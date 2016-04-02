@@ -1,4 +1,6 @@
 bin
 obj
 *.suo
+*.user
+.vs
 packages
