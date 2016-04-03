@@ -42,7 +42,8 @@ namespace iMobileDevice.Generator
 
         public static CodeTypeDelegate ToDelegate(this CXType type, string nativeName, CXCursor cursor, ModuleGenerator generator)
         {
-            if (type.kind != CXTypeKind.CXType_FunctionProto)
+            if (type.kind != CXTypeKind.CXType_FunctionProto
+                && type.kind != CXTypeKind.CXType_Unexposed)
             {
                 throw new InvalidOperationException();
             }

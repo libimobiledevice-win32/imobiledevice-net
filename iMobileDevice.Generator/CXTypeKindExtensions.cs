@@ -20,7 +20,7 @@ namespace iMobileDevice.Generator
             {
                 // Generate the delegate and add it to the list of members
                 nativeName = clang.getCursorSpelling(cursor).ToString();
-                var delegateType = canonical.ToDelegate(nativeName, cursor, generator);
+                var delegateType = type.ToDelegate(nativeName, cursor, generator);
                 generator.AddType(nativeName, delegateType);
             }
 

@@ -12,7 +12,16 @@ namespace iMobileDevice.Generator
     {
         public static string ToClrName(string nativeName, NameConversion conversion)
         {
-            List<string> parts = new List<string>(nativeName.Split('_'));
+            var patchedName = nativeName;
+
+            patchedName = patchedName.Replace("DIAGNOSTICS_RELAY", "diagnosticsrelay");
+            patchedName = patchedName.Replace("HOUSE_ARREST", "housearrest");
+            patchedName = patchedName.Replace("MOBILE_IMAGE_MOUNTER", "mobileimagemounter");
+            patchedName = patchedName.Replace("PROPERTY_LIST_SERVICE", "propertylistservice");
+            patchedName = patchedName.Replace("SYSLOG_RELAY", "syslogrelay");
+            patchedName = patchedName.Replace("FILE_RELAY", "filerelay");
+
+            List<string> parts = new List<string>(patchedName.Split('_'));
 
             StringBuilder nameBuilder = new StringBuilder();
 
@@ -41,7 +50,17 @@ namespace iMobileDevice.Generator
                 }
 
                 // Manual patching of naming inconsistencies
-                if (parts[i] == "instproxy")
+                if (parts[i] == "diagnosticsrelay")
+                {
+                    parts[i] = "Diagnostics";
+                    parts.Insert(i + 1, "Relay");
+                }
+                else if (parts[i] == "cb")
+                {
+                    parts[i] = "Call";
+                    parts.Insert(i + 1, "Back");
+                }
+                else if (parts[i] == "instproxy")
                 {
                     parts[i] = "Installation";
                     parts.Insert(i + 1, "Proxy");
@@ -98,6 +117,27 @@ namespace iMobileDevice.Generator
                     parts[i] = "Spring";
                     parts.Insert(i + 1, "Board");
                     parts.Insert(i + 2, "Services");
+                }
+                else if (parts[i] == "housearrest")
+                {
+                    parts[i] = "House";
+                    parts.Insert(i + 1, "Arrest");
+                }
+                else if (parts[i] == "propertylistservice")
+                {
+                    parts[i] = "Property";
+                    parts.Insert(i + 1, "List");
+                    parts.Insert(i + 2, "Service");
+                }
+                else if (parts[i] == "syslogrelay")
+                {
+                    parts[i] = "Syslog";
+                    parts.Insert(i + 1, "Relay");
+                }
+                else if (parts[i] == "filerelay")
+                {
+                    parts[i] = "File";
+                    parts.Insert(i + 1, "Relay");
                 }
 
                 if (conversion == NameConversion.Parameter && i == 0)

@@ -126,6 +126,11 @@ namespace iMobileDevice.Generator
             // Write the files
             foreach (var declaration in this.Types)
             {
+                if (declaration.Name.EndsWith("Private"))
+                {
+                    continue;
+                }
+
                 // Generate the container unit
                 CodeCompileUnit program = new CodeCompileUnit();
 
