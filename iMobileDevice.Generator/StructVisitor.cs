@@ -21,7 +21,7 @@ namespace iMobileDevice.Generator
 
         public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
         {
-            if (cursor.IsInSystemHeader())
+            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
             {
                 return CXChildVisitResult.CXChildVisit_Continue;
             }

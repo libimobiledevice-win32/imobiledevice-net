@@ -4,6 +4,8 @@
 
 namespace iMobileDevice.Generator
 {
+    using System;
+    using System.CodeDom;
     using System.Runtime.InteropServices;
     using ClangSharp;
 
@@ -36,6 +38,46 @@ namespace iMobileDevice.Generator
             }
 
             return false;
+        }
+
+        public static CodeTypeDelegate ToDelegate(this CXType type, string nativeName, CXCursor cursor, ModuleGenerator generator)
+        {
+            if (type.kind != CXTypeKind.CXType_FunctionProto)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var clrName = NameConversions.ToClrName(nativeName, NameConversion.Type);
+
+            CodeTypeDelegate delegateType = new CodeTypeDelegate();
+            delegateType.CustomAttributes.Add(
+                new CodeAttributeDeclaration(
+                    new CodeTypeReference(typeof(UnmanagedFunctionPointerAttribute)),
+                    new CodeAttributeArgument(
+                        new CodePropertyReferenceExpression(
+                            new CodeTypeReferenceExpression(typeof(CallingConvention)),
+                            type.GetCallingConvention().ToString()))));
+
+            delegateType.Attributes = MemberAttributes.Public;
+            delegateType.Name = clrName;
+            delegateType.ReturnType = new CodeTypeReference(clang.getResultType(type).ToClrType());
+
+            uint argumentCounter = 0;
+
+            clang.visitChildren(
+                cursor,
+                delegate(CXCursor cxCursor, CXCursor parent1, IntPtr ptr)
+                {
+                    if (cxCursor.kind == CXCursorKind.CXCursor_ParmDecl)
+                    {
+                        delegateType.Parameters.Add(Argument.GenerateArgument(generator, type, cxCursor, argumentCounter++));
+                    }
+
+                    return CXChildVisitResult.CXChildVisit_Continue;
+                },
+                new CXClientData(IntPtr.Zero));
+
+            return delegateType;
         }
     }
 }

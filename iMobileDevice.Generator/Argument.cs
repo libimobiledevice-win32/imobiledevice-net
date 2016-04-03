@@ -104,13 +104,15 @@ namespace iMobileDevice.Generator
                             break;
 
                         default:
-                            throw new NotImplementedException();
+                            parameter.Type = pointee.ToCodeTypeReference(paramCursor, generator);
+                            parameter.Direction = FieldDirection.Ref;
+                            break;
                     }
 
                     break;
 
                 default:
-                    parameter.Type = new CodeTypeReference(type.ToClrType());
+                    parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
                     break;
             }
 

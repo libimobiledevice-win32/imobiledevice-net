@@ -20,7 +20,7 @@ namespace iMobileDevice.Generator
 
         public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
         {
-            if (cursor.IsInSystemHeader())
+            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
             {
                 return CXChildVisitResult.CXChildVisit_Continue;
             }
@@ -56,34 +56,7 @@ namespace iMobileDevice.Generator
 
                     if (pointee.kind == CXTypeKind.CXType_FunctionProto)
                     {
-                        CodeTypeDelegate delegateType = new CodeTypeDelegate();
-                        delegateType.CustomAttributes.Add(
-                            new CodeAttributeDeclaration(
-                                new CodeTypeReference(typeof(UnmanagedFunctionPointerAttribute)),
-                                new CodeAttributeArgument(
-                                    new CodePropertyReferenceExpression(
-                                        new CodeTypeReferenceExpression(typeof(CallingConvention)),
-                                        pointee.GetCallingConvention().ToString()))));
-
-                        delegateType.Attributes = MemberAttributes.Public;
-                        delegateType.Name = clrName;
-                        delegateType.ReturnType = new CodeTypeReference(clang.getResultType(pointee).ToClrType());
-
-                        uint argumentCounter = 0;
-
-                        clang.visitChildren(
-                            cursor,
-                            delegate(CXCursor cxCursor, CXCursor parent1, IntPtr ptr)
-                            {
-                                if (cxCursor.kind == CXCursorKind.CXCursor_ParmDecl)
-                                {
-                                    delegateType.Parameters.Add(Argument.GenerateArgument(this.generator, pointee, cxCursor, argumentCounter++));
-                                }
-
-                                return CXChildVisitResult.CXChildVisit_Continue;
-                            },
-                            new CXClientData(IntPtr.Zero));
-
+                        CodeTypeDelegate delegateType = pointee.ToDelegate(nativeName, cursor, this.generator);
                         this.generator.AddType(nativeName, delegateType);
 
                         return CXChildVisitResult.CXChildVisit_Continue;

@@ -15,17 +15,18 @@ namespace iMobileDevice.Generator
 
     internal class ModuleGenerator
     {
-        public ModuleGenerator(string inputFile)
+        public string Name
         {
-            this.InputFile = inputFile;
-
-            this.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
+            get
+            {
+                return NameConversions.ToClrName(Path.GetFileNameWithoutExtension(this.InputFile), NameConversion.Type);
+            }
         }
 
         public string InputFile
         {
             get;
-            private set;
+            set;
         }
 
         public Collection<string> IncludeDirectories
@@ -105,6 +106,9 @@ namespace iMobileDevice.Generator
             var typeDefVisitor = new TypeDefVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
+            var functionVisitor = new FunctionVisitor(this, "libimobiledevice");
+            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
+
             clang.disposeTranslationUnit(translationUnit);
             clang.disposeIndex(createIndex);
 
@@ -116,10 +120,13 @@ namespace iMobileDevice.Generator
 
                 // Generate the namespace
                 CodeNamespace ns = new CodeNamespace("iMobileDevice");
+                ns.Imports.Add(new CodeNamespaceImport("System.Runtime.InteropServices"));
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
-                using (var outFile = File.Open(Path.Combine(targetDirectory, $"{declaration.Name}.cs"), FileMode.Create))
+                string path = Path.Combine(targetDirectory, $"{declaration.Name}.cs");
+
+                using (var outFile = File.Open(path, FileMode.Create))
                 using (var fileWriter = new StreamWriter(outFile))
                 using (var indentedTextWriter = new IndentedTextWriter(fileWriter, "    "))
                 {
@@ -129,6 +136,13 @@ namespace iMobileDevice.Generator
                         program,
                         indentedTextWriter,
                         new CodeGeneratorOptions() { BracingStyle = "C" });
+                }
+
+                if (declaration.Name.EndsWith("NativeMethods"))
+                {
+                    string content = File.ReadAllText(path);
+                    content = content.Replace("public abstract", "public static extern");
+                    File.WriteAllText(path, content);
                 }
             }
         }

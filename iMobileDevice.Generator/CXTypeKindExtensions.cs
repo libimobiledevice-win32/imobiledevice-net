@@ -5,15 +5,40 @@
 namespace iMobileDevice.Generator
 {
     using System;
+    using System.CodeDom;
     using ClangSharp;
 
     internal static class CXTypeKindExtensions
     {
+        public static CodeTypeReference ToCodeTypeReference(this CXType type, CXCursor cursor, ModuleGenerator generator)
+        {
+            var nativeName = type.ToString();
+            var canonical = clang.getCanonicalType(type);
+
+            // Special case: function prototypes embedded in the function declaration
+            if (canonical.kind == CXTypeKind.CXType_FunctionProto)
+            {
+                // Generate the delegate and add it to the list of members
+                nativeName = clang.getCursorSpelling(cursor).ToString();
+                var delegateType = canonical.ToDelegate(nativeName, cursor, generator);
+                generator.AddType(nativeName, delegateType);
+            }
+
+            if (generator.NameMapping.ContainsKey(nativeName))
+            {
+                return new CodeTypeReference(generator.NameMapping[nativeName]);
+            }
+            else
+            {
+                return new CodeTypeReference(type.ToClrType());
+            }
+        }
+
         public static Type ToClrType(this CXType type)
         {
             var canonical = clang.getCanonicalType(type);
 
-            switch (type.kind)
+            switch (canonical.kind)
             {
                 case CXTypeKind.CXType_Bool:
                     return typeof(bool);
@@ -45,6 +70,7 @@ namespace iMobileDevice.Generator
                     return typeof(uint);
 
                 case CXTypeKind.CXType_Pointer:
+                case CXTypeKind.CXType_IncompleteArray:
                     return typeof(IntPtr);
 
                 case CXTypeKind.CXType_Long:
