@@ -55,4 +55,27 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <Native32 Include="$(SolutionDir)packages\libimobiledevice.redist.1.2.0\build\native\bin\Win32\v140\Release\*.*" />
+      <Native32 Include="$(SolutionDir)packages\libiconv.redist.1.14.0.11\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
+      <Native32 Include="$(SolutionDir)packages\libxml2.redist.2.7.8.7\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
+      <Native32 Include="$(SolutionDir)packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\release\*.dll" />
+      <Native32 Include="$(SolutionDir)packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\Release\*.dll" />
+      <Native32 Include="$(SolutionDir)packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\Win32\v140\Release\Desktop\*.dll" />
+      <Native32 Include="$(WinDir)\syswow64\vcruntime140.dll" />
+      <Native32 Include="$(WinDir)\syswow64\msvcr110.dll" />
+      <Native64 Include="$(SolutionDir)packages\libimobiledevice.redist.1.2.0\build\native\bin\x64\v140\Release\*.*" />
+      <Native64 Include="$(SolutionDir)packages\libiconv.redist.1.14.0.11\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
+      <Native64 Include="$(SolutionDir)packages\libxml2.redist.2.7.8.7\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
+      <Native64 Include="$(SolutionDir)packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll" />
+      <Native64 Include="$(SolutionDir)packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Release\*.dll" />
+      <Native64 Include="$(SolutionDir)packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\x64\v140\Release\Desktop\*.dll" />
+      <Native64 Include="$(WinDir)\System32\vcruntime140.dll" />
+      <Native64 Include="$(WinDir)\System32\msvcr110.dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutDir)\x86" />
+    <Copy SourceFiles="@(Native32)" DestinationFolder="$(OutDir)\x86" />
+    <Copy SourceFiles="@(Native64)" DestinationFolder="$(OutDir)\x64" />
+  </Target>
 </Project>

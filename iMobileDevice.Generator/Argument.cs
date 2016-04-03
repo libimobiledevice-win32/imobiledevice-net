@@ -53,7 +53,7 @@ namespace iMobileDevice.Generator
                             else
                             {
                                 parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                                parameter.Direction = FieldDirection.Out;
+                                parameter.Direction = FieldDirection.Ref;
                             }
 
                             break;
