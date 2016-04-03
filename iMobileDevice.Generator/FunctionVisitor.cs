@@ -8,7 +8,7 @@ namespace iMobileDevice.Generator
     using System.CodeDom;
     using System.Runtime.InteropServices;
     using ClangSharp;
-
+    using System.Text;
     internal sealed class FunctionVisitor
     {
         private readonly string libraryName;
@@ -85,6 +85,13 @@ namespace iMobileDevice.Generator
                 method.Parameters.Add(argument);
             }
 
+            var comment = this.GetComment(cursor);
+
+            if (comment != null)
+            {
+                method.Comments.Add(comment);
+            }
+
             return method;
         }
 
@@ -101,6 +108,153 @@ namespace iMobileDevice.Generator
                     new CodePropertyReferenceExpression(
                         new CodeTypeReferenceExpression(typeof(CallingConvention)),
                         callingConvention.ToString())));
+        }
+
+        private CodeCommentStatement GetComment(CXCursor cursor)
+        {
+            // Standard hierarchy:
+            // - Full Comment
+            // - Paragraph Comment or ParamCommand comment
+            // - Text Comment
+            var fullComment = clang.Cursor_getParsedComment(cursor);
+            var fullCommentKind = clang.Comment_getKind(fullComment);
+            var fullCommentChildren = clang.Comment_getNumChildren(fullComment);
+
+            if (fullCommentKind != CXCommentKind.CXComment_FullComment || fullCommentChildren < 1)
+            {
+                return null;
+            }
+
+            StringBuilder summary = new StringBuilder();
+            StringBuilder parameters = new StringBuilder();
+            StringBuilder remarks = new StringBuilder();
+            StringBuilder returnValue = new StringBuilder();
+
+            bool hasComment = false;
+            bool hasParameter = false;
+
+            for (int i = 0; i < fullCommentChildren; i++)
+            {
+                var childComment = clang.Comment_getChild(fullComment, (uint)i);
+                var childCommentKind = clang.Comment_getKind(childComment);
+
+                if (childCommentKind != CXCommentKind.CXComment_Paragraph
+                    && childCommentKind != CXCommentKind.CXComment_ParamCommand
+                    && childCommentKind != CXCommentKind.CXComment_BlockCommand)
+                {
+                    continue;
+                }
+
+                StringBuilder textBuilder = new StringBuilder();
+                this.GetCommentInnerText(childComment, textBuilder);
+                string text = textBuilder.ToString();
+
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    continue;
+                }
+
+                if (childCommentKind == CXCommentKind.CXComment_Paragraph)
+                {
+                    summary.Append(text);
+                    hasComment = true;
+                }
+                else if (childCommentKind == CXCommentKind.CXComment_ParamCommand)
+                {
+                    // Get the parameter name
+                    var paramName = clang.ParamCommandComment_getParamName(childComment).ToString();
+
+                    if (hasParameter)
+                    {
+                        parameters.AppendLine();
+                    }
+
+                    parameters.AppendLine($" <param name=\"{paramName}\">");
+                    parameters.Append(text);
+                    parameters.Append(" </param>");
+                    hasComment = true;
+                    hasParameter = true;
+                }
+                else if (childCommentKind == CXCommentKind.CXComment_BlockCommand)
+                {
+                    var name = clang.BlockCommandComment_getCommandName(childComment).ToString();
+
+                    if (name == "note")
+                    {
+                        remarks.Append(text);
+                    }
+                    else if (name == "return")
+                    {
+                        returnValue.Append(text);
+                    }
+                }
+            }
+
+            if (!hasComment)
+            {
+                return null;
+            }
+
+            StringBuilder comment = new StringBuilder();
+
+            if (summary.Length > 0)
+            {
+                comment.AppendLine("<summary>");
+                comment.Append(summary.ToString());
+                comment.Append(" </summary>");
+            }
+
+            if (parameters.Length > 0)
+            {
+                comment.AppendLine();
+                comment.Append(parameters.ToString());
+            }
+
+            if (returnValue.Length > 0)
+            {
+                comment.AppendLine();
+                comment.AppendLine(" <returns>");
+                comment.Append(returnValue.ToString());
+                comment.Append(" </returns>");
+            }
+
+            if (remarks.Length > 0)
+            {
+                comment.AppendLine();
+                comment.AppendLine(" <remarks>");
+                comment.Append(remarks.ToString());
+                comment.Append(" </remarks>");
+            }
+
+            return new CodeCommentStatement(comment.ToString(), docComment: true);
+        }
+
+        private void GetCommentInnerText(CXComment comment, StringBuilder builder)
+        {
+            var commentKind = clang.Comment_getKind(comment);
+
+            if (commentKind == CXCommentKind.CXComment_Text)
+            {
+                var text = clang.TextComment_getText(comment).ToString();
+                text = text.Trim();
+
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    builder.Append(" ");
+                    builder.AppendLine(text);
+                }
+            }
+            else
+            {
+                // Recurse
+                var childCount = clang.Comment_getNumChildren(comment);
+
+                for (int i = 0; i < childCount; i++)
+                {
+                    var child = clang.Comment_getChild(comment, (uint)i);
+                    this.GetCommentInnerText(child, builder);
+                }
+            }
         }
     }
 }
