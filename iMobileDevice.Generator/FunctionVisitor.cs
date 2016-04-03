@@ -7,8 +7,9 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
-    using ClangSharp;
     using System.Text;
+    using ClangSharp;
+
     internal sealed class FunctionVisitor
     {
         private readonly string libraryName;
@@ -19,6 +20,14 @@ namespace iMobileDevice.Generator
         {
             this.generator = generator;
             this.libraryName = libraryName;
+        }
+
+        public CodeTypeDeclaration NativeMethods
+        {
+            get
+            {
+                return this.nativeMethods;
+            }
         }
 
         public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)

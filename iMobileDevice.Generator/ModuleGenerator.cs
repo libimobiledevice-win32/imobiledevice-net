@@ -112,6 +112,17 @@ namespace iMobileDevice.Generator
             clang.disposeTranslationUnit(translationUnit);
             clang.disposeIndex(createIndex);
 
+            var moduleDirectory = Path.Combine(targetDirectory, this.Name);
+
+            if (!Directory.Exists(moduleDirectory))
+            {
+                Directory.CreateDirectory(moduleDirectory);
+            }
+
+            // Extract the API interface and class. Used for DI.
+            ApiExtractor extractor = new ApiExtractor(this, functionVisitor);
+            extractor.Generate();
+
             // Write the files
             foreach (var declaration in this.Types)
             {
@@ -124,7 +135,7 @@ namespace iMobileDevice.Generator
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
-                string path = Path.Combine(targetDirectory, $"{declaration.Name}.cs");
+                string path = Path.Combine(moduleDirectory, $"{declaration.Name}.cs");
 
                 using (var outFile = File.Open(path, FileMode.Create))
                 using (var fileWriter = new StreamWriter(outFile))
