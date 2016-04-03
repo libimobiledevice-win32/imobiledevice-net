@@ -10,12 +10,13 @@ namespace iMobileDevice.Generator
     {
         public static void Main(string[] args)
         {
-            var directory = args[0];
+            var sourceDirectory = args[0];
+            var targetDirectory = args[1];
 
-            foreach (var file in Directory.GetFiles(directory, "*.h"))
+            foreach (var file in Directory.GetFiles(sourceDirectory, "*.h"))
             {
                 ModuleGenerator generator = new ModuleGenerator(file);
-                generator.Generate();
+                generator.Generate(targetDirectory);
             }
         }
     }

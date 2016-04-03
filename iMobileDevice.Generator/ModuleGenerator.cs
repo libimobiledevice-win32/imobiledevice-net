@@ -5,12 +5,14 @@
 namespace iMobileDevice.Generator
 {
     using System;
+    using System.CodeDom;
+    using System.CodeDom.Compiler;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using ClangSharp;
-    using System.CodeDom;
-    using System.CodeDom.Compiler;
+
     internal class ModuleGenerator
     {
         public ModuleGenerator(string inputFile)
@@ -29,7 +31,44 @@ namespace iMobileDevice.Generator
         public Collection<string> IncludeDirectories
         { get; } = new Collection<string>();
 
-        public void Generate()
+        public Collection<CodeTypeDeclaration> Types
+        { get; } = new Collection<CodeTypeDeclaration>();
+
+        public Dictionary<string, string> NameMapping
+        { get; } = new Dictionary<string, string>();
+
+        public void AddType(string nativeName, CodeTypeDeclaration type)
+        {
+            if (string.IsNullOrEmpty(nativeName))
+            {
+                throw new ArgumentOutOfRangeException(nameof(nativeName));
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentOutOfRangeException(nativeName);
+            }
+
+            if (this.Types.Contains(type))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (this.NameMapping.ContainsValue(type.Name))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (this.NameMapping.ContainsKey(nativeName))
+            {
+                throw new InvalidOperationException();
+            }
+
+            this.Types.Add(type);
+            this.NameMapping.Add(nativeName, type.Name);
+        }
+
+        public void Generate(string targetDirectory)
         {
             var createIndex = clang.createIndex(0, 0);
 
@@ -57,24 +96,30 @@ namespace iMobileDevice.Generator
                 throw new Exception(errorWriter.ToString());
             }
 
-            var enumVisitor = new EnumVisitor();
+            var enumVisitor = new EnumVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), enumVisitor.Visit, new CXClientData(IntPtr.Zero));
+
+            var structVisitor = new StructVisitor(this);
+            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), structVisitor.Visit, new CXClientData(IntPtr.Zero));
+
+            var typeDefVisitor = new TypeDefVisitor(this);
+            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             clang.disposeTranslationUnit(translationUnit);
             clang.disposeIndex(createIndex);
 
-            // Write the enum files
-            foreach (var enumDeclaration in enumVisitor.Enums)
+            // Write the files
+            foreach (var declaration in this.Types)
             {
                 // Generate the container unit
                 CodeCompileUnit program = new CodeCompileUnit();
 
                 // Generate the namespace
                 CodeNamespace ns = new CodeNamespace("iMobileDevice");
-                ns.Types.Add(enumDeclaration);
+                ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
-                using (var outFile = File.Open($"{enumDeclaration.Name}.cs", FileMode.Create))
+                using (var outFile = File.Open(Path.Combine(targetDirectory, $"{declaration.Name}.cs"), FileMode.Create))
                 using (var fileWriter = new StreamWriter(outFile))
                 using (var indentedTextWriter = new IndentedTextWriter(fileWriter, "    "))
                 {

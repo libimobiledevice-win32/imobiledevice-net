@@ -8,7 +8,7 @@ namespace iMobileDevice.Generator
 
     internal static class NameConversions
     {
-        public static string ToClrName(string nativeName, bool isType)
+        public static string ToClrName(string nativeName, NameConversion conversion)
         {
             string[] parts = nativeName.Split('_');
 
@@ -16,7 +16,9 @@ namespace iMobileDevice.Generator
 
             for (int i = 0; i < parts.Length; i++)
             {
-                if (!isType && i == 0)
+                if (
+                    (conversion == NameConversion.Function || conversion == NameConversion.Field)
+                    && i == 0)
                 {
                     continue;
                 }
@@ -31,7 +33,11 @@ namespace iMobileDevice.Generator
                     continue;
                 }
 
-                if (parts[i].StartsWith("idevice"))
+                if (conversion == NameConversion.Parameter && i == 0)
+                {
+                    nameBuilder.Append(char.ToLowerInvariant(parts[i][0]) + parts[i].Substring(1).ToLowerInvariant());
+                }
+                else if (parts[i].StartsWith("idevice"))
                 {
                     nameBuilder.Append("i" + char.ToUpperInvariant(parts[i][1]) + parts[i].Substring(2).ToLowerInvariant());
                 }

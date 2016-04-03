@@ -69,15 +69,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CursorExtensions.cs" />
+    <Compile Include="Argument.cs" />
+    <Compile Include="CXCursorExtensions.cs" />
+    <Compile Include="CXTypeExtensions.cs" />
     <Compile Include="CXTypeKindExtensions.cs" />
     <Compile Include="EnumVisitor.cs" />
     <Compile Include="ForwardDeclarationVisitor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Handles.cs" />
     <Compile Include="ModuleGenerator.cs" />
+    <Compile Include="NameConversion.cs" />
     <Compile Include="NameConversions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructVisitor.cs" />
+    <Compile Include="TypeDefVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
