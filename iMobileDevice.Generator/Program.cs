@@ -25,13 +25,13 @@ namespace iMobileDevice.Generator
 
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits\10\Include\10.0.10240.0\ucrt\"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0\build\native\include\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.20\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.47\build\native\include"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include"));
 
             Collection<string> names = new Collection<string>();
 
-            foreach (var file in Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0\build\native\include\libimobiledevice"), "*.h"))
+            foreach (var file in Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.20\build\native\include\libimobiledevice"), "*.h"))
             {
                 Console.WriteLine($"Processing {Path.GetFileName(file)}");
                 generator.InputFile = file;
