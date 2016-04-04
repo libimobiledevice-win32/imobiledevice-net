@@ -76,6 +76,7 @@
     <Compile Include="CXTypeKindExtensions.cs" />
     <Compile Include="EnumVisitor.cs" />
     <Compile Include="ForwardDeclarationVisitor.cs" />
+    <Compile Include="FunctionType.cs" />
     <Compile Include="FunctionVisitor.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Handles.cs" />

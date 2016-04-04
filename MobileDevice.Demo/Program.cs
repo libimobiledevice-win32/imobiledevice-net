@@ -41,23 +41,22 @@ namespace MobileDevice.Demo
                 udids[i] = udid;
             }
 
-            // TODO: Clean up the device list
+            idevice.idevice_device_list_free(devices);
 
             // Get the device name
-            foreach(var udid in udids)
+            foreach (var udid in udids)
             {
-                iDeviceHandle deviceHandle = new iDeviceHandle();
-                var device = idevice.idevice_new(ref deviceHandle, udid);
+                iDeviceHandle deviceHandle;
+                var device = idevice.idevice_new(out deviceHandle, udid);
 
                 var lockdown = new LockdownApi();
-                LockdownClientHandle lockdownHandle = new LockdownClientHandle();
-                lockdown.lockdownd_client_new_with_handshake(deviceHandle, ref lockdownHandle, "Quamotion");
+                LockdownClientHandle lockdownHandle;
+                lockdown.lockdownd_client_new_with_handshake(deviceHandle, out lockdownHandle, "Quamotion");
 
                 IntPtr deviceNamePtr = IntPtr.Zero;
                 lockdown.lockdownd_get_device_name(lockdownHandle, ref deviceNamePtr);
 
                 var deviceName = Marshal.PtrToStringAnsi(deviceNamePtr);
-
                 lockdown.lockdownd_client_free(lockdownHandle);
                 idevice.idevice_free(deviceHandle);
             }

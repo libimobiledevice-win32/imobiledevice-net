@@ -86,11 +86,22 @@ namespace iMobileDevice.Generator
             method.ReturnType = resultType.ToCodeTypeReference(cursor, this.generator);
             method.Name = nativeName;
 
+            var functionKind = FunctionType.None;
+
+            if (nativeName.Contains("_new"))
+            {
+                functionKind = FunctionType.New;
+            }
+            else if (nativeName.Contains("_free"))
+            {
+                functionKind = FunctionType.Free;
+            }
+
             int numArgTypes = clang.getNumArgTypes(functionType);
 
             for (uint i = 0; i < numArgTypes; ++i)
             {
-                var argument = Argument.GenerateArgument(this.generator, functionType, clang.Cursor_getArgument(cursor, i), i);
+                var argument = Argument.GenerateArgument(this.generator, functionType, clang.Cursor_getArgument(cursor, i), i, functionKind);
                 method.Parameters.Add(argument);
             }
 

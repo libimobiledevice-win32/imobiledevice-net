@@ -21,7 +21,7 @@ namespace iMobileDevice.Generator
                         value.ToString())));
         }
 
-        public static CodeParameterDeclarationExpression GenerateArgument(this ModuleGenerator generator, CXType functionType, CXCursor paramCursor, uint index)
+        public static CodeParameterDeclarationExpression GenerateArgument(this ModuleGenerator generator, CXType functionType, CXCursor paramCursor, uint index, FunctionType functionKind)
         {
             var numArgTypes = clang.getNumArgTypes(functionType);
             var type = clang.getArgType(functionType, index);
@@ -38,6 +38,8 @@ namespace iMobileDevice.Generator
             CodeParameterDeclarationExpression parameter = new CodeParameterDeclarationExpression();
             parameter.Name = name;
 
+            bool isPointer = false;
+
             switch (type.kind)
             {
                 case CXTypeKind.CXType_Pointer:
@@ -53,7 +55,7 @@ namespace iMobileDevice.Generator
                             else
                             {
                                 parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                                parameter.Direction = FieldDirection.Ref;
+                                isPointer = true;
                             }
 
                             break;
@@ -99,13 +101,13 @@ namespace iMobileDevice.Generator
 
                             // Get the CLR name for the record
                             var clrName = generator.NameMapping[recordType.ToString()];
-                            parameter.Direction = FieldDirection.Ref;
                             parameter.Type = new CodeTypeReference(clrName);
+                            isPointer = true;
                             break;
 
                         default:
                             parameter.Type = pointee.ToCodeTypeReference(paramCursor, generator);
-                            parameter.Direction = FieldDirection.Ref;
+                            isPointer = true;
                             break;
                     }
 
@@ -114,6 +116,24 @@ namespace iMobileDevice.Generator
                 default:
                     parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
                     break;
+            }
+
+            if (isPointer)
+            {
+                switch (functionKind)
+                {
+                    case FunctionType.None:
+                        parameter.Direction = FieldDirection.Ref;
+                        break;
+
+                    case FunctionType.New:
+                        parameter.Direction = FieldDirection.Out;
+                        break;
+
+                    case FunctionType.Free:
+                        parameter.Direction = FieldDirection.In;
+                        break;
+                }
             }
 
             return parameter;
