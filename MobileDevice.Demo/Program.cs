@@ -1,4 +1,6 @@
 ﻿using iMobileDevice;
+using iMobileDevice.iDevice;
+using iMobileDevice.Lockdown;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,8 @@ namespace MobileDevice.Demo
             IntPtr devices = IntPtr.Zero;
             int count = 0;
 
-            var idevice = new iDeviceApi();
+            var idevice = LibiMobileDevice.Instance.iDevice;
+            var lockdown = LibiMobileDevice.Instance.Lockdown;
 
             var ret = idevice.idevice_get_device_list(ref devices, ref count);
 
@@ -49,7 +52,6 @@ namespace MobileDevice.Demo
                 iDeviceHandle deviceHandle;
                 idevice.idevice_new(out deviceHandle, udid).ThrowOnError();
 
-                var lockdown = new LockdownApi();
                 LockdownClientHandle lockdownHandle;
                 lockdown.lockdownd_client_new_with_handshake(deviceHandle, out lockdownHandle, "Quamotion").ThrowOnError();
 

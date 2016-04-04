@@ -63,11 +63,6 @@ namespace iMobileDevice.Generator
                     }
                 }
 
-                if (clang.isPODType(type) != 0)
-                {
-                    this.generator.AddType(nativeName, Handles.CreateSafeHandle(clrName));
-                }
-
                 return CXChildVisitResult.CXChildVisit_Continue;
             }
 

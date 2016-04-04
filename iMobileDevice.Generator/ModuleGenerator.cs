@@ -128,6 +128,23 @@ namespace iMobileDevice.Generator
             extensionsExtractor.Generate();
 
             // Update the SafeHandle to call the _free method
+            var handles = this.Types.Where(t => t.Name.EndsWith("Handle"));
+
+            foreach (var handle in handles)
+            {
+                var freeMethod = functionVisitor.NativeMethods.Members
+                    .OfType<CodeMemberMethod>()
+                    .Where(m =>
+                        (m.Name.EndsWith("_free") || m.Name.EndsWith("_disconnect"))
+                        && m.Parameters.Count == 1
+                        && m.Parameters[0].Type.BaseType == handle.Name)
+                    .SingleOrDefault();
+
+                if (freeMethod == null)
+                {
+                    continue;
+                }
+            }
 
             // Write the files
             foreach (var declaration in this.Types)
@@ -141,8 +158,11 @@ namespace iMobileDevice.Generator
                 CodeCompileUnit program = new CodeCompileUnit();
 
                 // Generate the namespace
-                CodeNamespace ns = new CodeNamespace("iMobileDevice");
+                CodeNamespace ns = new CodeNamespace($"iMobileDevice.{this.Name}");
                 ns.Imports.Add(new CodeNamespaceImport("System.Runtime.InteropServices"));
+                ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.iDevice"));
+                ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Lockdown"));
+                ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Afc"));
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
@@ -167,7 +187,7 @@ namespace iMobileDevice.Generator
                     File.WriteAllText(path, content);
                 }
 
-                if(declaration.Name.EndsWith("Extensions"))
+                if (declaration.Name.EndsWith("Extensions"))
                 {
                     string content = File.ReadAllText(path);
                     content = content.Replace("public class", "public static class");

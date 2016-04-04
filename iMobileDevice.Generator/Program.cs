@@ -5,6 +5,7 @@
 namespace iMobileDevice.Generator
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.IO;
 
     internal class Program
@@ -22,12 +23,19 @@ namespace iMobileDevice.Generator
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"libplist\include"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"libusbmuxd\include"));
 
+            Collection<string> names = new Collection<string>();
+
             foreach (var file in Directory.GetFiles(Path.Combine(sourceDirectory, @"libimobiledevice\include\libimobiledevice"), "*.h"))
             {
                 generator.InputFile = file;
                 generator.Generate(targetDirectory);
                 generator.Types.Clear();
+
+                names.Add(generator.Name);
             }
+
+            ApiGenerator apiGenerator = new ApiGenerator();
+            apiGenerator.Generate(names, targetDirectory);
         }
     }
 }
