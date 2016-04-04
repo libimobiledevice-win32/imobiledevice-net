@@ -31,7 +31,7 @@ namespace MobileDevice.Demo
                 return;
             }
 
-            // MobileDevice.CheckError(ret);
+            ret.ThrowOnError();
 
             string[] udids = new string[count];
 
@@ -41,24 +41,24 @@ namespace MobileDevice.Demo
                 udids[i] = udid;
             }
 
-            idevice.idevice_device_list_free(devices);
+            idevice.idevice_device_list_free(devices).ThrowOnError();
 
             // Get the device name
             foreach (var udid in udids)
             {
                 iDeviceHandle deviceHandle;
-                var device = idevice.idevice_new(out deviceHandle, udid);
+                idevice.idevice_new(out deviceHandle, udid).ThrowOnError();
 
                 var lockdown = new LockdownApi();
                 LockdownClientHandle lockdownHandle;
-                lockdown.lockdownd_client_new_with_handshake(deviceHandle, out lockdownHandle, "Quamotion");
+                lockdown.lockdownd_client_new_with_handshake(deviceHandle, out lockdownHandle, "Quamotion").ThrowOnError();
 
                 IntPtr deviceNamePtr = IntPtr.Zero;
-                lockdown.lockdownd_get_device_name(lockdownHandle, ref deviceNamePtr);
+                lockdown.lockdownd_get_device_name(lockdownHandle, ref deviceNamePtr).ThrowOnError();
 
                 var deviceName = Marshal.PtrToStringAnsi(deviceNamePtr);
-                lockdown.lockdownd_client_free(lockdownHandle);
-                idevice.idevice_free(deviceHandle);
+                lockdown.lockdownd_client_free(lockdownHandle).ThrowOnError();
+                idevice.idevice_free(deviceHandle).ThrowOnError();
             }
         }
     }

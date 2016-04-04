@@ -119,9 +119,15 @@ namespace iMobileDevice.Generator
                 Directory.CreateDirectory(moduleDirectory);
             }
 
-            // Extract the API interface and class. Used for DI.
+            // Extract the API interface and class, as well as the Exception class. Used for DI.
             ApiExtractor extractor = new ApiExtractor(this, functionVisitor);
             extractor.Generate();
+
+            // Add the 'Error' extension IsError and ThrowOnError extension methods
+            var extensionsExtractor = new ErrorExtensionExtractor(this, functionVisitor);
+            extensionsExtractor.Generate();
+
+            // Update the SafeHandle to call the _free method
 
             // Write the files
             foreach (var declaration in this.Types)
@@ -158,6 +164,13 @@ namespace iMobileDevice.Generator
                 {
                     string content = File.ReadAllText(path);
                     content = content.Replace("public abstract", "public static extern");
+                    File.WriteAllText(path, content);
+                }
+
+                if(declaration.Name.EndsWith("Extensions"))
+                {
+                    string content = File.ReadAllText(path);
+                    content = content.Replace("public class", "public static class");
                     File.WriteAllText(path, content);
                 }
             }

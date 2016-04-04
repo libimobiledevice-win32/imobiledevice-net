@@ -75,6 +75,7 @@
     <Compile Include="CXTypeExtensions.cs" />
     <Compile Include="CXTypeKindExtensions.cs" />
     <Compile Include="EnumVisitor.cs" />
+    <Compile Include="ErrorExtensionExtractor.cs" />
     <Compile Include="ForwardDeclarationVisitor.cs" />
     <Compile Include="FunctionType.cs" />
     <Compile Include="FunctionVisitor.cs" />
