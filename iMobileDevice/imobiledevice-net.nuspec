@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>imobiledevice-net</id>
+    <version>1.2.0.{build}</version>
+    <authors>Quamotion</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET bindings for libimobiledevice, allows you to interact with devices running iOS from C# or VB.NET code</description>
+    <projectUrl>https://github.com/libimobiledevice-win32/imobiledevice-net</projectUrl>
+    <tags>libimobiledevice ios iphone ipad imobiledevice</tags>
+    <copyright>(c) 2016 Quamotion bvba</copyright>
+    <licenseUrl>https://github.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</licenseUrl>
+  </metadata>
+  <files>
+    <file src="bin\Debug\*.dll" target="lib\net40" />
+    <file src="bin\Debug\*.xml" target="lib\net40" />
+    <file src="bin\Debug\*.xml" target="lib\net40" />
+    <file src="bin\Debug\x86\*.*" target="tools\x86" />
+    <file src="bin\Debug\x64\*.*" target="tools\x64" />
+  </files>
+</package>
