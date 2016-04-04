@@ -59,8 +59,8 @@ namespace MobileDevice.Demo
                 lockdown.lockdownd_get_device_name(lockdownHandle, ref deviceNamePtr).ThrowOnError();
 
                 var deviceName = Marshal.PtrToStringAnsi(deviceNamePtr);
-                lockdown.lockdownd_client_free(lockdownHandle).ThrowOnError();
-                idevice.idevice_free(deviceHandle).ThrowOnError();
+                deviceHandle.Dispose();
+                lockdownHandle.Dispose();
             }
         }
     }

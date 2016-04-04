@@ -119,14 +119,6 @@ namespace iMobileDevice.Generator
                 Directory.CreateDirectory(moduleDirectory);
             }
 
-            // Extract the API interface and class, as well as the Exception class. Used for DI.
-            ApiExtractor extractor = new ApiExtractor(this, functionVisitor);
-            extractor.Generate();
-
-            // Add the 'Error' extension IsError and ThrowOnError extension methods
-            var extensionsExtractor = new ErrorExtensionExtractor(this, functionVisitor);
-            extensionsExtractor.Generate();
-
             // Update the SafeHandle to call the _free method
             var handles = this.Types.Where(t => t.Name.EndsWith("Handle"));
 
@@ -144,7 +136,45 @@ namespace iMobileDevice.Generator
                 {
                     continue;
                 }
+
+                // Directly pass the IntPtr, becuase the handle itself will already be in the 'closed' state
+                // when this method is called.
+                freeMethod.Parameters[0].Type = new CodeTypeReference(typeof(IntPtr));
+                freeMethod.Parameters[0].Direction = FieldDirection.In;
+
+                var releaseMethod = handle.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
+
+                // Sample statement:
+                // return !LibiMobileDevice.Instance.iDevice.idevice_free(this).IsError();
+                releaseMethod.Statements.Clear();
+
+                releaseMethod.Statements.Add(
+                    new CodeMethodReturnStatement(
+                        new CodeBinaryOperatorExpression(
+                            new CodeMethodInvokeExpression(
+                                new CodeMethodReferenceExpression(
+                                new CodePropertyReferenceExpression(
+                                    new CodePropertyReferenceExpression(
+                                        new CodeTypeReferenceExpression("LibiMobileDevice"),
+                                        "Instance"),
+                                    this.Name),
+                                freeMethod.Name),
+                                new CodeFieldReferenceExpression(
+                                    new CodeThisReferenceExpression(),
+                                    "handle")),
+                            CodeBinaryOperatorType.IdentityEquality,
+                            new CodePropertyReferenceExpression(
+                                new CodeTypeReferenceExpression($"{this.Name}Error"),
+                                "Success"))));
             }
+
+            // Extract the API interface and class, as well as the Exception class. Used for DI.
+            ApiExtractor extractor = new ApiExtractor(this, functionVisitor);
+            extractor.Generate();
+
+            // Add the 'Error' extension IsError and ThrowOnError extension methods
+            var extensionsExtractor = new ErrorExtensionExtractor(this, functionVisitor);
+            extensionsExtractor.Generate();
 
             // Write the files
             foreach (var declaration in this.Types)
