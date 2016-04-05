@@ -241,6 +241,7 @@ namespace iMobileDevice.Generator
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.iDevice"));
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Lockdown"));
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Afc"));
+                ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Plist"));
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 

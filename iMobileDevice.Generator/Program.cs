@@ -33,8 +33,8 @@ namespace iMobileDevice.Generator
             Collection<string> names = new Collection<string>();
 
             var files = new List<string>();
-            files.AddRange(Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.27\build\native\include\libimobiledevice"), "*.h"));
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include\plist\plist.h"));
+            files.AddRange(Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.27\build\native\include\libimobiledevice"), "*.h"));
 
             foreach (var file in files)
             {

@@ -123,7 +123,16 @@ namespace iMobileDevice.Generator
                 switch (functionKind)
                 {
                     case FunctionType.None:
-                        parameter.Direction = FieldDirection.Ref;
+                        if (parameter.Type.BaseType.EndsWith("Handle"))
+                        {
+                            // Handles are always out parameters
+                            parameter.Direction = FieldDirection.Out;
+                        }
+                        else
+                        {
+                            // For IntPtrs, we don't know - so we play on the safe side.
+                            parameter.Direction = FieldDirection.Ref;
+                        }
                         break;
 
                     case FunctionType.New:
