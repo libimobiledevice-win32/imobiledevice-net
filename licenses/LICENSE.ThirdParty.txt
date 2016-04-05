@@ -5,7 +5,7 @@ getopt.dll							lgpl-2.0.txt
 libiconv.dll						lgpl-2.0.txt
 libimobiledevice.dll				lgpl-2.1.txt
 libxml2.dll							libxml2.txt
-libzip.dll							libzip.txt
+zlib.dll							zlib.txt
 libeay.dll							openssl.txt
 libssl.dll							openssl.txt
 msvcr110.dll						https://www.visualstudio.com/en-us/mt639504
