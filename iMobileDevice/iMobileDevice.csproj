@@ -58,6 +58,7 @@
   <Target Name="AfterBuild">
     <ItemGroup>
       <Native32 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.0.20\build\native\bin\Win32\v140\Release\*.*" />
+      <Native32 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.13\build\native\bin\Win32\v140\Release\*.*" />
       <Native32 Include="$(ProjectDir)..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\release\*.dll" />
@@ -66,6 +67,7 @@
       <Native32 Include="$(WinDir)\syswow64\vcruntime140.dll" />
       <Native32 Include="$(WinDir)\syswow64\msvcr110.dll" />
       <Native64 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.0.20\build\native\bin\x64\v140\Release\*.*" />
+      <Native64 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.13\build\native\bin\x64\v140\Release\*.*" />
       <Native64 Include="$(ProjectDir)..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll" />
