@@ -80,21 +80,54 @@ namespace iMobileDevice.Generator
             CXUnsavedFile unsavedFile;
             var translationUnitError = clang.parseTranslationUnit2(createIndex, this.InputFile, arguments, arguments.Length, out unsavedFile, 0, 0, out translationUnit);
 
-            if (translationUnitError != CXErrorCode.CXError_Success)
+            StringWriter errorWriter = new StringWriter();
+            var numDiagnostics = clang.getNumDiagnostics(translationUnit);
+
+            bool hasError = false;
+            bool hasWarning = false;
+
+            for (uint i = 0; i < numDiagnostics; ++i)
             {
-                StringWriter errorWriter = new StringWriter();
+                var diagnostic = clang.getDiagnostic(translationUnit, i);
 
-                errorWriter.WriteLine("Error: " + translationUnitError);
-                var numDiagnostics = clang.getNumDiagnostics(translationUnit);
+                var severity = clang.getDiagnosticSeverity(diagnostic);
 
-                for (uint i = 0; i < numDiagnostics; ++i)
+                switch (severity)
                 {
-                    var diagnostic = clang.getDiagnostic(translationUnit, i);
-                    errorWriter.WriteLine(clang.getDiagnosticSpelling(diagnostic).ToString());
-                    clang.disposeDiagnostic(diagnostic);
+                    case CXDiagnosticSeverity.CXDiagnostic_Error:
+                    case CXDiagnosticSeverity.CXDiagnostic_Fatal:
+                        hasError = true;
+                        break;
+
+                    case CXDiagnosticSeverity.CXDiagnostic_Warning:
+                        hasWarning = true;
+                        break;
                 }
 
+                var location = clang.getDiagnosticLocation(diagnostic);
+                CXFile file;
+                uint line;
+                uint column;
+                uint offset;
+
+                clang.getFileLocation(location, out file, out line, out column, out offset);
+
+                var fileName = clang.getFileName(file).ToString();
+
+                var message = clang.getDiagnosticSpelling(diagnostic).ToString();
+                errorWriter.WriteLine($"{severity}: {fileName}:{line} {message}");
+                clang.disposeDiagnostic(diagnostic);
+            }
+
+            if (hasError)
+            {
                 throw new Exception(errorWriter.ToString());
+            }
+
+            if (hasWarning)
+            {
+                // Dump the warnings to the console output.
+                Console.WriteLine(errorWriter.ToString());
             }
 
             var enumVisitor = new EnumVisitor(this);
