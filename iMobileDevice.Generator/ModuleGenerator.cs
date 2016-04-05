@@ -148,24 +148,39 @@ namespace iMobileDevice.Generator
                 // return !LibiMobileDevice.Instance.iDevice.idevice_free(this).IsError();
                 releaseMethod.Statements.Clear();
 
-                releaseMethod.Statements.Add(
-                    new CodeMethodReturnStatement(
-                        new CodeBinaryOperatorExpression(
-                            new CodeMethodInvokeExpression(
-                                new CodeMethodReferenceExpression(
-                                new CodePropertyReferenceExpression(
+                var freeMethodInvokeExpression =
+                    new CodeMethodInvokeExpression(
+                                    new CodeMethodReferenceExpression(
                                     new CodePropertyReferenceExpression(
-                                        new CodeTypeReferenceExpression("LibiMobileDevice"),
-                                        "Instance"),
-                                    this.Name),
-                                freeMethod.Name),
-                                new CodeFieldReferenceExpression(
-                                    new CodeThisReferenceExpression(),
-                                    "handle")),
-                            CodeBinaryOperatorType.IdentityEquality,
-                            new CodePropertyReferenceExpression(
-                                new CodeTypeReferenceExpression($"{this.Name}Error"),
-                                "Success"))));
+                                        new CodePropertyReferenceExpression(
+                                            new CodeTypeReferenceExpression("LibiMobileDevice"),
+                                            "Instance"),
+                                        this.Name),
+                                    freeMethod.Name),
+                                    new CodeFieldReferenceExpression(
+                                        new CodeThisReferenceExpression(),
+                                        "handle"));
+
+                if (freeMethod.ReturnType.BaseType != "System.Void")
+                {
+                    // If the free method returns a value, it's an error code, and we can make sure the value indicates
+                    // success.
+                    releaseMethod.Statements.Add(
+                        new CodeMethodReturnStatement(
+                            new CodeBinaryOperatorExpression(
+                                freeMethodInvokeExpression,
+                                CodeBinaryOperatorType.IdentityEquality,
+                                new CodePropertyReferenceExpression(
+                                    new CodeTypeReferenceExpression($"{this.Name}Error"),
+                                    "Success"))));
+                }
+                else
+                {
+                    // If it does not, we always return true (which is a pitty, but this is how plist is implemented for now)
+                    // - on the other hand, in how many ways can free() really fail? :-)
+                    releaseMethod.Statements.Add(freeMethodInvokeExpression);
+                    releaseMethod.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
+                }
             }
 
             // Extract the API interface and class, as well as the Exception class. Used for DI.

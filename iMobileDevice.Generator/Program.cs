@@ -5,6 +5,7 @@
 namespace iMobileDevice.Generator
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
 
@@ -31,7 +32,11 @@ namespace iMobileDevice.Generator
 
             Collection<string> names = new Collection<string>();
 
-            foreach (var file in Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.20\build\native\include\libimobiledevice"), "*.h"))
+            var files = new List<string>();
+            files.AddRange(Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.20\build\native\include\libimobiledevice"), "*.h"));
+            files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.47\build\native\include\plist\plist.h"));
+
+            foreach (var file in files)
             {
                 Console.WriteLine($"Processing {Path.GetFileName(file)}");
                 generator.InputFile = file;

@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +32,165 @@ namespace iMobileDevice.Generator
 
         public void Generate()
         {
-            var errorEnum = this.generator.Types.Single(t => t.Name.EndsWith("Error"));
-            var excepionType = this.generator.Types.Single(t => t.Name.EndsWith("Exception"));
+            var errorEnum = this.generator.Types.SingleOrDefault(t => t.Name.EndsWith("Error"));
+
+            if (errorEnum == null)
+            {
+                return;
+            }
+
+            // Add the exception type
+
+            // Generate the {Name}Exception class
+            CodeTypeDeclaration exceptionType = new CodeTypeDeclaration();
+            exceptionType.Name = $"{this.generator.Name}Exception";
+            exceptionType.BaseTypes.Add(typeof(Exception));
+            exceptionType.Comments.Add(
+                new CodeCommentStatement(
+                    $"Represents an exception that occurred when interacting with the {this.generator.Name} API.",
+                    true));
+            exceptionType.CustomAttributes.Add(
+                new CodeAttributeDeclaration(
+                    new CodeTypeReference(
+                        typeof(SerializableAttribute))));
+
+            var defaultConstrutor = new CodeConstructor();
+            defaultConstrutor.Attributes = MemberAttributes.Public;
+            defaultConstrutor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class.\r\n </summary>",
+                    true));
+            exceptionType.Members.Add(defaultConstrutor);
+
+            var errorConstructor = new CodeConstructor();
+            errorConstructor.Attributes = MemberAttributes.Public;
+            errorConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error code.\r\n <summary>",
+                    true));
+            errorConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"error\">\r\n The error code of the error that occurred.\r\n </param>",
+                    true));
+            errorConstructor.BaseConstructorArgs.Add(
+                new CodeMethodInvokeExpression(
+                    new CodeMethodReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(string)),
+                        "Format"),
+                    new CodePrimitiveExpression($"An {this.generator.Name} error occurred. The error code was {0}"),
+                    new CodeArgumentReferenceExpression("error")));
+            errorConstructor.Statements.Add(
+                new CodeAssignStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        "errorCode"),
+                    new CodeArgumentReferenceExpression("error")));
+            errorConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference($"{this.generator.Name}Error"),
+                    "error"));
+            exceptionType.Members.Add(errorConstructor);
+
+            var errorCodeField = new CodeMemberField();
+            errorCodeField.Name = "errorCode";
+            errorCodeField.Type = new CodeTypeReference($"{this.generator.Name}Error");
+            errorCodeField.Comments.Add(
+                new CodeCommentStatement(
+                    "<summary>\r\n Backing field for the <see cref=\"ErrorCode\"/> property.\r\n </summary>",
+                    true));
+            exceptionType.Members.Add(errorCodeField);
+
+            var errorCodeProperty = new CodeMemberProperty();
+            errorCodeProperty.Attributes = MemberAttributes.Public;
+            errorCodeProperty.Name = "ErrorCode";
+            errorCodeProperty.Type = new CodeTypeReference($"{this.generator.Name}Error");
+            errorCodeProperty.HasGet = true;
+            errorCodeProperty.GetStatements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        "errorCode")));
+            errorCodeProperty.Comments.Add(
+                new CodeCommentStatement(
+                    "<summary>\r\n Gets the error code that represents the error.\r\n </summary>",
+                    true));
+            exceptionType.Members.Add(errorCodeProperty);
+
+            var messageConstructor = new CodeConstructor();
+            messageConstructor.Attributes = MemberAttributes.Public;
+            messageConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error message.\r\n</summary>",
+                    true));
+            messageConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"message\">\r\n The message that describes the error.\r\n</param>",
+                    true));
+            messageConstructor.BaseConstructorArgs.Add(
+                new CodeArgumentReferenceExpression("message"));
+            messageConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    typeof(string),
+                    "message"));
+            exceptionType.Members.Add(messageConstructor);
+
+            var messageAndInnerConstructor = new CodeConstructor();
+            messageAndInnerConstructor.Attributes = MemberAttributes.Public;
+            messageAndInnerConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.\r\n </summary>",
+                    true));
+            messageAndInnerConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"message\">\r\n The error message that explains the reason for the exception.\r\n </param>",
+                    true));
+            messageAndInnerConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"inner\">\r\n The exception that is the cause of the current exception, or <see langword=\"null\"/> if no inner exception is specified.\r\n </param>",
+                    true));
+            messageAndInnerConstructor.BaseConstructorArgs.Add(
+                new CodeArgumentReferenceExpression("message"));
+            messageAndInnerConstructor.BaseConstructorArgs.Add(
+                new CodeArgumentReferenceExpression("inner"));
+            messageAndInnerConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    typeof(string),
+                    "message"));
+            messageAndInnerConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    typeof(Exception),
+                    "inner"));
+            exceptionType.Members.Add(messageAndInnerConstructor);
+
+            var serializedConstructor = new CodeConstructor();
+            serializedConstructor.Attributes = MemberAttributes.Family;
+            serializedConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with serialized data.\r\n </summary>",
+                    true));
+            serializedConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"info\">\r\n The <see cref=\"System.Runtime.Serialization.SerializationInfo\"/> that holds the serialized object data about the exception being thrown.\r\n </param>",
+                    true));
+            serializedConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"context\">\r\n The <see cref=\"System.Runtime.Serialization.StreamingContext\"/> that contains contextual information about the source or destination.\r\n </param>",
+                    true));
+            serializedConstructor.BaseConstructorArgs.Add(
+                new CodeArgumentReferenceExpression("info"));
+            serializedConstructor.BaseConstructorArgs.Add(
+                new CodeArgumentReferenceExpression("context"));
+            serializedConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    typeof(SerializationInfo),
+                    "info"));
+            serializedConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    typeof(StreamingContext),
+                    "context"));
+            exceptionType.Members.Add(serializedConstructor);
+
+            this.generator.AddType(exceptionType.Name, exceptionType);
 
             CodeTypeDeclaration extensionsType = new CodeTypeDeclaration();
             extensionsType.Name = $"{errorEnum.Name}Extensions";
@@ -58,7 +216,7 @@ namespace iMobileDevice.Generator
                                 "Success")),
                         new CodeThrowExceptionStatement(
                             new CodeObjectCreateExpression(
-                                new CodeTypeReference(excepionType.Name),
+                                new CodeTypeReference(exceptionType.Name),
                                 new CodeArgumentReferenceExpression("value")))));
 
 
