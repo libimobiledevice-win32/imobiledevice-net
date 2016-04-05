@@ -1,0 +1,12 @@
+The following is a list of third-party software components and their licenses.
+
+SOFTWARE COMPONENT					LICENSE FILE
+getopt.dll							lgpl-2.0.txt
+libiconv.dll						lgpl-2.0.txt
+libimobiledevice.dll				lgpl-2.1.txt
+libxml2.dll							libxml2.txt
+libzip.dll							libzip.txt
+libeay.dll							openssl.txt
+libssl.dll							openssl.txt
+msvcr110.dll						https://www.visualstudio.com/en-us/mt639504
+vcruntime140.dll					https://www.visualstudio.com/en-us/downloads/2015-redistribution-vs.aspx

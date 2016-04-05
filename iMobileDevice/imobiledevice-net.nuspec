@@ -15,7 +15,9 @@
     <file src="bin\Debug\*.dll" target="lib\net40" />
     <file src="bin\Debug\*.xml" target="lib\net40" />
     <file src="bin\Debug\*.xml" target="lib\net40" />
+    <file src="..\licenses\*.txt" target="tools\x86" />
     <file src="bin\Debug\x86\*.*" target="tools\x86" />
+    <file src="..\licenses\*.txt" target="tools\x64" />
     <file src="bin\Debug\x64\*.*" target="tools\x64" />
     <file src="imobiledevice-net.targets" target="build\net40" />
   </files>
