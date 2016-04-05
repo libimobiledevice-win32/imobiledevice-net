@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyNativeBinaries" DependsOnTargets="CopyFilesToOutputDirectory">
+    <!-- This file lives in the build\net40 directory, whereas the native libraries live in tools\-->
+    <ItemGroup>
+      <Native32 Include="$(MSBuildThisFileDirectory)..\..\tools\x86\*.*" />
+      <Native64 Include="$(MSBuildThisFileDirectory)..\..\tools\x64\*.*" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutDir)\x86" />
+    <MakeDir Directories="$(OutDir)\x64" />
+    <Copy SourceFiles="@(Native32)" DestinationFolder="$(OutDir)\x86" />
+    <Copy SourceFiles="@(Native64)" DestinationFolder="$(OutDir)\x64" />
+  </Target>
+</Project>
