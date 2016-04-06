@@ -89,7 +89,9 @@ namespace iMobileDevice.Generator
                                 break;
 
                             case CXTypeKind.CXType_Char_S:
-                                if (type.IsPtrToConstChar())
+                                // In some of the read/write functions, const char is also used to represent data -- in that
+                                // case, it maps to a byte[] array or just an IntPtr.
+                                if (type.IsPtrToConstChar() && name != "data")
                                 {
                                     parameter.Type = new CodeTypeReference(typeof(string));
                                     parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPStr));
