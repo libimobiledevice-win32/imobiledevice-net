@@ -9,7 +9,7 @@ namespace iMobileDevice.Generator
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.IO;
-
+    using System.Globalization;
     internal class Program
     {
         public static void Main(string[] args)
@@ -26,7 +26,7 @@ namespace iMobileDevice.Generator
             ModuleGenerator generator = new ModuleGenerator();
 
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
-            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits\10\Include\10.0.10240.0\ucrt\"));
+            generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.34\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include"));
@@ -60,6 +60,40 @@ namespace iMobileDevice.Generator
 
             ApiGenerator apiGenerator = new ApiGenerator();
             apiGenerator.Generate(names, targetDirectory);
+        }
+
+        static string GetWindowsKitUcrtFolder()
+        {
+            var windowsKitsRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits");
+
+            var windowsKits = new DirectoryInfo(windowsKitsRoot)
+                .EnumerateDirectories()
+                .Where(d => d.Name != "NETFXSDK")
+                .OrderByDescending(d => float.Parse(d.Name, CultureInfo.InvariantCulture))
+                .Select(d => d.FullName)
+                .ToArray();
+
+            var windowsKit = windowsKits.First();
+
+            Console.WriteLine($"Opening Windows Kit {windowsKit}");
+
+            var includeRoot = Path.Combine(windowsKit, "Include");
+
+            var includeDirs = new DirectoryInfo(includeRoot)
+                .EnumerateDirectories()
+                .OrderByDescending(d => new Version(d.Name))
+                .Select(d => d.FullName)
+                .ToArray();
+
+            var includeDir = includeDirs.First();
+
+            Console.WriteLine($"Opening Windows Kit include directory {includeDir}");
+
+            var ucrt = Path.Combine(includeDir, "ucrt");
+
+            Console.WriteLine($"basetsd.h exists: {File.Exists(Path.Combine(ucrt, "BaseTsd"))}");
+
+            return ucrt;
         }
     }
 }
