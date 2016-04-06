@@ -51,12 +51,20 @@ namespace iMobileDevice.Generator
 
             bool isPointer = false;
 
-            if (type.IsTripleCharPointer() && generator.MarshalerType != null)
+            if (functionKind != FunctionType.Free
+                && type.IsDoubleCharPointer())
+            {
+                parameter.Type = new CodeTypeReference(typeof(string));
+                parameter.Direction = FieldDirection.Out;
+
+                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringMarshaler")));
+            }
+            else if (type.IsTripleCharPointer() && generator.StringArrayMarshalerType != null)
             {
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.Out;
 
-                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.MarshalerType.Name)));
+                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.StringArrayMarshalerType.Name)));
             }
             else
             {
@@ -67,16 +75,8 @@ namespace iMobileDevice.Generator
                         switch (pointee.kind)
                         {
                             case CXTypeKind.CXType_Pointer:
-
-                                if (pointee.IsPtrToConstChar() && clang.isConstQualifiedType(pointee) != 0)
-                                {
-                                    parameter.Type = new CodeTypeReference(typeof(string[]));
-                                }
-                                else
-                                {
-                                    parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                                    isPointer = true;
-                                }
+                                parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                isPointer = true;
 
                                 break;
 

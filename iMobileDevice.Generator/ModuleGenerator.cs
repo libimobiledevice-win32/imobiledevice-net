@@ -38,7 +38,7 @@ namespace iMobileDevice.Generator
         public Dictionary<string, string> NameMapping
         { get; } = new Dictionary<string, string>();
 
-        public CodeTypeDeclaration MarshalerType
+        public CodeTypeDeclaration StringArrayMarshalerType
         { get; set; }
 
         public void AddType(string nativeName, CodeTypeDeclaration type)

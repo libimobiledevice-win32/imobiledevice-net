@@ -25,15 +25,20 @@ namespace iMobileDevice.Generator
             string freeMethodName = null;
             string marshalerName = null;
 
-            if (this.generator.Name == "iDevice")
+            if (this.generator.Name == "Afc")
+            {
+                freeMethodName = "afc_dictionary_free";
+                marshalerName = "AfcDictionaryMarshaler";
+            }
+            else if (this.generator.Name == "iDevice")
             {
                 freeMethodName = "idevice_device_list_free";
                 marshalerName = "iDeviceListMarshaler";
             }
-            else if (this.generator.Name == "Afc")
+            else if (this.generator.Name == "Lockdown")
             {
-                freeMethodName = "afc_dictionary_free";
-                marshalerName = "AfcDictionaryMarshaler";
+                freeMethodName = "lockdownd_data_classes_free";
+                marshalerName = "LockdownMarshaler";
             }
 
             if (freeMethodName == null || marshalerName == null)
@@ -102,7 +107,7 @@ namespace iMobileDevice.Generator
             marshaler.Members.Add(cleanUpNativeDataMethod);
 
             this.generator.AddType(marshaler.Name, marshaler);
-            this.generator.MarshalerType = marshaler;
+            this.generator.StringArrayMarshalerType = marshaler;
         }
     }
 }

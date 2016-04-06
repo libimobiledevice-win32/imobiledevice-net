@@ -24,11 +24,21 @@ namespace iMobileDevice.Generator
             }
         }
 
+        public static bool IsDoubleCharPointer(this CXType type)
+        {
+            return IsCharPointer(type, 1);
+        }
+
         public static bool IsTripleCharPointer(this CXType type)
+        {
+            return IsCharPointer(type, 2);
+        }
+
+        public static bool IsCharPointer(this CXType type, int depth)
         {
             var pointee = type;
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < depth; i++)
             {
                 pointee = clang.getPointeeType(pointee);
 
@@ -86,7 +96,7 @@ namespace iMobileDevice.Generator
 
             clang.visitChildren(
                 cursor,
-                delegate(CXCursor cxCursor, CXCursor parent1, IntPtr ptr)
+                delegate (CXCursor cxCursor, CXCursor parent1, IntPtr ptr)
                 {
                     if (cxCursor.kind == CXCursorKind.CXCursor_ParmDecl)
                     {

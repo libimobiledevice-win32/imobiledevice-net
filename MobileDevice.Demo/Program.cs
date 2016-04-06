@@ -47,10 +47,9 @@ namespace MobileDevice.Demo
                 LockdownClientHandle lockdownHandle;
                 lockdown.lockdownd_client_new_with_handshake(deviceHandle, out lockdownHandle, "Quamotion").ThrowOnError();
 
-                IntPtr deviceNamePtr = IntPtr.Zero;
-                lockdown.lockdownd_get_device_name(lockdownHandle, ref deviceNamePtr).ThrowOnError();
+                string deviceName;
+                lockdown.lockdownd_get_device_name(lockdownHandle, out deviceName).ThrowOnError();
 
-                var deviceName = Marshal.PtrToStringAnsi(deviceNamePtr);
                 deviceHandle.Dispose();
                 lockdownHandle.Dispose();
             }
