@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<IInstallationProxyApi>
+  <instproxy_client_options_add>
+    <summary>
+      Add a key:value pairs to the given client_options.
+    </summary>
+    <param name="client_options">
+      The client options to modify.
+    </param>
+    <param name="key">
+      The key of the value to add.
+    </param>
+    <param name="value">
+      The value to add.
+    </param>
+    <param name="term">
+      The terminating character. Must always be '\0'.
+    </param>
+  </instproxy_client_options_add>
+</IInstallationProxyApi>

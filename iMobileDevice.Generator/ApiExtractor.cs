@@ -37,11 +37,13 @@ namespace iMobileDevice.Generator
             CodeTypeDeclaration nativeInterface = new CodeTypeDeclaration();
             nativeInterface.Name = $"I{this.generator.Name}Api";
             nativeInterface.IsInterface = true;
+            nativeInterface.IsPartial = true;
 
             // Create the {Name}Api class
             CodeTypeDeclaration nativeClass = new CodeTypeDeclaration();
             nativeClass.Name = $"{this.generator.Name}Api";
             nativeClass.BaseTypes.Add(nativeInterface.Name);
+            nativeClass.IsPartial = true;
 
             foreach (var method in this.visitor.NativeMethods.Members.OfType<CodeMemberMethod>())
             {

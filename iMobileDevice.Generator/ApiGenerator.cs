@@ -125,6 +125,25 @@ namespace iMobileDevice.Generator
                             new CodeTypeReference($"{name}Api"))));
             }
 
+            // Add the LibraryFound property
+            var libraryFoundInterfaceProperty = new CodeMemberProperty();
+            libraryFoundInterfaceProperty.Name = "LibraryFound";
+            libraryFoundInterfaceProperty.Type = new CodeTypeReference(typeof(bool));
+            libraryFoundInterfaceProperty.HasGet = true;
+            interfaceType.Members.Add(libraryFoundInterfaceProperty);
+
+            var libraryFoundClassProperty = new CodeMemberProperty();
+            libraryFoundClassProperty.Name = "LibraryFound";
+            libraryFoundClassProperty.Attributes = MemberAttributes.Public;
+            libraryFoundClassProperty.Type = new CodeTypeReference(typeof(bool));
+            libraryFoundClassProperty.HasGet = true;
+            libraryFoundClassProperty.GetStatements.Add(
+                new CodeMethodReturnStatement(
+                    new CodePropertyReferenceExpression(
+                        new CodeTypeReferenceExpression("NativeLibraries"),
+                        "LibraryFound")));
+            classType.Members.Add(libraryFoundClassProperty);
+
             foreach (var type in new CodeTypeDeclaration[] { interfaceType, classType })
             {
                 // Generate the container unit
