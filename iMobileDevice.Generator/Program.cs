@@ -81,7 +81,7 @@ namespace iMobileDevice.Generator
 
             var includeDirs = new DirectoryInfo(includeRoot)
                 .EnumerateDirectories()
-                .OrderByDescending(d => new Version(d.Name))
+                .OrderByDescending(d => TryGetVersion(d.Name))
                 .Select(d => d.FullName)
                 .ToArray();
 
@@ -94,6 +94,20 @@ namespace iMobileDevice.Generator
             Console.WriteLine($"basetsd.h exists: {File.Exists(Path.Combine(ucrt, "BaseTsd"))}");
 
             return ucrt;
+        }
+
+        private static Version TryGetVersion(string name)
+        {
+            Version version;
+            if(Version.TryParse(name, out version))
+            {
+                return version;
+            }
+            else
+            {
+                Console.WriteLine($"Encountered unexpected value {name}");
+                return new Version("0.0.0.0");
+            }
         }
     }
 }
