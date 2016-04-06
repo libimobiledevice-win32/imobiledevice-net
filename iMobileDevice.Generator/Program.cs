@@ -27,6 +27,7 @@ namespace iMobileDevice.Generator
 
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
             generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
+            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.34\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include"));
@@ -101,8 +102,6 @@ namespace iMobileDevice.Generator
             {
                 Console.WriteLine($" {file.Name}");
             }
-
-            Console.WriteLine($"basetsd.h exists: {File.Exists(Path.Combine(ucrt, "BaseTsd"))}");
 
             return ucrt;
         }
