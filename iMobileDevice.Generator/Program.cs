@@ -7,6 +7,7 @@ namespace iMobileDevice.Generator
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.IO;
 
     internal class Program
@@ -34,7 +35,16 @@ namespace iMobileDevice.Generator
 
             var files = new List<string>();
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include\plist\plist.h"));
-            files.AddRange(Directory.GetFiles(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.33\build\native\include\libimobiledevice"), "*.h"));
+
+            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.33\build\native\include\libimobiledevice");
+            files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
+            files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
+            files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));
+
+            var iMobileDeviceFileNames = Directory.GetFiles(iMobileDeviceDirectory, "*.h")
+                .Where(f => !files.Contains(f, StringComparer.OrdinalIgnoreCase));
+
+            files.AddRange(iMobileDeviceFileNames);
 
             foreach (var file in files)
             {
