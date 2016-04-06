@@ -137,15 +137,19 @@ namespace iMobileDevice.Generator
             var arrayMarshalerGenerator = new ArrayMarshalerGenerator(this);
             arrayMarshalerGenerator.Generate();
 
+            // Creates enums
             var enumVisitor = new EnumVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), enumVisitor.Visit, new CXClientData(IntPtr.Zero));
 
+            // Creates structs
             var structVisitor = new StructVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), structVisitor.Visit, new CXClientData(IntPtr.Zero));
 
+            // Creates safe handles & delegates
             var typeDefVisitor = new TypeDefVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
+            // Creates functions in a NativeMethods class
             var functionVisitor = new FunctionVisitor(this, "libimobiledevice");
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
 

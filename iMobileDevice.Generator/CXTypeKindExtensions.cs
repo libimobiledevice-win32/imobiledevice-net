@@ -24,6 +24,11 @@ namespace iMobileDevice.Generator
                 generator.AddType(nativeName, delegateType);
             }
 
+            if (nativeName.StartsWith("const "))
+            {
+                nativeName = nativeName.Substring(6);
+            }
+
             if (generator.NameMapping.ContainsKey(nativeName))
             {
                 return new CodeTypeReference(generator.NameMapping[nativeName]);

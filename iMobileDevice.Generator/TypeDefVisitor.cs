@@ -56,7 +56,9 @@ namespace iMobileDevice.Generator
 
                     if (pointee.kind == CXTypeKind.CXType_FunctionProto)
                     {
-                        CodeTypeDelegate delegateType = pointee.ToDelegate(nativeName, cursor, this.generator);
+                        var functionType = clang.getTypedefDeclUnderlyingType(cursor);
+                        var pt = clang.getPointeeType(functionType);
+                        CodeTypeDelegate delegateType = pt.ToDelegate(nativeName, cursor, this.generator);
                         this.generator.AddType(nativeName, delegateType);
 
                         return CXChildVisitResult.CXChildVisit_Continue;

@@ -69,7 +69,9 @@ namespace iMobileDevice.Generator
             bool isPointer = false;
 
             if (functionKind != FunctionType.Free
-                && type.IsDoubleCharPointer())
+                && type.IsDoubleCharPointer()
+                && !name.Contains("data")
+                && name != "appids")
             {
                 parameter.Type = new CodeTypeReference(typeof(string));
                 parameter.Direction = FieldDirection.Out;
