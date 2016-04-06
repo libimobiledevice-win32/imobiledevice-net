@@ -38,6 +38,9 @@ namespace iMobileDevice.Generator
         public Dictionary<string, string> NameMapping
         { get; } = new Dictionary<string, string>();
 
+        public CodeTypeDeclaration MarshalerType
+        { get; set; }
+
         public void AddType(string nativeName, CodeTypeDeclaration type)
         {
             if (string.IsNullOrEmpty(nativeName))
@@ -129,6 +132,10 @@ namespace iMobileDevice.Generator
                 // Dump the warnings to the console output.
                 Console.WriteLine(errorWriter.ToString());
             }
+
+            // Generate the marhaler types for string arrays (char **)
+            var arrayMarshalerGenerator = new ArrayMarshalerGenerator(this);
+            arrayMarshalerGenerator.Generate();
 
             var enumVisitor = new EnumVisitor(this);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), enumVisitor.Visit, new CXClientData(IntPtr.Zero));

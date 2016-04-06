@@ -8,17 +8,28 @@ namespace iMobileDevice.Generator
     using System.CodeDom;
     using System.Runtime.InteropServices;
     using ClangSharp;
-
+    using System.Collections.ObjectModel;
     internal static class Argument
     {
-        public static CodeAttributeDeclaration MarshalAsDeclaration(UnmanagedType value)
+        public static CodeAttributeDeclaration MarshalAsDeclaration(UnmanagedType type, CodeTypeReference customMarshaler = null)
         {
-            return new CodeAttributeDeclaration(
+            var value = new CodeAttributeDeclaration(
                 new CodeTypeReference(typeof(MarshalAsAttribute)),
                 new CodeAttributeArgument(
                     new CodePropertyReferenceExpression(
                         new CodeTypeReferenceExpression(typeof(UnmanagedType)),
-                        value.ToString())));
+                        type.ToString())));
+
+            if (type == UnmanagedType.CustomMarshaler)
+            {
+                value.Arguments.Add(
+                    new CodeAttributeArgument(
+                        "MarshalTypeRef",
+                        new CodeTypeOfExpression(
+                            customMarshaler)));
+            }
+
+            return value;
         }
 
         public static CodeParameterDeclarationExpression GenerateArgument(this ModuleGenerator generator, CXType functionType, CXCursor paramCursor, uint index, FunctionType functionKind)
@@ -40,82 +51,92 @@ namespace iMobileDevice.Generator
 
             bool isPointer = false;
 
-            switch (type.kind)
+            if (type.IsTripleCharPointer() && generator.MarshalerType != null)
             {
-                case CXTypeKind.CXType_Pointer:
-                    var pointee = clang.getPointeeType(type);
-                    switch (pointee.kind)
-                    {
-                        case CXTypeKind.CXType_Pointer:
+                parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
+                parameter.Direction = FieldDirection.Out;
 
-                            if (pointee.IsPtrToConstChar() && clang.isConstQualifiedType(pointee) != 0)
-                            {
-                                parameter.Type = new CodeTypeReference(typeof(string[]));
-                            }
-                            else
-                            {
+                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.MarshalerType.Name)));
+            }
+            else
+            {
+                switch (type.kind)
+                {
+                    case CXTypeKind.CXType_Pointer:
+                        var pointee = clang.getPointeeType(type);
+                        switch (pointee.kind)
+                        {
+                            case CXTypeKind.CXType_Pointer:
+
+                                if (pointee.IsPtrToConstChar() && clang.isConstQualifiedType(pointee) != 0)
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(string[]));
+                                }
+                                else
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                    isPointer = true;
+                                }
+
+                                break;
+
+                            case CXTypeKind.CXType_FunctionProto:
+                                parameter.Type = new CodeTypeReference(cursorType.ToClrType());
+                                break;
+
+                            case CXTypeKind.CXType_Void:
                                 parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                break;
+
+                            case CXTypeKind.CXType_Char_S:
+                                if (type.IsPtrToConstChar())
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(string));
+                                    parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPStr));
+                                }
+                                else
+                                {
+                                    // if it's not a const, it's best to go with IntPtr
+                                    parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                }
+
+                                break;
+
+                            case CXTypeKind.CXType_WChar:
+                                if (type.IsPtrToConstChar())
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(string));
+                                    parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPWStr));
+                                }
+                                else
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                }
+
+                                break;
+
+                            case CXTypeKind.CXType_Record:
+                                var recordTypeCursor = clang.getTypeDeclaration(pointee);
+                                var recordType = clang.getCursorType(recordTypeCursor);
+
+                                // Get the CLR name for the record
+                                var clrName = generator.NameMapping[recordType.ToString()];
+                                parameter.Type = new CodeTypeReference(clrName);
                                 isPointer = true;
-                            }
+                                break;
 
-                            break;
+                            default:
+                                parameter.Type = pointee.ToCodeTypeReference(paramCursor, generator);
+                                isPointer = true;
+                                break;
+                        }
 
-                        case CXTypeKind.CXType_FunctionProto:
-                            parameter.Type = new CodeTypeReference(cursorType.ToClrType());
-                            break;
+                        break;
 
-                        case CXTypeKind.CXType_Void:
-                            parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                            break;
-
-                        case CXTypeKind.CXType_Char_S:
-                            if (type.IsPtrToConstChar())
-                            {
-                                parameter.Type = new CodeTypeReference(typeof(string));
-                                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPStr));
-                            }
-                            else
-                            {
-                                // if it's not a const, it's best to go with IntPtr
-                                parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                            }
-
-                            break;
-
-                        case CXTypeKind.CXType_WChar:
-                            if (type.IsPtrToConstChar())
-                            {
-                                parameter.Type = new CodeTypeReference(typeof(string));
-                                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPWStr));
-                            }
-                            else
-                            {
-                                parameter.Type = new CodeTypeReference(typeof(IntPtr));
-                            }
-
-                            break;
-
-                        case CXTypeKind.CXType_Record:
-                            var recordTypeCursor = clang.getTypeDeclaration(pointee);
-                            var recordType = clang.getCursorType(recordTypeCursor);
-
-                            // Get the CLR name for the record
-                            var clrName = generator.NameMapping[recordType.ToString()];
-                            parameter.Type = new CodeTypeReference(clrName);
-                            isPointer = true;
-                            break;
-
-                        default:
-                            parameter.Type = pointee.ToCodeTypeReference(paramCursor, generator);
-                            isPointer = true;
-                            break;
-                    }
-
-                    break;
-
-                default:
-                    parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
-                    break;
+                    default:
+                        parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                        break;
+                }
             }
 
             if (isPointer)

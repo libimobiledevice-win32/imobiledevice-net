@@ -24,6 +24,25 @@ namespace iMobileDevice.Generator
             }
         }
 
+        public static bool IsTripleCharPointer(this CXType type)
+        {
+            var pointee = type;
+
+            for (int i = 0; i < 2; i++)
+            {
+                pointee = clang.getPointeeType(pointee);
+
+                if (pointee.kind != CXTypeKind.CXType_Pointer)
+                {
+                    return false;
+                }
+            }
+
+            pointee = clang.getPointeeType(pointee);
+
+            return pointee.kind == CXTypeKind.CXType_Char_S;
+        }
+
         public static bool IsPtrToConstChar(this CXType type)
         {
             var pointee = clang.getPointeeType(type);

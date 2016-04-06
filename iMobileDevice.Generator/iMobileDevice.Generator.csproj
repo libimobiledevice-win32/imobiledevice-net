@@ -72,6 +72,7 @@
     <Compile Include="ApiExtractor.cs" />
     <Compile Include="ApiGenerator.cs" />
     <Compile Include="Argument.cs" />
+    <Compile Include="ArrayMarshalerGenerator.cs" />
     <Compile Include="CXCursorExtensions.cs" />
     <Compile Include="CXTypeExtensions.cs" />
     <Compile Include="CXTypeKindExtensions.cs" />

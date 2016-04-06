@@ -3,6 +3,8 @@ using iMobileDevice.iDevice;
 using iMobileDevice.Lockdown;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -20,13 +22,13 @@ namespace MobileDevice.Demo
             // First, we need to make sure the unmanaged (native) libimobiledevice libraries are loaded correctly
             NativeLibraries.Load();
 
-            IntPtr devices = IntPtr.Zero;
+            ReadOnlyCollection<string> udids;
             int count = 0;
 
             var idevice = LibiMobileDevice.Instance.iDevice;
             var lockdown = LibiMobileDevice.Instance.Lockdown;
 
-            var ret = idevice.idevice_get_device_list(ref devices, ref count);
+            var ret = idevice.idevice_get_device_list(out udids, ref count);
 
             if (ret == iDeviceError.NoDevice)
             {
@@ -35,16 +37,6 @@ namespace MobileDevice.Demo
             }
 
             ret.ThrowOnError();
-
-            string[] udids = new string[count];
-
-            for (int i = 0; i < count; i++)
-            {
-                var udid = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(devices + i * IntPtr.Size));
-                udids[i] = udid;
-            }
-
-            idevice.idevice_device_list_free(devices).ThrowOnError();
 
             // Get the device name
             foreach (var udid in udids)
