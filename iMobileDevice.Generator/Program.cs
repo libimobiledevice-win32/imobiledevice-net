@@ -69,7 +69,7 @@ namespace iMobileDevice.Generator
             var windowsKits = new DirectoryInfo(windowsKitsRoot)
                 .EnumerateDirectories()
                 .Where(d => d.Name != "NETFXSDK")
-                .OrderBy(d => float.Parse(d.Name, CultureInfo.InvariantCulture))
+                .OrderByDescending(d => float.Parse(d.Name, CultureInfo.InvariantCulture))
                 .Select(d => d.FullName)
                 .ToArray();
 
@@ -81,15 +81,26 @@ namespace iMobileDevice.Generator
 
             var includeDirs = new DirectoryInfo(includeRoot)
                 .EnumerateDirectories()
-                .OrderBy(d => TryGetVersion(d.Name))
+                .OrderByDescending(d => TryGetVersion(d.Name))
                 .Select(d => d.FullName)
                 .ToArray();
 
             var includeDir = includeDirs.First();
 
-            Console.WriteLine($"Opening Windows Kit include directory {includeDir}");
+            Console.WriteLine($"Opening Windows Kit include directory {includeDir}. Contains the following directories:");
+
+            foreach (var directory in new DirectoryInfo(includeDir).GetDirectories())
+            {
+                Console.WriteLine($" {directory.Name}");
+            }
 
             var ucrt = Path.Combine(includeDir, "ucrt");
+
+            Console.Write("ucrt contains the following files:");
+            foreach (var file in new DirectoryInfo(ucrt).GetFiles())
+            {
+                Console.WriteLine($" {file.Name}");
+            }
 
             Console.WriteLine($"basetsd.h exists: {File.Exists(Path.Combine(ucrt, "BaseTsd"))}");
 
@@ -99,7 +110,7 @@ namespace iMobileDevice.Generator
         private static Version TryGetVersion(string name)
         {
             Version version;
-            if(Version.TryParse(name, out version))
+            if (Version.TryParse(name, out version))
             {
                 return version;
             }
