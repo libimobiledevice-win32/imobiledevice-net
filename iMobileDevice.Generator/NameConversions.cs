@@ -16,9 +16,9 @@ namespace iMobileDevice.Generator
 
             patchedName = patchedName.Replace("DIAGNOSTICS_RELAY", "diagnosticsrelay");
             patchedName = patchedName.Replace("HOUSE_ARREST", "housearrest");
-            patchedName = patchedName.Replace("MOBILE_IMAGE_MOUNTER", "mobileimagemounter");
+            patchedName = patchedName.Replace("MOBILE_IMAGE_MOUNTER", "imagemounter");
             patchedName = patchedName.Replace("PROPERTY_LIST_SERVICE", "propertylistservice");
-            patchedName = patchedName.Replace("SYSLOG_RELAY", "syslogrelay");
+            patchedName = patchedName.Replace("SYSLOG_RELAY", "syslog");
             patchedName = patchedName.Replace("FILE_RELAY", "filerelay");
 
             List<string> parts = new List<string>(patchedName.Split('_'));
