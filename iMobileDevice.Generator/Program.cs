@@ -69,7 +69,7 @@ namespace iMobileDevice.Generator
             var windowsKits = new DirectoryInfo(windowsKitsRoot)
                 .EnumerateDirectories()
                 .Where(d => d.Name != "NETFXSDK")
-                .OrderByDescending(d => float.Parse(d.Name, CultureInfo.InvariantCulture))
+                .OrderBy(d => float.Parse(d.Name, CultureInfo.InvariantCulture))
                 .Select(d => d.FullName)
                 .ToArray();
 
@@ -81,7 +81,7 @@ namespace iMobileDevice.Generator
 
             var includeDirs = new DirectoryInfo(includeRoot)
                 .EnumerateDirectories()
-                .OrderByDescending(d => TryGetVersion(d.Name))
+                .OrderBy(d => TryGetVersion(d.Name))
                 .Select(d => d.FullName)
                 .ToArray();
 
