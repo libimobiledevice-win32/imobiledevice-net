@@ -7,7 +7,7 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using ClangSharp;
-
+    using System.Runtime.InteropServices;
     internal class StructVisitor
     {
         private readonly ModuleGenerator generator;
@@ -52,6 +52,23 @@ namespace iMobileDevice.Generator
                     this.current = new CodeTypeDeclaration(clrName);
                     this.current.IsStruct = true;
                     this.generator.AddType(nativeName, this.current);
+
+                    var layoutAttribute =
+                        new CodeAttributeDeclaration(
+                            new CodeTypeReference(typeof(StructLayoutAttribute)),
+                            new CodeAttributeArgument(
+                                new CodePropertyReferenceExpression(
+                                    new CodeTypeReferenceExpression(typeof(LayoutKind)),
+                                    nameof(LayoutKind.Sequential))));
+
+                    layoutAttribute.Arguments.Add(
+                        new CodeAttributeArgument(
+                            "CharSet",
+                            new CodePropertyReferenceExpression(
+                                new CodeTypeReferenceExpression(typeof(CharSet)),
+                                CharSet.Ansi.ToString())));
+                    
+                    this.current.CustomAttributes.Add(layoutAttribute);
 
                     clang.visitChildren(cursor, this.Visit, new CXClientData(IntPtr.Zero));
                 }

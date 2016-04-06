@@ -23,7 +23,21 @@ namespace iMobileDevice.Generator
             switch (canonical.kind)
             {
                 case CXTypeKind.CXType_ConstantArray:
-                    throw new NotImplementedException();
+                    if (clang.getCanonicalType(clang.getArrayElementType(canonical)).kind == CXTypeKind.CXType_Char_S)
+                    {
+                        var size = clang.getArraySize(canonical);
+
+                        CodeMemberField fixedLengthString = new CodeMemberField();
+                        fixedLengthString.Attributes = MemberAttributes.Public;
+                        fixedLengthString.Name = cursorSpelling;
+                        fixedLengthString.Type = new CodeTypeReference(typeof(string));
+                        fixedLengthString.CustomAttributes.Add(Argument.MarshalAsFixedLengthStringDeclaration((int)size));
+                        return fixedLengthString;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
 
                 case CXTypeKind.CXType_Pointer:
                     var pointeeType = clang.getCanonicalType(clang.getPointeeType(canonical));
@@ -62,7 +76,11 @@ namespace iMobileDevice.Generator
                     return enumField;
 
                 case CXTypeKind.CXType_Record:
-                    throw new NotSupportedException();
+                    var recordField = new CodeMemberField();
+                    recordField.Attributes = MemberAttributes.Public;
+                    recordField.Name = cursorSpelling;
+                    recordField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
+                    return recordField;
 
                 default:
                     var field = new CodeMemberField();

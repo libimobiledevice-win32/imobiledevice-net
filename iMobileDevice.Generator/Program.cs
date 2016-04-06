@@ -27,6 +27,7 @@ namespace iMobileDevice.Generator
 
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits\10\Include\10.0.10240.0\ucrt\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.33\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include"));
@@ -34,6 +35,7 @@ namespace iMobileDevice.Generator
             Collection<string> names = new Collection<string>();
 
             var files = new List<string>();
+            files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\usbmuxd.h"));
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include\plist\plist.h"));
 
             var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.33\build\native\include\libimobiledevice");

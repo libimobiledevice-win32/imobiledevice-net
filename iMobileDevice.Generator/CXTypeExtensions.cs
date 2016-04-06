@@ -53,6 +53,22 @@ namespace iMobileDevice.Generator
             return pointee.kind == CXTypeKind.CXType_Char_S;
         }
 
+        public static bool IsPtrToChar(this CXType type)
+        {
+            var pointee = clang.getPointeeType(type);
+
+            if (clang.isConstQualifiedType(pointee) == 0)
+            {
+                switch (pointee.kind)
+                {
+                    case CXTypeKind.CXType_Char_S:
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool IsPtrToConstChar(this CXType type)
         {
             var pointee = clang.getPointeeType(type);

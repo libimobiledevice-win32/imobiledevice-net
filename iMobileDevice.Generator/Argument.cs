@@ -11,6 +11,23 @@ namespace iMobileDevice.Generator
     using System.Collections.ObjectModel;
     internal static class Argument
     {
+        public static CodeAttributeDeclaration MarshalAsFixedLengthStringDeclaration(int size)
+        {
+            var value = new CodeAttributeDeclaration(
+                new CodeTypeReference(typeof(MarshalAsAttribute)),
+                new CodeAttributeArgument(
+                    new CodePropertyReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(UnmanagedType)),
+                        UnmanagedType.ByValTStr.ToString())));
+
+            value.Arguments.Add(
+                new CodeAttributeArgument(
+                    "SizeConst",
+                    new CodePrimitiveExpression(size)));
+
+            return value;
+        }
+
         public static CodeAttributeDeclaration MarshalAsDeclaration(UnmanagedType type, CodeTypeReference customMarshaler = null)
         {
             var value = new CodeAttributeDeclaration(
@@ -91,10 +108,21 @@ namespace iMobileDevice.Generator
                             case CXTypeKind.CXType_Char_S:
                                 // In some of the read/write functions, const char is also used to represent data -- in that
                                 // case, it maps to a byte[] array or just an IntPtr.
-                                if (type.IsPtrToConstChar() && name != "data")
+                                if (type.IsPtrToConstChar())
                                 {
-                                    parameter.Type = new CodeTypeReference(typeof(string));
-                                    parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPStr));
+                                    if (!name.Contains("data") && name != "signature")
+                                    {
+                                        parameter.Type = new CodeTypeReference(typeof(string));
+                                        parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.LPStr));
+                                    }
+                                    else
+                                    {
+                                        parameter.Type = new CodeTypeReference(typeof(byte[]));
+                                    }
+                                }
+                                else if(type.IsPtrToChar() && name.Contains("data"))
+                                {
+                                    parameter.Type = new CodeTypeReference(typeof(byte[]));
                                 }
                                 else
                                 {
