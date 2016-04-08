@@ -8,7 +8,7 @@ namespace iMobileDevice.Generator
     using System.Runtime.ConstrainedExecution;
     using System.Security.Permissions;
     using Microsoft.Win32.SafeHandles;
-
+    using System;
     internal static class Handles
     {
         public static CodeAttributeDeclaration SecurityPermissionDeclaration(SecurityAction action, bool unmanagedCode)
@@ -57,6 +57,41 @@ namespace iMobileDevice.Generator
             releaseHandle.CustomAttributes.Add(ReliabilityContractDeclaration(Consistency.WillNotCorruptState, Cer.MayFail));
             releaseHandle.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
             safeHandle.Members.Add(releaseHandle);
+
+            // Add a "DangeousCreate" method which creates a new safe handle from an IntPtr
+            CodeMemberMethod dangerousCreate = new CodeMemberMethod();
+            dangerousCreate.Name = "DangerousCreate";
+            dangerousCreate.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+            dangerousCreate.ReturnType = new CodeTypeReference(safeHandle.Name);
+
+            dangerousCreate.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference(typeof(IntPtr)),
+                    "unsafeHandle"));
+
+            dangerousCreate.Statements.Add(
+                new CodeVariableDeclarationStatement(
+                    new CodeTypeReference(safeHandle.Name),
+                    "safeHandle"));
+
+            dangerousCreate.Statements.Add(
+                new CodeAssignStatement(
+                    new CodeVariableReferenceExpression("safeHandle"),
+                    new CodeObjectCreateExpression(
+                        new CodeTypeReference(safeHandle.Name))));
+
+            dangerousCreate.Statements.Add(
+                new CodeMethodInvokeExpression(
+                    new CodeMethodReferenceExpression(
+                        new CodeVariableReferenceExpression("safeHandle"),
+                        "SetHandle"),
+                    new CodeArgumentReferenceExpression("unsafeHandle")));
+
+            dangerousCreate.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeVariableReferenceExpression("safeHandle")));
+
+            safeHandle.Members.Add(dangerousCreate);
 
             return safeHandle;
         }
