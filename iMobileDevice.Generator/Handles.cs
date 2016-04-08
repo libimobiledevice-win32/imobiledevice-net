@@ -93,6 +93,26 @@ namespace iMobileDevice.Generator
 
             safeHandle.Members.Add(dangerousCreate);
 
+            // Add a "Zero" property which returns an invalid handle
+            CodeMemberProperty zeroProperty = new CodeMemberProperty();
+            zeroProperty.Name = "Zero";
+            zeroProperty.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+            zeroProperty.Type = new CodeTypeReference(safeHandle.Name);
+
+            zeroProperty.HasGet = true;
+
+            zeroProperty.GetStatements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeMethodReferenceExpression(
+                            new CodeTypeReferenceExpression(safeHandle.Name),
+                            dangerousCreate.Name),
+                        new CodePropertyReferenceExpression(
+                            new CodeTypeReferenceExpression(typeof(IntPtr)),
+                            nameof(IntPtr.Zero)))));
+
+            safeHandle.Members.Add(zeroProperty);
+
             return safeHandle;
         }
     }
