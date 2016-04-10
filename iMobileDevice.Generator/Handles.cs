@@ -44,6 +44,7 @@ namespace iMobileDevice.Generator
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.InheritanceDemand, true));
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.Demand, true));
             safeHandle.IsPartial = true;
+            safeHandle.Attributes = MemberAttributes.Public;
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));
 
             CodeConstructor constructor = new CodeConstructor();
