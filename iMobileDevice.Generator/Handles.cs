@@ -48,7 +48,7 @@ namespace iMobileDevice.Generator
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));
 
             CodeConstructor constructor = new CodeConstructor();
-            constructor.Attributes = MemberAttributes.Private;
+            constructor.Attributes = MemberAttributes.Family;
             constructor.BaseConstructorArgs.Add(new CodePrimitiveExpression(true));
             safeHandle.Members.Add(constructor);
 
