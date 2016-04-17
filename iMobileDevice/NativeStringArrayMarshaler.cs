@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace iMobileDevice
 {
     public class NativeStringArrayMarshaler : ICustomMarshaler
     {
-        private readonly Collection<IntPtr> allocatedHere = new Collection<IntPtr>();
+        private readonly Dictionary<IntPtr, GCHandle> allocatedHere = new Dictionary<IntPtr, GCHandle>();
 
         public void CleanUpManagedData(object ManagedObj)
         {
@@ -16,7 +17,7 @@ namespace iMobileDevice
 
         public virtual void CleanUpNativeData(IntPtr nativeData)
         {
-            if (allocatedHere.Contains(nativeData))
+            if (allocatedHere.ContainsKey(nativeData))
             {
                 // Free all the individual strings
                 if (nativeData != IntPtr.Zero)
@@ -37,7 +38,8 @@ namespace iMobileDevice
                     }
                 }
 
-                var handle = GCHandle.FromIntPtr(nativeData);
+                var handle = this.allocatedHere[nativeData];
+                this.allocatedHere.Remove(nativeData);
                 handle.Free();
             }
         }
@@ -49,7 +51,7 @@ namespace iMobileDevice
 
         public IntPtr MarshalManagedToNative(object managedObj)
         {
-            var values = managedObj as ReadOnlyCollection<string>();
+            var values = managedObj as ReadOnlyCollection<string>;
 
             if (values == null)
             {
@@ -58,17 +60,20 @@ namespace iMobileDevice
 
             IntPtr[] unmanagedArray = new IntPtr[values.Count + 1];
 
-            for (int i = 0; i < unmanagedArray.Length; i++)
+            for (int i = 0; i < values.Count; i++)
             {
                 unmanagedArray[i] = Marshal.StringToHGlobalAnsi(values[i]);
+
+                Debug.WriteLine($"values[{i}]: {unmanagedArray[i]}");
             }
 
             unmanagedArray[values.Count] = IntPtr.Zero;
 
             GCHandle unmanagedHandle = GCHandle.Alloc(unmanagedArray, GCHandleType.Pinned);
-            IntPtr unmanagedValue = GCHandle.ToIntPtr(unmanagedHandle);
+            IntPtr unmanagedValue = unmanagedHandle.AddrOfPinnedObject();
+            Debug.Write($"values: {unmanagedValue}");
 
-            allocatedHere.Add(unmanagedValue);
+            allocatedHere.Add(unmanagedValue, unmanagedHandle);
             return unmanagedValue;
         }
 

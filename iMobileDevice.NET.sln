@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25029.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Generator", "iMobileDevice.Generator\iMobileDevice.Generator.csproj", "{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice", "iMobileDevice\iMobileDevice.csproj", "{AE5503E1-1597-4F8F-BA40-D03D5C2BF572}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileDevice.Demo", "MobileDevice.Demo\MobileDevice.Demo.csproj", "{A34F38A3-DE63-4795-B77B-FCD14306C3E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Tests", "iMobileDevice.Tests\iMobileDevice.Tests.csproj", "{21A183FB-86D4-438F-81F3-C38F7035EDD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x86.Build.0 = Release|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|x86.Build.0 = Debug|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Release|x86.ActiveCfg = Release|Any CPU
+		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
