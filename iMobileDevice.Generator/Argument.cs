@@ -85,6 +85,13 @@ namespace iMobileDevice.Generator
 
                 parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.StringArrayMarshalerType.Name)));
             }
+            else if (type.IsArrayOfCharPointers())
+            {
+                parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
+                parameter.Direction = FieldDirection.In;
+
+                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringArrayMarshaler")));
+            }
             else
             {
                 switch (type.kind)

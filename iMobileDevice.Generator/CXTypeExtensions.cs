@@ -85,6 +85,25 @@ namespace iMobileDevice.Generator
             return false;
         }
 
+        public static bool IsArrayOfCharPointers(this CXType type)
+        {
+            if (type.kind != CXTypeKind.CXType_IncompleteArray)
+            {
+                return false;
+            }
+
+            var elementType = clang.getArrayElementType(type);
+
+            if (elementType.kind != CXTypeKind.CXType_Pointer)
+            {
+                return false;
+            }
+
+            var pointeeType = clang.getPointeeType(elementType);
+
+            return pointeeType.kind == CXTypeKind.CXType_Char_S;
+        }
+
         public static CodeTypeDelegate ToDelegate(this CXType type, string nativeName, CXCursor cursor, ModuleGenerator generator)
         {
             if (type.kind != CXTypeKind.CXType_FunctionProto

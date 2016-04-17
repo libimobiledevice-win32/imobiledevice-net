@@ -5,23 +5,71 @@ using System.Runtime.InteropServices;
 
 namespace iMobileDevice
 {
-    public abstract class NativeStringArrayMarshaler : ICustomMarshaler
+    public class NativeStringArrayMarshaler : ICustomMarshaler
     {
+        private readonly Collection<IntPtr> allocatedHere = new Collection<IntPtr>();
+
         public void CleanUpManagedData(object ManagedObj)
         {
             return;
         }
 
-        public abstract void CleanUpNativeData(IntPtr nativeData);
+        public virtual void CleanUpNativeData(IntPtr nativeData)
+        {
+            if (allocatedHere.Contains(nativeData))
+            {
+                // Free all the individual strings
+                if (nativeData != IntPtr.Zero)
+                {
+                    IntPtr arrayIndex = nativeData;
+
+                    while (true)
+                    {
+                        IntPtr stringPointer = Marshal.ReadIntPtr(arrayIndex);
+
+                        if (stringPointer == IntPtr.Zero)
+                        {
+                            break;
+                        }
+
+                        Marshal.FreeHGlobal(stringPointer);
+                        arrayIndex += IntPtr.Size;
+                    }
+                }
+
+                var handle = GCHandle.FromIntPtr(nativeData);
+                handle.Free();
+            }
+        }
 
         public int GetNativeDataSize()
         {
             return -1;
         }
 
-        public IntPtr MarshalManagedToNative(object ManagedObj)
+        public IntPtr MarshalManagedToNative(object managedObj)
         {
-            return IntPtr.Zero;
+            var values = managedObj as ReadOnlyCollection<string>();
+
+            if (values == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            IntPtr[] unmanagedArray = new IntPtr[values.Count + 1];
+
+            for (int i = 0; i < unmanagedArray.Length; i++)
+            {
+                unmanagedArray[i] = Marshal.StringToHGlobalAnsi(values[i]);
+            }
+
+            unmanagedArray[values.Count] = IntPtr.Zero;
+
+            GCHandle unmanagedHandle = GCHandle.Alloc(unmanagedArray, GCHandleType.Pinned);
+            IntPtr unmanagedValue = GCHandle.ToIntPtr(unmanagedHandle);
+
+            allocatedHere.Add(unmanagedValue);
+            return unmanagedValue;
         }
 
         public object MarshalNativeToManaged(IntPtr nativeData)
