@@ -117,7 +117,7 @@ namespace iMobileDevice.Generator
                             case CXTypeKind.CXType_Char_S:
                                 // In some of the read/write functions, const char is also used to represent data -- in that
                                 // case, it maps to a byte[] array or just an IntPtr.
-                                if (type.IsPtrToConstChar())
+                                if (functionKind != FunctionType.PInvoke && type.IsPtrToConstChar())
                                 {
                                     if (!name.Contains("data") && name != "signature")
                                     {
@@ -129,7 +129,7 @@ namespace iMobileDevice.Generator
                                         parameter.Type = new CodeTypeReference(typeof(byte[]));
                                     }
                                 }
-                                else if(type.IsPtrToChar() && name.Contains("data"))
+                                else if(functionKind != FunctionType.PInvoke && type.IsPtrToChar() && name.Contains("data"))
                                 {
                                     parameter.Type = new CodeTypeReference(typeof(byte[]));
                                 }
@@ -196,6 +196,7 @@ namespace iMobileDevice.Generator
                         break;
 
                     case FunctionType.New:
+                    case FunctionType.PInvoke:
                         parameter.Direction = FieldDirection.Out;
                         break;
 

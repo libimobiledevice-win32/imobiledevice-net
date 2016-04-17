@@ -10,6 +10,7 @@ namespace iMobileDevice.Generator
     {
         None,
         New,
-        Free
+        Free,
+        PInvoke
     }
 }

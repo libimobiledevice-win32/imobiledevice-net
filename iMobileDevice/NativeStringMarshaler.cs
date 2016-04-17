@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using iMobileDevice.Pinvoke;
+using System.IO;
+using System.Text;
 
 namespace iMobileDevice
 {
@@ -35,15 +37,9 @@ namespace iMobileDevice
 
         public object MarshalNativeToManaged(IntPtr nativeData)
         {
-            if (nativeData == IntPtr.Zero)
-            {
-                return null;
-            }
-            else
-            {
-                string value = Marshal.PtrToStringAnsi(nativeData);
-                return value;
-            }
+            // Get the the size of the string
+            string value = Utf8Marshal.PtrToStringUtf8(nativeData);
+            return value;
         }
     }
 }

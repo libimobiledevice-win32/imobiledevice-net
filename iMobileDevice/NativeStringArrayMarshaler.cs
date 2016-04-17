@@ -62,7 +62,7 @@ namespace iMobileDevice
 
             for (int i = 0; i < values.Count; i++)
             {
-                unmanagedArray[i] = Marshal.StringToHGlobalAnsi(values[i]);
+                unmanagedArray[i] = Utf8Marshal.StringToHGlobalUtf8(values[i]);
 
                 Debug.WriteLine($"values[{i}]: {unmanagedArray[i]}");
             }
@@ -94,7 +94,7 @@ namespace iMobileDevice
                         break;
                     }
 
-                    string value = Marshal.PtrToStringAnsi(stringPointer);
+                    string value = Utf8Marshal.PtrToStringUtf8(stringPointer);
 
                     if (value == string.Empty)
                     {

@@ -12,6 +12,8 @@ namespace iMobileDevice.Tests
         [TestMethod]
         public void TestRoundTrip()
         {
+            NativeLibraries.Load();
+
             // Create a string array worth +/- 10 MB of memory
             var values = new List<string>();
             values.Add(new string('0', 1024 * 1024));
@@ -24,6 +26,9 @@ namespace iMobileDevice.Tests
             values.Add(new string('7', 1024 * 1024));
             values.Add(new string('8', 1024 * 1024));
             values.Add(new string('9', 1024 * 1024));
+
+            // And, as the icing on the cake, an UTF-8 string.
+            values.Add("Bart’s iPhone");
 
             var readonlyValues = new ReadOnlyCollection<string>(values);
             NativeStringArrayMarshaler marshaler = new NativeStringArrayMarshaler();

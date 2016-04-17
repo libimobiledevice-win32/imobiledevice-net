@@ -97,6 +97,10 @@ namespace iMobileDevice.Generator
             {
                 functionKind = FunctionType.Free;
             }
+            else if(nativeName.Contains("pinvoke"))
+            {
+                functionKind = FunctionType.PInvoke;
+            }
 
             int numArgTypes = clang.getNumArgTypes(functionType);
 
