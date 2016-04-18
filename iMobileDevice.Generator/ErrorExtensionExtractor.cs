@@ -77,7 +77,7 @@ namespace iMobileDevice.Generator
                     new CodeMethodReferenceExpression(
                         new CodeTypeReferenceExpression(typeof(string)),
                         "Format"),
-                    new CodePrimitiveExpression($"An {this.generator.Name} error occurred. The error code was {0}"),
+                    new CodePrimitiveExpression($"An {this.generator.Name} error occurred. The error code was {{0}}"),
                     new CodeArgumentReferenceExpression("error")));
             errorConstructor.Statements.Add(
                 new CodeAssignStatement(
