@@ -10,6 +10,11 @@ namespace iMobileDevice
     {
         private readonly Dictionary<IntPtr, GCHandle> allocatedHere = new Dictionary<IntPtr, GCHandle>();
 
+        public static ICustomMarshaler GetInstance(string cookie)
+        {
+            return new NativeStringArrayMarshaler();
+        }
+
         public void CleanUpManagedData(object ManagedObj)
         {
             return;

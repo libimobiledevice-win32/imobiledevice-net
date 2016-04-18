@@ -8,7 +8,7 @@ namespace iMobileDevice.Generator
     using System.CodeDom;
     using System.Runtime.InteropServices;
     using ClangSharp;
-
+    using System.Collections.Generic;
     internal static class CXCursorExtensions
     {
         public static bool IsInSystemHeader(this CXCursor cursor)
@@ -16,7 +16,7 @@ namespace iMobileDevice.Generator
             return clang.Location_isInSystemHeader(clang.getCursorLocation(cursor)) != 0;
         }
 
-        public static CodeTypeMember ToCodeTypeMember(this CXCursor cursor, string cursorSpelling, ModuleGenerator generator)
+        public static IEnumerable<CodeTypeMember> ToCodeTypeMember(this CXCursor cursor, string cursorSpelling, ModuleGenerator generator)
         {
             var canonical = clang.getCanonicalType(clang.getCursorType(cursor));
 
@@ -32,62 +32,69 @@ namespace iMobileDevice.Generator
                         fixedLengthString.Name = cursorSpelling;
                         fixedLengthString.Type = new CodeTypeReference(typeof(string));
                         fixedLengthString.CustomAttributes.Add(Argument.MarshalAsFixedLengthStringDeclaration((int)size));
-                        return fixedLengthString;
+                        yield return fixedLengthString;
                     }
                     else
                     {
                         throw new NotImplementedException();
                     }
+                    break;
 
                 case CXTypeKind.CXType_Pointer:
                     var pointeeType = clang.getCanonicalType(clang.getPointeeType(canonical));
-                    switch (pointeeType.kind)
+
+                    CodeMemberField intPtrMember = new CodeMemberField();
+                    intPtrMember.Attributes = MemberAttributes.Public;
+                    intPtrMember.Name = cursorSpelling;
+                    intPtrMember.Type = new CodeTypeReference(typeof(IntPtr));
+                    yield return intPtrMember;
+
+                    if (pointeeType.kind == CXTypeKind.CXType_Char_S)
                     {
-                        case CXTypeKind.CXType_Char_S:
-                            CodeMemberField member = new CodeMemberField();
-                            member.Attributes = MemberAttributes.Public;
-                            member.Name = cursorSpelling;
-                            member.Type = new CodeTypeReference(typeof(string));
-                            member.CustomAttributes.Add(Argument.MarshalAsDeclaration(UnmanagedType.LPStr));
-                            return member;
+                        CodeMemberProperty stringMember = new CodeMemberProperty();
+                        stringMember.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+                        stringMember.Name = cursorSpelling + "String";
+                        stringMember.Type = new CodeTypeReference(typeof(string));
 
-                        case CXTypeKind.CXType_WChar:
-                            CodeMemberField wcharMember = new CodeMemberField();
-                            wcharMember.Attributes = MemberAttributes.Public;
-                            wcharMember.Name = cursorSpelling;
-                            wcharMember.Type = new CodeTypeReference(typeof(string));
-                            wcharMember.CustomAttributes.Add(Argument.MarshalAsDeclaration(UnmanagedType.LPWStr));
-                            return wcharMember;
+                        stringMember.HasGet = true;
+                        stringMember.GetStatements.Add(
+                            new CodeMethodReturnStatement(
+                                new CodeMethodInvokeExpression(
+                                    new CodeMethodReferenceExpression(
+                                        new CodeTypeReferenceExpression("Utf8Marshal"),
+                                        "PtrToStringUtf8"),
+                                    new CodeFieldReferenceExpression(
+                                        new CodeThisReferenceExpression(),
+                                        intPtrMember.Name))));
 
-                        default:
-                            CodeMemberField intPtrMember = new CodeMemberField();
-                            intPtrMember.Attributes = MemberAttributes.Public;
-                            intPtrMember.Attributes = MemberAttributes.Public;
-                            intPtrMember.Name = cursorSpelling;
-                            intPtrMember.Type = new CodeTypeReference(typeof(IntPtr));
-                            return intPtrMember;
+                        yield return stringMember;
                     }
+
+                    break;
 
                 case CXTypeKind.CXType_Enum:
                     var enumField = new CodeMemberField();
                     enumField.Attributes = MemberAttributes.Public;
                     enumField.Name = cursorSpelling;
                     enumField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
-                    return enumField;
+                    yield return enumField;
+                    break;
 
                 case CXTypeKind.CXType_Record:
                     var recordField = new CodeMemberField();
                     recordField.Attributes = MemberAttributes.Public;
                     recordField.Name = cursorSpelling;
                     recordField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
-                    return recordField;
+                    yield return recordField;
+                    break;
 
                 default:
                     var field = new CodeMemberField();
                     field.Attributes = MemberAttributes.Public;
                     field.Name = cursorSpelling;
                     field.Type = new CodeTypeReference(canonical.ToClrType());
-                    return field;
+                    yield return field;
+                    break;
             }
         }
     }

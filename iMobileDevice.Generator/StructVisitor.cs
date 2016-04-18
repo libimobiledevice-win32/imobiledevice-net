@@ -61,13 +61,6 @@ namespace iMobileDevice.Generator
                                     new CodeTypeReferenceExpression(typeof(LayoutKind)),
                                     nameof(LayoutKind.Sequential))));
 
-                    layoutAttribute.Arguments.Add(
-                        new CodeAttributeArgument(
-                            "CharSet",
-                            new CodePropertyReferenceExpression(
-                                new CodeTypeReferenceExpression(typeof(CharSet)),
-                                CharSet.Ansi.ToString())));
-                    
                     this.current.CustomAttributes.Add(layoutAttribute);
 
                     clang.visitChildren(cursor, this.Visit, new CXClientData(IntPtr.Zero));
@@ -86,7 +79,11 @@ namespace iMobileDevice.Generator
 
                 this.fieldPosition++;
 
-                this.current.Members.Add(cursor.ToCodeTypeMember(fieldName, this.generator));
+                foreach (var member in cursor.ToCodeTypeMember(fieldName, this.generator))
+                {
+                    this.current.Members.Add(member);
+                }
+
                 return CXChildVisitResult.CXChildVisit_Continue;
             }
 

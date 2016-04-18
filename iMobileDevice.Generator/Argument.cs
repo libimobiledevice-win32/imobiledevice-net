@@ -9,8 +9,19 @@ namespace iMobileDevice.Generator
     using System.Runtime.InteropServices;
     using ClangSharp;
     using System.Collections.ObjectModel;
+
     internal static class Argument
     {
+        public static CodeAttributeDeclaration MarshalAsUtf8String()
+        {
+            return MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringMarshaler"));
+        }
+
+        public static CodeAttributeDeclaration MarshalAsUtf8StringArray()
+        {
+            return MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringArrayMarshaler"));
+        }
+
         public static CodeAttributeDeclaration MarshalAsFixedLengthStringDeclaration(int size)
         {
             var value = new CodeAttributeDeclaration(
@@ -76,7 +87,7 @@ namespace iMobileDevice.Generator
                 parameter.Type = new CodeTypeReference(typeof(string));
                 parameter.Direction = FieldDirection.Out;
 
-                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringMarshaler")));
+                parameter.CustomAttributes.Add(MarshalAsUtf8String());
             }
             else if (type.IsTripleCharPointer() && generator.StringArrayMarshalerType != null)
             {
@@ -90,7 +101,7 @@ namespace iMobileDevice.Generator
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.In;
 
-                parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference("NativeStringArrayMarshaler")));
+                parameter.CustomAttributes.Add(MarshalAsUtf8StringArray());
             }
             else
             {
