@@ -85,7 +85,7 @@ namespace iMobileDevice.Generator
 
                 parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.StringArrayMarshalerType.Name)));
             }
-            else if (type.IsArrayOfCharPointers())
+            else if (type.IsArrayOfCharPointers() || type.IsDoublePtrToConstChar())
             {
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.In;
@@ -129,7 +129,7 @@ namespace iMobileDevice.Generator
                                         parameter.Type = new CodeTypeReference(typeof(byte[]));
                                     }
                                 }
-                                else if(functionKind != FunctionType.PInvoke && type.IsPtrToChar() && name.Contains("data"))
+                                else if (functionKind != FunctionType.PInvoke && type.IsPtrToChar() && name.Contains("data"))
                                 {
                                     parameter.Type = new CodeTypeReference(typeof(byte[]));
                                 }

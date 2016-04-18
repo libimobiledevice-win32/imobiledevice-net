@@ -104,6 +104,23 @@ namespace iMobileDevice.Generator
             return pointeeType.kind == CXTypeKind.CXType_Char_S;
         }
 
+        public static bool IsDoublePtrToConstChar(this CXType type)
+        {
+            if (type.kind != CXTypeKind.CXType_Pointer)
+            {
+                return false;
+            }
+
+            var pointee = clang.getPointeeType(type);
+
+            if (pointee.kind != CXTypeKind.CXType_Pointer)
+            {
+                return false;
+            }
+
+            return pointee.IsPtrToConstChar();
+        }
+
         public static CodeTypeDelegate ToDelegate(this CXType type, string nativeName, CXCursor cursor, ModuleGenerator generator)
         {
             if (type.kind != CXTypeKind.CXType_FunctionProto
