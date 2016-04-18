@@ -73,16 +73,23 @@ namespace iMobileDevice.Generator
 
             foreach (var assemblyName in assemblyNames)
             {
-                Assembly assembly = Assembly.LoadFile(Path.GetFullPath(assemblyName));
-
-                var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
-
-                foreach (var type in assembly.GetTypes())
+                try
                 {
-                    if (type.IsSubclassOf(diagnosticAnalyzerType) && !type.IsAbstract)
+                    Assembly assembly = Assembly.LoadFile(Path.GetFullPath(assemblyName));
+
+                    var diagnosticAnalyzerType = typeof(DiagnosticAnalyzer);
+
+                    foreach (var type in assembly.GetTypes())
                     {
-                        analyzers.Add((DiagnosticAnalyzer)Activator.CreateInstance(type));
+                        if (type.IsSubclassOf(diagnosticAnalyzerType) && !type.IsAbstract)
+                        {
+                            analyzers.Add((DiagnosticAnalyzer)Activator.CreateInstance(type));
+                        }
                     }
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine($"An error occurred while loading {ex.FileName}");
                 }
             }
 
@@ -144,21 +151,28 @@ namespace iMobileDevice.Generator
 
             foreach (var assemblyName in assemblyNames)
             {
-                Assembly assembly = Assembly.LoadFrom(Path.GetFullPath(assemblyName));
-
-                var codeFixProviderType = typeof(CodeFixProvider);
-
-                foreach (var type in assembly.GetTypes())
+                try
                 {
-                    if (type.IsSubclassOf(codeFixProviderType) && !type.IsAbstract)
-                    {
-                        var codeFixProvider = (CodeFixProvider)Activator.CreateInstance(type);
+                    Assembly assembly = Assembly.LoadFrom(Path.GetFullPath(assemblyName));
 
-                        foreach (var diagnosticId in codeFixProvider.FixableDiagnosticIds)
+                    var codeFixProviderType = typeof(CodeFixProvider);
+
+                    foreach (var type in assembly.GetTypes())
+                    {
+                        if (type.IsSubclassOf(codeFixProviderType) && !type.IsAbstract)
                         {
-                            providers.AddToInnerList(diagnosticId, codeFixProvider);
+                            var codeFixProvider = (CodeFixProvider)Activator.CreateInstance(type);
+
+                            foreach (var diagnosticId in codeFixProvider.FixableDiagnosticIds)
+                            {
+                                providers.AddToInnerList(diagnosticId, codeFixProvider);
+                            }
                         }
                     }
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Console.WriteLine($"An error occurred while loading {ex.FileName}");
                 }
             }
 
