@@ -61,6 +61,8 @@ namespace iMobileDevice.Generator
 
             ApiGenerator apiGenerator = new ApiGenerator();
             apiGenerator.Generate(names, targetDirectory);
+
+            StylecopFixer.Run(Path.Combine(targetDirectory, "iMobileDevice.csproj"));
         }
 
         static string GetWindowsKitUcrtFolder()

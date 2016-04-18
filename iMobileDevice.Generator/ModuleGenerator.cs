@@ -283,6 +283,21 @@ namespace iMobileDevice.Generator
                     content = content.Replace("public class", "public static class");
                     File.WriteAllText(path, content);
                 }
+
+                // Remove the CodeDOM header and replace it with our own header
+                IEnumerable<string> finalLines = File.ReadAllLines(path);
+                finalLines = finalLines.Skip(9);
+
+                var ourHeader = new string[]
+                {
+                    $@"// <copyright file=""{Path.GetFileName(path)}"" company=""Quamotion"">",
+                    $"// Copyright (c) {DateTime.Now.Year} Quamotion. All rights reserved.",
+                    "// </copyright>"
+                };
+
+                finalLines = ourHeader.Concat(finalLines);
+
+                File.WriteAllLines(path, finalLines);
             }
         }
     }
