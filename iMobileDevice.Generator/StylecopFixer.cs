@@ -57,6 +57,12 @@ namespace iMobileDevice.Generator
         {
             var analyzers = GetAllAnalyzers();
 
+            if (analyzers.Length == 0)
+            {
+                Console.WriteLine("No analyzers found");
+                return;
+            }
+
             MSBuildWorkspace workspace = MSBuildWorkspace.Create();
             var project = await workspace.OpenProjectAsync(projectPath, cancellationToken);
 
