@@ -6,6 +6,7 @@ namespace iMobileDevice.Generator
 {
     using System;
     using System.CodeDom;
+    using System.Linq;
     using System.Runtime.InteropServices;
     using ClangSharp;
 
@@ -50,7 +51,14 @@ namespace iMobileDevice.Generator
                     var pointee = clang.getPointeeType(type);
                     if (pointee.kind == CXTypeKind.CXType_Record || pointee.kind == CXTypeKind.CXType_Void)
                     {
-                        this.generator.AddType(nativeName, Handles.CreateSafeHandle(clrName));
+                        var types = Handles.CreateSafeHandle(clrName).ToArray();
+                        this.generator.AddType(nativeName, types[0]);
+
+                        for (int i = 1; i < types.Length; i++)
+                        {
+                            this.generator.AddType(types[i].Name, types[i]);
+                        }
+
                         return CXChildVisitResult.CXChildVisit_Continue;
                     }
 
