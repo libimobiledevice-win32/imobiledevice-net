@@ -189,11 +189,21 @@ namespace iMobileDevice.Generator
                 }
             }
 
+            if (functionKind == FunctionType.Delegate && parameter.Type.BaseType.EndsWith("Handle"))
+            {
+                // Use a custom marshaler
+                parameter.CustomAttributes.Add(
+                    MarshalAsDeclaration(
+                        UnmanagedType.CustomMarshaler,
+                        new CodeTypeReference(parameter.Type.BaseType + "DelegateMarshaler")));
+            }
+
             if (isPointer)
             {
                 switch (functionKind)
                 {
                     case FunctionType.None:
+                    case FunctionType.Delegate:
                         if (parameter.Type.BaseType.EndsWith("Handle"))
                         {
                             // Handles are always out parameters
@@ -214,6 +224,9 @@ namespace iMobileDevice.Generator
                     case FunctionType.Free:
                         parameter.Direction = FieldDirection.In;
                         break;
+
+                    default:
+                        throw new InvalidOperationException();
                 }
             }
 

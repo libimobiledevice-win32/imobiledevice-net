@@ -11,6 +11,7 @@ namespace iMobileDevice.Generator
         None,
         New,
         Free,
-        PInvoke
+        PInvoke,
+        Delegate
     }
 }

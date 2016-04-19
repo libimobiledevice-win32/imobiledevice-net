@@ -152,7 +152,7 @@ namespace iMobileDevice.Generator
                 {
                     if (cxCursor.kind == CXCursorKind.CXCursor_ParmDecl)
                     {
-                        delegateType.Parameters.Add(Argument.GenerateArgument(generator, type, cxCursor, argumentCounter++, FunctionType.None));
+                        delegateType.Parameters.Add(Argument.GenerateArgument(generator, type, cxCursor, argumentCounter++, FunctionType.Delegate));
                     }
 
                     return CXChildVisitResult.CXChildVisit_Continue;

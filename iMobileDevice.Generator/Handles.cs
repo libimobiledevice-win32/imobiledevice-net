@@ -227,7 +227,9 @@ namespace iMobileDevice.Generator
                             new CodeTypeReferenceExpression(safeHandle.Name),
                             "DangerousCreate"),
                         new CodeArgumentReferenceExpression("nativeData"),
-                        new CodePrimitiveExpression(true))));
+
+                        // ownsHandle: false
+                        new CodePrimitiveExpression(false))));
             safeHandleMarshaler.Members.Add(marshalNativeToManagedMethod);
 
             yield return safeHandleMarshaler;
