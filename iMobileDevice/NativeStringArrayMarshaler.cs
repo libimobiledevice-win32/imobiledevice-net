@@ -8,8 +8,6 @@ namespace iMobileDevice
 {
     public class NativeStringArrayMarshaler : ICustomMarshaler
     {
-        private readonly Dictionary<IntPtr, GCHandle> allocatedHere = new Dictionary<IntPtr, GCHandle>();
-
         public static ICustomMarshaler GetInstance(string cookie)
         {
             return new NativeStringArrayMarshaler();
@@ -22,31 +20,26 @@ namespace iMobileDevice
 
         public virtual void CleanUpNativeData(IntPtr nativeData)
         {
-            if (allocatedHere.ContainsKey(nativeData))
+            // Free all the individual strings
+            if (nativeData != IntPtr.Zero)
             {
-                // Free all the individual strings
-                if (nativeData != IntPtr.Zero)
+                IntPtr arrayIndex = nativeData;
+
+                while (true)
                 {
-                    IntPtr arrayIndex = nativeData;
+                    IntPtr stringPointer = Marshal.ReadIntPtr(arrayIndex);
 
-                    while (true)
+                    if (stringPointer == IntPtr.Zero)
                     {
-                        IntPtr stringPointer = Marshal.ReadIntPtr(arrayIndex);
-
-                        if (stringPointer == IntPtr.Zero)
-                        {
-                            break;
-                        }
-
-                        Marshal.FreeHGlobal(stringPointer);
-                        arrayIndex += IntPtr.Size;
+                        break;
                     }
-                }
 
-                var handle = this.allocatedHere[nativeData];
-                this.allocatedHere.Remove(nativeData);
-                handle.Free();
+                    Marshal.FreeHGlobal(stringPointer);
+                    arrayIndex += IntPtr.Size;
+                }
             }
+
+            Marshal.FreeHGlobal(nativeData);
         }
 
         public int GetNativeDataSize()
@@ -68,18 +61,14 @@ namespace iMobileDevice
             for (int i = 0; i < values.Count; i++)
             {
                 unmanagedArray[i] = Utf8Marshal.StringToHGlobalUtf8(values[i]);
-
-                Debug.WriteLine($"values[{i}]: {unmanagedArray[i]}");
             }
 
             unmanagedArray[values.Count] = IntPtr.Zero;
 
-            GCHandle unmanagedHandle = GCHandle.Alloc(unmanagedArray, GCHandleType.Pinned);
-            IntPtr unmanagedValue = unmanagedHandle.AddrOfPinnedObject();
-            Debug.Write($"values: {unmanagedValue}");
+            IntPtr unmanagedData = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IntPtr)) * unmanagedArray.Length);
+            Marshal.Copy(unmanagedArray, 0, unmanagedData, unmanagedArray.Length);
 
-            allocatedHere.Add(unmanagedValue, unmanagedHandle);
-            return unmanagedValue;
+            return unmanagedData;
         }
 
         public object MarshalNativeToManaged(IntPtr nativeData)
