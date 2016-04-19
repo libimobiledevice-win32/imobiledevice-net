@@ -30,10 +30,10 @@ namespace iMobileDevice
                 return IntPtr.Zero;
             }
 
-            byte[] data = Encoding.UTF8.GetBytes(value);
+            byte[] data = Encoding.UTF8.GetBytes(value + '\0');
 
             // Make sure the string is 0-terminated
-            IntPtr handle = Marshal.AllocHGlobal(data.Length + 1);
+            IntPtr handle = Marshal.AllocHGlobal(data.Length);
             Marshal.Copy(data, 0, handle, data.Length);
 
             return handle;

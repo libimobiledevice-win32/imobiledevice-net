@@ -31,7 +31,6 @@ namespace iMobileDevice.Tests
             values.Add("Bart’s iPhone");
 
             var readonlyValues = new ReadOnlyCollection<string>(values);
-            NativeStringArrayMarshaler marshaler = new NativeStringArrayMarshaler();
 
             GC.Collect();
             var p = Process.GetCurrentProcess();
@@ -39,8 +38,15 @@ namespace iMobileDevice.Tests
 
             for (int i = 0; i < 75; i++)
             {
+                NativeStringArrayMarshaler marshaler = new NativeStringArrayMarshaler();
                 var pointer = marshaler.MarshalManagedToNative(readonlyValues);
-                var roundTrip = marshaler.MarshalNativeToManaged(pointer);
+                marshaler = null;
+
+                GC.Collect();
+
+                marshaler = new NativeStringArrayMarshaler();
+                var roundTrip = (ReadOnlyCollection<string>)marshaler.MarshalNativeToManaged(pointer);
+                CollectionAssert.AreEqual(readonlyValues, roundTrip);
                 marshaler.CleanUpNativeData(pointer);
             }
 

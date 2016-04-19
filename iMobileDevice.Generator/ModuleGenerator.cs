@@ -12,7 +12,7 @@ namespace iMobileDevice.Generator
     using System.IO;
     using System.Linq;
     using ClangSharp;
-
+    using System.Diagnostics;
     internal class ModuleGenerator
     {
         public string Name
@@ -192,6 +192,23 @@ namespace iMobileDevice.Generator
                 // return !LibiMobileDevice.Instance.iDevice.idevice_free(this).IsError();
                 releaseMethod.Statements.Clear();
 
+                // Trace the release call:
+                // Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+                releaseMethod.Statements.Add(
+                    new CodeMethodInvokeExpression(
+                        new CodeMethodReferenceExpression(
+                            new CodeTypeReferenceExpression(typeof(Debug)),
+                            "WriteLine"),
+                        new CodePrimitiveExpression("Releasing {0} {1}"),
+                        new CodePropertyReferenceExpression(
+                            new CodeMethodInvokeExpression(
+                                new CodeThisReferenceExpression(),
+                                nameof(GetType)),
+                                "Name"),
+                        new CodeFieldReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "handle")));
+
                 var freeMethodInvokeExpression =
                     new CodeMethodInvokeExpression(
                                     new CodeMethodReferenceExpression(
@@ -249,6 +266,7 @@ namespace iMobileDevice.Generator
                 // Generate the namespace
                 CodeNamespace ns = new CodeNamespace($"iMobileDevice.{this.Name}");
                 ns.Imports.Add(new CodeNamespaceImport("System.Runtime.InteropServices"));
+                ns.Imports.Add(new CodeNamespaceImport("System.Diagnostics"));
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.iDevice"));
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Lockdown"));
                 ns.Imports.Add(new CodeNamespaceImport("iMobileDevice.Afc"));

@@ -11,6 +11,7 @@ namespace iMobileDevice.Generator
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+    using System.Diagnostics;
     internal static class Handles
     {
         public static CodeAttributeDeclaration SecurityPermissionDeclaration(SecurityAction action, bool unmanagedCode)
@@ -65,6 +66,7 @@ namespace iMobileDevice.Generator
             releaseHandle.Attributes = MemberAttributes.Override | MemberAttributes.Family;
             releaseHandle.ReturnType = new CodeTypeReference(typeof(bool));
             releaseHandle.CustomAttributes.Add(ReliabilityContractDeclaration(Consistency.WillNotCorruptState, Cer.MayFail));
+
             releaseHandle.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
             safeHandle.Members.Add(releaseHandle);
 
