@@ -20,6 +20,16 @@ namespace iMobileDevice
 
         public static void Load(string directory)
         {
+            if (directory == null)
+            {
+                throw new ArgumentNullException(nameof(directory));
+            }
+
+            if (!Directory.Exists(directory))
+            {
+                throw new ArgumentOutOfRangeException(nameof(directory), $"The directory '{directory}' does not exist.");
+            }
+
             // When the library is first called, call LoadLibrary with the full path to the
             // path of the various libaries, to make sure they are loaded from the exact
             // path we specify.
@@ -47,11 +57,16 @@ namespace iMobileDevice
 
                     if (Environment.Is64BitProcess)
                     {
-                        nativeLibrariesDirectory = Path.Combine(directory, "x64");
+                        nativeLibrariesDirectory = Path.Combine(directory, "win7-x64");
                     }
                     else
                     {
-                        nativeLibrariesDirectory = Path.Combine(directory, "x86");
+                        nativeLibrariesDirectory = Path.Combine(directory, "win7-x86");
+                    }
+
+                    if (!Directory.Exists(nativeLibrariesDirectory))
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(directory), $"The directory '{directory}' does not contain a subdirectory for the current architecture. The directory '{nativeLibrariesDirectory}' does not exist.");
                     }
 
                     foreach (var libraryToLoad in windowsLibariesToLoad)
