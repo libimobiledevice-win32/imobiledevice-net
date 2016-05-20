@@ -84,8 +84,8 @@
       <Native64 Include="$(ProjectDir)..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Release\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\x64\v140\Release\Desktop\*.dll" />
-      <Native64 Include="$(WinDir)\System32\vcruntime140.dll" />
-      <Native64 Include="$(WinDir)\System32\msvcr110.dll" />
+      <Native64 Include="$(WinDir)\Sysnative\vcruntime140.dll" />
+      <Native64 Include="$(WinDir)\Sysnative\msvcr110.dll" />
     </ItemGroup>
     <MakeDir Directories="$(OutDir)\x86" />
     <MakeDir Directories="$(OutDir)\x64" />
