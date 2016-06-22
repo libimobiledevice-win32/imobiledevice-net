@@ -81,8 +81,7 @@ namespace iMobileDevice
                         {
                             var lastError = Marshal.GetLastWin32Error();
                             var error = new Win32Exception(lastError);
-
-                            return;
+                            throw error;
                         }
                     }
 

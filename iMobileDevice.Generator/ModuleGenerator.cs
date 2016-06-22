@@ -253,6 +253,10 @@ namespace iMobileDevice.Generator
             var extensionsExtractor = new ErrorExtensionExtractor(this, functionVisitor);
             extensionsExtractor.Generate();
 
+            // Patch the native methods to be compatible with .NET Core - basically,
+            // do the marshalling ourselves
+            NativeMethodOverloadGenerator.Generate(this);
+
             // Write the files
             foreach (var declaration in this.Types)
             {
@@ -275,7 +279,13 @@ namespace iMobileDevice.Generator
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
-                string path = Path.Combine(moduleDirectory, $"{declaration.Name}.cs");
+                string suffix = string.Empty;
+                if (declaration.UserData.Contains("FileNameSuffix"))
+                {
+                    suffix = (string)declaration.UserData["FileNameSuffix"];
+                }
+
+                string path = Path.Combine(moduleDirectory, $"{declaration.Name}{suffix}.cs");
 
                 using (var outFile = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 using (var fileWriter = new StreamWriter(outFile))
@@ -286,7 +296,7 @@ namespace iMobileDevice.Generator
                     indentedTextWriter.Flush();
                 }
 
-                if (declaration.Name.EndsWith("NativeMethods"))
+                if (declaration.Name.EndsWith("NativeMethods") && string.IsNullOrEmpty(suffix))
                 {
                     string content = File.ReadAllText(path);
                     content = content.Replace("public abstract", "public static extern");
