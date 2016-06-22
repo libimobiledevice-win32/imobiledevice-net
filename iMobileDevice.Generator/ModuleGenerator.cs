@@ -13,7 +13,9 @@ namespace iMobileDevice.Generator
     using System.Linq;
     using ClangSharp;
     using System.Diagnostics;
-    using CodeDom;
+    using System.Security.Permissions;
+    using System.Runtime.ConstrainedExecution;
+
     internal class ModuleGenerator
     {
         public string Name
@@ -296,6 +298,38 @@ namespace iMobileDevice.Generator
                     indentedTextWriter.Flush();
                 }
 
+                // Add #if statements for code that doesn't work on .NET Core
+                if (true)
+                {
+                    string content = File.ReadAllText(path);
+
+                    content = content.Replace("#region !core", "#if !NETSTANDARD1_5");
+                    content = content.Replace("#endregion", "#endif");
+
+                    using (StringReader reader = new StringReader(content))
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        while (reader.Peek() >= 0)
+                        {
+                            string line = reader.ReadLine();
+
+                            if (line.Contains(nameof(SecurityPermissionAttribute))
+                                || line.Contains(nameof(ReliabilityContractAttribute))
+                                || line.Contains(nameof(SerializableAttribute)))
+                            {
+                                writer.WriteLine("#if !NETSTANDARD1_5");
+                                writer.WriteLine(line);
+                                writer.WriteLine("#endif");
+                            }
+                            else
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                    }
+                }
+
+                // Fix other CodeDOM shortcomings
                 if (declaration.Name.EndsWith("NativeMethods") && string.IsNullOrEmpty(suffix))
                 {
                     string content = File.ReadAllText(path);

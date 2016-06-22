@@ -1,0 +1,41 @@
+{
+  "version": "1.2.0-*",
+
+  "authors": [
+    "Quamotion"
+  ],
+
+  "title": ".NET client for iOS devices (libimobiledevice-net)",
+  "description": ".NET bindings for libimobiledevice, allows you to interact with devices running iOS, such as iPhones or iPads, using C# or VB.NET code",
+  "packOptions": {
+    "licenseUrl": "https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt",
+    "owners": [
+      "Quamotion"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "http://github.com/libimobiledevice-win32/imobiledevice-net"
+    },
+    "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ]
+  },
+
+  "dependencies": {
+  },
+
+  "buildOptions": {
+    "strongName": "true",
+    "keyFile": "iMobileDevice.snk"
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "dependencies": {
+        "NETStandard.Library": "1.5.0-rc2-24027"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+      }
+    }
+  }
+}

@@ -230,7 +230,9 @@ namespace iMobileDevice.Generator
                 new CodeParameterDeclarationExpression(
                     typeof(StreamingContext),
                     "context"));
+            serializedConstructor.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "!core"));
             exceptionType.Members.Add(serializedConstructor);
+            serializedConstructor.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, "!core"));
 
             this.generator.AddType(exceptionType.Name, exceptionType);
 

@@ -79,7 +79,11 @@ namespace iMobileDevice.Generator
 
             bool isPointer = false;
 
-            if (functionKind != FunctionType.Free
+            if (functionKind == FunctionType.Delegate)
+            {
+                parameter.Type = new CodeTypeReference(typeof(IntPtr));
+            }
+            else if (functionKind != FunctionType.Free
                 && type.IsDoubleCharPointer()
                 && !name.Contains("data")
                 && name != "appids")
@@ -96,7 +100,7 @@ namespace iMobileDevice.Generator
 
                 parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.StringArrayMarshalerType.Name)));
             }
-            else if (type.IsArrayOfCharPointers() || type.IsDoublePtrToConstChar())
+            else if ((type.IsArrayOfCharPointers() || type.IsDoublePtrToConstChar()))
             {
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.In;

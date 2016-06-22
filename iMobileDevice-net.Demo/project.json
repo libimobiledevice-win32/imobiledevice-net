@@ -1,0 +1,17 @@
+﻿{
+  "dependencies": {
+    "iMobileDevice-net": "1.2.1",
+    "runtime.linux.iMobileDevice-net": "1.2.1"
+  },
+  "buildOptions": {
+    "emitEntryPoint": true,
+     "allowUnsafe": true
+  },
+  "frameworks": {
+    "netstandardapp1.5": {
+    }
+  },
+  "runtimes": {
+    "ubuntu.14.04-x64": {}
+  }
+}
