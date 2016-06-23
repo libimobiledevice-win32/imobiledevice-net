@@ -178,6 +178,90 @@ namespace iMobileDevice.Generator
 
             safeHandle.Members.Add(zeroProperty);
 
+            // Create the ToString method which returns:
+            // {handle} ({type})
+            CodeMemberMethod toStringMethod = new CodeMemberMethod();
+            toStringMethod.Name = "ToString";
+            toStringMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            toStringMethod.ReturnType = new CodeTypeReference(typeof(string));
+            toStringMethod.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeTypeReferenceExpression(typeof(string)),
+                        "Format",
+                        new CodePrimitiveExpression("{0} ({1})"),
+                        new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "handle"),
+                        new CodePrimitiveExpression(safeHandle.Name))));
+            safeHandle.Members.Add(toStringMethod);
+
+            // Create the Equals method:
+            //
+            // if (!(obj is AfcClientHandle))
+            // {
+            //    return false;
+            // }
+            //
+            // return ((AfcClientHandle)obj).handle.Equals(this.handle);
+            CodeMemberMethod equalsMethod = new CodeMemberMethod();
+            equalsMethod.Name = "Equals";
+            equalsMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            equalsMethod.ReturnType = new CodeTypeReference(typeof(bool));
+            equalsMethod.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference(typeof(object)),
+                    "obj"));
+
+            equalsMethod.Statements.Add(
+                new CodeConditionStatement(
+                    new CodeBinaryOperatorExpression(
+                        new CodeBinaryOperatorExpression(
+                            new CodeArgumentReferenceExpression("obj"),
+                            CodeBinaryOperatorType.IdentityInequality,
+                            new CodePrimitiveExpression(null)),
+                        CodeBinaryOperatorType.BooleanAnd,
+                        new CodeBinaryOperatorExpression(
+                            new CodeMethodInvokeExpression(
+                                new CodeArgumentReferenceExpression("obj"),
+                                "GetType"),
+                            CodeBinaryOperatorType.IdentityEquality,
+                            new CodeTypeOfExpression(safeHandle.Name))),
+                    new CodeStatement[]
+                    {
+                        new CodeMethodReturnStatement(
+                            new CodeMethodInvokeExpression(
+                                new CodeFieldReferenceExpression(
+                            new CodeCastExpression(
+                                new CodeTypeReference(safeHandle.Name),
+                                new CodeArgumentReferenceExpression("obj")),
+                            "handle"),
+                            "Equals",
+                            new CodeFieldReferenceExpression(
+                                new CodeThisReferenceExpression(),
+                                "handle")))
+                    },
+                    new CodeStatement[]
+                    {
+                        new CodeMethodReturnStatement(
+                            new CodePrimitiveExpression(false))
+                    }));
+
+            safeHandle.Members.Add(equalsMethod);
+
+            // Create the GetHashCode method
+            // return this.handle.GetHashCode();
+            CodeMemberMethod getHashCodeMethod = new CodeMemberMethod();
+            getHashCodeMethod.Name = "GetHashCode";
+            getHashCodeMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            getHashCodeMethod.ReturnType = new CodeTypeReference(typeof(int));
+            getHashCodeMethod.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeFieldReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "handle"),
+                        "GetHashCode")));
+            safeHandle.Members.Add(getHashCodeMethod);
+
             yield return safeHandle;
 
             // Create the marshaler type
