@@ -81,7 +81,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iMobileDevice\iMobileDevice.csproj">
+    <ProjectReference Include="..\iMobileDevice-net\iMobileDevice.csproj">
       <Project>{ae5503e1-1597-4f8f-ba40-d03d5c2bf572}</Project>
       <Name>iMobileDevice</Name>
     </ProjectReference>

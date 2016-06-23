@@ -3,7 +3,7 @@ before_build:
 
 build_script:
   - msbuild iMobileDevice.Generator\iMobileDevice.Generator.csproj /p:Configuration=Debug /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice
+  - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice-net
   - msbuild iMobileDevice\iMobileDevice.csproj /p:Configuration=Debug /p:Platform=AnyCPU /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 on_success:

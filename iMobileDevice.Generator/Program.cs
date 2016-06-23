@@ -14,7 +14,7 @@ namespace iMobileDevice.Generator
     {
         public static void Main(string[] args)
         {
-            string sourceDirectory = null; ;
+            string sourceDirectory = null;
             string targetDirectory = null;
 
             if (args.Length >= 1)
@@ -33,7 +33,7 @@ namespace iMobileDevice.Generator
             }
             else
             {
-                targetDirectory = @"..\..\..\..\iMobileDevice";
+                targetDirectory = @"..\..\..\..\iMobileDevice-net";
             }
 
             sourceDirectory = Path.GetFullPath(sourceDirectory);
