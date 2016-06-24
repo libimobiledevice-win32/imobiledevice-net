@@ -17,5 +17,6 @@ The output will be generated in the `out` folder.
 
 If you want to do a quick smoke test, you can:
 
+0. [Disable `usbmuxd` which ships with Ubuntu 14.04](https://www.zeitgeist.se/2015/06/28/mount-an-iphone-inside-a-kvm-guest-by-disabling-usbmuxd/): `$ sudo touch /etc/udev/rules.d/39-usbmuxd.rules`
 1. Launch `usbmuxd`: `sudo out/usr/local/sbin/usbmuxd -f`
 2. Run `idevice_id` to get a list of all recognized iOS devices: `out/usr/local/bin/idevice_id -l` 
