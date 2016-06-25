@@ -16,6 +16,7 @@
             overloads.UserData.Add("FileNameSuffix", ".Extensions");
             overloads.Name = nativeMethods.Name;
             overloads.IsPartial = true;
+            overloads.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             nativeMethods.IsPartial = true;
 
             overloads.Name = nativeMethods.Name;

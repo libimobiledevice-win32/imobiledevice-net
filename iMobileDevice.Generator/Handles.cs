@@ -5,8 +5,10 @@
 namespace iMobileDevice.Generator
 {
     using System.CodeDom;
+#if !NETSTANDARD1_5
     using System.Runtime.ConstrainedExecution;
     using System.Security.Permissions;
+#endif
     using Microsoft.Win32.SafeHandles;
     using System;
     using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace iMobileDevice.Generator
     using System.Diagnostics;
     internal static class Handles
     {
+#if !NETSTANDARD1_5
         public static CodeAttributeDeclaration SecurityPermissionDeclaration(SecurityAction action, bool unmanagedCode)
         {
             return new CodeAttributeDeclaration(
@@ -39,13 +42,16 @@ namespace iMobileDevice.Generator
                         new CodeTypeReferenceExpression(typeof(Cer)),
                         cer.ToString())));
         }
+#endif
 
         public static IEnumerable<CodeTypeDeclaration> CreateSafeHandle(string name, ModuleGenerator generator)
         {
             CodeTypeDeclaration safeHandle = new CodeTypeDeclaration(name + "Handle");
 
+#if !NETSTANDARD1_5
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.InheritanceDemand, true));
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.Demand, true));
+#endif
             safeHandle.IsPartial = true;
             safeHandle.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));

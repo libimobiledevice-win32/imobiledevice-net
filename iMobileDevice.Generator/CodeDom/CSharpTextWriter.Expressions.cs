@@ -88,6 +88,10 @@ namespace iMobileDevice.Generator.CodeDom
                     this.Write("true");
                 }
             }
+            else if (expression.Value == null)
+            {
+                this.Write("null");
+            }
             else
             {
                 this.Write(expression.Value);
@@ -171,10 +175,11 @@ namespace iMobileDevice.Generator.CodeDom
 
         private void Generate(CodeCastExpression expression)
         {
-            this.Write("(");
+            this.Write("((");
             this.Generate(expression.TargetType);
             this.Write(")");
             this.Generate(expression.Expression);
+            this.Write(")");
         }
 
         private void Generate(CodeDirectionExpression expression)
@@ -195,7 +200,7 @@ namespace iMobileDevice.Generator.CodeDom
         {
             this.Generate(expression.Method.TargetObject);
             this.Write(".");
-            this.Write(expression.Method.MethodName);
+            this.WriteName(expression.Method.MethodName);
 
             this.Write("(");
             bool isFirst = true;

@@ -133,7 +133,7 @@
             if (statement.InitExpression != null)
             {
                 this.Write(" = ");
-                this.Write(statement.InitExpression);
+                this.Generate(statement.InitExpression);
             }
 
             this.WriteLine(";");
