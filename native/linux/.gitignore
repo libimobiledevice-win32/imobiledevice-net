@@ -1,0 +1,6 @@
+libplist/
+libimobiledevice/
+libusbmuxd/
+usbmuxd/
+out/
+*~
