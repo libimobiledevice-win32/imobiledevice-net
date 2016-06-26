@@ -162,10 +162,8 @@
     <Compile Include="CXCursorExtensions.cs" />
     <Compile Include="CXTypeExtensions.cs" />
     <Compile Include="CXTypeKindExtensions.cs" />
-    <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="EnumVisitor.cs" />
     <Compile Include="ErrorExtensionExtractor.cs" />
-    <Compile Include="FixAllContextHelper.cs" />
     <Compile Include="ForwardDeclarationVisitor.cs" />
     <Compile Include="FunctionType.cs" />
     <Compile Include="FunctionVisitor.cs" />
@@ -178,7 +176,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StructVisitor.cs" />
-    <Compile Include="StylecopFixer.cs" />
     <Compile Include="TypeDefVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
