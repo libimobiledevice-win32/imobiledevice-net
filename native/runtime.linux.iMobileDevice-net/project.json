@@ -1,0 +1,37 @@
+{
+  "version": "1.2.1-*",
+
+  "authors": [
+    "Quamotion"
+  ],
+
+  "title": "Linux Native libraries for .NET client for iOS devices (libimobiledevice-net)",
+  "description": ".NET bindings for libimobiledevice, allows you to interact with devices running iOS, such as iPhones or iPads, using C# or VB.NET code",
+  "packOptions": {
+    "licenseUrl": "https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt",
+    "owners": [
+      "Quamotion"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "http://github.com/libimobiledevice-win32/imobiledevice-net"
+    },
+    "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ],
+    "files": {
+      "mappings": {
+        "runtimes/ubuntu.14.04-x64/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so"
+      }
+    }
+  },
+
+  "buildOptions": {
+     "allowUnsafe": true
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "dependencies": {
+      }
+    }
+  }
+}

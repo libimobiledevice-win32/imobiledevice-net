@@ -12,6 +12,6 @@
     }
   },
   "runtimes": {
-    "ubuntu.14.04-x64": {}
+    "debian.8-x64": {}
   }
 }

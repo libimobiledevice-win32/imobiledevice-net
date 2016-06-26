@@ -16,6 +16,8 @@ namespace MobileDevice.Demo
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Starting the imobiledevice-net demo");
+
             // This demo application will use the libimobiledevice API to list all iOS devices currently
             // connected to this PC.
 
@@ -33,6 +35,7 @@ namespace MobileDevice.Demo
             if (ret == iDeviceError.NoDevice)
             {
                 // Not actually an error in our case
+                Console.WriteLine("No devices found");
                 return;
             }
 
@@ -49,6 +52,8 @@ namespace MobileDevice.Demo
 
                 string deviceName;
                 lockdown.lockdownd_get_device_name(lockdownHandle, out deviceName).ThrowOnError();
+
+                Console.WriteLine($"{deviceName} ({udid})");
 
                 deviceHandle.Dispose();
                 lockdownHandle.Dispose();
