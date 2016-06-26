@@ -13,5 +13,5 @@ namespace iMobileDevice.Service
     
     
     [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-    public delegate int ConstructorFunc([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(iDeviceHandleDelegateMarshaler))] iDeviceHandle param0, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(LockdownServiceDescriptorHandleDelegateMarshaler))] LockdownServiceDescriptorHandle param1, ref System.IntPtr param2);
+    public delegate int ConstructorFunc(System.IntPtr param0, System.IntPtr param1, ref System.IntPtr param2);
 }

@@ -195,7 +195,22 @@ namespace iMobileDevice.Generator
                         break;
 
                     default:
-                        parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                        if (generator.NameMapping.ContainsKey(type.ToString()))
+                        {
+                            if (functionKind != FunctionType.Delegate)
+                            {
+                                parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                            }
+                            else
+                            {
+                                parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                            }
+                        }
+                        else
+                        {
+                            parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                        }
+
                         break;
                 }
             }

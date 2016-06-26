@@ -13,5 +13,5 @@ namespace iMobileDevice.InstallationProxy
     
     
     [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-    public delegate void InstallationProxyStatusCallBack([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(PlistHandleDelegateMarshaler))] PlistHandle command, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(PlistHandleDelegateMarshaler))] PlistHandle status, System.IntPtr userData);
+    public delegate void InstallationProxyStatusCallBack(System.IntPtr command, System.IntPtr status, System.IntPtr userData);
 }
