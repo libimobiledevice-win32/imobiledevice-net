@@ -14,7 +14,7 @@ namespace iMobileDevice.Lockdown
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum LockdownError : int
     {
         

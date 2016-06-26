@@ -21,7 +21,7 @@ namespace iMobileDevice.Generator.CodeDom
             }
             else if (expression is CodeArgumentReferenceExpression)
             {
-                this.Write(((CodeArgumentReferenceExpression)expression).ParameterName);
+                this.WriteName(((CodeArgumentReferenceExpression)expression).ParameterName);
             }
             else if (expression is CodeVariableReferenceExpression)
             {
@@ -29,7 +29,7 @@ namespace iMobileDevice.Generator.CodeDom
             }
             else if (expression is CodePrimitiveExpression)
             {
-                this.Write(((CodePrimitiveExpression)expression).Value);
+                this.Generate((CodePrimitiveExpression)expression);
             }
             else if (expression is CodeTypeReferenceExpression)
             {
@@ -69,15 +69,41 @@ namespace iMobileDevice.Generator.CodeDom
             }
         }
 
+        private void Generate(CodePrimitiveExpression expression)
+        {
+            if (expression.Value is string)
+            {
+                this.Write("\"");
+                this.Write(expression.Value);
+                this.Write("\"");
+            }
+            else if (expression.Value is bool)
+            {
+                if (!(bool)expression.Value)
+                {
+                    this.Write("false");
+                }
+                else
+                {
+                    this.Write("true");
+                }
+            }
+            else
+            {
+                this.Write(expression.Value);
+            }
+        }
+
         private void Generate(CodeTypeOfExpression expression)
         {
             this.Write("typeof(");
-            this.Write(expression.Type);
+            this.Generate(expression.Type);
             this.Write(")");
         }
 
         private void Generate(CodeBinaryOperatorExpression expression)
         {
+            this.Write("(");
             this.Generate(expression.Left);
             this.Write(" ");
 
@@ -101,12 +127,32 @@ namespace iMobileDevice.Generator.CodeDom
 
             this.Write(" ");
             this.Generate(expression.Right);
+            this.Write(")");
         }
 
         private void Generate(CodeObjectCreateExpression expression)
         {
             this.Write("new ");
             this.Generate(expression.CreateType);
+            this.Write("(");
+
+            bool isFirst = true;
+
+            foreach (CodeExpression parameter in expression.Parameters)
+            {
+                if (!isFirst)
+                {
+                    this.Write(", ");
+                }
+                else
+                {
+                    isFirst = false;
+                }
+
+                this.Generate(parameter);
+            }
+
+            this.Write(")");
         }
 
         private void Generate(CodeFieldReferenceExpression expression)

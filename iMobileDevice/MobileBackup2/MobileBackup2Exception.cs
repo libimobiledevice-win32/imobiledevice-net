@@ -43,10 +43,10 @@ namespace iMobileDevice.MobileBackup2
         
         /// <summary>
         /// Initializes a new instance of the <see cref="MobileBackup2Exception"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public MobileBackup2Exception(string message) : 
                 base(message)
         {

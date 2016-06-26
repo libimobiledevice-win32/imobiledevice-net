@@ -43,6 +43,7 @@ namespace iMobileDevice.Generator
 
             // Generate the {Name}Exception class
             CodeTypeDeclaration exceptionType = new CodeTypeDeclaration();
+            exceptionType.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             exceptionType.Name = $"{this.generator.Name}Exception";
             exceptionType.BaseTypes.Add(typeof(Exception));
             exceptionType.Comments.Add(
@@ -194,7 +195,7 @@ namespace iMobileDevice.Generator
 
             CodeTypeDeclaration extensionsType = new CodeTypeDeclaration();
             extensionsType.Name = $"{errorEnum.Name}Extensions";
-            extensionsType.Attributes = MemberAttributes.Public;
+            extensionsType.Attributes = MemberAttributes.Public | MemberAttributes.Static;
 
             // Add the checkError method
             CodeMemberMethod checkErrorMethod = new CodeMemberMethod();

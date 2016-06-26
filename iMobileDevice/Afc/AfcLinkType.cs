@@ -14,7 +14,7 @@ namespace iMobileDevice.Afc
     
     /// <summary>
     /// Type of link for afc_make_link() calls 
-    ///</summary>
+    /// </summary>
     public enum AfcLinkType : int
     {
         

@@ -43,10 +43,10 @@ namespace iMobileDevice.iDevice
         
         /// <summary>
         /// Initializes a new instance of the <see cref="iDeviceException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public iDeviceException(string message) : 
                 base(message)
         {

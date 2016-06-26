@@ -14,7 +14,7 @@ namespace iMobileDevice.HeartBeat
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum HeartBeatError : int
     {
         

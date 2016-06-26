@@ -14,7 +14,7 @@ namespace iMobileDevice.Afc
     
     /// <summary>
     /// Lock operation flags 
-    ///</summary>
+    /// </summary>
     public enum AfcLockOp : int
     {
         
@@ -22,7 +22,7 @@ namespace iMobileDevice.Afc
         
         LockEx = 6,
         
-        ///  unlock 
+        /// unlock 
         LockUn = 12,
     }
 }

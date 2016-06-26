@@ -48,14 +48,13 @@
             {
                 throw new NotSupportedException();
             }
-
-            this.WriteLine(";");
         }
 
         private void Generate(CodeThrowExceptionStatement statement)
         {
             this.Write("throw ");
             this.Generate(statement.ToThrow);
+            this.WriteLine(";");
         }
 
         private void Generate(CodeConditionStatement statement)
@@ -72,7 +71,7 @@
             this.Indent--;
             this.WriteLine("}");
 
-            if (statement.FalseStatements != null)
+            if (statement.FalseStatements != null && statement.FalseStatements.Count > 0)
             {
                 this.WriteLine("else");
                 this.WriteLine("{");
@@ -90,17 +89,20 @@
             this.Generate(statement.Left);
             this.Write(" = ");
             this.Generate(statement.Right);
+            this.WriteLine(";");
         }
 
         private void Generate(CodeExpressionStatement statement)
         {
             this.Generate(statement.Expression);
+            this.WriteLine(";");
         }
 
         private void Generate(CodeMethodReturnStatement statement)
         {
             this.Write("return ");
             this.Generate(statement.Expression);
+            this.WriteLine(";");
         }
 
         private void Generate(CodeVariableDeclarationStatement statement)
@@ -114,6 +116,8 @@
                 this.Write(" = ");
                 this.Write(statement.InitExpression);
             }
+
+            this.WriteLine(";");
         }
 
         private void WriteDocumentation(CodeCommentStatementCollection comments)
@@ -124,7 +128,7 @@
 
                 while (reader.Peek() > 0)
                 {
-                    this.WriteLine($"/// {reader.ReadLine()}");
+                    this.WriteLine($"/// {reader.ReadLine().TrimStart()}");
                 }
             }
         }

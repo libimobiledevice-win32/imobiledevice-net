@@ -43,10 +43,10 @@ namespace iMobileDevice.SyslogRelay
         
         /// <summary>
         /// Initializes a new instance of the <see cref="SyslogRelayException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public SyslogRelayException(string message) : 
                 base(message)
         {

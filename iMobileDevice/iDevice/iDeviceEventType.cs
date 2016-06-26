@@ -14,7 +14,7 @@ namespace iMobileDevice.iDevice
     
     /// <summary>
     /// The event type for device add or removal 
-    ///</summary>
+    /// </summary>
     public enum iDeviceEventType : int
     {
         

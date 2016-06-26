@@ -14,7 +14,7 @@ namespace iMobileDevice.Usbmuxd
     
     /// <summary>
     /// event types for event callback function
-    ///</summary>
+    /// </summary>
     public enum UsbmuxdEventType : int
     {
         

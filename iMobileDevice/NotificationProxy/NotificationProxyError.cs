@@ -14,7 +14,7 @@ namespace iMobileDevice.NotificationProxy
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum NotificationProxyError : int
     {
         

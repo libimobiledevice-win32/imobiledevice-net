@@ -43,10 +43,10 @@ namespace iMobileDevice.NotificationProxy
         
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationProxyException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public NotificationProxyException(string message) : 
                 base(message)
         {

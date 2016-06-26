@@ -14,7 +14,7 @@ namespace iMobileDevice.WebInspector
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum WebInspectorError : int
     {
         

@@ -14,7 +14,7 @@ namespace iMobileDevice.DebugServer
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum DebugServerError : int
     {
         

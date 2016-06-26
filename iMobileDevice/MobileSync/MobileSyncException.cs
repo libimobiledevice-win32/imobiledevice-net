@@ -43,10 +43,10 @@ namespace iMobileDevice.MobileSync
         
         /// <summary>
         /// Initializes a new instance of the <see cref="MobileSyncException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public MobileSyncException(string message) : 
                 base(message)
         {

@@ -43,10 +43,10 @@ namespace iMobileDevice.PropertyListService
         
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyListServiceException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public PropertyListServiceException(string message) : 
                 base(message)
         {

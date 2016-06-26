@@ -28,7 +28,7 @@ namespace iMobileDevice.Generator
                         var size = clang.getArraySize(canonical);
 
                         CodeMemberField fixedLengthString = new CodeMemberField();
-                        fixedLengthString.Attributes = MemberAttributes.Public;
+                        fixedLengthString.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                         fixedLengthString.Name = cursorSpelling;
                         fixedLengthString.Type = new CodeTypeReference(typeof(string));
                         fixedLengthString.CustomAttributes.Add(Argument.MarshalAsFixedLengthStringDeclaration((int)size));
@@ -44,7 +44,7 @@ namespace iMobileDevice.Generator
                     var pointeeType = clang.getCanonicalType(clang.getPointeeType(canonical));
 
                     CodeMemberField intPtrMember = new CodeMemberField();
-                    intPtrMember.Attributes = MemberAttributes.Public;
+                    intPtrMember.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     intPtrMember.Name = cursorSpelling;
                     intPtrMember.Type = new CodeTypeReference(typeof(IntPtr));
                     yield return intPtrMember;
@@ -74,7 +74,7 @@ namespace iMobileDevice.Generator
 
                 case CXTypeKind.CXType_Enum:
                     var enumField = new CodeMemberField();
-                    enumField.Attributes = MemberAttributes.Public;
+                    enumField.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     enumField.Name = cursorSpelling;
                     enumField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
                     yield return enumField;
@@ -82,7 +82,7 @@ namespace iMobileDevice.Generator
 
                 case CXTypeKind.CXType_Record:
                     var recordField = new CodeMemberField();
-                    recordField.Attributes = MemberAttributes.Public;
+                    recordField.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     recordField.Name = cursorSpelling;
                     recordField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
                     yield return recordField;
@@ -90,7 +90,7 @@ namespace iMobileDevice.Generator
 
                 default:
                     var field = new CodeMemberField();
-                    field.Attributes = MemberAttributes.Public;
+                    field.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     field.Name = cursorSpelling;
                     field.Type = new CodeTypeReference(canonical.ToClrType());
                     yield return field;

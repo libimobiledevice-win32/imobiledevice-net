@@ -14,7 +14,7 @@ namespace iMobileDevice.Service
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum ServiceError : int
     {
         

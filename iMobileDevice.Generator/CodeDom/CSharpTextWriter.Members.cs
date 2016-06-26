@@ -28,16 +28,16 @@
         private void Generate(CodeMemberProperty property)
         {
             this.WriteDocumentation(property.Comments);
+            this.WriteCustomAttributes(property.CustomAttributes);
             this.WriteAttributes(property.Attributes);
-            this.Write(" ");
             this.Generate(property.Type);
             this.Write(" ");
-            this.Write(property.Name);
+            this.WriteName(property.Name);
             this.WriteLine();
             this.WriteLine("{");
             this.Indent++;
 
-            if (property.GetStatements != null)
+            if (property.GetStatements != null && property.GetStatements.Count > 0)
             {
                 this.WriteLine("get");
                 this.WriteLine("{");
@@ -47,10 +47,9 @@
 
                 this.Indent--;
                 this.WriteLine("}");
-
             }
 
-            if (property.GetStatements != null)
+            if (property.GetStatements != null && property.SetStatements.Count > 0)
             {
                 this.WriteLine("set");
                 this.WriteLine("{");
@@ -72,16 +71,16 @@
             bool isEnum = field.Type.BaseType == "System.Void";
 
             this.WriteDocumentation(field.Comments);
-            this.WriteAttributes(field.Attributes);
-            this.Write(" ");
+            this.WriteCustomAttributes(field.CustomAttributes);
 
             if (!isEnum)
             {
+                this.WriteAttributes(field.Attributes);
                 this.Generate(field.Type);
                 this.Write(" ");
             }
 
-            this.Write(field.Name);
+            this.WriteName(field.Name);
 
             if (field.InitExpression != null)
             {
@@ -103,51 +102,112 @@
 
         private void WriteAttributes(MemberAttributes attributes)
         {
-            this.WriteIfAttribute(attributes, MemberAttributes.Public, "public");
-            this.WriteIfNotAttribute(attributes, MemberAttributes.Final, "virtual");
-        }
-
-        private void Generate(CodeMemberMethod member)
-        {
-            this.WriteDocumentation(member.Comments);
-            this.WriteAttributes(member.Attributes);
-            this.Generate(member.ReturnType);
-            this.Write(" ");
-            this.Write(member.Name);
-            this.Write("(");
-
-            bool isFirst = true;
-
-            foreach (CodeParameterDeclarationExpression parameter in member.Parameters)
+            if (HasAttribute(attributes, MemberAttributes.Public))
             {
-                if (!isFirst)
-                {
-                    this.Write(", ");
-                }
-                else
-                {
-                    isFirst = false;
-                }
-
-                switch (parameter.Direction)
-                {
-                    case FieldDirection.Out:
-                        this.Write("out ");
-                        break;
-
-                    case FieldDirection.Ref:
-                        this.Write("ref ");
-                        break;
-                }
-
-                this.Generate(parameter.Type);
-                this.Write(" ");
-                this.Write(parameter.Name);
+                this.Write("public ");
+            }
+            else if (HasAttribute(attributes, MemberAttributes.Family))
+            {
+                this.Write("protected ");
+            }
+            else if (HasAttribute(attributes, MemberAttributes.Private))
+            {
+                this.Write("private ");
             }
 
+            if (HasAttribute(attributes, MemberAttributes.Const))
+            {
+                this.Write("const ");
+            }
+            else if (HasAttribute(attributes, MemberAttributes.Static))
+            {
+                this.Write("static ");
+            }
+            else if (HasAttribute(attributes, MemberAttributes.Abstract))
+            {
+                this.Write("abstract ");
+            }
+            else if (HasAttribute(attributes, MemberAttributes.Override))
+            {
+                this.Write("override ");
+            }
+            else if (!HasAttribute(attributes, MemberAttributes.Final))
+            {
+                this.Write("virtual ");
+            }
+        }
+
+        private void Generate(CodeTypeDeclaration type, CodeConstructor member)
+        {
+            this.WriteDocumentation(member.Comments);
+            var attributes = member.Attributes;
+            attributes |= MemberAttributes.Final;
+            this.WriteAttributes(attributes);
+
+            this.WriteName(type.Name);
+            this.Write("(");
+            this.Generate(member.Parameters);
             this.Write(")");
 
-            if (member.Statements != null && member.Statements.Count > 0)
+            if (member.BaseConstructorArgs != null && member.BaseConstructorArgs.Count > 0)
+            {
+                this.WriteLine(" : ");
+
+                this.Indent += 2;
+                this.Write("base(");
+
+                bool isFirst = true;
+
+                foreach (CodeExpression arg in member.BaseConstructorArgs)
+                {
+                    if (isFirst)
+                    {
+                        isFirst = false;
+                    }
+                    else
+                    {
+                        this.Write(", ");
+                    }
+
+                    this.Generate(arg);
+                }
+
+                this.WriteLine(")");
+                this.Indent -= 2;
+            }
+            else
+            {
+                this.WriteLine();
+            }
+
+            this.WriteLine("{");
+            this.Indent++;
+
+            this.Generate(member.Statements);
+
+            this.Indent--;
+            this.WriteLine("}");
+        }
+
+        private void Generate(CodeMemberMethod member, bool isInterface = false)
+        {
+            this.WriteDocumentation(member.Comments);
+            this.WriteCustomAttributes(member.CustomAttributes);
+
+            if (!isInterface)
+            {
+                this.WriteAttributes(member.Attributes);
+            }
+
+            this.Generate(member.ReturnType);
+            this.Write(" ");
+            this.WriteName(member.Name);
+            this.Write("(");
+            this.Generate(member.Parameters);
+            this.Write(")");
+
+            if (!isInterface && (!HasAttribute(member.Attributes, MemberAttributes.Abstract)
+                || HasAttribute(member.Attributes, MemberAttributes.Static)))
             {
                 this.WriteLine();
                 this.WriteLine("{");
@@ -163,8 +223,40 @@
                 // Interfaces and abstract methods
                 this.WriteLine(";");
             }
+        }
 
-            this.WriteLine();
+        private void Generate(CodeParameterDeclarationExpressionCollection parameters)
+        {
+            bool isFirst = true;
+
+            foreach (CodeParameterDeclarationExpression parameter in parameters)
+            {
+                if (!isFirst)
+                {
+                    this.Write(", ");
+                }
+                else
+                {
+                    isFirst = false;
+                }
+
+                this.WriteCustomAttributes(parameter.CustomAttributes, inLine: true);
+
+                switch (parameter.Direction)
+                {
+                    case FieldDirection.Out:
+                        this.Write("out ");
+                        break;
+
+                    case FieldDirection.Ref:
+                        this.Write("ref ");
+                        break;
+                }
+
+                this.Generate(parameter.Type);
+                this.Write(" ");
+                this.WriteName(parameter.Name);
+            }
         }
 
         private void WriteIfAttribute(MemberAttributes attributes, MemberAttributes expected, string value)
@@ -180,6 +272,30 @@
         private static bool HasAttribute(MemberAttributes attribute, MemberAttributes expected)
         {
             return (attribute & expected) == expected;
+        }
+
+        private void WriteName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
+            name = name.Trim();
+
+            // Should match all keywords, currently event/string are the only keywords we encounter.
+            if (name == "event")
+            {
+                this.Write("@event");
+            }
+            else if (name == "string")
+            {
+                this.Write("@string");
+            }
+            else
+            {
+                this.Write(name);
+            }
         }
     }
 }
