@@ -14,7 +14,7 @@ namespace iMobileDevice.HouseArrest
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum HouseArrestError : int
     {
         

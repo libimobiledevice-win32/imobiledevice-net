@@ -14,7 +14,7 @@ namespace iMobileDevice.MobileImageMounter
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum MobileImageMounterError : int
     {
         

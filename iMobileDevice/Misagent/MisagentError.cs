@@ -14,7 +14,7 @@ namespace iMobileDevice.Misagent
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum MisagentError : int
     {
         

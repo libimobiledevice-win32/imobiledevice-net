@@ -13,6 +13,7 @@ namespace iMobileDevice.Generator
     using System.Linq;
     using ClangSharp;
     using System.Diagnostics;
+    using CodeDom;
     internal class ModuleGenerator
     {
         public string Name
@@ -276,16 +277,13 @@ namespace iMobileDevice.Generator
 
                 string path = Path.Combine(moduleDirectory, $"{declaration.Name}.cs");
 
-                using (var outFile = File.Open(path, FileMode.Create))
+                using (var outFile = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 using (var fileWriter = new StreamWriter(outFile))
-                using (var indentedTextWriter = new IndentedTextWriter(fileWriter, "    "))
+                using (var indentedTextWriter = new CSharpTextWriter(fileWriter, "    "))
                 {
                     // Generate source code using the code provider.
-                    var provider = new Microsoft.CSharp.CSharpCodeProvider();
-                    provider.GenerateCodeFromCompileUnit(
-                        program,
-                        indentedTextWriter,
-                        new CodeGeneratorOptions() { BracingStyle = "C" });
+                    indentedTextWriter.Generate(ns);
+                    indentedTextWriter.Flush();
                 }
 
                 if (declaration.Name.EndsWith("NativeMethods"))
@@ -301,21 +299,6 @@ namespace iMobileDevice.Generator
                     content = content.Replace("public class", "public static class");
                     File.WriteAllText(path, content);
                 }
-
-                // Remove the CodeDOM header and replace it with our own header
-                IEnumerable<string> finalLines = File.ReadAllLines(path);
-                finalLines = finalLines.Skip(9);
-
-                var ourHeader = new string[]
-                {
-                    $@"// <copyright file=""{Path.GetFileName(path)}"" company=""Quamotion"">",
-                    $"// Copyright (c) {DateTime.Now.Year} Quamotion. All rights reserved.",
-                    "// </copyright>"
-                };
-
-                finalLines = ourHeader.Concat(finalLines);
-
-                File.WriteAllLines(path, finalLines);
             }
         }
     }

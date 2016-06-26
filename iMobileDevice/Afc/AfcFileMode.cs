@@ -14,7 +14,7 @@ namespace iMobileDevice.Afc
     
     /// <summary>
     /// Flags for afc_file_open 
-    ///</summary>
+    /// </summary>
     public enum AfcFileMode : int
     {
         
@@ -28,7 +28,7 @@ namespace iMobileDevice.Afc
         
         FopenAppend = 5,
         
-        ///  a+  O_RDWR   | O_APPEND | O_CREAT 
+        /// a+  O_RDWR   | O_APPEND | O_CREAT 
         FopenRdappend = 6,
     }
 }

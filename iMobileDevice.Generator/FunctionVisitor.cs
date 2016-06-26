@@ -42,7 +42,7 @@ namespace iMobileDevice.Generator
                 var name = this.generator.Name + "NativeMethods";
                 this.nativeMethods = new CodeTypeDeclaration();
                 this.nativeMethods.Name = name;
-                this.nativeMethods.Attributes = MemberAttributes.Static;
+                this.nativeMethods.Attributes = /*MemberAttributes.Static |*/ MemberAttributes.Public | MemberAttributes.Final;
                 this.nativeMethods.IsPartial = true;
                 this.nativeMethods.Members.Add(
                     new CodeMemberField(typeof(string), "libraryName")

@@ -14,7 +14,7 @@ namespace iMobileDevice.iDevice
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum iDeviceError : int
     {
         

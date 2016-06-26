@@ -136,6 +136,9 @@
     <Compile Include="ApiGenerator.cs" />
     <Compile Include="Argument.cs" />
     <Compile Include="ArrayMarshalerGenerator.cs" />
+    <Compile Include="CodeDom\CSharpTextWriter.cs" />
+    <Compile Include="CodeDom\CSharpTextWriter.Expressions.cs" />
+    <Compile Include="CodeDom\CSharpTextWriter.Members.cs" />
     <Compile Include="CXCursorExtensions.cs" />
     <Compile Include="CXTypeExtensions.cs" />
     <Compile Include="CXTypeKindExtensions.cs" />
@@ -159,7 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <Compile Include="CodeDom\CSharpTextWriter.Statements.cs" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>

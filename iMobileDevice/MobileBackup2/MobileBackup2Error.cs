@@ -14,7 +14,7 @@ namespace iMobileDevice.MobileBackup2
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum MobileBackup2Error : int
     {
         

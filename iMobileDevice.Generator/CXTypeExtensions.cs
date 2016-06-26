@@ -140,7 +140,7 @@ namespace iMobileDevice.Generator
                             new CodeTypeReferenceExpression(typeof(CallingConvention)),
                             type.GetCallingConvention().ToString()))));
 
-            delegateType.Attributes = MemberAttributes.Public;
+            delegateType.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             delegateType.Name = clrName;
             delegateType.ReturnType = new CodeTypeReference(clang.getResultType(type).ToClrType());
 

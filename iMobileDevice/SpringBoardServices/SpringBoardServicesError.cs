@@ -14,7 +14,7 @@ namespace iMobileDevice.SpringBoardServices
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum SpringBoardServicesError : int
     {
         

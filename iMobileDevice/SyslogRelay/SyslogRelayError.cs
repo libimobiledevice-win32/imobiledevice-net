@@ -14,7 +14,7 @@ namespace iMobileDevice.SyslogRelay
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum SyslogRelayError : int
     {
         

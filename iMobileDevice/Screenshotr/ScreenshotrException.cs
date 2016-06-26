@@ -43,10 +43,10 @@ namespace iMobileDevice.Screenshotr
         
         /// <summary>
         /// Initializes a new instance of the <see cref="ScreenshotrException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public ScreenshotrException(string message) : 
                 base(message)
         {

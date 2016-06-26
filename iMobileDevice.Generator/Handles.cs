@@ -47,7 +47,7 @@ namespace iMobileDevice.Generator
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.InheritanceDemand, true));
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.Demand, true));
             safeHandle.IsPartial = true;
-            safeHandle.Attributes = MemberAttributes.Public;
+            safeHandle.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));
 
             CodeConstructor constructor = new CodeConstructor();
@@ -159,7 +159,7 @@ namespace iMobileDevice.Generator
             CodeTypeDeclaration safeHandleMarshaler = new CodeTypeDeclaration();
             safeHandleMarshaler.Name = name + "HandleDelegateMarshaler";
             safeHandleMarshaler.IsPartial = true;
-            safeHandleMarshaler.Attributes = MemberAttributes.Family;
+            safeHandleMarshaler.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             safeHandleMarshaler.BaseTypes.Add(typeof(ICustomMarshaler));
 
             // Create the GetInstance method

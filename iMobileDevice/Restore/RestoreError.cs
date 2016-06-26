@@ -14,7 +14,7 @@ namespace iMobileDevice.Restore
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum RestoreError : int
     {
         

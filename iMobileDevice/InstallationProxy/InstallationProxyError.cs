@@ -14,7 +14,7 @@ namespace iMobileDevice.InstallationProxy
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum InstallationProxyError : int
     {
         

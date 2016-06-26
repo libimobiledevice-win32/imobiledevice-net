@@ -14,7 +14,7 @@ namespace iMobileDevice.MobileSync
     
     /// <summary>
     /// The sync type of the current sync session. 
-    ///</summary>
+    /// </summary>
     public enum MobileSyncSyncType : int
     {
         
@@ -22,7 +22,7 @@ namespace iMobileDevice.MobileSync
         
         SyncTypeSlow = 1,
         
-        ///  Reset-sync signals that the computer should send all data again. 
+        /// Reset-sync signals that the computer should send all data again. 
         SyncTypeReset = 2,
     }
 }

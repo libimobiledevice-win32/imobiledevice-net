@@ -14,7 +14,7 @@ namespace iMobileDevice.MobileSync
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum MobileSyncError : int
     {
         

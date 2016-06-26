@@ -14,7 +14,7 @@ namespace iMobileDevice.DiagnosticsRelay
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum DiagnosticsRelayError : int
     {
         

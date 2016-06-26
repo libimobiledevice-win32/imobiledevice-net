@@ -47,6 +47,7 @@ namespace iMobileDevice.Generator
             }
 
             CodeTypeDeclaration marshaler = new CodeTypeDeclaration();
+            marshaler.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             marshaler.Name = marshalerName;
             marshaler.BaseTypes.Add(new CodeTypeReference("NativeStringArrayMarshaler"));
 

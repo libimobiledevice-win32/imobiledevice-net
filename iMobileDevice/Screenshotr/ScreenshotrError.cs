@@ -14,7 +14,7 @@ namespace iMobileDevice.Screenshotr
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum ScreenshotrError : int
     {
         

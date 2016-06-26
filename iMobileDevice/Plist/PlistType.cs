@@ -14,7 +14,7 @@ namespace iMobileDevice.Plist
     
     /// <summary>
     /// The enumeration of plist node types.
-    ///</summary>
+    /// </summary>
     public enum PlistType : int
     {
         
@@ -38,7 +38,7 @@ namespace iMobileDevice.Plist
         
         Uid = 9,
         
-        ///  No type 
+        /// No type 
         None = 10,
     }
 }

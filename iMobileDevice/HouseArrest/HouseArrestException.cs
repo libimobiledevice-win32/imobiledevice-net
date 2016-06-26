@@ -43,10 +43,10 @@ namespace iMobileDevice.HouseArrest
         
         /// <summary>
         /// Initializes a new instance of the <see cref="HouseArrestException"/> class with a specified error message.
-        ///</summary>
+        /// </summary>
         /// <param name="message">
         /// The message that describes the error.
-        ///</param>
+        /// </param>
         public HouseArrestException(string message) : 
                 base(message)
         {

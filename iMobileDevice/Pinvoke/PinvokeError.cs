@@ -14,7 +14,7 @@ namespace iMobileDevice.Pinvoke
     
     /// <summary>
     /// Error Codes 
-    ///</summary>
+    /// </summary>
     public enum PinvokeError : int
     {
         
