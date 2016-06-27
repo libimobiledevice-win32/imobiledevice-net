@@ -21,6 +21,14 @@ namespace iMobileDevice
 
         public static void Load(string directory)
         {
+#if NETSTANDARD1_5
+            // .NET Core has a good story for loading unmanaged assemblies - you include them in the
+            // runtimes/<runtime>/native folder of the NuGet package. So we're letting .NET Core
+            // handle finding the assemblies and loading them.
+            LibraryFound = true;
+            return;
+#endif
+
             if (directory == null)
             {
                 throw new ArgumentNullException(nameof(directory));
