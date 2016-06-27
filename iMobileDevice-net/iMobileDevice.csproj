@@ -51,7 +51,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="**\*.cs" Exclude="obj\**\*.cs;bin\**\*.cs"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
