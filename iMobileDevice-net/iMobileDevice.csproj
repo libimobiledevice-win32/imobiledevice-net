@@ -51,12 +51,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\**\*.cs;bin\**\*.cs"/>
+    <Compile Include="**\*.cs" Exclude="obj\**\*.cs;bin\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="**\*.xml" />
     <None Include="iMobileDevice.snk" />
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Manual\InstallationProxyApi.xml" />
