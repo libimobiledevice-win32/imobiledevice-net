@@ -16,6 +16,15 @@ namespace iMobileDevice.iDevice
     {
         
         /// <summary>
+        /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
+        /// will be written to this callback instead of the standard output.
+        /// </summary>
+        /// <param name="callback">
+        /// The callback which will receive the debug messages. Set to NULL to redirect to stdout.
+        /// </param>
+        void idevice_set_debug_callback(iDeviceDebugCallBack callback);
+        
+        /// <summary>
         /// Set the level of debugging.
         /// </summary>
         /// <param name="level">
@@ -229,6 +238,20 @@ namespace iMobileDevice.iDevice
         /// enabled and does no further error checking on cleanup.
         /// </returns>
         iDeviceError idevice_connection_disable_ssl(iDeviceConnectionHandle connection);
+        
+        /// <summary>
+        /// Get the underlying file descriptor for a connection
+        /// </summary>
+        /// <param name="connection">
+        /// The connection to get fd of
+        /// </param>
+        /// <param name="fd">
+        /// Pointer to an int where the fd is stored
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
+        /// </returns>
+        iDeviceError idevice_connection_get_fd(iDeviceConnectionHandle connection, ref int fd);
         
         /// <summary>
         /// Gets the handle of the device. Depends on the connection type.

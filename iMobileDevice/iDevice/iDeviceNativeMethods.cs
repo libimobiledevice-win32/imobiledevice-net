@@ -18,6 +18,16 @@ namespace iMobileDevice.iDevice
         const string libraryName = "libimobiledevice";
         
         /// <summary>
+        /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
+        /// will be written to this callback instead of the standard output.
+        /// </summary>
+        /// <param name="callback">
+        /// The callback which will receive the debug messages. Set to NULL to redirect to stdout.
+        /// </param>
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_set_debug_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void idevice_set_debug_callback(iDeviceDebugCallBack callback);
+        
+        /// <summary>
         /// Set the level of debugging.
         /// </summary>
         /// <param name="level">
@@ -245,6 +255,21 @@ namespace iMobileDevice.iDevice
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_disable_ssl(iDeviceConnectionHandle connection);
+        
+        /// <summary>
+        /// Get the underlying file descriptor for a connection
+        /// </summary>
+        /// <param name="connection">
+        /// The connection to get fd of
+        /// </param>
+        /// <param name="fd">
+        /// Pointer to an int where the fd is stored
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_get_fd", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern iDeviceError idevice_connection_get_fd(iDeviceConnectionHandle connection, ref int fd);
         
         /// <summary>
         /// Gets the handle of the device. Depends on the connection type.

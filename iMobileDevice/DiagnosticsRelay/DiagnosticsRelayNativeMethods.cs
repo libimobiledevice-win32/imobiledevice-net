@@ -150,6 +150,25 @@ namespace iMobileDevice.DiagnosticsRelay
         [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_shutdown", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_shutdown(DiagnosticsRelayClientHandle client, DiagnosticsRelayAction flags);
         
+        /// <summary>
+        /// Shutdown of the device and optionally show a user notification.
+        /// </summary>
+        /// <param name="client">
+        /// The diagnostics_relay client
+        /// </param>
+        /// <param name="flags">
+        /// A binary flag combination of
+        /// DIAGNOSTICS_RELAY_ACTION_FLAG_WAIT_FOR_DISCONNECT to wait until
+        /// diagnostics_relay_client_free() disconnects before execution and
+        /// DIAGNOSTICS_RELAY_ACTION_FLAG_DISPLAY_FAIL to show a "FAIL" dialog
+        /// or DIAGNOSTICS_RELAY_ACTION_FLAG_DISPLAY_PASS to show an "OK" dialog
+        /// </param>
+        /// <returns>
+        /// DIAGNOSTICS_RELAY_E_SUCCESS on success,
+        /// DIAGNOSTICS_RELAY_E_INVALID_ARG when client is NULL,
+        /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
+        /// request
+        /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_request_diagnostics", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_request_diagnostics(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string type, out PlistHandle diagnostics);
         
