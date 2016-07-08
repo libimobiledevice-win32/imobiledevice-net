@@ -68,6 +68,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HandleTests.cs" />
     <Compile Include="NativeStringArrayMarshalerTests.cs" />
     <Compile Include="NativeStringMarshalerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,10 +109,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      mkdir $(ProjectDir)$(OutDir)\x86
-      mkdir $(ProjectDir)$(OutDir)\x64
-      copy /y $(SolutionDir)\iMobileDevice\$(OutDir)\x86\*.* $(ProjectDir)$(OutDir)\x86
-      copy /y $(SolutionDir)\iMobileDevice\$(OutDir)\x64\*.* $(ProjectDir)$(OutDir)\x64
     </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
