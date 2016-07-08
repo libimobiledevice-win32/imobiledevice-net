@@ -23,6 +23,14 @@ namespace iMobileDevice.InstallationProxy
             }
         }
         
+        public static void ThrowOnError(this InstallationProxyError value, string message)
+        {
+            if ((value != InstallationProxyError.Success))
+            {
+                throw new InstallationProxyException(value, message);
+            }
+        }
+        
         public static bool IsError(this InstallationProxyError value)
         {
             return (value != InstallationProxyError.Success);

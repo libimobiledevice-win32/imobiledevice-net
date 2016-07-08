@@ -42,6 +42,21 @@ namespace iMobileDevice.MobileSync
         }
         
         /// <summary>
+        /// Initializes a new instance of the <see cref="MobileSyncException"/> class with a specified error code and error message.
+        /// <summary>
+        /// <param name="error">
+        /// The error code of the error that occurred.
+        /// </param>
+        /// <param name="message">
+        /// A message which describes the error.
+        /// </param>
+        public MobileSyncException(MobileSyncError error, string message) : 
+                base(string.Format("An MobileSync error occurred. {1}. The error code was {0}", error, message))
+        {
+            this.errorCode = error;
+        }
+        
+        /// <summary>
         /// Initializes a new instance of the <see cref="MobileSyncException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">

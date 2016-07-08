@@ -23,6 +23,14 @@ namespace iMobileDevice.SpringBoardServices
             }
         }
         
+        public static void ThrowOnError(this SpringBoardServicesError value, string message)
+        {
+            if ((value != SpringBoardServicesError.Success))
+            {
+                throw new SpringBoardServicesException(value, message);
+            }
+        }
+        
         public static bool IsError(this SpringBoardServicesError value)
         {
             return (value != SpringBoardServicesError.Success);

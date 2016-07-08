@@ -23,6 +23,14 @@ namespace iMobileDevice.iDevice
             }
         }
         
+        public static void ThrowOnError(this iDeviceError value, string message)
+        {
+            if ((value != iDeviceError.Success))
+            {
+                throw new iDeviceException(value, message);
+            }
+        }
+        
         public static bool IsError(this iDeviceError value)
         {
             return (value != iDeviceError.Success);

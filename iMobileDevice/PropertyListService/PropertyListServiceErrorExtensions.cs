@@ -23,6 +23,14 @@ namespace iMobileDevice.PropertyListService
             }
         }
         
+        public static void ThrowOnError(this PropertyListServiceError value, string message)
+        {
+            if ((value != PropertyListServiceError.Success))
+            {
+                throw new PropertyListServiceException(value, message);
+            }
+        }
+        
         public static bool IsError(this PropertyListServiceError value)
         {
             return (value != PropertyListServiceError.Success);

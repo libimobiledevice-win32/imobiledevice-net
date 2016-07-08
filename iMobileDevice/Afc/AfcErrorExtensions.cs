@@ -23,6 +23,14 @@ namespace iMobileDevice.Afc
             }
         }
         
+        public static void ThrowOnError(this AfcError value, string message)
+        {
+            if ((value != AfcError.Success))
+            {
+                throw new AfcException(value, message);
+            }
+        }
+        
         public static bool IsError(this AfcError value)
         {
             return (value != AfcError.Success);

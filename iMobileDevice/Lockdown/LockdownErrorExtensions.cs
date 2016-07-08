@@ -23,6 +23,14 @@ namespace iMobileDevice.Lockdown
             }
         }
         
+        public static void ThrowOnError(this LockdownError value, string message)
+        {
+            if ((value != LockdownError.Success))
+            {
+                throw new LockdownException(value, message);
+            }
+        }
+        
         public static bool IsError(this LockdownError value)
         {
             return (value != LockdownError.Success);

@@ -23,6 +23,14 @@ namespace iMobileDevice.DebugServer
             }
         }
         
+        public static void ThrowOnError(this DebugServerError value, string message)
+        {
+            if ((value != DebugServerError.Success))
+            {
+                throw new DebugServerException(value, message);
+            }
+        }
+        
         public static bool IsError(this DebugServerError value)
         {
             return (value != DebugServerError.Success);
