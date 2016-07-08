@@ -1,10 +1,11 @@
 {
   "frameworks": {
-    "net45": {
+    "net452": {
     }
   },
 
   "runtimes": {
-    "win": { }
+    "win": { },
+    "win-x86": { }
   }
 }
