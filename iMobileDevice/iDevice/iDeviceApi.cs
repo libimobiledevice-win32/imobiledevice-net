@@ -16,10 +16,24 @@ namespace iMobileDevice.iDevice
     {
         
         /// <summary>
+        /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
+        /// will be written to this callback instead of the standard output.
+        /// </summary>
+        /// <param name="callback">
+        /// The callback which will receive the debug messages. Set to NULL to redirect to stdout.
+        /// </param>
+        public virtual void idevice_set_debug_callback(iDeviceDebugCallBack callback)
+        {
+            iDeviceNativeMethods.idevice_set_debug_callback(callback);
+        }
+        
+        /// <summary>
         /// Set the level of debugging.
         /// </summary>
         /// <param name="level">
-        /// Set to 0 for no debug output or 1 to enable debug output.
+        /// Set to 0 for no debug output, 1 to enable basic debug output and 2 to enable full debug output.
+        /// When set to 2, the values of buffers being sent across the wire are printed out as well, this results in very
+        /// verbose output.
         /// </param>
         public virtual void idevice_set_debug_level(int level)
         {
@@ -270,6 +284,23 @@ namespace iMobileDevice.iDevice
         public virtual iDeviceError idevice_connection_disable_ssl(iDeviceConnectionHandle connection)
         {
             return iDeviceNativeMethods.idevice_connection_disable_ssl(connection);
+        }
+        
+        /// <summary>
+        /// Get the underlying file descriptor for a connection
+        /// </summary>
+        /// <param name="connection">
+        /// The connection to get fd of
+        /// </param>
+        /// <param name="fd">
+        /// Pointer to an int where the fd is stored
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
+        /// </returns>
+        public virtual iDeviceError idevice_connection_get_fd(iDeviceConnectionHandle connection, ref int fd)
+        {
+            return iDeviceNativeMethods.idevice_connection_get_fd(connection, ref fd);
         }
         
         /// <summary>

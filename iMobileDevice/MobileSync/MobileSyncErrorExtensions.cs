@@ -23,6 +23,14 @@ namespace iMobileDevice.MobileSync
             }
         }
         
+        public static void ThrowOnError(this MobileSyncError value, string message)
+        {
+            if ((value != MobileSyncError.Success))
+            {
+                throw new MobileSyncException(value, message);
+            }
+        }
+        
         public static bool IsError(this MobileSyncError value)
         {
             return (value != MobileSyncError.Success);

@@ -23,6 +23,14 @@ namespace iMobileDevice.HeartBeat
             }
         }
         
+        public static void ThrowOnError(this HeartBeatError value, string message)
+        {
+            if ((value != HeartBeatError.Success))
+            {
+                throw new HeartBeatException(value, message);
+            }
+        }
+        
         public static bool IsError(this HeartBeatError value)
         {
             return (value != HeartBeatError.Success);

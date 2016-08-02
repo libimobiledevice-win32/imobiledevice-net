@@ -23,6 +23,14 @@ namespace iMobileDevice.Misagent
             }
         }
         
+        public static void ThrowOnError(this MisagentError value, string message)
+        {
+            if ((value != MisagentError.Success))
+            {
+                throw new MisagentException(value, message);
+            }
+        }
+        
         public static bool IsError(this MisagentError value)
         {
             return (value != MisagentError.Success);

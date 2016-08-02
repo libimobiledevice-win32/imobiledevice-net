@@ -23,6 +23,14 @@ namespace iMobileDevice.WebInspector
             }
         }
         
+        public static void ThrowOnError(this WebInspectorError value, string message)
+        {
+            if ((value != WebInspectorError.Success))
+            {
+                throw new WebInspectorException(value, message);
+            }
+        }
+        
         public static bool IsError(this WebInspectorError value)
         {
             return (value != WebInspectorError.Success);

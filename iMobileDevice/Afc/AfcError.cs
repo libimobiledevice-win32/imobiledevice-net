@@ -74,6 +74,12 @@ namespace iMobileDevice.Afc
         
         DirNotEmpty = 33,
         
+        ServiceClientFailed = 34,
+        
+        EmptyResponse = 35,
+        
+        IncompleteHeader = 36,
+        
         ForceSignedType = -1,
     }
 }

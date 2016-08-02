@@ -23,6 +23,14 @@ namespace iMobileDevice.Pinvoke
             }
         }
         
+        public static void ThrowOnError(this PinvokeError value, string message)
+        {
+            if ((value != PinvokeError.Success))
+            {
+                throw new PinvokeException(value, message);
+            }
+        }
+        
         public static bool IsError(this PinvokeError value)
         {
             return (value != PinvokeError.Success);

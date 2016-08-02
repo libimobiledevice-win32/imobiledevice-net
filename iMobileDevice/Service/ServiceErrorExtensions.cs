@@ -23,6 +23,14 @@ namespace iMobileDevice.Service
             }
         }
         
+        public static void ThrowOnError(this ServiceError value, string message)
+        {
+            if ((value != ServiceError.Success))
+            {
+                throw new ServiceException(value, message);
+            }
+        }
+        
         public static bool IsError(this ServiceError value)
         {
             return (value != ServiceError.Success);

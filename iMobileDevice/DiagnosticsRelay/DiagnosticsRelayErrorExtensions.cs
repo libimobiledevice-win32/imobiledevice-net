@@ -23,6 +23,14 @@ namespace iMobileDevice.DiagnosticsRelay
             }
         }
         
+        public static void ThrowOnError(this DiagnosticsRelayError value, string message)
+        {
+            if ((value != DiagnosticsRelayError.Success))
+            {
+                throw new DiagnosticsRelayException(value, message);
+            }
+        }
+        
         public static bool IsError(this DiagnosticsRelayError value)
         {
             return (value != DiagnosticsRelayError.Success);

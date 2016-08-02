@@ -23,6 +23,14 @@ namespace iMobileDevice.FileRelay
             }
         }
         
+        public static void ThrowOnError(this FileRelayError value, string message)
+        {
+            if ((value != FileRelayError.Success))
+            {
+                throw new FileRelayException(value, message);
+            }
+        }
+        
         public static bool IsError(this FileRelayError value)
         {
             return (value != FileRelayError.Success);

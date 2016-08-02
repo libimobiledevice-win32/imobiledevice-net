@@ -23,6 +23,14 @@ namespace iMobileDevice.HouseArrest
             }
         }
         
+        public static void ThrowOnError(this HouseArrestError value, string message)
+        {
+            if ((value != HouseArrestError.Success))
+            {
+                throw new HouseArrestException(value, message);
+            }
+        }
+        
         public static bool IsError(this HouseArrestError value)
         {
             return (value != HouseArrestError.Success);

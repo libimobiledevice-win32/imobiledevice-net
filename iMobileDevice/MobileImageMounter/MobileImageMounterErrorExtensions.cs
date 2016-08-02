@@ -23,6 +23,14 @@ namespace iMobileDevice.MobileImageMounter
             }
         }
         
+        public static void ThrowOnError(this MobileImageMounterError value, string message)
+        {
+            if ((value != MobileImageMounterError.Success))
+            {
+                throw new MobileImageMounterException(value, message);
+            }
+        }
+        
         public static bool IsError(this MobileImageMounterError value)
         {
             return (value != MobileImageMounterError.Success);

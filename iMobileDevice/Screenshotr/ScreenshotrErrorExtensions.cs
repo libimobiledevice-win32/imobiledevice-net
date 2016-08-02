@@ -23,6 +23,14 @@ namespace iMobileDevice.Screenshotr
             }
         }
         
+        public static void ThrowOnError(this ScreenshotrError value, string message)
+        {
+            if ((value != ScreenshotrError.Success))
+            {
+                throw new ScreenshotrException(value, message);
+            }
+        }
+        
         public static bool IsError(this ScreenshotrError value)
         {
             return (value != ScreenshotrError.Success);

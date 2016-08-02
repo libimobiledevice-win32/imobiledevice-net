@@ -23,6 +23,14 @@ namespace iMobileDevice.MobileBackup
             }
         }
         
+        public static void ThrowOnError(this MobileBackupError value, string message)
+        {
+            if ((value != MobileBackupError.Success))
+            {
+                throw new MobileBackupException(value, message);
+            }
+        }
+        
         public static bool IsError(this MobileBackupError value)
         {
             return (value != MobileBackupError.Success);

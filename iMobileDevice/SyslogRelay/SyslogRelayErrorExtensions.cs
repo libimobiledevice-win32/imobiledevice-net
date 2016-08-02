@@ -23,6 +23,14 @@ namespace iMobileDevice.SyslogRelay
             }
         }
         
+        public static void ThrowOnError(this SyslogRelayError value, string message)
+        {
+            if ((value != SyslogRelayError.Success))
+            {
+                throw new SyslogRelayException(value, message);
+            }
+        }
+        
         public static bool IsError(this SyslogRelayError value)
         {
             return (value != SyslogRelayError.Success);

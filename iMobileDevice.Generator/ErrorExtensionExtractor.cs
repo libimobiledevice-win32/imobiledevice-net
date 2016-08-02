@@ -63,6 +63,7 @@ namespace iMobileDevice.Generator
                     true));
             exceptionType.Members.Add(defaultConstrutor);
 
+            // Add the constructor which takes an error code
             var errorConstructor = new CodeConstructor();
             errorConstructor.Attributes = MemberAttributes.Public;
             errorConstructor.Comments.Add(
@@ -92,6 +93,46 @@ namespace iMobileDevice.Generator
                     "error"));
             exceptionType.Members.Add(errorConstructor);
 
+            // Add the constructor which takes an error code and an error message
+            var errorWithMessageConstructor = new CodeConstructor();
+            errorWithMessageConstructor.Attributes = MemberAttributes.Public;
+            errorWithMessageConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error code and error message.\r\n <summary>",
+                    true));
+            errorWithMessageConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"error\">\r\n The error code of the error that occurred.\r\n </param>",
+                    true));
+            errorWithMessageConstructor.Comments.Add(
+                new CodeCommentStatement(
+                    $"<param name=\"message\">\r\n A message which describes the error.\r\n </param>",
+                    true));
+            errorWithMessageConstructor.BaseConstructorArgs.Add(
+                new CodeMethodInvokeExpression(
+                    new CodeMethodReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(string)),
+                        "Format"),
+                    new CodePrimitiveExpression($"An {this.generator.Name} error occurred. {{1}}. The error code was {{0}}"),
+                    new CodeArgumentReferenceExpression("error"),
+                    new CodeArgumentReferenceExpression("message")));
+            errorWithMessageConstructor.Statements.Add(
+                new CodeAssignStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        "errorCode"),
+                    new CodeArgumentReferenceExpression("error")));
+            errorWithMessageConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference($"{this.generator.Name}Error"),
+                    "error"));
+            errorWithMessageConstructor.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference(typeof(string)),
+                    "message"));
+            exceptionType.Members.Add(errorWithMessageConstructor);
+
+            // Add the Error field
             var errorCodeField = new CodeMemberField();
             errorCodeField.Name = "errorCode";
             errorCodeField.Type = new CodeTypeReference($"{this.generator.Name}Error");
@@ -197,17 +238,17 @@ namespace iMobileDevice.Generator
             extensionsType.Name = $"{errorEnum.Name}Extensions";
             extensionsType.Attributes = MemberAttributes.Public | MemberAttributes.Static;
 
-            // Add the checkError method
-            CodeMemberMethod checkErrorMethod = new CodeMemberMethod();
-            checkErrorMethod.Name = "ThrowOnError";
-            checkErrorMethod.Attributes = MemberAttributes.Static | MemberAttributes.Public;
+            // Add the ThrowOnError method
+            CodeMemberMethod throwOnErrorMethod = new CodeMemberMethod();
+            throwOnErrorMethod.Name = "ThrowOnError";
+            throwOnErrorMethod.Attributes = MemberAttributes.Static | MemberAttributes.Public;
 
             var parameter = new CodeParameterDeclarationExpression();
             parameter.Name = "value";
             parameter.Type = new CodeTypeReference("this " + errorEnum.Name);
-            checkErrorMethod.Parameters.Add(parameter);
+            throwOnErrorMethod.Parameters.Add(parameter);
 
-            checkErrorMethod.Statements.Add(
+            throwOnErrorMethod.Statements.Add(
                 new CodeConditionStatement(
                         new CodeBinaryOperatorExpression(
                             new CodeArgumentReferenceExpression("value"),
@@ -220,8 +261,38 @@ namespace iMobileDevice.Generator
                                 new CodeTypeReference(exceptionType.Name),
                                 new CodeArgumentReferenceExpression("value")))));
 
+            extensionsType.Members.Add(throwOnErrorMethod);
 
-            extensionsType.Members.Add(checkErrorMethod);
+            // Add the ThrowOnError overload which takes an error message 
+            CodeMemberMethod throwOnErrorWithMessageMethod = new CodeMemberMethod();
+            throwOnErrorWithMessageMethod.Name = "ThrowOnError";
+            throwOnErrorWithMessageMethod.Attributes = MemberAttributes.Static | MemberAttributes.Public;
+
+            var throwOnErrorWithMessageMethodParameter = new CodeParameterDeclarationExpression();
+            throwOnErrorWithMessageMethodParameter.Name = "value";
+            throwOnErrorWithMessageMethodParameter.Type = new CodeTypeReference("this " + errorEnum.Name);
+            throwOnErrorWithMessageMethod.Parameters.Add(throwOnErrorWithMessageMethodParameter);
+
+            var messageParameter = new CodeParameterDeclarationExpression();
+            messageParameter.Name = "message";
+            messageParameter.Type = new CodeTypeReference(typeof(string));
+            throwOnErrorWithMessageMethod.Parameters.Add(messageParameter);
+
+            throwOnErrorWithMessageMethod.Statements.Add(
+                new CodeConditionStatement(
+                        new CodeBinaryOperatorExpression(
+                            new CodeArgumentReferenceExpression("value"),
+                            CodeBinaryOperatorType.IdentityInequality,
+                            new CodePropertyReferenceExpression(
+                                new CodeTypeReferenceExpression(errorEnum.Name),
+                                "Success")),
+                        new CodeThrowExceptionStatement(
+                            new CodeObjectCreateExpression(
+                                new CodeTypeReference(exceptionType.Name),
+                                new CodeArgumentReferenceExpression("value"),
+                                new CodeArgumentReferenceExpression("message")))));
+
+            extensionsType.Members.Add(throwOnErrorWithMessageMethod);
 
             // Add the CheckError method
             CodeMemberMethod isErrorMethod = new CodeMemberMethod();

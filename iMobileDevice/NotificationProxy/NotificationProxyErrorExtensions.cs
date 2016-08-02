@@ -23,6 +23,14 @@ namespace iMobileDevice.NotificationProxy
             }
         }
         
+        public static void ThrowOnError(this NotificationProxyError value, string message)
+        {
+            if ((value != NotificationProxyError.Success))
+            {
+                throw new NotificationProxyException(value, message);
+            }
+        }
+        
         public static bool IsError(this NotificationProxyError value)
         {
             return (value != NotificationProxyError.Success);

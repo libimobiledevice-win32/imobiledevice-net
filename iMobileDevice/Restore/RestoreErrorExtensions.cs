@@ -23,6 +23,14 @@ namespace iMobileDevice.Restore
             }
         }
         
+        public static void ThrowOnError(this RestoreError value, string message)
+        {
+            if ((value != RestoreError.Success))
+            {
+                throw new RestoreException(value, message);
+            }
+        }
+        
         public static bool IsError(this RestoreError value)
         {
             return (value != RestoreError.Success);
