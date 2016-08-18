@@ -16,6 +16,14 @@ namespace iMobileDevice.HeartBeat
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="HeartBeat"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the heartbeat service on the specified device.
         /// </summary>
         /// <param name="device">

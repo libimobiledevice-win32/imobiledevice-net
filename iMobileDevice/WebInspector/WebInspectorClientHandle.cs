@@ -17,6 +17,8 @@ namespace iMobileDevice.WebInspector
     public partial class WebInspectorClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected WebInspectorClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.WebInspector
         protected WebInspectorClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static WebInspectorClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.WebInspector
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.WebInspector.webinspector_client_free(this.handle) == WebInspectorError.Success);
+            return (this.Api.WebInspector.webinspector_client_free(this.handle) == WebInspectorError.Success);
         }
         
         public static WebInspectorClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

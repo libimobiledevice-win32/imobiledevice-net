@@ -17,6 +17,8 @@ namespace iMobileDevice.Afc
     public partial class AfcClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected AfcClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Afc
         protected AfcClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static AfcClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Afc
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Afc.afc_client_free(this.handle) == AfcError.Success);
+            return (this.Api.Afc.afc_client_free(this.handle) == AfcError.Success);
         }
         
         public static AfcClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

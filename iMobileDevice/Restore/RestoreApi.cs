@@ -16,6 +16,31 @@ namespace iMobileDevice.Restore
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"RestoreApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Restore"/>.
+        /// </summary>
+        public RestoreApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Creates a new restored client for the device.
         /// </summary>
         /// <param name="device">
@@ -32,7 +57,10 @@ namespace iMobileDevice.Restore
         /// </returns>
         public virtual RestoreError restored_client_new(iDeviceHandle device, out RestoreClientHandle client, string label)
         {
-            return RestoreNativeMethods.restored_client_new(device, out client, label);
+            RestoreError returnValue;
+            returnValue = RestoreNativeMethods.restored_client_new(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -88,7 +116,10 @@ namespace iMobileDevice.Restore
         /// </returns>
         public virtual RestoreError restored_query_value(RestoreClientHandle client, string key, out PlistHandle value)
         {
-            return RestoreNativeMethods.restored_query_value(client, key, out value);
+            RestoreError returnValue;
+            returnValue = RestoreNativeMethods.restored_query_value(client, key, out value);
+            value.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -108,7 +139,10 @@ namespace iMobileDevice.Restore
         /// </returns>
         public virtual RestoreError restored_get_value(RestoreClientHandle client, string key, out PlistHandle value)
         {
-            return RestoreNativeMethods.restored_get_value(client, key, out value);
+            RestoreError returnValue;
+            returnValue = RestoreNativeMethods.restored_get_value(client, key, out value);
+            value.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -148,7 +182,10 @@ namespace iMobileDevice.Restore
         /// </returns>
         public virtual RestoreError restored_receive(RestoreClientHandle client, out PlistHandle plist)
         {
-            return RestoreNativeMethods.restored_receive(client, out plist);
+            RestoreError returnValue;
+            returnValue = RestoreNativeMethods.restored_receive(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

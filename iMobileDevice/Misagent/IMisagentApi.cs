@@ -16,6 +16,14 @@ namespace iMobileDevice.Misagent
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Misagent"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the misagent service on the specified device.
         /// </summary>
         /// <param name="device">

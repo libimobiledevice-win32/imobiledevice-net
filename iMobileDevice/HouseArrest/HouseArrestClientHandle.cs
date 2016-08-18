@@ -17,6 +17,8 @@ namespace iMobileDevice.HouseArrest
     public partial class HouseArrestClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected HouseArrestClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.HouseArrest
         protected HouseArrestClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static HouseArrestClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.HouseArrest
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.HouseArrest.house_arrest_client_free(this.handle) == HouseArrestError.Success);
+            return (this.Api.HouseArrest.house_arrest_client_free(this.handle) == HouseArrestError.Success);
         }
         
         public static HouseArrestClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

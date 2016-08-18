@@ -97,7 +97,7 @@ namespace iMobileDevice.Generator
             {
                 functionKind = FunctionType.Free;
             }
-            else if(nativeName.Contains("pinvoke"))
+            else if (nativeName.Contains("pinvoke"))
             {
                 functionKind = FunctionType.PInvoke;
             }

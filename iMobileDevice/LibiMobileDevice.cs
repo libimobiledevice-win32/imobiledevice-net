@@ -94,31 +94,31 @@ namespace iMobileDevice
         
         public LibiMobileDevice()
         {
-            this.usbmuxd = new UsbmuxdApi();
-            this.plist = new PlistApi();
-            this.idevice = new iDeviceApi();
-            this.lockdown = new LockdownApi();
-            this.afc = new AfcApi();
-            this.debugServer = new DebugServerApi();
-            this.diagnosticsRelay = new DiagnosticsRelayApi();
-            this.fileRelay = new FileRelayApi();
-            this.heartBeat = new HeartBeatApi();
-            this.houseArrest = new HouseArrestApi();
-            this.installationProxy = new InstallationProxyApi();
-            this.misagent = new MisagentApi();
-            this.mobileBackup = new MobileBackupApi();
-            this.mobileBackup2 = new MobileBackup2Api();
-            this.mobileSync = new MobileSyncApi();
-            this.mobileImageMounter = new MobileImageMounterApi();
-            this.notificationProxy = new NotificationProxyApi();
-            this.pinvoke = new PinvokeApi();
-            this.propertyListService = new PropertyListServiceApi();
-            this.restore = new RestoreApi();
-            this.springBoardServices = new SpringBoardServicesApi();
-            this.screenshotr = new ScreenshotrApi();
-            this.service = new ServiceApi();
-            this.syslogRelay = new SyslogRelayApi();
-            this.webInspector = new WebInspectorApi();
+            this.usbmuxd = new UsbmuxdApi(this);
+            this.plist = new PlistApi(this);
+            this.idevice = new iDeviceApi(this);
+            this.lockdown = new LockdownApi(this);
+            this.afc = new AfcApi(this);
+            this.debugServer = new DebugServerApi(this);
+            this.diagnosticsRelay = new DiagnosticsRelayApi(this);
+            this.fileRelay = new FileRelayApi(this);
+            this.heartBeat = new HeartBeatApi(this);
+            this.houseArrest = new HouseArrestApi(this);
+            this.installationProxy = new InstallationProxyApi(this);
+            this.misagent = new MisagentApi(this);
+            this.mobileBackup = new MobileBackupApi(this);
+            this.mobileBackup2 = new MobileBackup2Api(this);
+            this.mobileSync = new MobileSyncApi(this);
+            this.mobileImageMounter = new MobileImageMounterApi(this);
+            this.notificationProxy = new NotificationProxyApi(this);
+            this.pinvoke = new PinvokeApi(this);
+            this.propertyListService = new PropertyListServiceApi(this);
+            this.restore = new RestoreApi(this);
+            this.springBoardServices = new SpringBoardServicesApi(this);
+            this.screenshotr = new ScreenshotrApi(this);
+            this.service = new ServiceApi(this);
+            this.syslogRelay = new SyslogRelayApi(this);
+            this.webInspector = new WebInspectorApi(this);
         }
         
         public static ILibiMobileDevice Instance

@@ -17,6 +17,8 @@ namespace iMobileDevice.PropertyListService
     public partial class PropertyListServiceClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected PropertyListServiceClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.PropertyListService
         protected PropertyListServiceClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static PropertyListServiceClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.PropertyListService
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.PropertyListService.property_list_service_client_free(this.handle) == PropertyListServiceError.Success);
+            return (this.Api.PropertyListService.property_list_service_client_free(this.handle) == PropertyListServiceError.Success);
         }
         
         public static PropertyListServiceClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

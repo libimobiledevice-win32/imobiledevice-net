@@ -16,6 +16,14 @@ namespace iMobileDevice.FileRelay
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="FileRelay"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the file_relay service on the specified device.
         /// </summary>
         /// <param name="device">

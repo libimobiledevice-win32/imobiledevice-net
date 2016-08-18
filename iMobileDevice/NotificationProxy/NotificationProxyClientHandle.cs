@@ -17,6 +17,8 @@ namespace iMobileDevice.NotificationProxy
     public partial class NotificationProxyClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected NotificationProxyClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.NotificationProxy
         protected NotificationProxyClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static NotificationProxyClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.NotificationProxy
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.NotificationProxy.np_client_free(this.handle) == NotificationProxyError.Success);
+            return (this.Api.NotificationProxy.np_client_free(this.handle) == NotificationProxyError.Success);
         }
         
         public static NotificationProxyClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

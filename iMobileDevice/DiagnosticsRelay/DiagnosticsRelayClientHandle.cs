@@ -17,6 +17,8 @@ namespace iMobileDevice.DiagnosticsRelay
     public partial class DiagnosticsRelayClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected DiagnosticsRelayClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.DiagnosticsRelay
         protected DiagnosticsRelayClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static DiagnosticsRelayClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.DiagnosticsRelay
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.DiagnosticsRelay.diagnostics_relay_client_free(this.handle) == DiagnosticsRelayError.Success);
+            return (this.Api.DiagnosticsRelay.diagnostics_relay_client_free(this.handle) == DiagnosticsRelayError.Success);
         }
         
         public static DiagnosticsRelayClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

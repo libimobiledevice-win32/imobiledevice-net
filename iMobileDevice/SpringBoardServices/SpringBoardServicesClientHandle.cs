@@ -17,6 +17,8 @@ namespace iMobileDevice.SpringBoardServices
     public partial class SpringBoardServicesClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected SpringBoardServicesClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.SpringBoardServices
         protected SpringBoardServicesClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static SpringBoardServicesClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.SpringBoardServices
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.SpringBoardServices.sbservices_client_free(this.handle) == SpringBoardServicesError.Success);
+            return (this.Api.SpringBoardServices.sbservices_client_free(this.handle) == SpringBoardServicesError.Success);
         }
         
         public static SpringBoardServicesClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

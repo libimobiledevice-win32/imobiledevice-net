@@ -16,6 +16,14 @@ namespace iMobileDevice.MobileBackup
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileBackup"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the mobilebackup service on the specified device.
         /// </summary>
         /// <param name="device">

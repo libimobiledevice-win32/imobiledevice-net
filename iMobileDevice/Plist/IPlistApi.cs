@@ -16,6 +16,14 @@ namespace iMobileDevice.Plist
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Plist"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Frees memory used globally by listplist, in
         /// particular the libxml parser
         /// </summary>

@@ -16,6 +16,31 @@ namespace iMobileDevice.iDevice
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"iDeviceApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="iDevice"/>.
+        /// </summary>
+        public iDeviceApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
         /// will be written to this callback instead of the standard output.
         /// </summary>
@@ -123,7 +148,10 @@ namespace iMobileDevice.iDevice
         /// </remarks>
         public virtual iDeviceError idevice_new(out iDeviceHandle device, string udid)
         {
-            return iDeviceNativeMethods.idevice_new(out device, udid);
+            iDeviceError returnValue;
+            returnValue = iDeviceNativeMethods.idevice_new(out device, udid);
+            device.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -157,7 +185,10 @@ namespace iMobileDevice.iDevice
         /// </returns>
         public virtual iDeviceError idevice_connect(iDeviceHandle device, ushort port, out iDeviceConnectionHandle connection)
         {
-            return iDeviceNativeMethods.idevice_connect(device, port, out connection);
+            iDeviceError returnValue;
+            returnValue = iDeviceNativeMethods.idevice_connect(device, port, out connection);
+            connection.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

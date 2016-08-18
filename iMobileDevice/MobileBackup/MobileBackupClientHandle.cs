@@ -17,6 +17,8 @@ namespace iMobileDevice.MobileBackup
     public partial class MobileBackupClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected MobileBackupClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.MobileBackup
         protected MobileBackupClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static MobileBackupClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.MobileBackup
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.MobileBackup.mobilebackup_client_free(this.handle) == MobileBackupError.Success);
+            return (this.Api.MobileBackup.mobilebackup_client_free(this.handle) == MobileBackupError.Success);
         }
         
         public static MobileBackupClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

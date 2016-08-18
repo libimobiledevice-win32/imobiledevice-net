@@ -17,6 +17,8 @@ namespace iMobileDevice.Misagent
     public partial class MisagentClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected MisagentClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Misagent
         protected MisagentClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static MisagentClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Misagent
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Misagent.misagent_client_free(this.handle) == MisagentError.Success);
+            return (this.Api.Misagent.misagent_client_free(this.handle) == MisagentError.Success);
         }
         
         public static MisagentClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

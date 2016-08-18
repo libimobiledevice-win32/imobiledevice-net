@@ -16,6 +16,14 @@ namespace iMobileDevice.Service
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Service"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Creates a new service for the specified service descriptor.
         /// </summary>
         /// <param name="device">

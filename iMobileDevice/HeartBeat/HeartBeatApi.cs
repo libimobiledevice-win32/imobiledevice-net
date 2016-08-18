@@ -16,6 +16,31 @@ namespace iMobileDevice.HeartBeat
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"HeartBeatApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="HeartBeat"/>.
+        /// </summary>
+        public HeartBeatApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the heartbeat service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public virtual HeartBeatError heartbeat_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out HeartBeatClientHandle client)
         {
-            return HeartBeatNativeMethods.heartbeat_client_new(device, service, out client);
+            HeartBeatError returnValue;
+            returnValue = HeartBeatNativeMethods.heartbeat_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public virtual HeartBeatError heartbeat_client_start_service(iDeviceHandle device, out HeartBeatClientHandle client, string label)
         {
-            return HeartBeatNativeMethods.heartbeat_client_start_service(device, out client, label);
+            HeartBeatError returnValue;
+            returnValue = HeartBeatNativeMethods.heartbeat_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -111,7 +142,10 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public virtual HeartBeatError heartbeat_receive(HeartBeatClientHandle client, out PlistHandle plist)
         {
-            return HeartBeatNativeMethods.heartbeat_receive(client, out plist);
+            HeartBeatError returnValue;
+            returnValue = HeartBeatNativeMethods.heartbeat_receive(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -137,7 +171,10 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public virtual HeartBeatError heartbeat_receive_with_timeout(HeartBeatClientHandle client, out PlistHandle plist, uint timeoutMs)
         {
-            return HeartBeatNativeMethods.heartbeat_receive_with_timeout(client, out plist, timeoutMs);
+            HeartBeatError returnValue;
+            returnValue = HeartBeatNativeMethods.heartbeat_receive_with_timeout(client, out plist, timeoutMs);
+            plist.Api = this.Parent;
+            return returnValue;
         }
     }
 }

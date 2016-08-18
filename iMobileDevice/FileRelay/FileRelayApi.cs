@@ -16,6 +16,31 @@ namespace iMobileDevice.FileRelay
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"FileRelayApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="FileRelay"/>.
+        /// </summary>
+        public FileRelayApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the file_relay service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.FileRelay
         /// </returns>
         public virtual FileRelayError file_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out FileRelayClientHandle client)
         {
-            return FileRelayNativeMethods.file_relay_client_new(device, service, out client);
+            FileRelayError returnValue;
+            returnValue = FileRelayNativeMethods.file_relay_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.FileRelay
         /// </returns>
         public virtual FileRelayError file_relay_client_start_service(iDeviceHandle device, out FileRelayClientHandle client, string label)
         {
-            return FileRelayNativeMethods.file_relay_client_start_service(device, out client, label);
+            FileRelayError returnValue;
+            returnValue = FileRelayNativeMethods.file_relay_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -122,7 +153,10 @@ namespace iMobileDevice.FileRelay
         /// </remarks>
         public virtual FileRelayError file_relay_request_sources(FileRelayClientHandle client, out string sources, out iDeviceConnectionHandle connection)
         {
-            return FileRelayNativeMethods.file_relay_request_sources(client, out sources, out connection);
+            FileRelayError returnValue;
+            returnValue = FileRelayNativeMethods.file_relay_request_sources(client, out sources, out connection);
+            connection.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -165,7 +199,10 @@ namespace iMobileDevice.FileRelay
         /// </remarks>
         public virtual FileRelayError file_relay_request_sources_timeout(FileRelayClientHandle client, out string sources, out iDeviceConnectionHandle connection, uint timeout)
         {
-            return FileRelayNativeMethods.file_relay_request_sources_timeout(client, out sources, out connection, timeout);
+            FileRelayError returnValue;
+            returnValue = FileRelayNativeMethods.file_relay_request_sources_timeout(client, out sources, out connection, timeout);
+            connection.Api = this.Parent;
+            return returnValue;
         }
     }
 }

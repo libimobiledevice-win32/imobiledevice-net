@@ -51,7 +51,7 @@ namespace iMobileDevice.Generator
                     var pointee = clang.getPointeeType(type);
                     if (pointee.kind == CXTypeKind.CXType_Record || pointee.kind == CXTypeKind.CXType_Void)
                     {
-                        var types = Handles.CreateSafeHandle(clrName).ToArray();
+                        var types = Handles.CreateSafeHandle(clrName, this.generator).ToArray();
                         this.generator.AddType(nativeName, types[0]);
 
                         for (int i = 1; i < types.Length; i++)

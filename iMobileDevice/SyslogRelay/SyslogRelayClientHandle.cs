@@ -17,6 +17,8 @@ namespace iMobileDevice.SyslogRelay
     public partial class SyslogRelayClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected SyslogRelayClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.SyslogRelay
         protected SyslogRelayClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static SyslogRelayClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.SyslogRelay
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.SyslogRelay.syslog_relay_client_free(this.handle) == SyslogRelayError.Success);
+            return (this.Api.SyslogRelay.syslog_relay_client_free(this.handle) == SyslogRelayError.Success);
         }
         
         public static SyslogRelayClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

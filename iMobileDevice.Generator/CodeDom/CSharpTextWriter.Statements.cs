@@ -44,10 +44,29 @@
             {
                 this.Generate((CodeThrowExceptionStatement)statement);
             }
+            else if (statement is CodeCommentStatement)
+            {
+                this.Generate((CodeCommentStatement)statement);
+            }
             else
             {
                 throw new NotSupportedException();
             }
+        }
+
+        private void Generate(CodeCommentStatement statement)
+        {
+            if (statement.Comment.DocComment)
+            {
+                this.Write("/// ");
+            }
+            else
+            {
+                this.Write("// ");
+            }
+
+            this.Write(statement.Comment.Text);
+            this.WriteLine();
         }
 
         private void Generate(CodeThrowExceptionStatement statement)

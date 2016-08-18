@@ -16,6 +16,31 @@ namespace iMobileDevice.SyslogRelay
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"SyslogRelayApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="SyslogRelay"/>.
+        /// </summary>
+        public SyslogRelayApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the syslog_relay service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.SyslogRelay
         /// </returns>
         public virtual SyslogRelayError syslog_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out SyslogRelayClientHandle client)
         {
-            return SyslogRelayNativeMethods.syslog_relay_client_new(device, service, out client);
+            SyslogRelayError returnValue;
+            returnValue = SyslogRelayNativeMethods.syslog_relay_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.SyslogRelay
         /// </returns>
         public virtual SyslogRelayError syslog_relay_client_start_service(iDeviceHandle device, out SyslogRelayClientHandle client, string label)
         {
-            return SyslogRelayNativeMethods.syslog_relay_client_start_service(device, out client, label);
+            SyslogRelayError returnValue;
+            returnValue = SyslogRelayNativeMethods.syslog_relay_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

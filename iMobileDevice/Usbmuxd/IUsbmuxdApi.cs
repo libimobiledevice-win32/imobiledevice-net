@@ -16,6 +16,14 @@ namespace iMobileDevice.Usbmuxd
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Usbmuxd"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Subscribe a callback function so that applications get to know about
         /// device add/remove events.
         /// </summary>

@@ -16,6 +16,31 @@ namespace iMobileDevice.WebInspector
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"WebInspectorApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="WebInspector"/>.
+        /// </summary>
+        public WebInspectorApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the webinspector service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.WebInspector
         /// </returns>
         public virtual WebInspectorError webinspector_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out WebInspectorClientHandle client)
         {
-            return WebInspectorNativeMethods.webinspector_client_new(device, service, out client);
+            WebInspectorError returnValue;
+            returnValue = WebInspectorNativeMethods.webinspector_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.WebInspector
         /// </returns>
         public virtual WebInspectorError webinspector_client_start_service(iDeviceHandle device, out WebInspectorClientHandle client, string label)
         {
-            return WebInspectorNativeMethods.webinspector_client_start_service(device, out client, label);
+            WebInspectorError returnValue;
+            returnValue = WebInspectorNativeMethods.webinspector_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -111,7 +142,10 @@ namespace iMobileDevice.WebInspector
         /// </returns>
         public virtual WebInspectorError webinspector_receive(WebInspectorClientHandle client, out PlistHandle plist)
         {
-            return WebInspectorNativeMethods.webinspector_receive(client, out plist);
+            WebInspectorError returnValue;
+            returnValue = WebInspectorNativeMethods.webinspector_receive(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -137,7 +171,10 @@ namespace iMobileDevice.WebInspector
         /// </returns>
         public virtual WebInspectorError webinspector_receive_with_timeout(WebInspectorClientHandle client, out PlistHandle plist, uint timeoutMs)
         {
-            return WebInspectorNativeMethods.webinspector_receive_with_timeout(client, out plist, timeoutMs);
+            WebInspectorError returnValue;
+            returnValue = WebInspectorNativeMethods.webinspector_receive_with_timeout(client, out plist, timeoutMs);
+            plist.Api = this.Parent;
+            return returnValue;
         }
     }
 }

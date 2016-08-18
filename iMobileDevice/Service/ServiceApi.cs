@@ -16,6 +16,31 @@ namespace iMobileDevice.Service
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"ServiceApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Service"/>.
+        /// </summary>
+        public ServiceApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Creates a new service for the specified service descriptor.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.Service
         /// </returns>
         public virtual ServiceError service_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out ServiceClientHandle client)
         {
-            return ServiceNativeMethods.service_client_new(device, service, out client);
+            ServiceError returnValue;
+            returnValue = ServiceNativeMethods.service_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

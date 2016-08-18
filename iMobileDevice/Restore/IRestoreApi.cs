@@ -16,6 +16,14 @@ namespace iMobileDevice.Restore
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Restore"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Creates a new restored client for the device.
         /// </summary>
         /// <param name="device">

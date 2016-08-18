@@ -16,6 +16,31 @@ namespace iMobileDevice.NotificationProxy
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"NotificationProxyApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="NotificationProxy"/>.
+        /// </summary>
+        public NotificationProxyApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the notification_proxy on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.NotificationProxy
         /// </returns>
         public virtual NotificationProxyError np_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out NotificationProxyClientHandle client)
         {
-            return NotificationProxyNativeMethods.np_client_new(device, service, out client);
+            NotificationProxyError returnValue;
+            returnValue = NotificationProxyNativeMethods.np_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.NotificationProxy
         /// </returns>
         public virtual NotificationProxyError np_client_start_service(iDeviceHandle device, out NotificationProxyClientHandle client, string label)
         {
-            return NotificationProxyNativeMethods.np_client_start_service(device, out client, label);
+            NotificationProxyError returnValue;
+            returnValue = NotificationProxyNativeMethods.np_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

@@ -16,6 +16,14 @@ namespace iMobileDevice.MobileSync
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileSync"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the mobilesync service on the specified device.
         /// MOBILESYNC_E_SUCCESS on success
         /// MOBILESYNC_E_INVALID_ARG if one or more parameters are invalid

@@ -16,6 +16,14 @@ namespace iMobileDevice.SyslogRelay
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="SyslogRelay"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the syslog_relay service on the specified device.
         /// </summary>
         /// <param name="device">

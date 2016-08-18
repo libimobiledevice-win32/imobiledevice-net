@@ -16,6 +16,31 @@ namespace iMobileDevice.Misagent
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"MisagentApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Misagent"/>.
+        /// </summary>
+        public MisagentApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the misagent service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -34,7 +59,10 @@ namespace iMobileDevice.Misagent
         /// </returns>
         public virtual MisagentError misagent_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MisagentClientHandle client)
         {
-            return MisagentNativeMethods.misagent_client_new(device, service, out client);
+            MisagentError returnValue;
+            returnValue = MisagentNativeMethods.misagent_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -58,7 +86,10 @@ namespace iMobileDevice.Misagent
         /// </returns>
         public virtual MisagentError misagent_client_start_service(iDeviceHandle device, out MisagentClientHandle client, string label)
         {
-            return MisagentNativeMethods.misagent_client_start_service(device, out client, label);
+            MisagentError returnValue;
+            returnValue = MisagentNativeMethods.misagent_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -117,7 +148,10 @@ namespace iMobileDevice.Misagent
         /// </remarks>
         public virtual MisagentError misagent_copy(MisagentClientHandle client, out PlistHandle profiles)
         {
-            return MisagentNativeMethods.misagent_copy(client, out profiles);
+            MisagentError returnValue;
+            returnValue = MisagentNativeMethods.misagent_copy(client, out profiles);
+            profiles.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

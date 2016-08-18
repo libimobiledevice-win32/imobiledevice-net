@@ -215,9 +215,9 @@ namespace iMobileDevice.Generator
                                     new CodeMethodReferenceExpression(
                                     new CodePropertyReferenceExpression(
                                         new CodePropertyReferenceExpression(
-                                            new CodeTypeReferenceExpression("LibiMobileDevice"),
-                                            "Instance"),
-                                        this.Name),
+                                            new CodeThisReferenceExpression(),
+                                            "Api"),
+                                            this.Name),
                                     freeMethod.Name),
                                     new CodeFieldReferenceExpression(
                                         new CodeThisReferenceExpression(),

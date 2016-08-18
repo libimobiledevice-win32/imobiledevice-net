@@ -40,7 +40,7 @@ namespace iMobileDevice.Generator
                         cer.ToString())));
         }
 
-        public static IEnumerable<CodeTypeDeclaration> CreateSafeHandle(string name)
+        public static IEnumerable<CodeTypeDeclaration> CreateSafeHandle(string name, ModuleGenerator generator)
         {
             CodeTypeDeclaration safeHandle = new CodeTypeDeclaration(name + "Handle");
 
@@ -69,6 +69,31 @@ namespace iMobileDevice.Generator
 
             releaseHandle.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
             safeHandle.Members.Add(releaseHandle);
+
+            // Add an "Api" property which provides a reference to the instance of the API which was used to
+            // create this handle - and which will also be used to destroy this handle.
+            CodeMemberField apiField = new CodeMemberField();
+            apiField.Name = "api";
+            apiField.Attributes = MemberAttributes.Private | MemberAttributes.Final;
+            apiField.Type = new CodeTypeReference("ILibiMobileDevice");
+            safeHandle.Members.Add(apiField);
+
+            CodeMemberProperty apiProperty = new CodeMemberProperty();
+            apiProperty.Name = "Api";
+            apiProperty.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+            apiProperty.GetStatements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        apiField.Name)));
+            apiProperty.SetStatements.Add(
+                new CodeAssignStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        apiField.Name),
+                    new CodeVariableReferenceExpression("value")));
+            apiProperty.Type = new CodeTypeReference("ILibiMobileDevice");
+            safeHandle.Members.Add(apiProperty);
 
             // Add a "DangeousCreate" method which creates a new safe handle from an IntPtr
             CodeMemberMethod dangerousCreate = new CodeMemberMethod();

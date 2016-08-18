@@ -16,6 +16,31 @@ namespace iMobileDevice.HouseArrest
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"HouseArrestApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="HouseArrest"/>.
+        /// </summary>
+        public HouseArrestApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the house_arrest service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -34,7 +59,10 @@ namespace iMobileDevice.HouseArrest
         /// </returns>
         public virtual HouseArrestError house_arrest_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out HouseArrestClientHandle client)
         {
-            return HouseArrestNativeMethods.house_arrest_client_new(device, service, out client);
+            HouseArrestError returnValue;
+            returnValue = HouseArrestNativeMethods.house_arrest_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -58,7 +86,10 @@ namespace iMobileDevice.HouseArrest
         /// </returns>
         public virtual HouseArrestError house_arrest_client_start_service(iDeviceHandle device, out HouseArrestClientHandle client, string label)
         {
-            return HouseArrestNativeMethods.house_arrest_client_start_service(device, out client, label);
+            HouseArrestError returnValue;
+            returnValue = HouseArrestNativeMethods.house_arrest_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -159,7 +190,10 @@ namespace iMobileDevice.HouseArrest
         /// </returns>
         public virtual HouseArrestError house_arrest_get_result(HouseArrestClientHandle client, out PlistHandle dict)
         {
-            return HouseArrestNativeMethods.house_arrest_get_result(client, out dict);
+            HouseArrestError returnValue;
+            returnValue = HouseArrestNativeMethods.house_arrest_get_result(client, out dict);
+            dict.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -188,7 +222,10 @@ namespace iMobileDevice.HouseArrest
         /// </remarks>
         public virtual AfcError afc_client_new_from_house_arrest_client(HouseArrestClientHandle client, out AfcClientHandle afcClient)
         {
-            return HouseArrestNativeMethods.afc_client_new_from_house_arrest_client(client, out afcClient);
+            AfcError returnValue;
+            returnValue = HouseArrestNativeMethods.afc_client_new_from_house_arrest_client(client, out afcClient);
+            afcClient.Api = this.Parent;
+            return returnValue;
         }
     }
 }

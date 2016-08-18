@@ -17,6 +17,8 @@ namespace iMobileDevice.Lockdown
     public partial class LockdownPairRecordHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected LockdownPairRecordHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Lockdown
         protected LockdownPairRecordHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static LockdownPairRecordHandle Zero

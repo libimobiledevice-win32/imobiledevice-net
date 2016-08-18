@@ -16,6 +16,31 @@ namespace iMobileDevice.Lockdown
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"LockdownApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Lockdown"/>.
+        /// </summary>
+        public LockdownApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Creates a new lockdownd client for the device.
         /// </summary>
         /// <param name="device">
@@ -39,7 +64,10 @@ namespace iMobileDevice.Lockdown
         /// </remarks>
         public virtual LockdownError lockdownd_client_new(iDeviceHandle device, out LockdownClientHandle client, string label)
         {
-            return LockdownNativeMethods.lockdownd_client_new(device, out client, label);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_client_new(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -68,7 +96,10 @@ namespace iMobileDevice.Lockdown
         /// </remarks>
         public virtual LockdownError lockdownd_client_new_with_handshake(iDeviceHandle device, out LockdownClientHandle client, string label)
         {
-            return LockdownNativeMethods.lockdownd_client_new_with_handshake(device, out client, label);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_client_new_with_handshake(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -124,7 +155,10 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public virtual LockdownError lockdownd_get_value(LockdownClientHandle client, string domain, string key, out PlistHandle value)
         {
-            return LockdownNativeMethods.lockdownd_get_value(client, domain, key, out value);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_get_value(client, domain, key, out value);
+            value.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -194,7 +228,10 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public virtual LockdownError lockdownd_start_service(LockdownClientHandle client, string identifier, out LockdownServiceDescriptorHandle service)
         {
-            return LockdownNativeMethods.lockdownd_start_service(client, identifier, out service);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_start_service(client, identifier, out service);
+            service.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -219,7 +256,10 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public virtual LockdownError lockdownd_start_service_with_escrow_bag(LockdownClientHandle client, string identifier, out LockdownServiceDescriptorHandle service)
         {
-            return LockdownNativeMethods.lockdownd_start_service_with_escrow_bag(client, identifier, out service);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_start_service_with_escrow_bag(client, identifier, out service);
+            service.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -302,7 +342,10 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public virtual LockdownError lockdownd_receive(LockdownClientHandle client, out PlistHandle plist)
         {
-            return LockdownNativeMethods.lockdownd_receive(client, out plist);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_receive(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -355,7 +398,10 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public virtual LockdownError lockdownd_pair_with_options(LockdownClientHandle client, LockdownPairRecordHandle pairRecord, PlistHandle options, out PlistHandle response)
         {
-            return LockdownNativeMethods.lockdownd_pair_with_options(client, pairRecord, options, out response);
+            LockdownError returnValue;
+            returnValue = LockdownNativeMethods.lockdownd_pair_with_options(client, pairRecord, options, out response);
+            response.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

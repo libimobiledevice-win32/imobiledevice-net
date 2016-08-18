@@ -14,8 +14,27 @@ namespace iMobileDevice.Generator
     {
         public static void Main(string[] args)
         {
-            var sourceDirectory = args[0];
-            var targetDirectory = args[1];
+            string sourceDirectory = null; ;
+            string targetDirectory = null;
+
+            if (args.Length >= 1)
+            {
+                sourceDirectory = args[0];
+            }
+            else
+            {
+                // Default value so that you can just F5 from within Visual Studio
+                sourceDirectory = @"..\..\..\..\";
+            }
+
+            if (args.Length >= 2)
+            {
+                targetDirectory = args[1];
+            }
+            else
+            {
+                targetDirectory = @"..\..\..\..\iMobileDevice";
+            }
 
             sourceDirectory = Path.GetFullPath(sourceDirectory);
             targetDirectory = Path.GetFullPath(targetDirectory);

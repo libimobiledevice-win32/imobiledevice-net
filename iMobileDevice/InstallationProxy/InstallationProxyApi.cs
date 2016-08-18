@@ -16,6 +16,31 @@ namespace iMobileDevice.InstallationProxy
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"InstallationProxyApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="InstallationProxy"/>.
+        /// </summary>
+        public InstallationProxyApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the installation_proxy service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -34,7 +59,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out InstallationProxyClientHandle client)
         {
-            return InstallationProxyNativeMethods.instproxy_client_new(device, service, out client);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -58,7 +86,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_client_start_service(iDeviceHandle device, out InstallationProxyClientHandle client, string label)
         {
-            return InstallationProxyNativeMethods.instproxy_client_start_service(device, out client, label);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -101,7 +132,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_browse(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result)
         {
-            return InstallationProxyNativeMethods.instproxy_browse(client, clientOptions, out result);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_browse(client, clientOptions, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -158,7 +192,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_lookup(InstallationProxyClientHandle client, System.Collections.ObjectModel.ReadOnlyCollection<string> appids, PlistHandle clientOptions, out PlistHandle result)
         {
-            return InstallationProxyNativeMethods.instproxy_lookup(client, appids, clientOptions, out result);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_lookup(client, appids, clientOptions, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -298,7 +335,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_lookup_archives(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result)
         {
-            return InstallationProxyNativeMethods.instproxy_lookup_archives(client, clientOptions, out result);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_lookup_archives(client, clientOptions, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -439,7 +479,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual InstallationProxyError instproxy_check_capabilities_match(InstallationProxyClientHandle client, out string capabilities, PlistHandle clientOptions, out PlistHandle result)
         {
-            return InstallationProxyNativeMethods.instproxy_check_capabilities_match(client, out capabilities, clientOptions, out result);
+            InstallationProxyError returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_check_capabilities_match(client, out capabilities, clientOptions, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

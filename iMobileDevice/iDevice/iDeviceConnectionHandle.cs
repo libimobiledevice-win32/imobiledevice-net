@@ -17,6 +17,8 @@ namespace iMobileDevice.iDevice
     public partial class iDeviceConnectionHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected iDeviceConnectionHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.iDevice
         protected iDeviceConnectionHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static iDeviceConnectionHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.iDevice
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.iDevice.idevice_disconnect(this.handle) == iDeviceError.Success);
+            return (this.Api.iDevice.idevice_disconnect(this.handle) == iDeviceError.Success);
         }
         
         public static iDeviceConnectionHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
