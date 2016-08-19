@@ -17,6 +17,8 @@ namespace iMobileDevice.Plist
     public partial class PlistHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected PlistHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Plist
         protected PlistHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static PlistHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Plist
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            LibiMobileDevice.Instance.Plist.plist_free(this.handle);
+            this.Api.Plist.plist_free(this.handle);
             return true;
         }
         

@@ -16,6 +16,31 @@ namespace iMobileDevice.Screenshotr
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"ScreenshotrApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Screenshotr"/>.
+        /// </summary>
+        public ScreenshotrApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the screenshotr service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -39,7 +64,10 @@ namespace iMobileDevice.Screenshotr
         /// </remarks>
         public virtual ScreenshotrError screenshotr_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out ScreenshotrClientHandle client)
         {
-            return ScreenshotrNativeMethods.screenshotr_client_new(device, service, out client);
+            ScreenshotrError returnValue;
+            returnValue = ScreenshotrNativeMethods.screenshotr_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -63,7 +91,10 @@ namespace iMobileDevice.Screenshotr
         /// </returns>
         public virtual ScreenshotrError screenshotr_client_start_service(iDeviceHandle device, out ScreenshotrClientHandle client, string label)
         {
-            return ScreenshotrNativeMethods.screenshotr_client_start_service(device, out client, label);
+            ScreenshotrError returnValue;
+            returnValue = ScreenshotrNativeMethods.screenshotr_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

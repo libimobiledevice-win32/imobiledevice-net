@@ -16,6 +16,14 @@ namespace iMobileDevice.Afc
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Afc"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Makes a connection to the AFC service on the device.
         /// </summary>
         /// <param name="device">

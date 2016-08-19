@@ -16,6 +16,14 @@ namespace iMobileDevice.NotificationProxy
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="NotificationProxy"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the notification_proxy on the specified device.
         /// </summary>
         /// <param name="device">

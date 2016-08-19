@@ -17,6 +17,8 @@ namespace iMobileDevice.Restore
     public partial class RestoreClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected RestoreClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Restore
         protected RestoreClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static RestoreClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Restore
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Restore.restored_client_free(this.handle) == RestoreError.Success);
+            return (this.Api.Restore.restored_client_free(this.handle) == RestoreError.Success);
         }
         
         public static RestoreClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

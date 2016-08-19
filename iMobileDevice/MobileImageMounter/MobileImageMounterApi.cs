@@ -16,6 +16,31 @@ namespace iMobileDevice.MobileImageMounter
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"MobileImageMounterApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileImageMounter"/>.
+        /// </summary>
+        public MobileImageMounterApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the mobile_image_mounter service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -36,7 +61,10 @@ namespace iMobileDevice.MobileImageMounter
         /// </returns>
         public virtual MobileImageMounterError mobile_image_mounter_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileImageMounterClientHandle client)
         {
-            return MobileImageMounterNativeMethods.mobile_image_mounter_new(device, service, out client);
+            MobileImageMounterError returnValue;
+            returnValue = MobileImageMounterNativeMethods.mobile_image_mounter_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -60,7 +88,10 @@ namespace iMobileDevice.MobileImageMounter
         /// </returns>
         public virtual MobileImageMounterError mobile_image_mounter_start_service(iDeviceHandle device, out MobileImageMounterClientHandle client, string label)
         {
-            return MobileImageMounterNativeMethods.mobile_image_mounter_start_service(device, out client, label);
+            MobileImageMounterError returnValue;
+            returnValue = MobileImageMounterNativeMethods.mobile_image_mounter_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -101,7 +132,10 @@ namespace iMobileDevice.MobileImageMounter
         /// </remarks>
         public virtual MobileImageMounterError mobile_image_mounter_lookup_image(MobileImageMounterClientHandle client, string imageType, out PlistHandle result)
         {
-            return MobileImageMounterNativeMethods.mobile_image_mounter_lookup_image(client, imageType, out result);
+            MobileImageMounterError returnValue;
+            returnValue = MobileImageMounterNativeMethods.mobile_image_mounter_lookup_image(client, imageType, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -176,7 +210,10 @@ namespace iMobileDevice.MobileImageMounter
         /// </remarks>
         public virtual MobileImageMounterError mobile_image_mounter_mount_image(MobileImageMounterClientHandle client, string imagePath, byte[] signature, ushort signatureSize, string imageType, out PlistHandle result)
         {
-            return MobileImageMounterNativeMethods.mobile_image_mounter_mount_image(client, imagePath, signature, signatureSize, imageType, out result);
+            MobileImageMounterError returnValue;
+            returnValue = MobileImageMounterNativeMethods.mobile_image_mounter_mount_image(client, imagePath, signature, signatureSize, imageType, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

@@ -16,6 +16,31 @@ namespace iMobileDevice.MobileBackup2
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"MobileBackup2Api"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileBackup2"/>.
+        /// </summary>
+        public MobileBackup2Api(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the mobilebackup2 service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.MobileBackup2
         /// </returns>
         public virtual MobileBackup2Error mobilebackup2_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileBackup2ClientHandle client)
         {
-            return MobileBackup2NativeMethods.mobilebackup2_client_new(device, service, out client);
+            MobileBackup2Error returnValue;
+            returnValue = MobileBackup2NativeMethods.mobilebackup2_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.MobileBackup2
         /// </returns>
         public virtual MobileBackup2Error mobilebackup2_client_start_service(iDeviceHandle device, out MobileBackup2ClientHandle client, string label)
         {
-            return MobileBackup2NativeMethods.mobilebackup2_client_start_service(device, out client, label);
+            MobileBackup2Error returnValue;
+            returnValue = MobileBackup2NativeMethods.mobilebackup2_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -126,7 +157,10 @@ namespace iMobileDevice.MobileBackup2
         /// </returns>
         public virtual MobileBackup2Error mobilebackup2_receive_message(MobileBackup2ClientHandle client, out PlistHandle msgPlist, out string dlmessage)
         {
-            return MobileBackup2NativeMethods.mobilebackup2_receive_message(client, out msgPlist, out dlmessage);
+            MobileBackup2Error returnValue;
+            returnValue = MobileBackup2NativeMethods.mobilebackup2_receive_message(client, out msgPlist, out dlmessage);
+            msgPlist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

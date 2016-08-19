@@ -17,6 +17,8 @@ namespace iMobileDevice.HeartBeat
     public partial class HeartBeatClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected HeartBeatClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.HeartBeat
         protected HeartBeatClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static HeartBeatClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.HeartBeat
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.HeartBeat.heartbeat_client_free(this.handle) == HeartBeatError.Success);
+            return (this.Api.HeartBeat.heartbeat_client_free(this.handle) == HeartBeatError.Success);
         }
         
         public static HeartBeatClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

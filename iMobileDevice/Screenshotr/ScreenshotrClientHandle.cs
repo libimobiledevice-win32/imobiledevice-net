@@ -17,6 +17,8 @@ namespace iMobileDevice.Screenshotr
     public partial class ScreenshotrClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected ScreenshotrClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Screenshotr
         protected ScreenshotrClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static ScreenshotrClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Screenshotr
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Screenshotr.screenshotr_client_free(this.handle) == ScreenshotrError.Success);
+            return (this.Api.Screenshotr.screenshotr_client_free(this.handle) == ScreenshotrError.Success);
         }
         
         public static ScreenshotrClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

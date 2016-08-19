@@ -16,6 +16,14 @@ namespace iMobileDevice.HouseArrest
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="HouseArrest"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the house_arrest service on the specified device.
         /// </summary>
         /// <param name="device">

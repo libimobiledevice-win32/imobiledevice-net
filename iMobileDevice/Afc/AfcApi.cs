@@ -16,6 +16,31 @@ namespace iMobileDevice.Afc
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"AfcApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Afc"/>.
+        /// </summary>
+        public AfcApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Makes a connection to the AFC service on the device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.Afc
         /// </returns>
         public virtual AfcError afc_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out AfcClientHandle client)
         {
-            return AfcNativeMethods.afc_client_new(device, service, out client);
+            AfcError returnValue;
+            returnValue = AfcNativeMethods.afc_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -57,7 +85,10 @@ namespace iMobileDevice.Afc
         /// </returns>
         public virtual AfcError afc_client_start_service(iDeviceHandle device, out AfcClientHandle client, string label)
         {
-            return AfcNativeMethods.afc_client_start_service(device, out client, label);
+            AfcError returnValue;
+            returnValue = AfcNativeMethods.afc_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

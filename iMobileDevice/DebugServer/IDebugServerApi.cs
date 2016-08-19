@@ -16,6 +16,14 @@ namespace iMobileDevice.DebugServer
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="DebugServer"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the debugserver service on the specified device.
         /// </summary>
         /// <param name="device">

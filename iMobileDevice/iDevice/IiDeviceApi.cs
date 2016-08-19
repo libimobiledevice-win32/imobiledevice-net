@@ -16,6 +16,14 @@ namespace iMobileDevice.iDevice
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="iDevice"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
         /// will be written to this callback instead of the standard output.
         /// </summary>

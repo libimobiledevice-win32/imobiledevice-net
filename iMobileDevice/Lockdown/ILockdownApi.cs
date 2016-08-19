@@ -16,6 +16,14 @@ namespace iMobileDevice.Lockdown
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Lockdown"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Creates a new lockdownd client for the device.
         /// </summary>
         /// <param name="device">

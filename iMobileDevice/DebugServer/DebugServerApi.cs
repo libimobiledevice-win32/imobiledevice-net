@@ -16,6 +16,31 @@ namespace iMobileDevice.DebugServer
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"DebugServerApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="DebugServer"/>.
+        /// </summary>
+        public DebugServerApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the debugserver service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.DebugServer
         /// </returns>
         public virtual DebugServerError debugserver_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out DebugServerClientHandle client)
         {
-            return DebugServerNativeMethods.debugserver_client_new(device, service, out client);
+            DebugServerError returnValue;
+            returnValue = DebugServerNativeMethods.debugserver_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.DebugServer
         /// </returns>
         public virtual DebugServerError debugserver_client_start_service(iDeviceHandle device, out DebugServerClientHandle client, string label)
         {
-            return DebugServerNativeMethods.debugserver_client_start_service(device, out client, label);
+            DebugServerError returnValue;
+            returnValue = DebugServerNativeMethods.debugserver_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -285,7 +316,10 @@ namespace iMobileDevice.DebugServer
         /// </returns>
         public virtual DebugServerError debugserver_command_new(string name, int argc, System.Collections.ObjectModel.ReadOnlyCollection<string> argv, out DebugServerCommandHandle command)
         {
-            return DebugServerNativeMethods.debugserver_command_new(name, argc, argv, out command);
+            DebugServerError returnValue;
+            returnValue = DebugServerNativeMethods.debugserver_command_new(name, argc, argv, out command);
+            command.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

@@ -16,6 +16,14 @@ namespace iMobileDevice.WebInspector
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="WebInspector"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the webinspector service on the specified device.
         /// </summary>
         /// <param name="device">

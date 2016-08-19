@@ -16,6 +16,14 @@ namespace iMobileDevice.DiagnosticsRelay
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="DiagnosticsRelay"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the diagnostics_relay service on the specified device.
         /// </summary>
         /// <param name="device">

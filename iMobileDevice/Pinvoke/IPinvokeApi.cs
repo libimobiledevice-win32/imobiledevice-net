@@ -16,6 +16,14 @@ namespace iMobileDevice.Pinvoke
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Pinvoke"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Frees a string that was previously allocated by libimobiledevice.
         /// </summary>
         /// <param name="string">

@@ -17,6 +17,8 @@ namespace iMobileDevice.InstallationProxy
     public partial class InstallationProxyClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected InstallationProxyClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.InstallationProxy
         protected InstallationProxyClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static InstallationProxyClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.InstallationProxy
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.InstallationProxy.instproxy_client_free(this.handle) == InstallationProxyError.Success);
+            return (this.Api.InstallationProxy.instproxy_client_free(this.handle) == InstallationProxyError.Success);
         }
         
         public static InstallationProxyClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

@@ -48,8 +48,12 @@
                 this.Indent--;
                 this.WriteLine("}");
             }
+            else if (property.HasGet)
+            {
+                this.WriteLine("get;");
+            }
 
-            if (property.GetStatements != null && property.SetStatements.Count > 0)
+            if (property.SetStatements != null && property.SetStatements.Count > 0)
             {
                 this.WriteLine("set");
                 this.WriteLine("{");
@@ -59,6 +63,10 @@
 
                 this.Indent--;
                 this.WriteLine("}");
+            }
+            else if (property.HasSet)
+            {
+                this.WriteLine("set;");
             }
 
             this.Indent--;

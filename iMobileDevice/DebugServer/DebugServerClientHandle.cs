@@ -17,6 +17,8 @@ namespace iMobileDevice.DebugServer
     public partial class DebugServerClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected DebugServerClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.DebugServer
         protected DebugServerClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static DebugServerClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.DebugServer
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.DebugServer.debugserver_client_free(this.handle) == DebugServerError.Success);
+            return (this.Api.DebugServer.debugserver_client_free(this.handle) == DebugServerError.Success);
         }
         
         public static DebugServerClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

@@ -16,6 +16,14 @@ namespace iMobileDevice.MobileImageMounter
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileImageMounter"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the mobile_image_mounter service on the specified device.
         /// </summary>
         /// <param name="device">

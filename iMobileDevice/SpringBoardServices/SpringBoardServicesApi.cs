@@ -16,6 +16,31 @@ namespace iMobileDevice.SpringBoardServices
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"SpringBoardServicesApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="SpringBoardServices"/>.
+        /// </summary>
+        public SpringBoardServicesApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the springboardservices service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -34,7 +59,10 @@ namespace iMobileDevice.SpringBoardServices
         /// </returns>
         public virtual SpringBoardServicesError sbservices_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out SpringBoardServicesClientHandle client)
         {
-            return SpringBoardServicesNativeMethods.sbservices_client_new(device, service, out client);
+            SpringBoardServicesError returnValue;
+            returnValue = SpringBoardServicesNativeMethods.sbservices_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -58,7 +86,10 @@ namespace iMobileDevice.SpringBoardServices
         /// </returns>
         public virtual SpringBoardServicesError sbservices_client_start_service(iDeviceHandle device, out SpringBoardServicesClientHandle client, string label)
         {
-            return SpringBoardServicesNativeMethods.sbservices_client_start_service(device, out client, label);
+            SpringBoardServicesError returnValue;
+            returnValue = SpringBoardServicesNativeMethods.sbservices_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -99,7 +130,10 @@ namespace iMobileDevice.SpringBoardServices
         /// </returns>
         public virtual SpringBoardServicesError sbservices_get_icon_state(SpringBoardServicesClientHandle client, out PlistHandle state, string formatVersion)
         {
-            return SpringBoardServicesNativeMethods.sbservices_get_icon_state(client, out state, formatVersion);
+            SpringBoardServicesError returnValue;
+            returnValue = SpringBoardServicesNativeMethods.sbservices_get_icon_state(client, out state, formatVersion);
+            state.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

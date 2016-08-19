@@ -16,6 +16,14 @@ namespace iMobileDevice.PropertyListService
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="PropertyListService"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Creates a new property list service for the specified port.
         /// </summary>
         /// <param name="device">

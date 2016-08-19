@@ -17,6 +17,8 @@ namespace iMobileDevice.Lockdown
     public partial class LockdownServiceDescriptorHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected LockdownServiceDescriptorHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Lockdown
         protected LockdownServiceDescriptorHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static LockdownServiceDescriptorHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Lockdown
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Lockdown.lockdownd_service_descriptor_free(this.handle) == LockdownError.Success);
+            return (this.Api.Lockdown.lockdownd_service_descriptor_free(this.handle) == LockdownError.Success);
         }
         
         public static LockdownServiceDescriptorHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

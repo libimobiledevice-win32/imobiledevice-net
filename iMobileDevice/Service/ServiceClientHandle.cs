@@ -17,6 +17,8 @@ namespace iMobileDevice.Service
     public partial class ServiceClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected ServiceClientHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.Service
         protected ServiceClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static ServiceClientHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.Service
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.Service.service_client_free(this.handle) == ServiceError.Success);
+            return (this.Api.Service.service_client_free(this.handle) == ServiceError.Success);
         }
         
         public static ServiceClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

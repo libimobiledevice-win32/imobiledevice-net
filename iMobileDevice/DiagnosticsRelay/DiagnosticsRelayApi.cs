@@ -16,6 +16,31 @@ namespace iMobileDevice.DiagnosticsRelay
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"DiagnosticsRelayApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="DiagnosticsRelay"/>.
+        /// </summary>
+        public DiagnosticsRelayApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the diagnostics_relay service on the specified device.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.DiagnosticsRelay
         /// </returns>
         public virtual DiagnosticsRelayError diagnostics_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out DiagnosticsRelayClientHandle client)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_client_new(device, service, out client);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -59,7 +87,10 @@ namespace iMobileDevice.DiagnosticsRelay
         /// </returns>
         public virtual DiagnosticsRelayError diagnostics_relay_client_start_service(iDeviceHandle device, out DiagnosticsRelayClientHandle client, string label)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_client_start_service(device, out client, label);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -183,22 +214,34 @@ namespace iMobileDevice.DiagnosticsRelay
         /// </returns>
         public virtual DiagnosticsRelayError diagnostics_relay_request_diagnostics(DiagnosticsRelayClientHandle client, string type, out PlistHandle diagnostics)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_request_diagnostics(client, type, out diagnostics);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_request_diagnostics(client, type, out diagnostics);
+            diagnostics.Api = this.Parent;
+            return returnValue;
         }
         
         public virtual DiagnosticsRelayError diagnostics_relay_query_mobilegestalt(DiagnosticsRelayClientHandle client, PlistHandle keys, out PlistHandle result)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_query_mobilegestalt(client, keys, out result);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_query_mobilegestalt(client, keys, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         public virtual DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, string name, string classname, out PlistHandle result)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_query_ioregistry_entry(client, name, classname, out result);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_query_ioregistry_entry(client, name, classname, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
         
         public virtual DiagnosticsRelayError diagnostics_relay_query_ioregistry_plane(DiagnosticsRelayClientHandle client, string plane, out PlistHandle result)
         {
-            return DiagnosticsRelayNativeMethods.diagnostics_relay_query_ioregistry_plane(client, plane, out result);
+            DiagnosticsRelayError returnValue;
+            returnValue = DiagnosticsRelayNativeMethods.diagnostics_relay_query_ioregistry_plane(client, plane, out result);
+            result.Api = this.Parent;
+            return returnValue;
         }
     }
 }

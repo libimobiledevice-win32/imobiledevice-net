@@ -17,6 +17,8 @@ namespace iMobileDevice.MobileSync
     public partial class MobileSyncAnchorsHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private ILibiMobileDevice api;
+        
         protected MobileSyncAnchorsHandle() : 
                 base(true)
         {
@@ -25,6 +27,18 @@ namespace iMobileDevice.MobileSync
         protected MobileSyncAnchorsHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+        }
+        
+        public ILibiMobileDevice Api
+        {
+            get
+            {
+                return this.api;
+            }
+            set
+            {
+                this.api = value;
+            }
         }
         
         public static MobileSyncAnchorsHandle Zero
@@ -39,7 +53,7 @@ namespace iMobileDevice.MobileSync
         protected override bool ReleaseHandle()
         {
             System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-            return (LibiMobileDevice.Instance.MobileSync.mobilesync_anchors_free(this.handle) == MobileSyncError.Success);
+            return (this.Api.MobileSync.mobilesync_anchors_free(this.handle) == MobileSyncError.Success);
         }
         
         public static MobileSyncAnchorsHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)

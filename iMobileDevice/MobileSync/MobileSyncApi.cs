@@ -16,6 +16,31 @@ namespace iMobileDevice.MobileSync
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"MobileSyncApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileSync"/>.
+        /// </summary>
+        public MobileSyncApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Connects to the mobilesync service on the specified device.
         /// MOBILESYNC_E_SUCCESS on success
         /// MOBILESYNC_E_INVALID_ARG if one or more parameters are invalid
@@ -34,7 +59,10 @@ namespace iMobileDevice.MobileSync
         /// </param>
         public virtual MobileSyncError mobilesync_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileSyncClientHandle client)
         {
-            return MobileSyncNativeMethods.mobilesync_client_new(device, service, out client);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -58,7 +86,10 @@ namespace iMobileDevice.MobileSync
         /// </returns>
         public virtual MobileSyncError mobilesync_client_start_service(iDeviceHandle device, out MobileSyncClientHandle client, string label)
         {
-            return MobileSyncNativeMethods.mobilesync_client_start_service(device, out client, label);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_client_start_service(device, out client, label);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -90,7 +121,10 @@ namespace iMobileDevice.MobileSync
         /// </returns>
         public virtual MobileSyncError mobilesync_receive(MobileSyncClientHandle client, out PlistHandle plist)
         {
-            return MobileSyncNativeMethods.mobilesync_receive(client, out plist);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_receive(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -251,7 +285,11 @@ namespace iMobileDevice.MobileSync
         /// </param>
         public virtual MobileSyncError mobilesync_receive_changes(MobileSyncClientHandle client, out PlistHandle entities, ref char isLastRecord, out PlistHandle actions)
         {
-            return MobileSyncNativeMethods.mobilesync_receive_changes(client, out entities, ref isLastRecord, out actions);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_receive_changes(client, out entities, ref isLastRecord, out actions);
+            entities.Api = this.Parent;
+            actions.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -333,7 +371,10 @@ namespace iMobileDevice.MobileSync
         /// </param>
         public virtual MobileSyncError mobilesync_remap_identifiers(MobileSyncClientHandle client, out PlistHandle mapping)
         {
-            return MobileSyncNativeMethods.mobilesync_remap_identifiers(client, out mapping);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_remap_identifiers(client, out mapping);
+            mapping.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -353,7 +394,10 @@ namespace iMobileDevice.MobileSync
         /// </param>
         public virtual MobileSyncError mobilesync_anchors_new(string deviceAnchor, string computerAnchor, out MobileSyncAnchorsHandle anchor)
         {
-            return MobileSyncNativeMethods.mobilesync_anchors_new(deviceAnchor, computerAnchor, out anchor);
+            MobileSyncError returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_anchors_new(deviceAnchor, computerAnchor, out anchor);
+            anchor.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

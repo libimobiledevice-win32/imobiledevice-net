@@ -16,6 +16,31 @@ namespace iMobileDevice.PropertyListService
     {
         
         /// <summary>
+        /// Backing field for the <see cref="Parent"/> property
+        /// </summary>
+        private ILibiMobileDevice parent;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref"PropertyListServiceApi"/> class
+        /// </summary>
+        /// <param name="parent">
+        /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="PropertyListService"/>.
+        /// </summary>
+        public PropertyListServiceApi(ILibiMobileDevice parent)
+        {
+            this.parent = parent;
+        }
+        
+        /// <inheritdoc/>
+        public ILibiMobileDevice Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+        }
+        
+        /// <summary>
         /// Creates a new property list service for the specified port.
         /// </summary>
         /// <param name="device">
@@ -35,7 +60,10 @@ namespace iMobileDevice.PropertyListService
         /// </returns>
         public virtual PropertyListServiceError property_list_service_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out PropertyListServiceClientHandle client)
         {
-            return PropertyListServiceNativeMethods.property_list_service_client_new(device, service, out client);
+            PropertyListServiceError returnValue;
+            returnValue = PropertyListServiceNativeMethods.property_list_service_client_new(device, service, out client);
+            client.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -119,7 +147,10 @@ namespace iMobileDevice.PropertyListService
         /// </returns>
         public virtual PropertyListServiceError property_list_service_receive_plist_with_timeout(PropertyListServiceClientHandle client, out PlistHandle plist, uint timeout)
         {
-            return PropertyListServiceNativeMethods.property_list_service_receive_plist_with_timeout(client, out plist, timeout);
+            PropertyListServiceError returnValue;
+            returnValue = PropertyListServiceNativeMethods.property_list_service_receive_plist_with_timeout(client, out plist, timeout);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -145,7 +176,10 @@ namespace iMobileDevice.PropertyListService
         /// </returns>
         public virtual PropertyListServiceError property_list_service_receive_plist(PropertyListServiceClientHandle client, out PlistHandle plist)
         {
-            return PropertyListServiceNativeMethods.property_list_service_receive_plist(client, out plist);
+            PropertyListServiceError returnValue;
+            returnValue = PropertyListServiceNativeMethods.property_list_service_receive_plist(client, out plist);
+            plist.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

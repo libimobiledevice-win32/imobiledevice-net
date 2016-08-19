@@ -122,7 +122,8 @@ namespace iMobileDevice.Generator
                             new CodeThisReferenceExpression(),
                             camelCased),
                         new CodeObjectCreateExpression(
-                            new CodeTypeReference($"{name}Api"))));
+                            new CodeTypeReference($"{name}Api"),
+                            new CodeThisReferenceExpression())));
             }
 
             // Add the LibraryFound property

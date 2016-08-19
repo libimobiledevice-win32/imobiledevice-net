@@ -16,6 +16,14 @@ namespace iMobileDevice.Screenshotr
     {
         
         /// <summary>
+        /// Gets or sets the <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Screenshotr"/>.
+        /// </summary>
+        ILibiMobileDevice Parent
+        {
+            get;
+        }
+        
+        /// <summary>
         /// Connects to the screenshotr service on the specified device.
         /// </summary>
         /// <param name="device">
