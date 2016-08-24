@@ -144,11 +144,12 @@ namespace iMobileDevice.Generator
                 }
                 else
                 {
-                    // If there are "out" parameters which are safe handles, we should special case.
+                    // If there are return values or "out" parameters which are safe handles, we should special case.
                     // Otherwise, just call the method and return the result
                     if (!method.Parameters.OfType<CodeParameterDeclarationExpression>().Any(
                         p => p.Direction == FieldDirection.Out
-                        && p.Type.BaseType.EndsWith("Handle")))
+                        && p.Type.BaseType.EndsWith("Handle"))
+                        && !method.ReturnType.BaseType.EndsWith("Handle"))
                     {
                         classMethod.Statements.Add(
                             new CodeMethodReturnStatement(
@@ -183,6 +184,19 @@ namespace iMobileDevice.Generator
                                             new CodeThisReferenceExpression(),
                                             "Parent")));
                             }
+                        }
+
+                        // The same also applies to the return value - if it is a safe handle, update the. Api property
+                        if(method.ReturnType.BaseType.EndsWith("Handle"))
+                        {
+                            classMethod.Statements.Add(
+                                new CodeAssignStatement(
+                                    new CodePropertyReferenceExpression(
+                                        new CodeVariableReferenceExpression("returnValue"),
+                                        "Api"),
+                                    new CodePropertyReferenceExpression(
+                                        new CodeThisReferenceExpression(),
+                                        "Parent")));
                         }
 
                         classMethod.Statements.Add(
