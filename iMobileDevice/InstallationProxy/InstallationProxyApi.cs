@@ -590,7 +590,10 @@ namespace iMobileDevice.InstallationProxy
         /// </returns>
         public virtual PlistHandle instproxy_client_options_new()
         {
-            return InstallationProxyNativeMethods.instproxy_client_options_new();
+            PlistHandle returnValue;
+            returnValue = InstallationProxyNativeMethods.instproxy_client_options_new();
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

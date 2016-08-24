@@ -57,7 +57,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_dict()
         {
-            return PlistNativeMethods.plist_new_dict();
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_dict();
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -68,7 +71,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_array()
         {
-            return PlistNativeMethods.plist_new_array();
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_array();
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -82,7 +88,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_string(string val)
         {
-            return PlistNativeMethods.plist_new_string(val);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_string(val);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -96,7 +105,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_bool(char val)
         {
-            return PlistNativeMethods.plist_new_bool(val);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_bool(val);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -110,7 +122,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_uint(ulong val)
         {
-            return PlistNativeMethods.plist_new_uint(val);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_uint(val);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -124,7 +139,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_real(double val)
         {
-            return PlistNativeMethods.plist_new_real(val);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_real(val);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -141,7 +159,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_data(string val, ulong length)
         {
-            return PlistNativeMethods.plist_new_data(val, length);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_data(val, length);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -158,7 +179,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_date(int sec, int usec)
         {
-            return PlistNativeMethods.plist_new_date(sec, usec);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_date(sec, usec);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -172,7 +196,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_new_uid(ulong val)
         {
-            return PlistNativeMethods.plist_new_uid(val);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_new_uid(val);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -197,7 +224,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_copy(PlistHandle node)
         {
-            return PlistNativeMethods.plist_copy(node);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_copy(node);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -228,7 +258,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_array_get_item(PlistHandle node, uint n)
         {
-            return PlistNativeMethods.plist_array_get_item(node, n);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_array_get_item(node, n);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -389,7 +422,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_dict_get_item(PlistHandle node, string key)
         {
-            return PlistNativeMethods.plist_dict_get_item(node, key);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_dict_get_item(node, key);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -467,7 +503,10 @@ namespace iMobileDevice.Plist
         /// </param>
         public virtual PlistHandle plist_get_parent(PlistHandle node)
         {
-            return PlistNativeMethods.plist_get_parent(node);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_get_parent(node);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -849,7 +888,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_access_path(PlistHandle plist, uint length)
         {
-            return PlistNativeMethods.plist_access_path(plist, length);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_access_path(plist, length);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
@@ -869,7 +911,10 @@ namespace iMobileDevice.Plist
         /// </returns>
         public virtual PlistHandle plist_access_pathv(PlistHandle plist, uint length, System.IntPtr v)
         {
-            return PlistNativeMethods.plist_access_pathv(plist, length, v);
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_access_pathv(plist, length, v);
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>

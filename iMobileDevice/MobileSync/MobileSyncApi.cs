@@ -420,7 +420,10 @@ namespace iMobileDevice.MobileSync
         /// </returns>
         public virtual PlistHandle mobilesync_actions_new()
         {
-            return MobileSyncNativeMethods.mobilesync_actions_new();
+            PlistHandle returnValue;
+            returnValue = MobileSyncNativeMethods.mobilesync_actions_new();
+            returnValue.Api = this.Parent;
+            return returnValue;
         }
         
         /// <summary>
