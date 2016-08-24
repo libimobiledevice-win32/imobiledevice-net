@@ -30,7 +30,8 @@
           "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x64/native/*.exe",
           "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x64/native/*.dll",
           "../../packages/pthreads.redist.2.9.1.4/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll"
-        ]
+        ],
+        "runtimes/win7-x64/native/imobiledevice-net-lighthouse-x64.dll": "lighthouse-x64.dll"
       }
     }
   },

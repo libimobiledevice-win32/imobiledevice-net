@@ -19,7 +19,8 @@
     "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ],
     "files": {
       "mappings": {
-        "runtimes/ubuntu.14.04-x64/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so"
+        "runtimes/linux-x64/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so",
+        "runtimes/linux-x64/native/libimobiledevice-net-lighthouse-x64.so": "liblighthouse-x64.so"
       }
     }
   },
