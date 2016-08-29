@@ -29,7 +29,8 @@
           "../../packages/fix8.dependencies.getopt.1.0.20151130.1/build/native/bin/Win32/v140/Release/Desktop/*.dll",
           "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x86/native/*.exe",
           "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x86/native/*.dll",
-          "../../packages/pthreads.redist.2.9.1.4/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll"
+          "../../packages/pthreads.redist.2.9.1.4/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll",
+          "msvcr110.dll"
         ],
         "runtimes/win7-x86/native/imobiledevice-net-lighthouse-x86.dll": "lighthouse-x86.dll"
       }
