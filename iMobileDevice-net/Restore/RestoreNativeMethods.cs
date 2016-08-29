@@ -15,7 +15,7 @@ namespace iMobileDevice.Restore
     public partial class RestoreNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Creates a new restored client for the device.

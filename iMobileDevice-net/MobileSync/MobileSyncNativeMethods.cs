@@ -15,7 +15,7 @@ namespace iMobileDevice.MobileSync
     public partial class MobileSyncNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the mobilesync service on the specified device.

@@ -15,7 +15,7 @@ namespace iMobileDevice.MobileImageMounter
     public partial class MobileImageMounterNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the mobile_image_mounter service on the specified device.

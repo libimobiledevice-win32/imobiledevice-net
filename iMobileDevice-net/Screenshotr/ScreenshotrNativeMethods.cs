@@ -15,7 +15,7 @@ namespace iMobileDevice.Screenshotr
     public partial class ScreenshotrNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the screenshotr service on the specified device.

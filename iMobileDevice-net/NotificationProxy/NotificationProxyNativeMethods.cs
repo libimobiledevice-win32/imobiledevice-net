@@ -15,7 +15,7 @@ namespace iMobileDevice.NotificationProxy
     public partial class NotificationProxyNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the notification_proxy on the specified device.

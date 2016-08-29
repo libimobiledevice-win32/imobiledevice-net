@@ -158,7 +158,7 @@ namespace iMobileDevice.Generator
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             // Creates functions in a NativeMethods class
-            var functionVisitor = new FunctionVisitor(this, "libimobiledevice");
+            var functionVisitor = new FunctionVisitor(this, "imobiledevice");
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             clang.disposeTranslationUnit(translationUnit);

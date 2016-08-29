@@ -15,7 +15,7 @@ namespace iMobileDevice.Lockdown
     public partial class LockdownNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Creates a new lockdownd client for the device.

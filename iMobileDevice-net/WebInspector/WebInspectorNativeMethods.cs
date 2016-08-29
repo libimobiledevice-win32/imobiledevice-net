@@ -15,7 +15,7 @@ namespace iMobileDevice.WebInspector
     public partial class WebInspectorNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the webinspector service on the specified device.

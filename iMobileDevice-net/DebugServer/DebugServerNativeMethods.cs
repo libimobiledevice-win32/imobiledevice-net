@@ -15,7 +15,7 @@ namespace iMobileDevice.DebugServer
     public partial class DebugServerNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the debugserver service on the specified device.

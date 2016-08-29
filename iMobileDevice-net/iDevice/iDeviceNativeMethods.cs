@@ -15,7 +15,7 @@ namespace iMobileDevice.iDevice
     public partial class iDeviceNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages

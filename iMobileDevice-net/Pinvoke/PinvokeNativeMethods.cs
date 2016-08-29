@@ -15,7 +15,7 @@ namespace iMobileDevice.Pinvoke
     public partial class PinvokeNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Frees a string that was previously allocated by libimobiledevice.

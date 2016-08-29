@@ -15,7 +15,7 @@ namespace iMobileDevice.PropertyListService
     public partial class PropertyListServiceNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Creates a new property list service for the specified port.

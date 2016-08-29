@@ -15,7 +15,7 @@ namespace iMobileDevice.SpringBoardServices
     public partial class SpringBoardServicesNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the springboardservices service on the specified device.

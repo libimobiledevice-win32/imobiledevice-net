@@ -15,7 +15,7 @@ namespace iMobileDevice.InstallationProxy
     public partial class InstallationProxyNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the installation_proxy service on the specified device.

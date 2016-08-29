@@ -15,7 +15,7 @@ namespace iMobileDevice.HeartBeat
     public partial class HeartBeatNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the heartbeat service on the specified device.

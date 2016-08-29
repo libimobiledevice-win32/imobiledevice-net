@@ -15,7 +15,7 @@ namespace iMobileDevice.Afc
     public partial class AfcNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Makes a connection to the AFC service on the device.

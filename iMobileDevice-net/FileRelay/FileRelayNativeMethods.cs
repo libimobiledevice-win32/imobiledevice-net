@@ -15,7 +15,7 @@ namespace iMobileDevice.FileRelay
     public partial class FileRelayNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the file_relay service on the specified device.

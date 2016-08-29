@@ -15,7 +15,7 @@ namespace iMobileDevice.SyslogRelay
     public partial class SyslogRelayNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the syslog_relay service on the specified device.

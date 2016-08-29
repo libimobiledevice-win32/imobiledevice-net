@@ -15,7 +15,7 @@ namespace iMobileDevice.Plist
     public partial class PlistNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Frees memory used globally by listplist, in

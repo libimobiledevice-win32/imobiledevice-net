@@ -15,7 +15,7 @@ namespace iMobileDevice.DiagnosticsRelay
     public partial class DiagnosticsRelayNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the diagnostics_relay service on the specified device.

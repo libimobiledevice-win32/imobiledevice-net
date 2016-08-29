@@ -15,7 +15,7 @@ namespace iMobileDevice.Misagent
     public partial class MisagentNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the misagent service on the specified device.

@@ -15,7 +15,7 @@ namespace iMobileDevice.MobileBackup2
     public partial class MobileBackup2NativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the mobilebackup2 service on the specified device.

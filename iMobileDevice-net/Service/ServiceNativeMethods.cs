@@ -15,7 +15,7 @@ namespace iMobileDevice.Service
     public partial class ServiceNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Creates a new service for the specified service descriptor.

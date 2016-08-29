@@ -15,7 +15,7 @@ namespace iMobileDevice.HouseArrest
     public partial class HouseArrestNativeMethods
     {
         
-        const string libraryName = "libimobiledevice";
+        const string libraryName = "imobiledevice";
         
         /// <summary>
         /// Connects to the house_arrest service on the specified device.
