@@ -5,7 +5,7 @@
     "Quamotion"
   ],
 
-  "title": "Linux Native libraries for .NET client for iOS devices (libimobiledevice-net)",
+  "title": "Linux (64-bit) Native libraries for .NET client for iOS devices (libimobiledevice-net)",
   "description": ".NET bindings for libimobiledevice, allows you to interact with devices running iOS, such as iPhones or iPads, using C# or VB.NET code",
   "packOptions": {
     "licenseUrl": "https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt",
@@ -20,6 +20,9 @@
     "files": {
       "mappings": {
         "runtimes/linux-x64/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so",
+        "runtimes/linux-x64/native/iproxy": "out/usr/local/bin/iproxy",
+        "runtimes/linux-x64/native/idevicesyslog": "out/usr/local/bin/idevicesyslog",
+        "runtimes/linux-x64/native/idevice_id": "out/usr/local/bin/idevice_id",
         "runtimes/linux-x64/native/libimobiledevice-net-lighthouse-x64.so": "liblighthouse-x64.so"
       }
     }
