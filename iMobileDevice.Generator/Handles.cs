@@ -56,15 +56,34 @@ namespace iMobileDevice.Generator
             safeHandle.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));
 
+            // Add a field which stores the stack used to create this object. Useful for troubleshooting issues
+            // that may occur when a plist object is being disposed of.
+            CodeMemberField stackTraceField = new CodeMemberField();
+            stackTraceField.Name = "creationStackTrace";
+            stackTraceField.Type = new CodeTypeReference(typeof(string));
+            stackTraceField.Attributes = MemberAttributes.Private | MemberAttributes.Final;
+            safeHandle.Members.Add(stackTraceField);
+
+            var setCreationStackTrace =
+                new CodeAssignStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        "creationStackTrace"),
+                    new CodePropertyReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(Environment)),
+                        "StackTrace"));
+
             CodeConstructor constructor = new CodeConstructor();
             constructor.Attributes = MemberAttributes.Family;
             constructor.BaseConstructorArgs.Add(new CodePrimitiveExpression(true));
+            constructor.Statements.Add(setCreationStackTrace);
             safeHandle.Members.Add(constructor);
 
             CodeConstructor ownsHandleConstructor = new CodeConstructor();
             ownsHandleConstructor.Attributes = MemberAttributes.Family;
             ownsHandleConstructor.Parameters.Add(new CodeParameterDeclarationExpression(new CodeTypeReference(typeof(bool)), "ownsHandle"));
             ownsHandleConstructor.BaseConstructorArgs.Add(new CodeArgumentReferenceExpression("ownsHandle"));
+            ownsHandleConstructor.Statements.Add(setCreationStackTrace);
             safeHandle.Members.Add(ownsHandleConstructor);
 
             CodeMemberMethod releaseHandle = new CodeMemberMethod();

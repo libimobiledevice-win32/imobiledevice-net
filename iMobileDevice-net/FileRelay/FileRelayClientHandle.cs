@@ -21,16 +21,20 @@ namespace iMobileDevice.FileRelay
     public partial class FileRelayClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected FileRelayClientHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected FileRelayClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api
@@ -58,7 +62,7 @@ namespace iMobileDevice.FileRelay
 #endif
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
             return (this.Api.FileRelay.file_relay_client_free(this.handle) == FileRelayError.Success);
         }
         

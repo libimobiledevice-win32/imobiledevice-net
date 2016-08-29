@@ -21,16 +21,20 @@ namespace iMobileDevice.MobileImageMounter
     public partial class MobileImageMounterClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected MobileImageMounterClientHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected MobileImageMounterClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api
@@ -58,7 +62,7 @@ namespace iMobileDevice.MobileImageMounter
 #endif
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
             return (this.Api.MobileImageMounter.mobile_image_mounter_free(this.handle) == MobileImageMounterError.Success);
         }
         

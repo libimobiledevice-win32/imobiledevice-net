@@ -21,16 +21,20 @@ namespace iMobileDevice.Lockdown
     public partial class LockdownPairRecordHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected LockdownPairRecordHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected LockdownPairRecordHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api

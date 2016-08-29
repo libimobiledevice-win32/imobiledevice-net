@@ -19,6 +19,8 @@ namespace iMobileDevice.Generator
 #endif
     using CodeDom;
     using System.Runtime.Serialization;
+    using System.Runtime.ExceptionServices;
+
     internal class ModuleGenerator
     {
         public string Name
@@ -195,7 +197,9 @@ namespace iMobileDevice.Generator
                 var releaseMethod = handle.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
 
                 // Sample statement:
-                // return !LibiMobileDevice.Instance.iDevice.idevice_free(this).IsError();
+                //   System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+                //   this.Api.Plist.plist_free(this.handle);
+                //   return true;
                 releaseMethod.Statements.Clear();
 
                 // Trace the release call:
@@ -205,7 +209,7 @@ namespace iMobileDevice.Generator
                         new CodeMethodReferenceExpression(
                             new CodeTypeReferenceExpression(typeof(Debug)),
                             "WriteLine"),
-                        new CodePrimitiveExpression("Releasing {0} {1}"),
+                        new CodePrimitiveExpression("Releasing {0} {1} using {2}. This object was created at {3}"),
                         new CodePropertyReferenceExpression(
                             new CodeMethodInvokeExpression(
                                 new CodeThisReferenceExpression(),
@@ -213,7 +217,13 @@ namespace iMobileDevice.Generator
                                 "Name"),
                         new CodeFieldReferenceExpression(
                             new CodeThisReferenceExpression(),
-                            "handle")));
+                            "handle"),
+                        new CodePropertyReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "Api"),
+                        new CodeFieldReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "creationStackTrace")));
 
                 var freeMethodInvokeExpression =
                     new CodeMethodInvokeExpression(

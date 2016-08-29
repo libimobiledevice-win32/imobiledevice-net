@@ -21,16 +21,20 @@ namespace iMobileDevice.Service
     public partial class ServiceClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected ServiceClientHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected ServiceClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api
@@ -58,7 +62,7 @@ namespace iMobileDevice.Service
 #endif
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
             return (this.Api.Service.service_client_free(this.handle) == ServiceError.Success);
         }
         

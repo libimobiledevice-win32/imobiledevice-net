@@ -21,16 +21,20 @@ namespace iMobileDevice.Screenshotr
     public partial class ScreenshotrClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected ScreenshotrClientHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected ScreenshotrClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api
@@ -58,7 +62,7 @@ namespace iMobileDevice.Screenshotr
 #endif
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
             return (this.Api.Screenshotr.screenshotr_client_free(this.handle) == ScreenshotrError.Success);
         }
         

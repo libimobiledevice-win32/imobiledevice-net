@@ -21,16 +21,20 @@ namespace iMobileDevice.iDevice
     public partial class iDeviceConnectionHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
     {
         
+        private string creationStackTrace;
+        
         private ILibiMobileDevice api;
         
         protected iDeviceConnectionHandle() : 
                 base(true)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         protected iDeviceConnectionHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
+            this.creationStackTrace = System.Environment.StackTrace;
         }
         
         public ILibiMobileDevice Api
@@ -58,7 +62,7 @@ namespace iMobileDevice.iDevice
 #endif
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
             return (this.Api.iDevice.idevice_disconnect(this.handle) == iDeviceError.Success);
         }
         

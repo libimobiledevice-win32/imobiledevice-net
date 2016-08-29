@@ -24,8 +24,8 @@
 
   "dependencies": {
     "runtime.linux-x64.iMobileDevice-net": "1.2.1-beta002",
-    "runtime.win-x86.iMobileDevice-net": "1.2.0",
-    "runtime.win-x64.iMobileDevice-net": "1.2.1"
+    "runtime.win-x86.iMobileDevice-net": "1.2.1-r114",
+    "runtime.win-x64.iMobileDevice-net": "1.2.1-r114"
   },
 
   "buildOptions": {
@@ -43,6 +43,8 @@
         "System.Linq": "4.1.0",
         "System.Diagnostics.Debug": "4.0.11",
         "System.IO.FileSystem": "4.0.1",
+        "System.Diagnostics.StackTrace": "4.0.1",
+        "System.Threading":  "4.0.11",
         "Microsoft.Win32.Primitives": "4.0.1"
       }
     },
