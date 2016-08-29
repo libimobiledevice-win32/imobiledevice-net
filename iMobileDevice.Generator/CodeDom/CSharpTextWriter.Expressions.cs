@@ -11,6 +11,11 @@ namespace iMobileDevice.Generator.CodeDom
     {
         private void Generate(CodeExpression expression)
         {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             if (expression is CodeMethodInvokeExpression)
             {
                 this.Generate((CodeMethodInvokeExpression)expression);
