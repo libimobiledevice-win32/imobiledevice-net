@@ -10,8 +10,18 @@ namespace iMobileDevice
     {
         public static bool LibraryFound
         {
+#if !NETSTANDARD1_5
             get;
             private set;
+#else
+            get 
+            { 
+                // .NET Core has a good story for loading unmanaged assemblies - you include them in the
+                // runtimes/<runtime>/native folder of the NuGet package. So we're letting .NET Core
+                // handle finding the assemblies and loading them.
+                return true; 
+            }
+#endif
         }
 
         public static void Load()
@@ -21,14 +31,7 @@ namespace iMobileDevice
 
         public static void Load(string directory)
         {
-#if NETSTANDARD1_5
-            // .NET Core has a good story for loading unmanaged assemblies - you include them in the
-            // runtimes/<runtime>/native folder of the NuGet package. So we're letting .NET Core
-            // handle finding the assemblies and loading them.
-            LibraryFound = true;
-            return;
-#endif
-
+#if !NETSTANDARD1_5
             if (directory == null)
             {
                 throw new ArgumentNullException(nameof(directory));
@@ -47,9 +50,7 @@ namespace iMobileDevice
 
             bool isWindows = false;
             bool isLinux = false;
-            bool isOsX = false;
 
-#if !NETSTANDARD1_5
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Win32NT:
@@ -59,16 +60,7 @@ namespace iMobileDevice
                 case PlatformID.Unix:
                     isLinux = true;
                     break;
-
-                case PlatformID.MacOSX:
-                    isOsX = true;
-                    break;
             }
-#else
-            isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-            isOsX =  RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-#endif
 
             if (isWindows)
             {
@@ -87,11 +79,7 @@ namespace iMobileDevice
 
                 string nativeLibrariesDirectory;
 
-#if !NETSTANDARD1_5
                 if (Environment.Is64BitProcess)
-#else
-                if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
-#endif
                 {
                     nativeLibrariesDirectory = Path.Combine(directory, "win7-x64");
                 }
@@ -151,8 +139,11 @@ namespace iMobileDevice
             }
             else
             {
-                LibraryFound = false;
+                throw new NotSupportedException("imobiledevice-net is supported on Windows (.NET FX, .NET Core), Linux (Mono, .NET Core) and OS X (.NET Core)");
             }
+#else
+            throw new NotSupportedException("Load is supported on .NET FX and Mono only. When using .NET Core, add the runtime.*.imobiledevice-net packages to your project to add the native libraries.");
+#endif
         }
     }
 }
