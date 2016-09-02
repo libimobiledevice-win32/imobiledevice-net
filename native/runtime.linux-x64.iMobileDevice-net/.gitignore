@@ -4,3 +4,4 @@ libusbmuxd/
 usbmuxd/
 out/
 *~
+patchelf-*

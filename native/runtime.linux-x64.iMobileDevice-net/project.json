@@ -20,10 +20,12 @@
     "files": {
       "mappings": {
         "runtimes/linux-x64/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so",
+        "runtimes/linux-x64/native/libusb-1.0.so": "out/usr/local/lib/libusb-1.0.so",
         "runtimes/linux-x64/native/iproxy": "out/usr/local/bin/iproxy",
         "runtimes/linux-x64/native/idevicesyslog": "out/usr/local/bin/idevicesyslog",
         "runtimes/linux-x64/native/idevice_id": "out/usr/local/bin/idevice_id",
-        "runtimes/linux-x64/native/libimobiledevice-net-lighthouse-x64.so": "liblighthouse-x64.so"
+        "runtimes/linux-x64/native/usbmuxd": "out/usr/local/sbin/usbmuxd",
+        "runtimes/linux-x64/native/libimobiledevice-net-lighthouse-x64.so": "liblighthouse-x64.so",
       }
     }
   },
