@@ -22,7 +22,10 @@ namespace iMobileDevice.iDevice
         
         public override void CleanUpNativeData(System.IntPtr nativeData)
         {
-            LibiMobileDevice.Instance.iDevice.idevice_device_list_free(nativeData).ThrowOnError();
+            if ((nativeData != System.IntPtr.Zero))
+            {
+                LibiMobileDevice.Instance.iDevice.idevice_device_list_free(nativeData).ThrowOnError();
+            }
         }
     }
 }

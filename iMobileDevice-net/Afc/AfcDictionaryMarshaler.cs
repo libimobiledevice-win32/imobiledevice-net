@@ -22,7 +22,10 @@ namespace iMobileDevice.Afc
         
         public override void CleanUpNativeData(System.IntPtr nativeData)
         {
-            LibiMobileDevice.Instance.Afc.afc_dictionary_free(nativeData).ThrowOnError();
+            if ((nativeData != System.IntPtr.Zero))
+            {
+                LibiMobileDevice.Instance.Afc.afc_dictionary_free(nativeData).ThrowOnError();
+            }
         }
     }
 }

@@ -22,7 +22,10 @@ namespace iMobileDevice.Lockdown
         
         public override void CleanUpNativeData(System.IntPtr nativeData)
         {
-            LibiMobileDevice.Instance.Lockdown.lockdownd_data_classes_free(nativeData).ThrowOnError();
+            if ((nativeData != System.IntPtr.Zero))
+            {
+                LibiMobileDevice.Instance.Lockdown.lockdownd_data_classes_free(nativeData).ThrowOnError();
+            }
         }
     }
 }
