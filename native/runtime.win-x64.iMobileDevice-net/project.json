@@ -16,25 +16,7 @@
       "type": "git",
       "url": "http://github.com/libimobiledevice-win32/imobiledevice-net"
     },
-    "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ],
-    "files": {
-      "mappings": {
-        "runtimes/win7-x64/native/": [
-          "../../packages/libimobiledevice.redist.1.2.0.58/build/native/bin/x64/v140/Release/*.*",
-          "../../packages/libusbmuxd.redist.1.0.10.13/build/native/bin/x64/v140/Release/*.*",
-          "../../packages/libiconv.redist.1.14.0.11/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
-          "../../packages/libxml2.redist.2.7.8.7/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
-          "../../packages/openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/release/*.dll",
-          "../../packages/zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/Release/*.dll",
-          "../../packages/fix8.dependencies.getopt.1.0.20151130.1/build/native/bin/x64/v140/Release/Desktop/*.dll",
-          "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x64/native/*.exe",
-          "../../packages/usbmuxd.1.1.0.29/runtimes/win7-x64/native/*.dll",
-          "../../packages/pthreads.redist.2.9.1.4/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
-          "msvcr110.dll"
-        ],
-        "runtimes/win7-x64/native/imobiledevice-net-lighthouse-x64.dll": "lighthouse-x64.dll"
-      }
-    }
+    "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ]
   },
 
   "scripts": {
@@ -45,11 +27,8 @@
   ],
 
   "packInclude": {
-    "runtimes/win7-x86/native/": [
-    ],
-
     "runtimes/win7-x64/native/": [
-      "../packages/libimobiledevice.redist.1.2.0.37/build/native/bin/x64/v140/Release/*.*",
+      "../packages/libimobiledevice.redist.1.12.73/build/native/bin/x64/v140/Release/*.*",
       "../packages/libusbmuxd.redist.1.0.10.13/build/native/bin/x64/v140/Release/*.*",
       "../packages/libiconv.redist.1.14.0.11/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
       "../packages/libxml2.redist.2.7.8.7/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
