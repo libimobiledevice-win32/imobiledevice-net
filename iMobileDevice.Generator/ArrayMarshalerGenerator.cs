@@ -59,7 +59,10 @@ namespace iMobileDevice.Generator
             //
             // public override void CleanUpNativeData(IntPtr nativeData)
             // {
-            //    LibiMobileDevice.Instance.iDevice.idevice_device_list_free(nativeData).ThrowOnError();
+            //    if (nativeData != IntPtr.Zero)
+            //    {
+            //         LibiMobileDevice.Instance.iDevice.idevice_device_list_free(nativeData).ThrowOnError();
+            //    }
             // }
 
             CodeMemberMethod getInstanceMethod = new CodeMemberMethod();
@@ -104,7 +107,18 @@ namespace iMobileDevice.Generator
                     new CodeMethodReferenceExpression(
                         freeInvoke,
                         "ThrowOnError"));
-            cleanUpNativeDataMethod.Statements.Add(throwOnErrorInvoke);
+
+            var ifStatement = new
+                CodeConditionStatement(
+                new CodeBinaryOperatorExpression(
+                    new CodeArgumentReferenceExpression("nativeData"),
+                    CodeBinaryOperatorType.IdentityInequality,
+                    new CodePropertyReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(IntPtr)),
+                        "Zero")));
+            ifStatement.TrueStatements.Add(throwOnErrorInvoke);
+
+            cleanUpNativeDataMethod.Statements.Add(ifStatement);
             marshaler.Members.Add(cleanUpNativeDataMethod);
 
             this.generator.AddType(marshaler.Name, marshaler);

@@ -48,9 +48,43 @@
             {
                 this.Generate((CodeCommentStatement)statement);
             }
+            else if (statement is CodeTryCatchFinallyStatement)
+            {
+                this.Generate((CodeTryCatchFinallyStatement)statement);
+            }
             else
             {
                 throw new NotSupportedException();
+            }
+        }
+
+        private void Generate(CodeTryCatchFinallyStatement statement)
+        {
+            this.WriteLine("try");
+            this.WriteLine("{");
+            this.Indent++;
+            this.Generate(statement.TryStatements);
+            this.Indent--;
+            this.WriteLine("}");
+
+            foreach (CodeCatchClause catchClause in statement.CatchClauses)
+            {
+                this.WriteLine($"catch ({catchClause.CatchExceptionType.BaseType} {catchClause.LocalName})");
+                this.WriteLine("{");
+                this.Indent++;
+                this.Generate(catchClause.Statements);
+                this.Indent--;
+                this.WriteLine("}");
+            }
+
+            if (statement.FinallyStatements.Count > 0)
+            {
+                this.WriteLine("finally");
+                this.WriteLine("{");
+                this.Indent++;
+                this.Generate(statement.FinallyStatements);
+                this.Indent--;
+                this.WriteLine("}");
             }
         }
 
@@ -72,7 +106,12 @@
         private void Generate(CodeThrowExceptionStatement statement)
         {
             this.Write("throw ");
-            this.Generate(statement.ToThrow);
+
+            if (statement.ToThrow != null)
+            {
+                this.Generate(statement.ToThrow);
+            }
+
             this.WriteLine(";");
         }
 
@@ -133,7 +172,7 @@
             if (statement.InitExpression != null)
             {
                 this.Write(" = ");
-                this.Write(statement.InitExpression);
+                this.Generate(statement.InitExpression);
             }
 
             this.WriteLine(";");

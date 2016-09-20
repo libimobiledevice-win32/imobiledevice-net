@@ -1,0 +1,7 @@
+libplist/
+libimobiledevice/
+libusbmuxd/
+usbmuxd/
+out/
+*~
+patchelf-*

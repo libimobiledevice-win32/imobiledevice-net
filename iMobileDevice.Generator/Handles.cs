@@ -5,8 +5,10 @@
 namespace iMobileDevice.Generator
 {
     using System.CodeDom;
+#if !NETSTANDARD1_5
     using System.Runtime.ConstrainedExecution;
     using System.Security.Permissions;
+#endif
     using Microsoft.Win32.SafeHandles;
     using System;
     using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace iMobileDevice.Generator
     using System.Diagnostics;
     internal static class Handles
     {
+#if !NETSTANDARD1_5
         public static CodeAttributeDeclaration SecurityPermissionDeclaration(SecurityAction action, bool unmanagedCode)
         {
             return new CodeAttributeDeclaration(
@@ -39,26 +42,48 @@ namespace iMobileDevice.Generator
                         new CodeTypeReferenceExpression(typeof(Cer)),
                         cer.ToString())));
         }
+#endif
 
         public static IEnumerable<CodeTypeDeclaration> CreateSafeHandle(string name, ModuleGenerator generator)
         {
             CodeTypeDeclaration safeHandle = new CodeTypeDeclaration(name + "Handle");
 
+#if !NETSTANDARD1_5
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.InheritanceDemand, true));
             safeHandle.CustomAttributes.Add(SecurityPermissionDeclaration(SecurityAction.Demand, true));
+#endif
             safeHandle.IsPartial = true;
             safeHandle.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             safeHandle.BaseTypes.Add(typeof(SafeHandleZeroOrMinusOneIsInvalid));
 
+            // Add a field which stores the stack used to create this object. Useful for troubleshooting issues
+            // that may occur when a plist object is being disposed of.
+            CodeMemberField stackTraceField = new CodeMemberField();
+            stackTraceField.Name = "creationStackTrace";
+            stackTraceField.Type = new CodeTypeReference(typeof(string));
+            stackTraceField.Attributes = MemberAttributes.Private | MemberAttributes.Final;
+            safeHandle.Members.Add(stackTraceField);
+
+            var setCreationStackTrace =
+                new CodeAssignStatement(
+                    new CodeFieldReferenceExpression(
+                        new CodeThisReferenceExpression(),
+                        "creationStackTrace"),
+                    new CodePropertyReferenceExpression(
+                        new CodeTypeReferenceExpression(typeof(Environment)),
+                        "StackTrace"));
+
             CodeConstructor constructor = new CodeConstructor();
             constructor.Attributes = MemberAttributes.Family;
             constructor.BaseConstructorArgs.Add(new CodePrimitiveExpression(true));
+            constructor.Statements.Add(setCreationStackTrace);
             safeHandle.Members.Add(constructor);
 
             CodeConstructor ownsHandleConstructor = new CodeConstructor();
             ownsHandleConstructor.Attributes = MemberAttributes.Family;
             ownsHandleConstructor.Parameters.Add(new CodeParameterDeclarationExpression(new CodeTypeReference(typeof(bool)), "ownsHandle"));
             ownsHandleConstructor.BaseConstructorArgs.Add(new CodeArgumentReferenceExpression("ownsHandle"));
+            ownsHandleConstructor.Statements.Add(setCreationStackTrace);
             safeHandle.Members.Add(ownsHandleConstructor);
 
             CodeMemberMethod releaseHandle = new CodeMemberMethod();
@@ -177,6 +202,90 @@ namespace iMobileDevice.Generator
                             nameof(IntPtr.Zero)))));
 
             safeHandle.Members.Add(zeroProperty);
+
+            // Create the ToString method which returns:
+            // {handle} ({type})
+            CodeMemberMethod toStringMethod = new CodeMemberMethod();
+            toStringMethod.Name = "ToString";
+            toStringMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            toStringMethod.ReturnType = new CodeTypeReference(typeof(string));
+            toStringMethod.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeTypeReferenceExpression(typeof(string)),
+                        "Format",
+                        new CodePrimitiveExpression("{0} ({1})"),
+                        new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), "handle"),
+                        new CodePrimitiveExpression(safeHandle.Name))));
+            safeHandle.Members.Add(toStringMethod);
+
+            // Create the Equals method:
+            //
+            // if (!(obj is AfcClientHandle))
+            // {
+            //    return false;
+            // }
+            //
+            // return ((AfcClientHandle)obj).handle.Equals(this.handle);
+            CodeMemberMethod equalsMethod = new CodeMemberMethod();
+            equalsMethod.Name = "Equals";
+            equalsMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            equalsMethod.ReturnType = new CodeTypeReference(typeof(bool));
+            equalsMethod.Parameters.Add(
+                new CodeParameterDeclarationExpression(
+                    new CodeTypeReference(typeof(object)),
+                    "obj"));
+
+            equalsMethod.Statements.Add(
+                new CodeConditionStatement(
+                    new CodeBinaryOperatorExpression(
+                        new CodeBinaryOperatorExpression(
+                            new CodeArgumentReferenceExpression("obj"),
+                            CodeBinaryOperatorType.IdentityInequality,
+                            new CodePrimitiveExpression(null)),
+                        CodeBinaryOperatorType.BooleanAnd,
+                        new CodeBinaryOperatorExpression(
+                            new CodeMethodInvokeExpression(
+                                new CodeArgumentReferenceExpression("obj"),
+                                "GetType"),
+                            CodeBinaryOperatorType.IdentityEquality,
+                            new CodeTypeOfExpression(safeHandle.Name))),
+                    new CodeStatement[]
+                    {
+                        new CodeMethodReturnStatement(
+                            new CodeMethodInvokeExpression(
+                                new CodeFieldReferenceExpression(
+                            new CodeCastExpression(
+                                new CodeTypeReference(safeHandle.Name),
+                                new CodeArgumentReferenceExpression("obj")),
+                            "handle"),
+                            "Equals",
+                            new CodeFieldReferenceExpression(
+                                new CodeThisReferenceExpression(),
+                                "handle")))
+                    },
+                    new CodeStatement[]
+                    {
+                        new CodeMethodReturnStatement(
+                            new CodePrimitiveExpression(false))
+                    }));
+
+            safeHandle.Members.Add(equalsMethod);
+
+            // Create the GetHashCode method
+            // return this.handle.GetHashCode();
+            CodeMemberMethod getHashCodeMethod = new CodeMemberMethod();
+            getHashCodeMethod.Name = "GetHashCode";
+            getHashCodeMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
+            getHashCodeMethod.ReturnType = new CodeTypeReference(typeof(int));
+            getHashCodeMethod.Statements.Add(
+                new CodeMethodReturnStatement(
+                    new CodeMethodInvokeExpression(
+                        new CodeFieldReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "handle"),
+                        "GetHashCode")));
+            safeHandle.Members.Add(getHashCodeMethod);
 
             yield return safeHandle;
 

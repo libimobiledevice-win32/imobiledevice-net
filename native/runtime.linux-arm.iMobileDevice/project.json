@@ -1,0 +1,43 @@
+{
+  "version": "1.2.1-*",
+
+  "authors": [
+    "Quamotion"
+  ],
+
+  "title": "Linux (ARM) Native libraries for .NET client for iOS devices (libimobiledevice-net)",
+  "description": ".NET bindings for libimobiledevice, allows you to interact with devices running iOS, such as iPhones or iPads, using C# or VB.NET code",
+  "packOptions": {
+    "licenseUrl": "https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt",
+    "owners": [
+      "Quamotion"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "http://github.com/libimobiledevice-win32/imobiledevice-net"
+    },
+    "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ],
+    "files": {
+      "mappings": {
+        "runtimes/linux-arm/native/libimobiledevice.so": "out/usr/local/lib/libimobiledevice.so",
+        "runtimes/linux-arm/native/libusb-1.0.so": "out/usr/local/lib/libusb-1.0.so",
+        "runtimes/linux-arm/native/iproxy": "out/usr/local/bin/iproxy",
+        "runtimes/linux-arm/native/idevicesyslog": "out/usr/local/bin/idevicesyslog",
+        "runtimes/linux-arm/native/idevice_id": "out/usr/local/bin/idevice_id",
+        "runtimes/linux-arm/native/usbmuxd": "out/usr/local/sbin/usbmuxd",
+        "runtimes/linux-arm/native/libimobiledevice-net-lighthouse-arm.so": "liblighthouse-arm.so",
+      }
+    }
+  },
+
+  "buildOptions": {
+     "allowUnsafe": true
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "dependencies": {
+      }
+    }
+  }
+}

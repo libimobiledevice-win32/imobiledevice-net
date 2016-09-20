@@ -80,6 +80,7 @@ namespace iMobileDevice.Generator
             bool isPointer = false;
 
             if (functionKind != FunctionType.Free
+                && functionKind != FunctionType.Delegate
                 && type.IsDoubleCharPointer()
                 && !name.Contains("data")
                 && name != "appids")
@@ -89,14 +90,14 @@ namespace iMobileDevice.Generator
 
                 parameter.CustomAttributes.Add(MarshalAsUtf8String());
             }
-            else if (type.IsTripleCharPointer() && generator.StringArrayMarshalerType != null)
+            else if (functionKind != FunctionType.Delegate && type.IsTripleCharPointer() && generator.StringArrayMarshalerType != null)
             {
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.Out;
 
                 parameter.CustomAttributes.Add(MarshalAsDeclaration(UnmanagedType.CustomMarshaler, new CodeTypeReference(generator.StringArrayMarshalerType.Name)));
             }
-            else if (type.IsArrayOfCharPointers() || type.IsDoublePtrToConstChar())
+            else if (functionKind != FunctionType.Delegate && (type.IsArrayOfCharPointers() || type.IsDoublePtrToConstChar()))
             {
                 parameter.Type = new CodeTypeReference(typeof(ReadOnlyCollection<string>));
                 parameter.Direction = FieldDirection.In;
@@ -140,7 +141,7 @@ namespace iMobileDevice.Generator
                                         parameter.Type = new CodeTypeReference(typeof(byte[]));
                                     }
                                 }
-                                else if (functionKind != FunctionType.PInvoke && type.IsPtrToChar() && name.Contains("data"))
+                                else if (functionKind != FunctionType.PInvoke && functionKind != FunctionType.Delegate && type.IsPtrToChar() && name.Contains("data"))
                                 {
                                     parameter.Type = new CodeTypeReference(typeof(byte[]));
                                 }
@@ -166,13 +167,23 @@ namespace iMobileDevice.Generator
                                 break;
 
                             case CXTypeKind.CXType_Record:
-                                var recordTypeCursor = clang.getTypeDeclaration(pointee);
-                                var recordType = clang.getCursorType(recordTypeCursor);
+                                if (functionKind != FunctionType.Delegate)
+                                {
+                                    var recordTypeCursor = clang.getTypeDeclaration(pointee);
+                                    var recordType = clang.getCursorType(recordTypeCursor);
 
-                                // Get the CLR name for the record
-                                var clrName = generator.NameMapping[recordType.ToString()];
-                                parameter.Type = new CodeTypeReference(clrName);
-                                isPointer = true;
+                                    // Get the CLR name for the record
+                                    var clrName = generator.NameMapping[recordType.ToString()];
+                                    parameter.Type = new CodeTypeReference(clrName);
+                                    isPointer = true;
+                                }
+                                else
+                                {
+                                    // if it's not a const, it's best to go with IntPtr
+                                    parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                                    isPointer = true;
+                                }
+
                                 break;
 
                             default:
@@ -184,7 +195,22 @@ namespace iMobileDevice.Generator
                         break;
 
                     default:
-                        parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                        if (generator.NameMapping.ContainsKey(type.ToString()))
+                        {
+                            if (functionKind != FunctionType.Delegate)
+                            {
+                                parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                            }
+                            else
+                            {
+                                parameter.Type = new CodeTypeReference(typeof(IntPtr));
+                            }
+                        }
+                        else
+                        {
+                            parameter.Type = type.ToCodeTypeReference(paramCursor, generator);
+                        }
+
                         break;
                 }
             }
@@ -214,6 +240,7 @@ namespace iMobileDevice.Generator
                             // For IntPtrs, we don't know - so we play on the safe side.
                             parameter.Direction = FieldDirection.Ref;
                         }
+
                         break;
 
                     case FunctionType.New:

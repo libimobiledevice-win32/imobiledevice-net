@@ -14,7 +14,7 @@ namespace iMobileDevice.Generator
     {
         public static void Main(string[] args)
         {
-            string sourceDirectory = null; ;
+            string sourceDirectory = null;
             string targetDirectory = null;
 
             if (args.Length >= 1)
@@ -33,7 +33,7 @@ namespace iMobileDevice.Generator
             }
             else
             {
-                targetDirectory = @"..\..\..\..\iMobileDevice";
+                targetDirectory = @"..\..\..\..\iMobileDevice-net";
             }
 
             sourceDirectory = Path.GetFullPath(sourceDirectory);
@@ -48,7 +48,7 @@ namespace iMobileDevice.Generator
             generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.56\build\native\include\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.58\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include"));
 
@@ -58,7 +58,7 @@ namespace iMobileDevice.Generator
             files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.13\build\native\include\usbmuxd.h"));
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.48\build\native\include\plist\plist.h"));
 
-            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.56\build\native\include\libimobiledevice");
+            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.0.58\build\native\include\libimobiledevice");
             files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));

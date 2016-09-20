@@ -5,4 +5,4 @@ Param(
 Write-Host Changing build number to $build
 
 # Update the build number
-(gc .\iMobileDevice\imobiledevice-net.nuspec).replace('{build}', $build)|sc .\iMobileDevice\imobiledevice-net.out.nuspec
+(gc .\iMobileDevice-net\imobiledevice-net.nuspec).replace('{build}', $build)|sc .\iMobileDevice-net\imobiledevice-net.out.nuspec

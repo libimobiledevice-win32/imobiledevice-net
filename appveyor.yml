@@ -1,16 +1,20 @@
 before_build:
   - nuget restore
+  - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .
+  - dotnet restore
 
 build_script:
   - msbuild iMobileDevice.Generator\iMobileDevice.Generator.csproj /p:Configuration=Debug /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice
-  - msbuild iMobileDevice\iMobileDevice.csproj /p:Configuration=Debug /p:Platform=AnyCPU /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+  - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice-net
+  - dotnet build imobiledevice-net\project.json
+  - dotnet pack imobiledevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
+  - dotnet pack native\runtime.win-x64.iMobileDevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
+  - dotnet pack native\runtime.win-x86.iMobileDevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
 
 on_success:
-  - ps: .\UpdateNuGetFile.ps1 -Build $ENV:APPVEYOR_BUILD_NUMBER
-  - cmd: cd iMobileDevice
-  - cmd: nuget pack imobiledevice-net.out.nuspec
-  - cmd: appveyor PushArtifact imobiledevice-net.1.2.0.%APPVEYOR_BUILD_NUMBER%.nupkg
+  - ps: Push-AppVeyorArtifact imobiledevice-net\bin\Debug\imobiledevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
+  - ps: Push-AppVeyorArtifact native\runtime.win-x64.iMobileDevice-net\bin\Debug\runtime.win-x64.iMobileDevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
+  - ps: Push-AppVeyorArtifact native\runtime.win-x86.iMobileDevice-net\bin\Debug\runtime.win-x86.iMobileDevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
 
 nuget:
   project_feed: true

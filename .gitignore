@@ -6,3 +6,6 @@ obj
 packages
 *.opendb
 *.db
+*.lock.json
+*~
+out.txt

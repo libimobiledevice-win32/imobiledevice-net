@@ -13,7 +13,14 @@ namespace iMobileDevice.Generator
     using System.Linq;
     using ClangSharp;
     using System.Diagnostics;
+#if !NETSTANDARD1_5
+    using System.Security.Permissions;
+    using System.Runtime.ConstrainedExecution;
+#endif
     using CodeDom;
+    using System.Runtime.Serialization;
+    using System.Runtime.ExceptionServices;
+
     internal class ModuleGenerator
     {
         public string Name
@@ -151,7 +158,7 @@ namespace iMobileDevice.Generator
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             // Creates functions in a NativeMethods class
-            var functionVisitor = new FunctionVisitor(this, "libimobiledevice");
+            var functionVisitor = new FunctionVisitor(this, "imobiledevice");
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             clang.disposeTranslationUnit(translationUnit);
@@ -190,7 +197,9 @@ namespace iMobileDevice.Generator
                 var releaseMethod = handle.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
 
                 // Sample statement:
-                // return !LibiMobileDevice.Instance.iDevice.idevice_free(this).IsError();
+                //   System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
+                //   this.Api.Plist.plist_free(this.handle);
+                //   return true;
                 releaseMethod.Statements.Clear();
 
                 // Trace the release call:
@@ -200,7 +209,7 @@ namespace iMobileDevice.Generator
                         new CodeMethodReferenceExpression(
                             new CodeTypeReferenceExpression(typeof(Debug)),
                             "WriteLine"),
-                        new CodePrimitiveExpression("Releasing {0} {1}"),
+                        new CodePrimitiveExpression("Releasing {0} {1} using {2}. This object was created at {3}"),
                         new CodePropertyReferenceExpression(
                             new CodeMethodInvokeExpression(
                                 new CodeThisReferenceExpression(),
@@ -208,7 +217,13 @@ namespace iMobileDevice.Generator
                                 "Name"),
                         new CodeFieldReferenceExpression(
                             new CodeThisReferenceExpression(),
-                            "handle")));
+                            "handle"),
+                        new CodePropertyReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "Api"),
+                        new CodeFieldReferenceExpression(
+                            new CodeThisReferenceExpression(),
+                            "creationStackTrace")));
 
                 var freeMethodInvokeExpression =
                     new CodeMethodInvokeExpression(
@@ -253,6 +268,10 @@ namespace iMobileDevice.Generator
             var extensionsExtractor = new ErrorExtensionExtractor(this, functionVisitor);
             extensionsExtractor.Generate();
 
+            // Patch the native methods to be compatible with .NET Core - basically,
+            // do the marshalling ourselves
+            NativeMethodOverloadGenerator.Generate(this);
+
             // Write the files
             foreach (var declaration in this.Types)
             {
@@ -275,7 +294,13 @@ namespace iMobileDevice.Generator
                 ns.Types.Add(declaration);
                 program.Namespaces.Add(ns);
 
-                string path = Path.Combine(moduleDirectory, $"{declaration.Name}.cs");
+                string suffix = string.Empty;
+                if (declaration.UserData.Contains("FileNameSuffix"))
+                {
+                    suffix = (string)declaration.UserData["FileNameSuffix"];
+                }
+
+                string path = Path.Combine(moduleDirectory, $"{declaration.Name}{suffix}.cs");
 
                 using (var outFile = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 using (var fileWriter = new StreamWriter(outFile))
@@ -286,7 +311,48 @@ namespace iMobileDevice.Generator
                     indentedTextWriter.Flush();
                 }
 
-                if (declaration.Name.EndsWith("NativeMethods"))
+                // Add #if statements for code that doesn't work on .NET Core
+                if (true)
+                {
+                    string content = File.ReadAllText(path);
+
+                    content = content.Replace("#region !core", "#if !NETSTANDARD1_5");
+                    content = content.Replace("#endregion", "#endif");
+
+                    using (StringReader reader = new StringReader(content))
+                    using (StreamWriter writer = new StreamWriter(path))
+                    {
+                        while (reader.Peek() >= 0)
+                        {
+                            string line = reader.ReadLine();
+
+                            if (line.Contains(nameof(SecurityPermissionAttribute))
+                                || line.Contains(nameof(ReliabilityContractAttribute))
+                                || line.Contains(nameof(SerializableAttribute)))
+                            {
+                                writer.WriteLine("#if !NETSTANDARD1_5");
+                                writer.WriteLine(line);
+                                writer.WriteLine("#endif");
+                            }
+                            else if (line.Contains("SerializationInfo info"))
+                            {
+                                writer.WriteLine("#if !NETSTANDARD1_5");
+                                writer.WriteLine(line);
+                                writer.WriteLine(reader.ReadLine());
+                                writer.WriteLine(reader.ReadLine());
+                                writer.WriteLine(reader.ReadLine());
+                                writer.WriteLine("#endif");
+                            }
+                            else
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                    }
+                }
+
+                // Fix other CodeDOM shortcomings
+                if (declaration.Name.EndsWith("NativeMethods") && string.IsNullOrEmpty(suffix))
                 {
                     string content = File.ReadAllText(path);
                     content = content.Replace("public abstract", "public static extern");

@@ -34,6 +34,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -50,6 +68,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HandleTests.cs" />
     <Compile Include="NativeStringArrayMarshalerTests.cs" />
     <Compile Include="NativeStringMarshalerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +82,7 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\iMobileDevice\iMobileDevice.csproj">
+    <ProjectReference Include="..\iMobileDevice-net\iMobileDevice.csproj">
       <Project>{ae5503e1-1597-4f8f-ba40-d03d5c2bf572}</Project>
       <Name>iMobileDevice</Name>
     </ProjectReference>
@@ -90,10 +109,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      mkdir $(ProjectDir)$(OutDir)\x86
-      mkdir $(ProjectDir)$(OutDir)\x64
-      copy /y $(SolutionDir)\iMobileDevice\$(OutDir)\x86\*.* $(ProjectDir)$(OutDir)\x86
-      copy /y $(SolutionDir)\iMobileDevice\$(OutDir)\x64\*.* $(ProjectDir)$(OutDir)\x64
     </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
