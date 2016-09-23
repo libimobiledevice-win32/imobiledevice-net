@@ -1,5 +1,5 @@
 # .NET bindings for imobiledevice
-[![Build status](https://ci.appveyor.com/api/projects/status/fp04bcd55flbeg60?svg=true)](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net)
+[![Build status](https://ci.appveyor.com/api/projects/status/fp04bcd55flbeg60?svg=true)](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net) [![NuGet Status](http://img.shields.io/nuget/v/imobiledevice-net.svg?style=flat)](https://www.nuget.org/packages/imobiledevice-net/)
 
 imobiledevice-net is a library which allows you to interact with iOS devices on Windows using any of the .NET Framework
 languages (such as C# or Visual Basic). It is based on the libimobiledevice library.
