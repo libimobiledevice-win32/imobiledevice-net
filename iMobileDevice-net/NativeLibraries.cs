@@ -74,7 +74,7 @@ namespace iMobileDevice
                     "getopt",
                     "libeay32",
                     "ssleay32",
-                    "libimobiledevice",
+                    "imobiledevice",
                 };
 
                 string nativeLibrariesDirectory;
