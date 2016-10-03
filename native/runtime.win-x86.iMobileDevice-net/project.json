@@ -19,6 +19,9 @@
     "tags": [ "libimobiledevice", "ios", "iphone", "ipad", "imobiledevice", "netcore" ],
     "files": {
       "mappings": {
+        "build/net40/": [
+          "runtime.win-x86.iMobileDevice-net.targets"
+        ],
         "runtimes/win7-x86/native/": [
           "../../packages/libimobiledevice.redist.1.2.1.73/build/native/bin/Win32/v140/Release/*.*",
           "../../packages/libusbmuxd.redist.1.0.10.13/build/native/bin/Win32/v140/Release/*.*",
