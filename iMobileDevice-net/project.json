@@ -23,9 +23,10 @@
   },
 
   "dependencies": {
-    "runtime.linux-x64.iMobileDevice-net": "1.2.1-beta002",
-    "runtime.win-x86.iMobileDevice-net": "1.2.1-r114",
-    "runtime.win-x64.iMobileDevice-net": "1.2.1-r114"
+    "runtime.linux-x64.iMobileDevice-net": "1.2.1-beta009",
+    "runtime.osx-x64.iMobileDevice-net": "1.2.1-beta003",
+    "runtime.win-x86.iMobileDevice-net": "1.2.1-r144",
+    "runtime.win-x64.iMobileDevice-net": "1.2.1-r144"
   },
 
   "buildOptions": {
