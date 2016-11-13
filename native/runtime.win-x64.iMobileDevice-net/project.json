@@ -24,7 +24,10 @@
         ],
         "runtimes/win7-x64/native/": [
           "../../packages/libimobiledevice.redist.1.2.1.79/build/native/bin/x64/v140/Release/*.*",
+          "../../packages/libimobiledevice.symbols.1.2.1.79/build/native/bin/x64/v140/Release/*.pdb",
           "../../packages/libusbmuxd.redist.1.0.10.25/build/native/bin/x64/v140/Release/*.*",
+          "../../packages/libusbmuxd.symbols.1.0.10.25/build/native/bin/x64/v140/Release/*.pdb",
+          "../../packages/libplist.symbols.1.12.78/build/native/bin/x64/v140/Release/*.pdb",
           "../../packages/libiconv.redist.1.14.0.11/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll",
           "../../packages/openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/release/*.dll",
           "../../packages/zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/Release/*.dll",
