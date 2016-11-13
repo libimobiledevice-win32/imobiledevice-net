@@ -31,7 +31,8 @@
 
   "buildOptions": {
     "strongName": "true",
-    "keyFile": "iMobileDevice.snk"
+    "keyFile": "iMobileDevice.snk",
+    "xmlDoc": true
   },
 
   "frameworks": {
