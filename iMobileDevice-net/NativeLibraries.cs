@@ -70,7 +70,6 @@ namespace iMobileDevice
                     "vcruntime140",
                     "zlib",
                     "libiconv",
-                    "libxml2",
                     "getopt",
                     "libeay32",
                     "ssleay32",
