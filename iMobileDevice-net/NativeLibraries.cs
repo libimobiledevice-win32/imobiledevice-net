@@ -99,11 +99,16 @@ namespace iMobileDevice
                     // Attempt to load the libraries. If they are not found, throw an error.
                     // See also http://blogs.msdn.com/b/adam_nathan/archive/2003/04/25/56643.aspx for
                     // more information about GetLastWin32Error
+                    if (!File.Exists(path))
+                    {
+                        throw new FileNotFoundException($"Could not load the library '{libraryToLoad}' at '{path}', because the file does not exist", path);
+                    }
+
                     IntPtr result = NativeMethods.LoadLibrary(path);
                     if (result == IntPtr.Zero)
                     {
                         var lastError = Marshal.GetLastWin32Error();
-                        var error = new Win32Exception(lastError);
+                        var error = new Win32Exception(lastError, $"Could not load the library '{libraryToLoad}' at '{path}'. The error code was {lastError}");
                         throw error;
                     }
                 }
