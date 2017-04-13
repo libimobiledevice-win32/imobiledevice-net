@@ -4,16 +4,16 @@ before_build:
   - nuget restore
   - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .
   - dotnet restore
-  - mkdir ext
+  - if not exist ext mkdir ext
   - choco install -y wget
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-74.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-74.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-74.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-x64-1.1.0-74.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz
-  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-74.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-74.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-74.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-x64-1.1.0-74.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz
   - 7z x ext\usbmuxd-osx-x64-1.1.0-74.tar.gz -oext\
   - 7z x ext\usbmuxd-linux-arm-1.1.0-74.tar.gz -oext\
   - 7z x ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz -oext\
@@ -31,18 +31,19 @@ before_build:
   - 7z x ext\libimobiledevice-linux-arm-1.2.1-94.tar -oext\linux-arm
   - 7z x ext\libimobiledevice-linux-x64-1.2.1-94.tar -oext\linux-x64
 
+cache:
+  - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
+  - ext -> appveyor.yml
+  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # NuGet package for .NET Core
+
 build_script:
   - msbuild iMobileDevice.Generator\iMobileDevice.Generator.csproj /p:Configuration=Debug /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
   - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice-net
-  - dotnet build imobiledevice-net\project.json
-  - dotnet pack imobiledevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
-  - dotnet pack native\runtime.win-x64.iMobileDevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
-  - dotnet pack native\runtime.win-x86.iMobileDevice-net\project.json --version-suffix r%APPVEYOR_BUILD_NUMBER%
+  - dotnet build imobiledevice-net\iMobileDevice-net.csproj
+  - dotnet pack imobiledevice-net\iMobileDevice-net.csproj --version-suffix r%APPVEYOR_BUILD_NUMBER%
 
 on_success:
   - ps: Push-AppVeyorArtifact imobiledevice-net\bin\Debug\imobiledevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
-  - ps: Push-AppVeyorArtifact native\runtime.win-x64.iMobileDevice-net\bin\Debug\runtime.win-x64.iMobileDevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
-  - ps: Push-AppVeyorArtifact native\runtime.win-x86.iMobileDevice-net\bin\Debug\runtime.win-x86.iMobileDevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
 
 nuget:
   project_feed: true
