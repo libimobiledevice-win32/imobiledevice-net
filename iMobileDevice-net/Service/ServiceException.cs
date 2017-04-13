@@ -1,5 +1,5 @@
 // <copyright file="ServiceException.cs" company="Quamotion">
-// Copyright (c) 2016 Quamotion. All rights reserved.
+// Copyright (c) 2016-2017 Quamotion. All rights reserved.
 // </copyright>
 
 namespace iMobileDevice.Service

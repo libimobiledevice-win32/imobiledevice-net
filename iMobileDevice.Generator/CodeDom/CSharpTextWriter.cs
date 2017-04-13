@@ -16,7 +16,7 @@
         internal void Generate(CodeNamespace ns)
         {
             this.WriteLine($@"// <copyright file=""{ns.Types.OfType<CodeTypeDeclaration>().First().Name}.cs"" company=""Quamotion"">");
-            this.WriteLine($@"// Copyright (c) {DateTime.Now.Year} Quamotion. All rights reserved.");
+            this.WriteLine($@"// Copyright (c) 2016-{DateTime.Now.Year} Quamotion. All rights reserved.");
             this.WriteLine($@"// </copyright>");
             this.WriteLine();
             this.WriteLine($@"namespace {ns.Name}");
