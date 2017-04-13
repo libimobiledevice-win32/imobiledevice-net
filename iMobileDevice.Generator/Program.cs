@@ -43,22 +43,22 @@ namespace iMobileDevice.Generator
             Console.WriteLine($"Writing the C# files to: {targetDirectory}");
 
             ModuleGenerator generator = new ModuleGenerator();
-
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
+            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio\Shared\14.0\VC\include"));
             generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.28\build\native\include\"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.81\build\native\include\"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.79\build\native\include"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.28\build\native\include"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.54\build\native\include\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.100\build\native\include\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.113\build\native\include"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.54\build\native\include"));
 
             Collection<string> names = new Collection<string>();
 
             var files = new List<string>();
-            files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.28\build\native\include\usbmuxd.h"));
-            files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.79\build\native\include\plist\plist.h"));
+            files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.54\build\native\include\usbmuxd.h"));
+            files.Add(Path.Combine(sourceDirectory, @"packages\libplist.1.12.113\build\native\include\plist\plist.h"));
 
-            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.81\build\native\include\libimobiledevice");
+            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.100\build\native\include\libimobiledevice");
             files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));

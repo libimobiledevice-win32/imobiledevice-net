@@ -72,28 +72,26 @@
   -->
   <Target Name="AfterBuild">
     <ItemGroup>
-      <Native32 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.0.56\build\native\bin\Win32\v140\Release\*.*" />
-      <Native32 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.13\build\native\bin\Win32\v140\Release\*.*" />
+      <Native32 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.1.100\build\native\bin\Win32\v140\Release\*.*" />
+      <Native32 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.54\build\native\bin\Win32\v140\Release\*.*" />
+      <Native32 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.78\runtimes\win7-x86\native\*.exe" />
+      <Native32 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.78\runtimes\win7-x86\native\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
-      <Native32 Include="$(ProjectDir)..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\release\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\Release\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\Win32\v140\Release\Desktop\*.dll" />
-      <Native32 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.29\runtimes\win7-x86\native\*.exe" />
-      <Native32 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.29\runtimes\win7-x86\native\*.dll" />
       <Native32 Include="$(ProjectDir)..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll" />
       <Native32 Include="$(WinDir)\syswow64\vcruntime140.dll" />
       <Native32 Include="$(WinDir)\syswow64\msvcr110.dll" />
-      <Native64 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.0.56\build\native\bin\x64\v140\Release\*.*" />
-      <Native64 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.13\build\native\bin\x64\v140\Release\*.*" />
+      <Native64 Include="$(ProjectDir)..\packages\libimobiledevice.redist.1.2.1.100\build\native\bin\x64\v140\Release\*.*" />
+      <Native64 Include="$(ProjectDir)..\packages\libusbmuxd.redist.1.0.10.54\build\native\bin\x64\v140\Release\*.*" />
+      <Native64 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.78\runtimes\win7-x64\native\*.exe" />
+      <Native64 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.78\runtimes\win7-x64\native\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
-      <Native64 Include="$(ProjectDir)..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Release\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\x64\v140\Release\Desktop\*.dll" />
       <Native64 Include="$(ProjectDir)..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll" />
-      <Native64 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.29\runtimes\win7-x64\native\*.exe" />
-      <Native64 Include="$(ProjectDir)..\packages\usbmuxd.1.1.0.29\runtimes\win7-x64\native\*.dll" />
       <Native64 Include="$(WinDir)\Sysnative\vcruntime140.dll" />
       <Native64 Include="$(WinDir)\Sysnative\msvcr110.dll" />
     </ItemGroup>
