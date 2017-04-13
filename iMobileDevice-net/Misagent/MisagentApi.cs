@@ -128,7 +128,7 @@ namespace iMobileDevice.Misagent
         }
         
         /// <summary>
-        /// Retrieves an array of all installed provisioning profiles.
+        /// Retrieves all installed provisioning profiles (iOS 9.2.1 or below).
         /// </summary>
         /// <param name="client">
         /// The connected misagent to use.
@@ -142,6 +142,8 @@ namespace iMobileDevice.Misagent
         /// client is invalid, or an MISAGENT_E_* error code otherwise.
         /// </returns>
         /// <remarks>
+        /// This API call only works with iOS 9.2.1 or below.
+        /// For newer iOS versions use misagent_copy_all() instead.
         /// If no provisioning profiles are installed on the device, this function
         /// still returns MISAGENT_E_SUCCESS and profiles will just point to an
         /// empty array.
@@ -150,6 +152,35 @@ namespace iMobileDevice.Misagent
         {
             MisagentError returnValue;
             returnValue = MisagentNativeMethods.misagent_copy(client, out profiles);
+            profiles.Api = this.Parent;
+            return returnValue;
+        }
+        
+        /// <summary>
+        /// Retrieves all installed provisioning profiles (iOS 9.3 or higher).
+        /// </summary>
+        /// <param name="client">
+        /// The connected misagent to use.
+        /// </param>
+        /// <param name="profiles">
+        /// Pointer to a plist_t that will be set to a PLIST_ARRAY
+        /// if the function is successful.
+        /// </param>
+        /// <returns>
+        /// MISAGENT_E_SUCCESS on success, MISAGENT_E_INVALID_ARG when
+        /// client is invalid, or an MISAGENT_E_* error code otherwise.
+        /// </returns>
+        /// <remarks>
+        /// This API call only works with iOS 9.3 or higher.
+        /// For older iOS versions use misagent_copy() instead.
+        /// If no provisioning profiles are installed on the device, this function
+        /// still returns MISAGENT_E_SUCCESS and profiles will just point to an
+        /// empty array.
+        /// </remarks>
+        public virtual MisagentError misagent_copy_all(MisagentClientHandle client, out PlistHandle profiles)
+        {
+            MisagentError returnValue;
+            returnValue = MisagentNativeMethods.misagent_copy_all(client, out profiles);
             profiles.Api = this.Parent;
             return returnValue;
         }

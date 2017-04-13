@@ -18,13 +18,6 @@ namespace iMobileDevice.Plist
         const string libraryName = "imobiledevice";
         
         /// <summary>
-        /// Frees memory used globally by listplist, in
-        /// particular the libxml parser
-        /// </summary>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_cleanup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void plist_cleanup();
-        
-        /// <summary>
         /// Create a new root plist_t type #PLIST_DICT
         /// </summary>
         /// <returns>
@@ -645,7 +638,7 @@ namespace iMobileDevice.Plist
         /// <summary>
         /// Frees the memory allocated by plist_to_xml
         /// </summary>
-        /// <param name="plist_bin">
+        /// <param name="plist_xml">
         /// The object allocated by plist_to_xml
         /// </param>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_xml_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
@@ -705,6 +698,43 @@ namespace iMobileDevice.Plist
         /// </param>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_from_bin", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_from_bin([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistBin, uint length, out PlistHandle plist);
+        
+        /// <summary>
+        /// Import the #plist_t structure from memory data.
+        /// This method will look at the first bytes of plist_data
+        /// to determine if plist_data contains a binary or XML plist.
+        /// </summary>
+        /// <param name="plist_data">
+        /// a pointer to the memory buffer containing plist data.
+        /// </param>
+        /// <param name="length">
+        /// length of the buffer to read.
+        /// </param>
+        /// <param name="plist">
+        /// a pointer to the imported plist.
+        /// </param>
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_from_memory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void plist_from_memory([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistData, uint length, out PlistHandle plist);
+        
+        /// <summary>
+        /// Test if in-memory plist data is binary or XML
+        /// This method will look at the first bytes of plist_data
+        /// to determine if plist_data contains a binary or XML plist.
+        /// This method is not validating the whole memory buffer to check if the
+        /// content is truly a plist, it's only using some heuristic on the first few
+        /// bytes of plist_data.
+        /// </summary>
+        /// <param name="plist_data">
+        /// a pointer to the memory buffer containing plist data.
+        /// </param>
+        /// <param name="length">
+        /// length of the buffer to read.
+        /// </param>
+        /// <returns>
+        /// 1 if the buffer is a binary plist, 0 otherwise.
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_is_binary", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int plist_is_binary([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistData, uint length);
         
         /// <summary>
         /// Get a node from its path. Each path element depends on the associated father node type.

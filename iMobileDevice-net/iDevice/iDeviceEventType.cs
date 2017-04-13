@@ -21,5 +21,7 @@ namespace iMobileDevice.iDevice
         DeviceAdd = 1,
         
         DeviceRemove = 2,
+        
+        DevicePaired = 3,
     }
 }

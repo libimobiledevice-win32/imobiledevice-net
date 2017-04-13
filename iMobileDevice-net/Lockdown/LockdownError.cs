@@ -32,7 +32,7 @@ namespace iMobileDevice.Lockdown
         
         DictError = -6,
         
-        NotEnoughData = -7,
+        ReceiveTimeout = -7,
         
         MuxError = -8,
         
