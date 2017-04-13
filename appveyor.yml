@@ -1,7 +1,35 @@
+image: Visual Studio 2017
+
 before_build:
   - nuget restore
   - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .
   - dotnet restore
+  - mkdir ext
+  - choco install -y wget
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-74.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-74.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-74.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-x64-1.1.0-74.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz
+  - wget https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz
+  - 7z x ext\usbmuxd-osx-x64-1.1.0-74.tar.gz -oext\
+  - 7z x ext\usbmuxd-linux-arm-1.1.0-74.tar.gz -oext\
+  - 7z x ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz -oext\
+  - 7z x ext\usbmuxd-linux-x64-1.1.0-74.tar.gz -oext\
+  - 7z x ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz -oext\
+  - 7z x ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz -oext\
+  - 7z x ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz -oext\
+  - 7z x ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz -oext\
+  - 7z x ext\usbmuxd-osx-x64-1.1.0-74.tar -oext\osx-64
+  - 7z x ext\usbmuxd-linux-arm-1.1.0-74.tar -oext\linux-arm
+  - 7z x ext\usbmuxd-linux-arm64-1.1.0-74.tar -oext\linux-arm64
+  - 7z x ext\usbmuxd-linux-x64-1.1.0-74.tar -oext\linux-x64
+  - 7z x ext\libimobiledevice-osx-x64-1.2.1-94.tar -oext\osx-x64
+  - 7z x ext\libimobiledevice-linux-arm64-1.2.1-94.tar -oext\linux-arm64
+  - 7z x ext\libimobiledevice-linux-arm-1.2.1-94.tar -oext\linux-arm
+  - 7z x ext\libimobiledevice-linux-x64-1.2.1-94.tar -oext\linux-x64
 
 build_script:
   - msbuild iMobileDevice.Generator\iMobileDevice.Generator.csproj /p:Configuration=Debug /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"

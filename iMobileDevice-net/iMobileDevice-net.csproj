@@ -1,0 +1,200 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>.NET bindings for libimobiledevice, allows you to interact with devices running iOS, such as iPhones or iPads, using C# or VB.NET code</Description>
+    <AssemblyTitle>.NET client for iOS devices (libimobiledevice-net)</AssemblyTitle>
+    <VersionPrefix>1.2.1</VersionPrefix>
+    <Authors>Quamotion</Authors>
+    <TargetFrameworks>netstandard1.5;net45</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>iMobileDevice-net</AssemblyName>
+    <AssemblyOriginatorKeyFile>iMobileDevice.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>iMobileDevice-net</PackageId>
+    <PackageTags>libimobiledevice;ios;iphone;ipad;imobiledevice;netcore</PackageTags>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.StackTrace" Version="4.3.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- win7-x64 files which come from NuGet packages-->
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libimobiledevice.redist.1.2.1.100/build/native/bin/x64/v140/Release/*.*">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.100\build\native\bin\x64\v140\Release\*.pdb">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.78\runtimes\win7-x64\native\*.exe">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.78\runtimes\win7-x64\native\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Release\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\x64\v140\Release\Desktop\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+
+    <!-- win7-x86 files which come from NuGet packages-->
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.redist.1.2.1.100\build\native\bin\Win32\v140\Release\*.*">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.100\build\native\bin\Win32\v140\Release\*.pdb">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.78\runtimes\win7-x86\native\*.exe">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.78\runtimes\win7-x86\native\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\release\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\Release\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\Win32\v140\Release\Desktop\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    
+    <!-- linux arm, arm64, x64 files which come from the tarballs -->
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\lib\*.so">
+      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\bin\*">
+      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\sbin\*">
+      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm64\lib\*.so">
+      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-arm64/bin/**">
+      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm64\sbin\**">
+      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\lib\*.so">
+      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\bin\*">
+      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\sbin\*">
+      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\lib\*.so">
+      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\bin\*">
+      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\sbin\*">
+      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    
+    <!-- Pack the files are included in the current project dir-->
+    <Content Include="runtimes/win7-x64/native/*.*">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="runtimes/win7-x86/native/*.*">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="runtimes/osx-x64/native/*.*">
+      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="runtimes/linux-x64/native/*.*">
+      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="build/net45/*.*">
+      <PackagePath>build/net45/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
