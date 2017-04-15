@@ -6,14 +6,14 @@ before_build:
   - dotnet restore
   - if not exist ext mkdir ext
   - choco install -y wget
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-74.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-74.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-74.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-x64-1.1.0-74.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz
-  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-74.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-74.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-74.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-74.tar.gz -O ext\usbmuxd-linux-x64-1.1.0-74.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-osx-x64-1.2.1-94.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm64-1.2.1-94.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-arm-1.2.1-94.tar.gz && exit 0
+  - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-94.tar.gz -O ext\libimobiledevice-linux-x64-1.2.1-94.tar.gz && exit 0
   - 7z x ext\usbmuxd-osx-x64-1.1.0-74.tar.gz -oext\
   - 7z x ext\usbmuxd-linux-arm-1.1.0-74.tar.gz -oext\
   - 7z x ext\usbmuxd-linux-arm64-1.1.0-74.tar.gz -oext\
