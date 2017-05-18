@@ -156,7 +156,7 @@
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\lib\*.so">
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\lib\*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
