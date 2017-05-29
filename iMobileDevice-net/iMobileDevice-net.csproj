@@ -160,11 +160,11 @@
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\bin\*">
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\bin\*">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\sbin\*">
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\sbin\*">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
