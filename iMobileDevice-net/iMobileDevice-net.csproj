@@ -117,42 +117,52 @@
     </Content>
     
     <!-- linux arm, arm64, x64 files which come from the tarballs -->
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\lib\*.so">
-      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
+
+    <!-- libimobiledevice depends on OpenSSL. Unfortunately, the OpenSSL files
+         have different names (libssl.so.1.0.0 vs libssl.so.10) on e.g. Debian
+         and CentOS distributions; and there is no common name (we would expect
+         libssl.so but that doesn't existon all platforms) so we are not yet
+         cross platform here.
+         
+         If you are running on a non-Debian (or derived) distro, you should
+         acquire libimobiledevice manually or from the OpenSuse Build service
+         -->
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\lib\*.so">
+      <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\bin\*">
-      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\bin\*">
+      <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm\sbin\*">
-      <PackagePath>runtimes/linux-arm/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm64\lib\*.so">
-      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-arm64/bin/**">
-      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-arm64\sbin\**">
-      <PackagePath>runtimes/linux-arm64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\sbin\*">
+      <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\lib\*.so">
-      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm64\lib\*.so">
+      <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\bin\*">
-      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm64/bin/**">
+      <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\linux-x64\sbin\*">
-      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm64\sbin\**">
+      <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\lib\*.so">
+      <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\bin\*">
+      <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\sbin\*">
+      <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
@@ -182,8 +192,8 @@
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="runtimes/linux-x64/native/*.*">
-      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="runtimes/debian-x64/native/*.*">
+      <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="build/net45/*.*">
