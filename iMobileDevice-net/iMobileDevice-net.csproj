@@ -99,7 +99,7 @@
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\release\*.dll">
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\release\*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
