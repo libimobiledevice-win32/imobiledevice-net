@@ -7,8 +7,8 @@ init:
 - ps: '[System.IO.File]::AppendAllText("C:\Windows\System32\drivers\etc\hosts", "`n93.184.221.200  api.nuget.org")'
 
 before_build:
-  - nuget restore
-  - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .
+  - nuget restore -NonInteractive
+  - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .  -NonInteractive
   - dotnet restore
   - if not exist ext mkdir ext
   - choco install -y wget
