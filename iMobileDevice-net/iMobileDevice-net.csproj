@@ -127,6 +127,8 @@
          If you are running on a non-Debian (or derived) distro, you should
          acquire libimobiledevice manually or from the OpenSuse Build service
          -->
+    
+      <!--
     <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\lib\*.so">
       <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
@@ -152,6 +154,7 @@
       <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    -->
     
     <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\lib\*.so">
       <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
