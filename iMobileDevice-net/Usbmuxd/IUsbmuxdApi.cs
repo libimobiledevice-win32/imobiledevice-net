@@ -24,6 +24,18 @@ namespace iMobileDevice.Usbmuxd
         }
         
         /// <summary>
+        /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        int usbmuxd_set_socket_type(int value);
+        
+        /// <summary>
+        /// Gets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        int usbmuxd_get_socket_type(ref int value);
+        
+        /// <summary>
         /// Subscribe a callback function so that applications get to know about
         /// device add/remove events.
         /// </summary>

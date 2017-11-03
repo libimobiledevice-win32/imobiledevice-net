@@ -22,6 +22,7 @@ namespace iMobileDevice
     using iMobileDevice.HouseArrest;
     using iMobileDevice.InstallationProxy;
     using iMobileDevice.Misagent;
+    using iMobileDevice.Mobileactivation;
     using iMobileDevice.MobileBackup;
     using iMobileDevice.MobileBackup2;
     using iMobileDevice.MobileSync;
@@ -96,6 +97,11 @@ namespace iMobileDevice
         }
         
         IMisagentApi Misagent
+        {
+            get;
+        }
+        
+        IMobileactivationApi Mobileactivation
         {
             get;
         }

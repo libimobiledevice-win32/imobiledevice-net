@@ -69,6 +69,7 @@ namespace iMobileDevice.Generator
                     return typeof(double);
 
                 case CXTypeKind.CXType_Int:
+                case CXTypeKind.CXType_Enum:
                     return typeof(int);
 
                 case CXTypeKind.CXType_UInt:

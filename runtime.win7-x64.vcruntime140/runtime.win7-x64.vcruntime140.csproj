@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>The Visual C++ Redistributable Packages install run-time components of Visual C++ libraries. These components are required to run C++ applications that are developed using Visual Studio 2015 and link dynamically to Visual C++ libraries. These package can be used to run such applications on a computer even if it does not have Visual Studio 2015 installed. These packages install run-time components of these libraries: C Runtime (CRT), Standard C++, MFC, C++ AMP, and OpenMP.</Description>
+    <AssemblyTitle>Windows (64-bit) Native libraries for Visual C++ Redistributable for Visual Studio 2015</AssemblyTitle>
+    <VersionPrefix>14.00.24406.1</VersionPrefix>
+    <Authors>Microsoft</Authors>
+    <TargetFrameworks>netstandard1.5;netstandard2.0;net45</TargetFrameworks>
+    <AssemblyName>runtime.win7-x64.vcruntime140</AssemblyName>
+    <PackageId>runtime.win7-x64.vcruntime140</PackageId>
+    <PackageTags>visual c++;vcruntime;netcore</PackageTags>
+    <PackageLicenseUrl>https://www.microsoft.com/en-US/download/details.aspx?id=48145</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="vcruntime140.dll">
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="runtime.win7-x64.vcruntime140.targets">
+      <PackagePath>build/net40/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+</Project>

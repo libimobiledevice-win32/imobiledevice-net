@@ -22,6 +22,7 @@ namespace iMobileDevice
     using iMobileDevice.HouseArrest;
     using iMobileDevice.InstallationProxy;
     using iMobileDevice.Misagent;
+    using iMobileDevice.Mobileactivation;
     using iMobileDevice.MobileBackup;
     using iMobileDevice.MobileBackup2;
     using iMobileDevice.MobileSync;
@@ -66,6 +67,8 @@ namespace iMobileDevice
         
         private IMisagentApi misagent;
         
+        private IMobileactivationApi mobileactivation;
+        
         private IMobileBackupApi mobileBackup;
         
         private IMobileBackup2Api mobileBackup2;
@@ -106,6 +109,7 @@ namespace iMobileDevice
             this.houseArrest = new HouseArrestApi(this);
             this.installationProxy = new InstallationProxyApi(this);
             this.misagent = new MisagentApi(this);
+            this.mobileactivation = new MobileactivationApi(this);
             this.mobileBackup = new MobileBackupApi(this);
             this.mobileBackup2 = new MobileBackup2Api(this);
             this.mobileSync = new MobileSyncApi(this);
@@ -274,6 +278,18 @@ namespace iMobileDevice
             set
             {
                 this.misagent = value;
+            }
+        }
+        
+        public virtual IMobileactivationApi Mobileactivation
+        {
+            get
+            {
+                return this.mobileactivation;
+            }
+            set
+            {
+                this.mobileactivation = value;
             }
         }
         
