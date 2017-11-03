@@ -18,6 +18,20 @@ namespace iMobileDevice.Usbmuxd
         const string libraryName = "imobiledevice";
         
         /// <summary>
+        /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_set_socket_type(int value);
+        
+        /// <summary>
+        /// Gets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_get_socket_type(ref int value);
+        
+        /// <summary>
         /// Subscribe a callback function so that applications get to know about
         /// device add/remove events.
         /// </summary>
