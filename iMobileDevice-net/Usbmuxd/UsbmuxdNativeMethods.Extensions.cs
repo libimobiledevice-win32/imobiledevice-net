@@ -15,6 +15,16 @@ namespace iMobileDevice.Usbmuxd
     public partial class UsbmuxdNativeMethods
     {
         
+        public static int usbmuxd_get_tcp_endpoint(out string host, ref ushort port)
+        {
+            System.Runtime.InteropServices.ICustomMarshaler hostMarshaler = NativeStringMarshaler.GetInstance(null);
+            System.IntPtr hostNative = System.IntPtr.Zero;
+            int returnValue = UsbmuxdNativeMethods.usbmuxd_get_tcp_endpoint(out hostNative, ref port);
+            host = ((string)hostMarshaler.MarshalNativeToManaged(hostNative));
+            hostMarshaler.CleanUpNativeData(hostNative);
+            return returnValue;
+        }
+        
         public static int usbmuxd_read_buid(out string buid)
         {
             System.Runtime.InteropServices.ICustomMarshaler buidMarshaler = NativeStringMarshaler.GetInstance(null);

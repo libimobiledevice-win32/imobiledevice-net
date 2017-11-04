@@ -44,6 +44,12 @@ namespace iMobileDevice.Usbmuxd
         /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
         /// to usbmuxd.
         /// </summary>
+        /// <param name="value">
+        /// SOCKET_TYPE_UNIX or SOCKET_TYPE_TCP
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
         public virtual int usbmuxd_set_socket_type(int value)
         {
             return UsbmuxdNativeMethods.usbmuxd_set_socket_type(value);
@@ -53,9 +59,52 @@ namespace iMobileDevice.Usbmuxd
         /// Gets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
         /// to usbmuxd.
         /// </summary>
+        /// <param name="value">
+        /// A pointer to an integer which will reveive the current socket type
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
         public virtual int usbmuxd_get_socket_type(ref int value)
         {
             return UsbmuxdNativeMethods.usbmuxd_get_socket_type(ref value);
+        }
+        
+        /// <summary>
+        /// Sets the TCP endpoint to which usbmuxd will connect if the socket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// The hostname or IP address to which to connect
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect.
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        public virtual int usbmuxd_set_tcp_endpoint(string host, ushort port)
+        {
+            return UsbmuxdNativeMethods.usbmuxd_set_tcp_endpoint(host, port);
+        }
+        
+        /// <summary>
+        /// Gets the TCP endpoint to which usbmuxd will connect if th esocket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// A pointer which will be set to the hostname or IP address to which to connect.
+        /// The caller must free this string.
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        public virtual int usbmuxd_get_tcp_endpoint(out string host, ref ushort port)
+        {
+            return UsbmuxdNativeMethods.usbmuxd_get_tcp_endpoint(out host, ref port);
         }
         
         /// <summary>

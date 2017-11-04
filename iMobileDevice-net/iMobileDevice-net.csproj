@@ -41,11 +41,11 @@
 
   <ItemGroup>
     <!-- win7-x64 files which come from NuGet packages-->
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libimobiledevice.redist.1.2.1.180/build/native/bin/x64/v140/Release/*.*">
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libimobiledevice.redist.1.2.1.183/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.180\build\native\bin\x64\v140\Release\*.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.183\build\native\bin\x64\v140\Release\*.pdb">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -79,11 +79,11 @@
     </Content>
 
     <!-- win7-x86 files which come from NuGet packages-->
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.redist.1.2.1.180\build\native\bin\Win32\v140\Release\*.*">
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.redist.1.2.1.183\build\native\bin\Win32\v140\Release\*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.180\build\native\bin\Win32\v140\Release\*.pdb">
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.183\build\native\bin\Win32\v140\Release\*.pdb">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
