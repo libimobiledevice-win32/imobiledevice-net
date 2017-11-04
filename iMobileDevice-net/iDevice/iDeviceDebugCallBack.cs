@@ -13,5 +13,5 @@ namespace iMobileDevice.iDevice
     
     
     [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-    public delegate void iDeviceDebugCallBack(System.IntPtr message);
+    public delegate void iDeviceDebugCallBack([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string message);
 }

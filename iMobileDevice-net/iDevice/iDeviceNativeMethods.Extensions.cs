@@ -34,5 +34,15 @@ namespace iMobileDevice.iDevice
             udidMarshaler.CleanUpNativeData(udidNative);
             return returnValue;
         }
+        
+        public static iDeviceError idevice_get_tcp_endpoint(out string host, ref ushort port)
+        {
+            System.Runtime.InteropServices.ICustomMarshaler hostMarshaler = NativeStringMarshaler.GetInstance(null);
+            System.IntPtr hostNative = System.IntPtr.Zero;
+            iDeviceError returnValue = iDeviceNativeMethods.idevice_get_tcp_endpoint(out hostNative, ref port);
+            host = ((string)hostMarshaler.MarshalNativeToManaged(hostNative));
+            hostMarshaler.CleanUpNativeData(hostNative);
+            return returnValue;
+        }
     }
 }

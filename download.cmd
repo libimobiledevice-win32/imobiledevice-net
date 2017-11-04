@@ -1,5 +1,5 @@
 set USBMUXD_VERSION=104
-set LIBIMOBILEDEVICE_VERSION=134
+set LIBIMOBILEDEVICE_VERSION=141
 wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-%USBMUXD_VERSION%.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-%USBMUXD_VERSION%.tar.gz
 REM wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-%USBMUXD_VERSION%.tar.gz -O ext\usbmuxd-linux-arm-1.1.0-%USBMUXD_VERSION%.tar.gz
 REM wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-%USBMUXD_VERSION%.tar.gz -O ext\usbmuxd-linux-arm64-1.1.0-%USBMUXD_VERSION%.tar.gz
