@@ -272,5 +272,60 @@ namespace iMobileDevice.iDevice
         /// Gets the unique id for the device.
         /// </summary>
         iDeviceError idevice_get_udid(iDeviceHandle device, out string udid);
+        
+        /// <summary>
+        /// Sets the socket type (Unix socket or TCP socket) libimobiledevice should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        /// <param name="value">
+        /// IDEVICE_SOCKET_TYPE_UNIX or IDEVICE_SOCKET_TYPE_TCP
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        iDeviceError idevice_set_socket_type(int value);
+        
+        /// <summary>
+        /// Gets the socket type (Unix socket or TCP socket) libimobiledevice should use when connecting
+        /// to usbmuxd.
+        /// </summary>
+        /// <param name="value">
+        /// A pointer to an integer which will reveive the current socket type
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        iDeviceError idevice_get_socket_type(ref int value);
+        
+        /// <summary>
+        /// Sets the TCP endpoint to which libimobiledevice will connect if the socket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// The hostname or IP address to which to connect
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect.
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        iDeviceError idevice_set_tcp_endpoint(string host, ushort port);
+        
+        /// <summary>
+        /// Gets the TCP endpoint to which libimobiledevice will connect if the socket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// A pointer which will be set to the hostname or IP address to which to connect.
+        /// The caller must free this string.
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        iDeviceError idevice_get_tcp_endpoint(out string host, ref ushort port);
     }
 }

@@ -48,7 +48,7 @@ namespace iMobileDevice.Generator
             generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
             generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.86\build\native\include\"));
-            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.183\build\native\include\"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.190\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.2.0.1.171\build\native\include"));
 
             Collection<string> names = new Collection<string>();
@@ -57,7 +57,7 @@ namespace iMobileDevice.Generator
             files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.86\build\native\include\usbmuxd.h"));
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.2.0.1.171\build\native\include\plist\plist.h"));
 
-            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.183\build\native\include\libimobiledevice");
+            var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.190\build\native\include\libimobiledevice");
             files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));
