@@ -5,7 +5,7 @@
     <AssemblyTitle>.NET client for iOS devices (libimobiledevice-net)</AssemblyTitle>
     <VersionPrefix>1.2.1</VersionPrefix>
     <Authors>Quamotion</Authors>
-    <TargetFrameworks>netstandard1.5;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.5;netstandard2.0;net45</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>iMobileDevice-net</AssemblyName>
     <AssemblyOriginatorKeyFile>iMobileDevice.snk</AssemblyOriginatorKeyFile>
