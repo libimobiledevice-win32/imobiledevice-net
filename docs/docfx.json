@@ -1,0 +1,28 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ "iMobileDevice-net/iMobileDevice-net.csproj" ],
+          "src": "../",
+          "exclude": [ "**/bin/**", "**/obj/**" ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**/*.md", "toc.yml", "api/**/*.yml" ],
+      }
+    ],
+    "globalMetadata": {
+      "_appTitle": "imobiledevice-net API",
+      "_enableSearch": false,
+      "_appFooter": "Copyright (c) 2015-2017 Quamotion bvba. All rights reserved",
+    },
+    "dest": "_site",
+    "template": "statictoc"
+  }
+}
