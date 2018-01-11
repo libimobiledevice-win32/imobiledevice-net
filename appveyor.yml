@@ -1,11 +1,5 @@
 image: Visual Studio 2017
 
-# Temporarly fix for an issue for NuGet/AppVeyor connectivity;
-# see appveyor.statuspage.io for more info. Should be removed when connectivty
-# is restored.
-init:
-- ps: '[System.IO.File]::AppendAllText("C:\Windows\System32\drivers\etc\hosts", "`n93.184.221.200  api.nuget.org")'
-
 before_build:
   - nuget restore -NonInteractive
   - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .  -NonInteractive

@@ -41,6 +41,10 @@
 
   <ItemGroup>
     <!-- win7-x64 files which come from NuGet packages-->
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/ideviceinstaller.redist.1.1.0.19/build/native/bin/x64/v140/Release/*.*">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(MSBuildThisFileDirectory)/../packages/libimobiledevice.redist.1.2.1.191/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
@@ -79,6 +83,10 @@
     </Content>
 
     <!-- win7-x86 files which come from NuGet packages-->
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\ideviceinstaller.redist.1.1.0.19\build\native\bin\Win32\v140\Release\*.*">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.redist.1.2.1.191\build\native\bin\Win32\v140\Release\*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
