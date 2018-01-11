@@ -3,7 +3,7 @@ sudo: false
 
 language: csharp
 mono: none
-dotnet: 1.0.1
+dotnet: 2.1.4
 
 install:
 - mkdir ext
