@@ -22,6 +22,9 @@ We've done some work to make sure imobiledevice-net "just works":
 ## How it works
 We use `libclang` to parse the libimobiledevice C headers and generate the C# P/Invoke code.
 
+## Documentation
+See the [API Documentation](https://libimobiledevice-win32.github.io/imobiledevice-net/index.html) for more information on imobiledevice-net.
+
 ## Getting started
 
 ### Using the library
