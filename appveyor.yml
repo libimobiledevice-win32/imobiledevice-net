@@ -22,11 +22,17 @@ build_script:
   - dotnet pack runtime.win7-x64.vcruntime140\runtime.win7-x64.vcruntime140.csproj -c Release
   - dotnet build runtime.win7-x86.vcruntime140\runtime.win7-x86.vcruntime140.csproj
   - dotnet pack runtime.win7-x86.vcruntime140\runtime.win7-x86.vcruntime140.csproj -c Release
+  - 7z x imobiledevice-net\bin\Release\imobiledevice-net.1.2.1-r%APPVEYOR_BUILD_NUMBER%.nupkg -ozip\
+  - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip -r zip\runtimes\win7-x86\native\
+  - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip -r zip\runtimes\win7-x64\native\
 
 on_success:
   - ps: Push-AppVeyorArtifact imobiledevice-net\bin\Release\imobiledevice-net.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER).nupkg
   - ps: Push-AppVeyorArtifact runtime.win7-x64.vcruntime140\bin\Release\runtime.win7-x64.vcruntime140.14.0.24406.1.nupkg
   - ps: Push-AppVeyorArtifact runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.0.24406.1.nupkg
+  - ps: Push-AppVeyorArtifact runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.0.24406.1.nupkg
+  - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip
+  - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip
 
 nuget:
   project_feed: true
