@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Generator", "iMobileDevice.Generator\iMobileDevice.Generator.csproj", "{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileDevice.Demo", "MobileDevice.Demo\MobileDevice.Demo.csproj", "{A34F38A3-DE63-4795-B77B-FCD14306C3E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Tests", "iMobileDevice.Tests\iMobileDevice.Tests.csproj", "{21A183FB-86D4-438F-81F3-C38F7035EDD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice-net", "iMobileDevice-net\iMobileDevice-net.csproj", "{F404280A-2556-4FE5-8B84-A5363545B998}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice-net.Demo", "iMobileDevice-net.Demo\iMobileDevice-net.Demo.csproj", "{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,6 @@ Global
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x64.Build.0 = Release|x64
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x86.ActiveCfg = Release|x86
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x86.Build.0 = Release|x86
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|x64.ActiveCfg = Debug|x64
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|x64.Build.0 = Debug|x64
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Debug|x86.Build.0 = Debug|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x64.ActiveCfg = Release|x64
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x64.Build.0 = Release|x64
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x86.ActiveCfg = Release|Any CPU
-		{A34F38A3-DE63-4795-B77B-FCD14306C3E2}.Release|x86.Build.0 = Release|Any CPU
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -69,8 +57,23 @@ Global
 		{F404280A-2556-4FE5-8B84-A5363545B998}.Release|x64.Build.0 = Release|Any CPU
 		{F404280A-2556-4FE5-8B84-A5363545B998}.Release|x86.ActiveCfg = Release|Any CPU
 		{F404280A-2556-4FE5-8B84-A5363545B998}.Release|x86.Build.0 = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Debug|x86.Build.0 = Debug|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x64.Build.0 = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x86.ActiveCfg = Release|Any CPU
+		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01F465BA-A197-4728-B9CE-320B20DE609A}
 	EndGlobalSection
 EndGlobal
