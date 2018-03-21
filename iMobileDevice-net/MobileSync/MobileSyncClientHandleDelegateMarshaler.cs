@@ -1,5 +1,5 @@
 // <copyright file="MobileSyncClientHandleDelegateMarshaler.cs" company="Quamotion">
-// Copyright (c) 2016-2017 Quamotion. All rights reserved.
+// Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
 
 namespace iMobileDevice.MobileSync
