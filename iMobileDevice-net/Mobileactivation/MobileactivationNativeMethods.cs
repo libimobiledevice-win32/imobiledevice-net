@@ -178,21 +178,25 @@ namespace iMobileDevice.Mobileactivation
         
         /// <summary>
         /// Activates the device with the given activation record in 'session' mode.
-        /// The activation record plist dictionary must be obtained using the
+        /// The activation record plist must be obtained using the
         /// activation protocol requesting from Apple's https webservice.
         /// </summary>
         /// <param name="client">
         /// The mobileactivation client
         /// </param>
         /// <param name="activation_record">
-        /// The activation record plist dictionary
+        /// The activation record in plist format
+        /// </param>
+        /// <param name="headers">
+        /// A plist dictionary with the activation response headers
+        /// as returned from Apple's https webservice with the activation record
         /// </param>
         /// <returns>
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_activate_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern MobileactivationError mobileactivation_activate_with_session(MobileactivationClientHandle client, PlistHandle activationRecord);
+        public static extern MobileactivationError mobileactivation_activate_with_session(MobileactivationClientHandle client, PlistHandle activationRecord, PlistHandle headers);
         
         /// <summary>
         /// Deactivates the device.
