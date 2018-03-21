@@ -93,6 +93,18 @@
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\curl.redist.7.30.0.2\build\native\bin\v110\x64\Release\dynamic\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libssh2.redist.1.4.3.1\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- win7-x86 files which come from NuGet packages-->
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\ideviceinstaller.redist.1.1.0.19\build\native\bin\Win32\v140\Release\*.*">
@@ -144,6 +156,18 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\curl.redist.7.30.0.2\build\native\bin\v110\Win32\Release\dynamic\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libssh2.redist.1.4.3.1\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
