@@ -20,6 +20,8 @@ namespace iMobileDevice.Generator
             patchedName = patchedName.Replace("PROPERTY_LIST_SERVICE", "propertylistservice");
             patchedName = patchedName.Replace("SYSLOG_RELAY", "syslogrelay");
             patchedName = patchedName.Replace("FILE_RELAY", "filerelay");
+            patchedName = patchedName.Replace("IDEVICE_ACTIVATION", "ideviceactivation");
+            patchedName = patchedName.Replace("libideviceactivation", "ideviceactivation");
 
             List<string> parts = new List<string>(patchedName.Split('_'));
 
@@ -138,6 +140,11 @@ namespace iMobileDevice.Generator
                 {
                     parts[i] = "File";
                     parts.Insert(i + 1, "Relay");
+                }
+                else if (parts[i] == "ideviceactivation")
+                {
+                    parts[i] = "iDevice";
+                    parts.Insert(i + 1, "Activation");
                 }
 
                 if (conversion == NameConversion.Parameter && i == 0)

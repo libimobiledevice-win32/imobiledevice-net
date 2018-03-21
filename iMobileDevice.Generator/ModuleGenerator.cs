@@ -80,7 +80,7 @@ namespace iMobileDevice.Generator
             this.NameMapping.Add(nativeName, type.Name);
         }
 
-        public void Generate(string targetDirectory)
+        public void Generate(string targetDirectory, string libraryName = "imobiledevice")
         {
             var createIndex = clang.createIndex(0, 0);
 
@@ -158,7 +158,7 @@ namespace iMobileDevice.Generator
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             // Creates functions in a NativeMethods class
-            var functionVisitor = new FunctionVisitor(this, "imobiledevice");
+            var functionVisitor = new FunctionVisitor(this, libraryName);
             clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
 
             clang.disposeTranslationUnit(translationUnit);
