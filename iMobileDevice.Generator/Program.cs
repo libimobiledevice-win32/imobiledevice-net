@@ -73,7 +73,16 @@ namespace iMobileDevice.Generator
             {
                 Console.WriteLine($"Processing {Path.GetFileName(file)}");
                 generator.InputFile = file;
-                generator.Generate(targetDirectory);
+
+                if (string.Equals(Path.GetFileName(file), "libideviceactivation.h", StringComparison.OrdinalIgnoreCase))
+                {
+                    generator.Generate(targetDirectory, "ideviceactivation");
+                }
+                else
+                {
+                    generator.Generate(targetDirectory);
+                }
+
                 generator.Types.Clear();
 
                 names.Add(generator.Name);

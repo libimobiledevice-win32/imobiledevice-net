@@ -12,6 +12,7 @@ namespace iMobileDevice
 {
     using iMobileDevice.Usbmuxd;
     using iMobileDevice.Plist;
+    using iMobileDevice.iDeviceActivation;
     using iMobileDevice.iDevice;
     using iMobileDevice.Lockdown;
     using iMobileDevice.Afc;
@@ -46,6 +47,8 @@ namespace iMobileDevice
         private IUsbmuxdApi usbmuxd;
         
         private IPlistApi plist;
+        
+        private IiDeviceActivationApi ideviceActivation;
         
         private IiDeviceApi idevice;
         
@@ -99,6 +102,7 @@ namespace iMobileDevice
         {
             this.usbmuxd = new UsbmuxdApi(this);
             this.plist = new PlistApi(this);
+            this.ideviceActivation = new iDeviceActivationApi(this);
             this.idevice = new iDeviceApi(this);
             this.lockdown = new LockdownApi(this);
             this.afc = new AfcApi(this);
@@ -158,6 +162,18 @@ namespace iMobileDevice
             set
             {
                 this.plist = value;
+            }
+        }
+        
+        public virtual IiDeviceActivationApi iDeviceActivation
+        {
+            get
+            {
+                return this.ideviceActivation;
+            }
+            set
+            {
+                this.ideviceActivation = value;
             }
         }
         
