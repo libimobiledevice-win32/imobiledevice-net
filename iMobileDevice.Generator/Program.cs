@@ -50,12 +50,14 @@ namespace iMobileDevice.Generator
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.86\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.196\build\native\include\"));
             generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libplist.2.0.1.171\build\native\include"));
+            generator.IncludeDirectories.Add(Path.Combine(sourceDirectory, @"packages\libideviceactivation.1.0.0.23\build\native\include\libideviceactivation"));
 
             Collection<string> names = new Collection<string>();
 
             var files = new List<string>();
             files.Add(Path.Combine(sourceDirectory, @"packages\libusbmuxd.1.0.10.86\build\native\include\usbmuxd.h"));
             files.Add(Path.Combine(sourceDirectory, @"packages\libplist.2.0.1.171\build\native\include\plist\plist.h"));
+            files.Add(Path.Combine(sourceDirectory, @"packages\libideviceactivation.1.0.0.23\build\native\include\libideviceactivation\libideviceactivation.h"));
 
             var iMobileDeviceDirectory = Path.Combine(sourceDirectory, @"packages\libimobiledevice.1.2.1.196\build\native\include\libimobiledevice");
             files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));

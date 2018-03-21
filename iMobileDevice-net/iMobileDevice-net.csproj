@@ -57,6 +57,14 @@
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.redist.1.0.0.23/build/native/bin/x64/v140/Release/*.*">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.symbols.1.0.0.23/build/native/bin/x64/v140/Release/*.pdb">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x64\native\*.exe">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
@@ -101,6 +109,14 @@
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.196\build\native\bin\Win32\v140\Release\*.pdb">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.redist.1.0.0.23/build/native/bin/Win32/v140/Release/*.*">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.symbols.1.0.0.23/build/native/bin/Win32/v140/Release/*.pdb">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x86\native\*.exe">
