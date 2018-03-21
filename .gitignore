@@ -10,3 +10,4 @@ packages
 *.lock.json
 *~
 out.txt
+docs
