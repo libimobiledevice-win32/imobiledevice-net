@@ -8,20 +8,20 @@ dotnet: 2.1.4
 install:
 - mkdir ext
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-113.tar.gz -O ext/usbmuxd-osx-x64-1.1.0-113.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm-1.1.0-113.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz
+# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm-1.1.0-113.tar.gz
+# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-x64-1.1.0-113.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz
+# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz
+# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz
 - tar -xvzf ext/usbmuxd-osx-x64-1.1.0-113.tar.gz -C ext
-- tar -xvzf ext/usbmuxd-linux-arm-1.1.0-113.tar.gz -C ext
-- tar -xvzf ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz -C ext
+# - tar -xvzf ext/usbmuxd-linux-arm-1.1.0-113.tar.gz -C ext
+# - tar -xvzf ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz -C ext
 - tar -xvzf ext/usbmuxd-linux-x64-1.1.0-113.tar.gz -C ext
 - tar -xvzf ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz -C ext
-- tar -xvzf ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -C ext
-- tar -xvzf ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz -C ext
+# - tar -xvzf ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -C ext
+# - tar -xvzf ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz -C ext
 - tar -xvzf ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz -C ext
 - dotnet restore iMobileDevice-net/iMobileDevice-net.csproj
 #- pip install --user azure-cli
