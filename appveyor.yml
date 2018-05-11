@@ -30,7 +30,3 @@ on_success:
   - ps: Push-AppVeyorArtifact runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.0.24406.1.nupkg
   - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER)-win-x64.zip
   - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER)-win-x86.zip
-
-nuget:
-  project_feed: true
-  account_feed: true
