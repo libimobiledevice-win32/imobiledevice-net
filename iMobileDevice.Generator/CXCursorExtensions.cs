@@ -1,4 +1,4 @@
-﻿// <copyright file="CXCursorExtensions.cs" company="Quamotion">
+﻿// <copyright file="CursorExtensions.cs" company="Quamotion">
 // Copyright (c) Quamotion. All rights reserved.
 // </copyright>
 
@@ -7,25 +7,33 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
-    using ClangSharp;
     using System.Collections.Generic;
-    internal static class CXCursorExtensions
+    using Core.Clang;
+
+    internal static class CursorExtensions
     {
-        public static bool IsInSystemHeader(this CXCursor cursor)
+        public static bool IsInSystemHeader(this Cursor cursor)
         {
-            return clang.Location_isInSystemHeader(clang.getCursorLocation(cursor)) != 0;
+            try
+            {
+                return cursor.GetLocation().IsInSystemHeader();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public static IEnumerable<CodeTypeMember> ToCodeTypeMember(this CXCursor cursor, string cursorSpelling, ModuleGenerator generator)
+        public static IEnumerable<CodeTypeMember> ToCodeTypeMember(this Cursor cursor, string cursorSpelling, ModuleGenerator generator)
         {
-            var canonical = clang.getCanonicalType(clang.getCursorType(cursor));
+            var canonical = cursor.GetTypeInfo().GetCanonicalType();
 
-            switch (canonical.kind)
+            switch (canonical.Kind)
             {
-                case CXTypeKind.CXType_ConstantArray:
-                    if (clang.getCanonicalType(clang.getArrayElementType(canonical)).kind == CXTypeKind.CXType_Char_S)
+                case TypeKind.ConstantArray:
+                    if (canonical.GetArrayElementType().GetCanonicalType().Kind == TypeKind.Char_S)
                     {
-                        var size = clang.getArraySize(canonical);
+                        var size = canonical.GetArraySize();
 
                         CodeMemberField fixedLengthString = new CodeMemberField();
                         fixedLengthString.Attributes = MemberAttributes.Public | MemberAttributes.Final;
@@ -40,8 +48,8 @@ namespace iMobileDevice.Generator
                     }
                     break;
 
-                case CXTypeKind.CXType_Pointer:
-                    var pointeeType = clang.getCanonicalType(clang.getPointeeType(canonical));
+                case TypeKind.Pointer:
+                    var pointeeType = canonical.GetPointeeType().GetCanonicalType();
 
                     CodeMemberField intPtrMember = new CodeMemberField();
                     intPtrMember.Attributes = MemberAttributes.Public | MemberAttributes.Final;
@@ -49,7 +57,7 @@ namespace iMobileDevice.Generator
                     intPtrMember.Type = new CodeTypeReference(typeof(IntPtr));
                     yield return intPtrMember;
 
-                    if (pointeeType.kind == CXTypeKind.CXType_Char_S)
+                    if (pointeeType.Kind == TypeKind.Char_S)
                     {
                         CodeMemberProperty stringMember = new CodeMemberProperty();
                         stringMember.Attributes = MemberAttributes.Public | MemberAttributes.Final;
@@ -72,19 +80,19 @@ namespace iMobileDevice.Generator
 
                     break;
 
-                case CXTypeKind.CXType_Enum:
+                case TypeKind.Enum:
                     var enumField = new CodeMemberField();
                     enumField.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     enumField.Name = cursorSpelling;
-                    enumField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
+                    enumField.Type = new CodeTypeReference(generator.NameMapping[canonical.GetSpelling()]);
                     yield return enumField;
                     break;
 
-                case CXTypeKind.CXType_Record:
+                case TypeKind.Record:
                     var recordField = new CodeMemberField();
                     recordField.Attributes = MemberAttributes.Public | MemberAttributes.Final;
                     recordField.Name = cursorSpelling;
-                    recordField.Type = new CodeTypeReference(generator.NameMapping[canonical.ToString()]);
+                    recordField.Type = new CodeTypeReference(generator.NameMapping[canonical.GetSpelling()]);
                     yield return recordField;
                     break;
 

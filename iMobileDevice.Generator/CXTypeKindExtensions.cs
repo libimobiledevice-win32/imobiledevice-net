@@ -1,4 +1,4 @@
-﻿// <copyright file="CXTypeKindExtensions.cs" company="Quamotion">
+﻿// <copyright file="TypeKindExtensions.cs" company="Quamotion">
 // Copyright (c) Quamotion. All rights reserved.
 // </copyright>
 
@@ -6,20 +6,20 @@ namespace iMobileDevice.Generator
 {
     using System;
     using System.CodeDom;
-    using ClangSharp;
+    using Core.Clang;
 
-    internal static class CXTypeKindExtensions
+    internal static class TypeKindExtensions
     {
-        public static CodeTypeReference ToCodeTypeReference(this CXType type, CXCursor cursor, ModuleGenerator generator)
+        public static CodeTypeReference ToCodeTypeReference(this TypeInfo type, Cursor cursor, ModuleGenerator generator)
         {
-            var nativeName = type.ToString();
-            var canonical = clang.getCanonicalType(type);
+            var nativeName = type.GetSpelling();
+            var canonical = type.GetCanonicalType();
 
             // Special case: function prototypes embedded in the function declaration
-            if (canonical.kind == CXTypeKind.CXType_FunctionProto)
+            if (canonical.Kind == TypeKind.FunctionProto)
             {
                 // Generate the delegate and add it to the list of members
-                nativeName = clang.getCursorSpelling(cursor).ToString();
+                nativeName = cursor.GetSpelling();
                 var delegateType = type.ToDelegate(nativeName, cursor, generator);
                 generator.AddType(nativeName, delegateType);
             }
@@ -39,59 +39,59 @@ namespace iMobileDevice.Generator
             }
         }
 
-        public static Type ToClrType(this CXType type)
+        public static Type ToClrType(this TypeInfo type)
         {
-            var canonical = clang.getCanonicalType(type);
+            var canonical = type.GetCanonicalType();
 
-            switch (canonical.kind)
+            switch (canonical.Kind)
             {
-                case CXTypeKind.CXType_Bool:
+                case TypeKind.Bool:
                     return typeof(bool);
 
-                case CXTypeKind.CXType_UChar:
-                case CXTypeKind.CXType_Char_U:
+                case TypeKind.UChar:
+                case TypeKind.Char_U:
                     return typeof(char);
 
-                case CXTypeKind.CXType_SChar:
-                case CXTypeKind.CXType_Char_S:
+                case TypeKind.SChar:
+                case TypeKind.Char_S:
                     return typeof(sbyte);
 
-                case CXTypeKind.CXType_UShort:
+                case TypeKind.UShort:
                     return typeof(ushort);
 
-                case CXTypeKind.CXType_Short:
+                case TypeKind.Short:
                     return typeof(short);
 
-                case CXTypeKind.CXType_Float:
+                case TypeKind.Float:
                     return typeof(float);
 
-                case CXTypeKind.CXType_Double:
+                case TypeKind.Double:
                     return typeof(double);
 
-                case CXTypeKind.CXType_Int:
-                case CXTypeKind.CXType_Enum:
+                case TypeKind.Int:
+                case TypeKind.Enum:
                     return typeof(int);
 
-                case CXTypeKind.CXType_UInt:
+                case TypeKind.UInt:
                     return typeof(uint);
 
-                case CXTypeKind.CXType_Pointer:
-                case CXTypeKind.CXType_IncompleteArray:
+                case TypeKind.Pointer:
+                case TypeKind.IncompleteArray:
                     return typeof(IntPtr);
 
-                case CXTypeKind.CXType_Long:
+                case TypeKind.Long:
                     return typeof(int);
 
-                case CXTypeKind.CXType_ULong:
+                case TypeKind.ULong:
                     return typeof(int);
 
-                case CXTypeKind.CXType_LongLong:
+                case TypeKind.LongLong:
                     return typeof(long);
 
-                case CXTypeKind.CXType_ULongLong:
+                case TypeKind.ULongLong:
                     return typeof(ulong);
 
-                case CXTypeKind.CXType_Void:
+                case TypeKind.Void:
                     return typeof(void);
 
                 default:

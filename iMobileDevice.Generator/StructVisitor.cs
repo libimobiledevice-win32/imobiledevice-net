@@ -6,8 +6,9 @@ namespace iMobileDevice.Generator
 {
     using System;
     using System.CodeDom;
-    using ClangSharp;
     using System.Runtime.InteropServices;
+    using Core.Clang;
+
     internal class StructVisitor
     {
         private readonly ModuleGenerator generator;
@@ -19,25 +20,25 @@ namespace iMobileDevice.Generator
             this.generator = generator;
         }
 
-        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
+        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
         {
-            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
+            if (!cursor.GetLocation().IsFromMainFile())
             {
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            CXCursorKind curKind = clang.getCursorKind(cursor);
-            if (curKind == CXCursorKind.CXCursor_StructDecl)
+            CursorKind curKind = cursor.Kind;
+            if (curKind == CursorKind.StructDecl)
             {
                 this.fieldPosition = 0;
-                var nativeName = clang.getCursorSpelling(cursor).ToString();
+                var nativeName = cursor.GetSpelling();
 
                 // struct names can be empty, and so we visit its sibling to find the name
                 if (string.IsNullOrEmpty(nativeName))
                 {
-                    var forwardDeclaringVisitor = new ForwardDeclarationVisitor(cursor);
-                    clang.visitChildren(clang.getCursorSemanticParent(cursor), forwardDeclaringVisitor.Visit, new CXClientData(IntPtr.Zero));
-                    nativeName = clang.getCursorSpelling(forwardDeclaringVisitor.ForwardDeclarationCursor).ToString();
+                    var forwardDeclaringVisitor = new ForwardDeclarationVisitor(cursor, skipSystemHeaderCheck: true);
+                    forwardDeclaringVisitor.VisitChildren(cursor.GetSemanticParent());
+                    nativeName = forwardDeclaringVisitor.ForwardDeclarationCursor.GetSpelling();
 
                     if (string.IsNullOrEmpty(nativeName))
                     {
@@ -64,15 +65,16 @@ namespace iMobileDevice.Generator
 
                     this.current.CustomAttributes.Add(layoutAttribute);
 
-                    clang.visitChildren(cursor, this.Visit, new CXClientData(IntPtr.Zero));
+                    var visitor = new DelegatingCursorVisitor(this.Visit);
+                    visitor.VisitChildren(cursor);
                 }
 
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            if (curKind == CXCursorKind.CXCursor_FieldDecl)
+            if (curKind == CursorKind.FieldDecl)
             {
-                var fieldName = clang.getCursorSpelling(cursor).ToString();
+                var fieldName = cursor.GetSpelling();
                 if (string.IsNullOrEmpty(fieldName))
                 {
                     fieldName = "field" + this.fieldPosition; // what if they have fields called field*? :)
@@ -85,10 +87,10 @@ namespace iMobileDevice.Generator
                     this.current.Members.Add(member);
                 }
 
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            return CXChildVisitResult.CXChildVisit_Recurse;
+            return ChildVisitResult.Recurse;
         }
     }
 }

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Generator", "iMobileDevice.Generator\iMobileDevice.Generator.csproj", "{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice.Generator", "iMobileDevice.Generator\iMobileDevice.Generator.csproj", "{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iMobileDevice.Tests", "iMobileDevice.Tests\iMobileDevice.Tests.csproj", "{21A183FB-86D4-438F-81F3-C38F7035EDD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice.Tests", "iMobileDevice.Tests\iMobileDevice.Tests.csproj", "{21A183FB-86D4-438F-81F3-C38F7035EDD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice-net", "iMobileDevice-net\iMobileDevice-net.csproj", "{F404280A-2556-4FE5-8B84-A5363545B998}"
 EndProject
@@ -21,18 +21,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|x64.ActiveCfg = Debug|x64
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|x64.Build.0 = Debug|x64
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|x86.ActiveCfg = Debug|x86
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|x86.Build.0 = Debug|x86
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Debug|x86.ActiveCfg = Debug|x64
+		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|Any CPU.ActiveCfg = Release|x64
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x64.ActiveCfg = Release|x64
 		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x64.Build.0 = Release|x64
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x86.ActiveCfg = Release|x86
-		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x86.Build.0 = Release|x86
+		{DF9F07F3-5FD9-4500-972B-7FE0F1BC79D8}.Release|x86.ActiveCfg = Release|x64
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A183FB-86D4-438F-81F3-C38F7035EDD4}.Debug|x64.ActiveCfg = Debug|x64

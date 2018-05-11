@@ -6,7 +6,8 @@ namespace iMobileDevice.Generator
 {
     using System;
     using System.CodeDom;
-    using ClangSharp;
+    using Core.Clang;
+    using iMobileDevice.Generator.Polyfill;
 
     internal sealed class EnumVisitor
     {
@@ -17,19 +18,19 @@ namespace iMobileDevice.Generator
             this.generator = generator;
         }
 
-        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
+        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
         {
-            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
+            if (!cursor.GetLocation().IsFromMainFile())
             {
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            CXCursorKind curKind = clang.getCursorKind(cursor);
+            CursorKind curKind = cursor.Kind;
 
-            if (curKind == CXCursorKind.CXCursor_EnumDecl)
+            if (curKind == CursorKind.EnumDecl)
             {
-                var nativeName = clang.getCursorSpelling(cursor).ToString();
-                var type = clang.getEnumDeclIntegerType(cursor).ToClrType();
+                var nativeName = cursor.GetSpelling();
+                var type = cursor.GetEnumDeclIntegerType().ToClrType();
                 var enumComment = this.GetComment(cursor, forType: true);
 
                 // enumName can be empty because of typedef enum { .. } enumName;
@@ -37,9 +38,9 @@ namespace iMobileDevice.Generator
                 // to do with libclang, maybe there is a better way?
                 if (string.IsNullOrEmpty(nativeName))
                 {
-                    var forwardDeclaringVisitor = new ForwardDeclarationVisitor(cursor);
-                    clang.visitChildren(clang.getCursorLexicalParent(cursor), forwardDeclaringVisitor.Visit, new CXClientData(IntPtr.Zero));
-                    nativeName = clang.getCursorSpelling(forwardDeclaringVisitor.ForwardDeclarationCursor).ToString();
+                    var forwardDeclaringVisitor = new ForwardDeclarationVisitor(cursor, skipSystemHeaderCheck: true);
+                    forwardDeclaringVisitor.VisitChildren(cursor.GetLexicalParent());
+                    nativeName = forwardDeclaringVisitor.ForwardDeclarationCursor.GetSpelling();
 
                     if (string.IsNullOrEmpty(nativeName))
                     {
@@ -52,7 +53,7 @@ namespace iMobileDevice.Generator
                 // if we've printed these previously, skip them
                 if (this.generator.NameMapping.ContainsKey(nativeName))
                 {
-                    return CXChildVisitResult.CXChildVisit_Continue;
+                    return ChildVisitResult.Continue;
                 }
 
                 CodeTypeDeclaration enumDeclaration = new CodeTypeDeclaration();
@@ -67,67 +68,66 @@ namespace iMobileDevice.Generator
                 }
 
                 // visit all the enum values
-                clang.visitChildren(
-                    cursor,
-                    (cxCursor, vistor, clientData) =>
+                DelegatingCursorVisitor visitor = new DelegatingCursorVisitor(
+                    (c, vistor) =>
                     {
                         var field =
                             new CodeMemberField()
                             {
-                                Name = NameConversions.ToClrName(clang.getCursorSpelling(cxCursor).ToString(), NameConversion.Field),
-                                InitExpression = new CodePrimitiveExpression(clang.getEnumConstantDeclValue(cxCursor))
+                                Name = NameConversions.ToClrName(c.GetSpelling(), NameConversion.Field),
+                                InitExpression = new CodePrimitiveExpression(c.GetEnumConstantDeclValue())
                             };
 
-                        var fieldComment = this.GetComment(cxCursor, forType: false);
+                        var fieldComment = this.GetComment(c, forType: false);
                         if (fieldComment != null)
                         {
                             field.Comments.Add(fieldComment);
                         }
 
                         enumDeclaration.Members.Add(field);
-                        return CXChildVisitResult.CXChildVisit_Continue;
-                    },
-                    new CXClientData(IntPtr.Zero));
+                        return ChildVisitResult.Continue;
+                    });
+                visitor.VisitChildren(cursor);
 
                 this.generator.AddType(nativeName, enumDeclaration);
             }
 
-            return CXChildVisitResult.CXChildVisit_Recurse;
+            return ChildVisitResult.Recurse;
         }
 
-        private CodeCommentStatement GetComment(CXCursor cursor, bool forType)
+        private CodeCommentStatement GetComment(Cursor cursor, bool forType)
         {
             // Standard hierarchy:
             // - Full Comment
             // - Paragraph Comment
             // - Text Comment
-            var fullComment = clang.Cursor_getParsedComment(cursor);
-            var fullCommentKind = clang.Comment_getKind(fullComment);
-            var fullCommentChildren = clang.Comment_getNumChildren(fullComment);
+            var fullComment = Polyfill.NativeMethods.Cursor_getParsedComment(cursor.ToCXCursor());
+            var fullCommentKind = Polyfill.NativeMethods.Comment_getKind(fullComment);
+            var fullCommentChildren = Polyfill.NativeMethods.Comment_getNumChildren(fullComment);
 
-            if (fullCommentKind != CXCommentKind.CXComment_FullComment || fullCommentChildren != 1)
+            if (fullCommentKind != Polyfill.CommentKind.FullComment || fullCommentChildren != 1)
             {
                 return null;
             }
 
-            var paragraphComment = clang.Comment_getChild(fullComment, 0);
-            var paragraphCommentKind = clang.Comment_getKind(paragraphComment);
-            var paragraphCommentChildren = clang.Comment_getNumChildren(paragraphComment);
+            var paragraphComment = Polyfill.NativeMethods.Comment_getChild(fullComment, 0);
+            var paragraphCommentKind = Polyfill.NativeMethods.Comment_getKind(paragraphComment);
+            var paragraphCommentChildren = Polyfill.NativeMethods.Comment_getNumChildren(paragraphComment);
 
-            if (paragraphCommentKind != CXCommentKind.CXComment_Paragraph || paragraphCommentChildren != 1)
+            if (paragraphCommentKind != Polyfill.CommentKind.Paragraph || paragraphCommentChildren != 1)
             {
                 return null;
             }
 
-            var textComment = clang.Comment_getChild(paragraphComment, 0);
-            var textCommentKind = clang.Comment_getKind(textComment);
+            var textComment = Polyfill.NativeMethods.Comment_getChild(paragraphComment, 0);
+            var textCommentKind = Polyfill.NativeMethods.Comment_getKind(textComment);
 
-            if (textCommentKind != CXCommentKind.CXComment_Text)
+            if (textCommentKind != Polyfill.CommentKind.Text)
             {
                 return null;
             }
 
-            var text = clang.TextComment_getText(textComment).ToString();
+            var text = Polyfill.NativeMethods.TextComment_getText(textComment).ToString();
 
             if (string.IsNullOrWhiteSpace(text))
             {
