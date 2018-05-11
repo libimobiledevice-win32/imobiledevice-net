@@ -1,15 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Xunit;
 
 namespace iMobileDevice.Tests
 {
-    [TestClass]
     public class NativeStringArrayMarshalerTests
     {
-        [TestMethod]
+        [Fact]
         public void TestRoundTrip()
         {
             NativeLibraries.Load();
@@ -46,7 +45,7 @@ namespace iMobileDevice.Tests
 
                 marshaler = new NativeStringArrayMarshaler();
                 var roundTrip = (ReadOnlyCollection<string>)marshaler.MarshalNativeToManaged(pointer);
-                CollectionAssert.AreEqual(readonlyValues, roundTrip);
+                Assert.Equal(readonlyValues, roundTrip);
                 marshaler.CleanUpNativeData(pointer);
             }
 
@@ -58,10 +57,7 @@ namespace iMobileDevice.Tests
 
             // If more than 10 MB was leaked, set off the alarm bells
             // You can verify this works by commenting out NativeStringMarshaler.CleanUpNativeData
-            if (delta > 10 * 1024 * 1024 * 8 /* 10 MB */)
-            {
-                Assert.Fail("Memory was leaked");
-            }
+            Assert.True(delta <= 10 * 1024 * 1024 * 8 /* 10 MB */, "Memory was leaked");
         }
     }
 }
