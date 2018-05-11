@@ -22,7 +22,9 @@ namespace iMobileDevice.Afc
         
         LockEx = 6,
         
+        /// <summary>
         /// unlock 
+        /// </summary>
         LockUn = 12,
     }
 }

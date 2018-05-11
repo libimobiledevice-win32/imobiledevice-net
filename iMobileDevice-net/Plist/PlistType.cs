@@ -38,7 +38,9 @@ namespace iMobileDevice.Plist
         
         Uid = 9,
         
+        /// <summary>
         /// No type 
+        /// </summary>
         None = 10,
     }
 }

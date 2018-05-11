@@ -28,7 +28,9 @@ namespace iMobileDevice.Afc
         
         FopenAppend = 5,
         
+        /// <summary>
         /// a+  O_RDWR   | O_APPEND | O_CREAT 
+        /// </summary>
         FopenRdappend = 6,
     }
 }

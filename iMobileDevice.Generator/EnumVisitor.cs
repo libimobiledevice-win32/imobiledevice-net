@@ -78,7 +78,7 @@ namespace iMobileDevice.Generator
                                 InitExpression = new CodePrimitiveExpression(c.GetEnumConstantDeclValue())
                             };
 
-                        var fieldComment = this.GetComment(c, forType: false);
+                        var fieldComment = this.GetComment(c, forType: true);
                         if (fieldComment != null)
                         {
                             field.Comments.Add(fieldComment);

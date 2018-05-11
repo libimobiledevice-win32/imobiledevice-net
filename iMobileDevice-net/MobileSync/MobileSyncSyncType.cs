@@ -22,7 +22,9 @@ namespace iMobileDevice.MobileSync
         
         SyncTypeSlow = 1,
         
+        /// <summary>
         /// Reset-sync signals that the computer should send all data again. 
+        /// </summary>
         SyncTypeReset = 2,
     }
 }
