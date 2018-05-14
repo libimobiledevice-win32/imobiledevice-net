@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <!-- libimobiledevice-win32 projects -->
+    <ideviceinstaller>1.1.0.19</ideviceinstaller>
+    <libimobiledevice>1.2.1.196</libimobiledevice>
+    <libideviceactivation>1.0.0.23</libideviceactivation>
+    <libusbmuxd>1.0.10.92</libusbmuxd>
+    <libplist>2.0.1.171</libplist>
+    <usbmuxd>1.1.0.106</usbmuxd>
+
+    <!-- External dependencies -->
+    <libzip>1.1.2.7</libzip>
+    <libiconv>1.14.0.11</libiconv>
+    <openssl>1.0.2.0</openssl>
+    <zlib>1.2.8.8</zlib>
+    <getopt>1.0.20151130.1</getopt>
+    <pthreads>2.9.1.4</pthreads>
+    <curl>7.30.0.2</curl>
+    <libxml2>2.7.8.7</libxml2>
+    <libssh2>1.4.3.1</libssh2>
+  </PropertyGroup>
+</Project>

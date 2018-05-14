@@ -16,14 +16,6 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
@@ -39,135 +31,137 @@
     <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
   </ItemGroup>
 
+  <Import Project="../native.props" />
+  
   <ItemGroup>
     <!-- win7-x64 files which come from NuGet packages-->
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/ideviceinstaller.redist.1.1.0.19/build/native/bin/x64/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/ideviceinstaller.redist/$(ideviceinstaller)/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libzip.redist.1.1.2.7/build/native/bin/x64/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/libzip.redist/$(libzip)/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libimobiledevice.redist.1.2.1.196/build/native/bin/x64/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/libimobiledevice.redist/$(libimobiledevice)/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.196\build\native\bin\x64\v140\Release\*.pdb">
+    <Content Include="$(NuGetPackageFolders)/libimobiledevice.symbols/$(libimobiledevice)/build/native/bin/x64/v140/Release/*.pdb">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.redist.1.0.0.23/build/native/bin/x64/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/libideviceactivation.redist/$(libideviceactivation)/build/native/bin/x64/v140/Release/*.*">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.symbols.1.0.0.23/build/native/bin/x64/v140/Release/*.pdb">
+    <Content Include="$(NuGetPackageFolders)/libideviceactivation.symbols/$(libideviceactivation)/build/native/bin/x64/v140/Release/*.pdb">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x64\native\*.exe">
+    <Content Include="$(NuGetPackageFolders)/usbmuxd/$(usbmuxd)/runtimes/win7-x64/native/*.exe">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x64\native\*.dll">
+    <Content Include="$(NuGetPackageFolders)/usbmuxd/$(usbmuxd)/runtimes/win7-x64/native/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libiconv.redist/$(libiconv)/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\release\*.dll">
+    <Content Include="$(NuGetPackageFolders)/openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64/$(openssl)/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/release/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x64\Release\*.dll">
+    <Content Include="$(NuGetPackageFolders)/zlib.v140.windesktop.msvcstl.dyn.rt-dyn/$(zlib)/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x64/Release/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\x64\v140\Release\Desktop\*.dll">
+    <Content Include="$(NuGetPackageFolders)/fix8.dependencies.getopt/$(getopt)/build/native/bin/x64/v140/Release/Desktop/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/pthreads.redist/$(pthreads)/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\curl.redist.7.30.0.2\build\native\bin\v110\x64\Release\dynamic\*.dll">
+    <Content Include="$(NuGetPackageFolders)/curl.redist/$(curl)/build/native/bin/v110/x64/Release/dynamic/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libxml2.redist/$(libxml2)/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libssh2.redist.1.4.3.1\build\native\bin\v110\x64\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libssh2.redist/$(libssh2)/build/native/bin/v110/x64/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- win7-x86 files which come from NuGet packages-->
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\ideviceinstaller.redist.1.1.0.19\build\native\bin\Win32\v140\Release\*.*">
+    <Content Include="$(NuGetPackageFolders)/ideviceinstaller.redist/$(ideviceinstaller)/build/native/bin/Win32/v140/Release/*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libzip.redist.1.1.2.7/build/native/bin/Win32/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/libzip.redist/$(libzip)/build/native/bin/Win32/v140/Release/*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.redist.1.2.1.196\build\native\bin\Win32\v140\Release\*.*">
+    <Content Include="$(NuGetPackageFolders)/libimobiledevice.redist/$(libimobiledevice)build/native/bin/Win32/v140/Release/*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libimobiledevice.symbols.1.2.1.196\build\native\bin\Win32\v140\Release\*.pdb">
+    <Content Include="$(NuGetPackageFolders)/libimobiledevice.symbols/$(libimobiledevice)/build/native/bin/Win32/v140/Release/*.pdb">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.redist.1.0.0.23/build/native/bin/Win32/v140/Release/*.*">
+    <Content Include="$(NuGetPackageFolders)/libideviceactivation.redist/$(libideviceactivation)/build/native/bin/Win32/v140/Release/*.*">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../packages/libideviceactivation.symbols.1.0.0.23/build/native/bin/Win32/v140/Release/*.pdb">
+    <Content Include="$(NuGetPackageFolders)/libideviceactivation.symbols/$(libideviceactivation)/build/native/bin/Win32/v140/Release/*.pdb">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x86\native\*.exe">
+    <Content Include="$(NuGetPackageFolders)/usbmuxd/$(usbmuxd)/runtimes/win7-x86/native/*.exe">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\usbmuxd.1.1.0.106\runtimes\win7-x86\native\*.dll">
+    <Content Include="$(NuGetPackageFolders)/usbmuxd/$(usbmuxd)/runtimes/win7-x86/native/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libiconv.redist.1.14.0.11\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libiconv.redist/$(libiconv)/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86.1.0.2.0\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\x86\release\*.dll">
+    <Content Include="$(NuGetPackageFolders)/openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86/$(openssl)/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/x86/release/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\zlib.v140.windesktop.msvcstl.dyn.rt-dyn.1.2.8.8\lib\native\v140\windesktop\msvcstl\dyn\rt-dyn\Win32\Release\*.dll">
+    <Content Include="$(NuGetPackageFolders)/zlib.v140.windesktop.msvcstl.dyn.rt-dyn/$(zlib)/lib/native/v140/windesktop/msvcstl/dyn/rt-dyn/Win32/Release/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\fix8.dependencies.getopt.1.0.20151130.1\build\native\bin\Win32\v140\Release\Desktop\*.dll">
+    <Content Include="$(NuGetPackageFolders)/fix8.dependencies.getopt/$(getopt)/build/native/bin/Win32/v140/Release/Desktop/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\pthreads.redist.2.9.1.4\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/pthreads.redist/$(pthreads)/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\curl.redist.7.30.0.2\build\native\bin\v110\Win32\Release\dynamic\*.dll">
+    <Content Include="$(NuGetPackageFolders)/curl.redist/$(curl)/build/native/bin/v110/Win32/Release/dynamic/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libxml2.redist.2.7.8.7\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libxml2.redist/$(libxml2)/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\packages\libssh2.redist.1.4.3.1\build\native\bin\v110\Win32\Release\dynamic\cdecl\*.dll">
+    <Content Include="$(NuGetPackageFolders)/libssh2.redist/$(libssh2)/build/native/bin/v110/Win32/Release/dynamic/cdecl/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -185,20 +179,20 @@
          -->
     
       <!--
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\lib\*.so">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm/lib/*.so">
       <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\bin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm/bin/*">
       <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm\sbin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm/sbin/*">
       <PackagePath>runtimes/debian-arm/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm64\lib\*.so">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm64/lib/*.so">
       <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -206,34 +200,34 @@
       <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-arm64\sbin\**">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-arm64/sbin/**">
       <PackagePath>runtimes/debian-arm64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     -->
     
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\lib\*.so">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-x64/lib/*.so">
       <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\bin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-x64/bin/*">
       <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\debian-x64\sbin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/debian-x64/sbin/*">
       <PackagePath>runtimes/debian-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\lib\*.dylib">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\bin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/bin/*">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)\..\ext\osx-x64\sbin\*">
+    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/sbin/*">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
