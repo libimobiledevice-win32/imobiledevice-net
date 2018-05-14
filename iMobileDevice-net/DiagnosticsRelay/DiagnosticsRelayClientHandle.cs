@@ -100,5 +100,39 @@ namespace iMobileDevice.DiagnosticsRelay
         {
             return this.handle.GetHashCode();
         }
+        
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="DiagnosticsRelayClientHandle"/> are equal.
+        /// </summary>
+        /// <param name="value1">
+        /// The first pointer or handle to compare.
+        /// </param>
+        /// <param name="value2">
+        /// The second pointer or handle to compare.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="value1"/> equals <paramref name="value2"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool operator == (DiagnosticsRelayClientHandle value1, DiagnosticsRelayClientHandle value2) 
+        {
+            return value1.handle == value2.handle;
+        }
+        
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="DiagnosticsRelayClientHandle"/> are not equal.
+        /// </summary>
+        /// <param name="value1">
+        /// The first pointer or handle to compare.
+        /// </param>
+        /// <param name="value2">
+        /// The second pointer or handle to compare.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="value1"/> does not equal <paramref name="value2"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool operator != (DiagnosticsRelayClientHandle value1, DiagnosticsRelayClientHandle value2) 
+        {
+            return value1.handle != value2.handle;
+        }
     }
 }
