@@ -25,18 +25,30 @@ namespace iMobileDevice.DiagnosticsRelay
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiagnosticsRelayClientHandle"/> class.
+        /// </summary>
         protected DiagnosticsRelayClientHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiagnosticsRelayClientHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected DiagnosticsRelayClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.DiagnosticsRelay
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static DiagnosticsRelayClientHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.DiagnosticsRelay
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.DiagnosticsRelay
             return (this.Api.DiagnosticsRelay.diagnostics_relay_client_free(this.handle) == DiagnosticsRelayError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="DiagnosticsRelayClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static DiagnosticsRelayClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             DiagnosticsRelayClientHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.DiagnosticsRelay
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="DiagnosticsRelayClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static DiagnosticsRelayClientHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return DiagnosticsRelayClientHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "DiagnosticsRelayClientHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(DiagnosticsRelayClientHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.DiagnosticsRelay
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();

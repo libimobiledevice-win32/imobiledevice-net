@@ -25,18 +25,30 @@ namespace iMobileDevice.HeartBeat
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeartBeatClientHandle"/> class.
+        /// </summary>
         protected HeartBeatClientHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeartBeatClientHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected HeartBeatClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.HeartBeat
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static HeartBeatClientHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.HeartBeat
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.HeartBeat
             return (this.Api.HeartBeat.heartbeat_client_free(this.handle) == HeartBeatError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="HeartBeatClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static HeartBeatClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             HeartBeatClientHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.HeartBeat
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="HeartBeatClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static HeartBeatClientHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return HeartBeatClientHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "HeartBeatClientHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(HeartBeatClientHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.HeartBeat
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();

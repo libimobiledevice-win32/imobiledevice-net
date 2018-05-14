@@ -25,18 +25,30 @@ namespace iMobileDevice.Service
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceClientHandle"/> class.
+        /// </summary>
         protected ServiceClientHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceClientHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected ServiceClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.Service
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static ServiceClientHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.Service
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.Service
             return (this.Api.Service.service_client_free(this.handle) == ServiceError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="ServiceClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static ServiceClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             ServiceClientHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.Service
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="ServiceClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static ServiceClientHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return ServiceClientHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "ServiceClientHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(ServiceClientHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.Service
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();

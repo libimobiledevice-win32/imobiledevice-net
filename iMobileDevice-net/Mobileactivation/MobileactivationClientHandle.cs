@@ -25,18 +25,30 @@ namespace iMobileDevice.Mobileactivation
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MobileactivationClientHandle"/> class.
+        /// </summary>
         protected MobileactivationClientHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MobileactivationClientHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected MobileactivationClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.Mobileactivation
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static MobileactivationClientHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.Mobileactivation
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.Mobileactivation
             return (this.Api.Mobileactivation.mobileactivation_client_free(this.handle) == MobileactivationError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="MobileactivationClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static MobileactivationClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             MobileactivationClientHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.Mobileactivation
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="MobileactivationClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static MobileactivationClientHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return MobileactivationClientHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "MobileactivationClientHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(MobileactivationClientHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.Mobileactivation
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();

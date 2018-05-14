@@ -25,18 +25,30 @@ namespace iMobileDevice.MobileSync
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MobileSyncAnchorsHandle"/> class.
+        /// </summary>
         protected MobileSyncAnchorsHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MobileSyncAnchorsHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected MobileSyncAnchorsHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.MobileSync
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static MobileSyncAnchorsHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.MobileSync
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.MobileSync
             return (this.Api.MobileSync.mobilesync_anchors_free(this.handle) == MobileSyncError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="MobileSyncAnchorsHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static MobileSyncAnchorsHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             MobileSyncAnchorsHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.MobileSync
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="MobileSyncAnchorsHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static MobileSyncAnchorsHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return MobileSyncAnchorsHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "MobileSyncAnchorsHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(MobileSyncAnchorsHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.MobileSync
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();

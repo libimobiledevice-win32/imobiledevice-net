@@ -25,18 +25,30 @@ namespace iMobileDevice.iDevice
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="iDeviceConnectionHandle"/> class.
+        /// </summary>
         protected iDeviceConnectionHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="iDeviceConnectionHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected iDeviceConnectionHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.iDevice
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static iDeviceConnectionHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.iDevice
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.iDevice
             return (this.Api.iDevice.idevice_disconnect(this.handle) == iDeviceError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="iDeviceConnectionHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static iDeviceConnectionHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             iDeviceConnectionHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.iDevice
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="iDeviceConnectionHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static iDeviceConnectionHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return iDeviceConnectionHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "iDeviceConnectionHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(iDeviceConnectionHandle))))
@@ -96,6 +133,7 @@ namespace iMobileDevice.iDevice
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();
