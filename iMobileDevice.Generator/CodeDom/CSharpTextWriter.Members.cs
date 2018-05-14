@@ -2,6 +2,7 @@
 {
     using System;
     using System.CodeDom;
+    using System.IO;
 
     partial class CSharpTextWriter
     {
@@ -18,6 +19,10 @@
             else if (member is CodeMemberProperty)
             {
                 this.Generate((CodeMemberProperty)member);
+            }
+            else if (member is CodeSnippetTypeMember)
+            {
+                this.Generate((CodeSnippetTypeMember)member);
             }
             else
             {
@@ -264,6 +269,17 @@
                 this.Generate(parameter.Type);
                 this.Write(" ");
                 this.WriteName(parameter.Name);
+            }
+        }
+
+        private void Generate(CodeSnippetTypeMember expression)
+        {
+            using (StringReader reader = new StringReader(expression.Text))
+            {
+                while (reader.Peek() >= 0)
+                {
+                    this.WriteLine(reader.ReadLine());
+                }
             }
         }
 

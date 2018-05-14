@@ -25,18 +25,30 @@ namespace iMobileDevice.Restore
         
         private ILibiMobileDevice api;
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RestoreClientHandle"/> class.
+        /// </summary>
         protected RestoreClientHandle() : 
                 base(true)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RestoreClientHandle"/> class, specifying whether the handle is to be reliably released.
+        /// </summary>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
         protected RestoreClientHandle(bool ownsHandle) : 
                 base(ownsHandle)
         {
             this.creationStackTrace = System.Environment.StackTrace;
         }
         
+        /// <summary>
+        /// Gets or sets the API to use
+        /// </summary>
         public ILibiMobileDevice Api
         {
             get
@@ -49,6 +61,9 @@ namespace iMobileDevice.Restore
             }
         }
         
+        /// <summary>
+        /// Gets a value which represents a pointer or handle that has been initialized to zero.
+        /// </summary>
         public static RestoreClientHandle Zero
         {
             get
@@ -57,6 +72,7 @@ namespace iMobileDevice.Restore
             }
         }
         
+        /// <inheritdoc/>
 #if !NETSTANDARD1_5
         [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
 #endif
@@ -66,6 +82,17 @@ namespace iMobileDevice.Restore
             return (this.Api.Restore.restored_client_free(this.handle) == RestoreError.Success);
         }
         
+        /// <summary>
+        /// Creates a new <see cref="RestoreClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <param name="ownsHandle">
+        /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static RestoreClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
             RestoreClientHandle safeHandle;
@@ -74,16 +101,26 @@ namespace iMobileDevice.Restore
             return safeHandle;
         }
         
+        /// <summary>
+        /// Creates a new <see cref="RestoreClientHandle"/> from a <see cref="IntPtr"/>.
+        /// </summary>
+        /// <param name="unsafeHandle">
+        /// The underlying <see cref="IntPtr"/>
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static RestoreClientHandle DangerousCreate(System.IntPtr unsafeHandle)
         {
             return RestoreClientHandle.DangerousCreate(unsafeHandle, true);
         }
         
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("{0} ({1})", this.handle, "RestoreClientHandle");
         }
         
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (((obj != null) & (obj.GetType() == typeof(RestoreClientHandle))))
@@ -96,9 +133,44 @@ namespace iMobileDevice.Restore
             }
         }
         
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return this.handle.GetHashCode();
+        }
+        
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="RestoreClientHandle"/> are equal.
+        /// </summary>
+        /// <param name="value1">
+        /// The first pointer or handle to compare.
+        /// </param>
+        /// <param name="value2">
+        /// The second pointer or handle to compare.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="value1"/> equals <paramref name="value2"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool operator == (RestoreClientHandle value1, RestoreClientHandle value2) 
+        {
+            return value1.handle == value2.handle;
+        }
+        
+        /// <summary>
+        /// Determines whether two specified instances of <see cref="RestoreClientHandle"/> are not equal.
+        /// </summary>
+        /// <param name="value1">
+        /// The first pointer or handle to compare.
+        /// </param>
+        /// <param name="value2">
+        /// The second pointer or handle to compare.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="value1"/> does not equal <paramref name="value2"/>; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool operator != (RestoreClientHandle value1, RestoreClientHandle value2) 
+        {
+            return value1.handle != value2.handle;
         }
     }
 }
