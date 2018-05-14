@@ -77,6 +77,9 @@ namespace iMobileDevice.Generator
             constructor.Attributes = MemberAttributes.Family;
             constructor.BaseConstructorArgs.Add(new CodePrimitiveExpression(true));
             constructor.Statements.Add(setCreationStackTrace);
+            constructor.Comments.Add(new CodeCommentStatement($@"<summary>
+Initializes a new instance of the <see cref=""{safeHandle.Name}""/> class.
+</summary>"));
             safeHandle.Members.Add(constructor);
 
             CodeConstructor ownsHandleConstructor = new CodeConstructor();
@@ -84,6 +87,12 @@ namespace iMobileDevice.Generator
             ownsHandleConstructor.Parameters.Add(new CodeParameterDeclarationExpression(new CodeTypeReference(typeof(bool)), "ownsHandle"));
             ownsHandleConstructor.BaseConstructorArgs.Add(new CodeArgumentReferenceExpression("ownsHandle"));
             ownsHandleConstructor.Statements.Add(setCreationStackTrace);
+            ownsHandleConstructor.Comments.Add(new CodeCommentStatement($@"<summary>
+Initializes a new instance of the <see cref=""{safeHandle.Name}""/> class, specifying whether the handle is to be reliably released.
+</summary>
+<param name=""ownsHandle"">
+<see langword=""true""/> to reliably release the handle during the finalization phase; <see langword=""false""/> to prevent reliable release (not recommended).
+</param>"));
             safeHandle.Members.Add(ownsHandleConstructor);
 
             CodeMemberMethod releaseHandle = new CodeMemberMethod();
@@ -91,6 +100,7 @@ namespace iMobileDevice.Generator
             releaseHandle.Attributes = MemberAttributes.Override | MemberAttributes.Family;
             releaseHandle.ReturnType = new CodeTypeReference(typeof(bool));
             releaseHandle.CustomAttributes.Add(ReliabilityContractDeclaration(Consistency.WillNotCorruptState, Cer.MayFail));
+            releaseHandle.Comments.Add(new CodeCommentStatement("<inheritdoc/>"));
 
             releaseHandle.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
             safeHandle.Members.Add(releaseHandle);
@@ -118,6 +128,9 @@ namespace iMobileDevice.Generator
                         apiField.Name),
                     new CodeVariableReferenceExpression("value")));
             apiProperty.Type = new CodeTypeReference("ILibiMobileDevice");
+            apiProperty.Comments.Add(new CodeCommentStatement(@"<summary>
+Gets or sets the API to use
+</summary>"));
             safeHandle.Members.Add(apiProperty);
 
             // Add a "DangeousCreate" method which creates a new safe handle from an IntPtr
@@ -125,6 +138,17 @@ namespace iMobileDevice.Generator
             dangerousCreate.Name = "DangerousCreate";
             dangerousCreate.Attributes = MemberAttributes.Public | MemberAttributes.Static;
             dangerousCreate.ReturnType = new CodeTypeReference(safeHandle.Name);
+            dangerousCreate.Comments.Add(new CodeCommentStatement($@"<summary>
+Creates a new <see cref=""{safeHandle.Name}""/> from a <see cref=""IntPtr""/>.
+</summary>
+<param name=""unsafeHandle"">
+The underlying <see cref=""IntPtr""/>
+</param>
+<param name=""ownsHandle"">
+<see langword=""true""/> to reliably release the handle during the finalization phase; <see langword=""false""/> to prevent reliable release (not recommended).
+</param>
+<returns>
+</returns>"));
 
             dangerousCreate.Parameters.Add(
                 new CodeParameterDeclarationExpression(
@@ -166,6 +190,14 @@ namespace iMobileDevice.Generator
             simpleDangerousCreate.Name = "DangerousCreate";
             simpleDangerousCreate.Attributes = MemberAttributes.Public | MemberAttributes.Static;
             simpleDangerousCreate.ReturnType = new CodeTypeReference(safeHandle.Name);
+            simpleDangerousCreate.Comments.Add(new CodeCommentStatement($@"<summary>
+Creates a new <see cref=""{safeHandle.Name}""/> from a <see cref=""IntPtr""/>.
+</summary>
+<param name=""unsafeHandle"">
+The underlying <see cref=""IntPtr""/>
+</param>
+<returns>
+</returns>"));
 
             simpleDangerousCreate.Parameters.Add(
                 new CodeParameterDeclarationExpression(
@@ -188,6 +220,9 @@ namespace iMobileDevice.Generator
             zeroProperty.Name = "Zero";
             zeroProperty.Attributes = MemberAttributes.Public | MemberAttributes.Static;
             zeroProperty.Type = new CodeTypeReference(safeHandle.Name);
+            zeroProperty.Comments.Add(new CodeCommentStatement(@"<summary>
+Gets a value which represents a pointer or handle that has been initialized to zero.
+</summary>"));
 
             zeroProperty.HasGet = true;
 
@@ -209,6 +244,7 @@ namespace iMobileDevice.Generator
             toStringMethod.Name = "ToString";
             toStringMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
             toStringMethod.ReturnType = new CodeTypeReference(typeof(string));
+            toStringMethod.Comments.Add(new CodeCommentStatement("<inheritdoc/>"));
             toStringMethod.Statements.Add(
                 new CodeMethodReturnStatement(
                     new CodeMethodInvokeExpression(
@@ -231,6 +267,7 @@ namespace iMobileDevice.Generator
             equalsMethod.Name = "Equals";
             equalsMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
             equalsMethod.ReturnType = new CodeTypeReference(typeof(bool));
+            equalsMethod.Comments.Add(new CodeCommentStatement("<inheritdoc/>"));
             equalsMethod.Parameters.Add(
                 new CodeParameterDeclarationExpression(
                     new CodeTypeReference(typeof(object)),
@@ -313,6 +350,7 @@ public static bool operator != ({safeHandle.Name} value1, {safeHandle.Name} valu
             getHashCodeMethod.Name = "GetHashCode";
             getHashCodeMethod.Attributes = MemberAttributes.Public | MemberAttributes.Override;
             getHashCodeMethod.ReturnType = new CodeTypeReference(typeof(int));
+            getHashCodeMethod.Comments.Add(new CodeCommentStatement("<inheritdoc/>"));
             getHashCodeMethod.Statements.Add(
                 new CodeMethodReturnStatement(
                     new CodeMethodInvokeExpression(
