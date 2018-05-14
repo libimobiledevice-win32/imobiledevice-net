@@ -5,7 +5,6 @@
 namespace iMobileDevice.Generator
 {
     using Core.Clang;
-    using iMobileDevice.Generator.Polyfill;
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
@@ -148,11 +147,11 @@ namespace iMobileDevice.Generator
             // - Full Comment
             // - Paragraph Comment or ParamCommand comment
             // - Text Comment
-            var fullComment = Polyfill.NativeMethods.Cursor_getParsedComment(cursor.ToCXCursor());
-            var fullCommentKind = Polyfill.NativeMethods.Comment_getKind(fullComment);
-            var fullCommentChildren = Polyfill.NativeMethods.Comment_getNumChildren(fullComment);
+            var fullComment = cursor.GetParsedComment();
+            var fullCommentKind = fullComment.Kind;
+            var fullCommentChildren = fullComment.GetNumChildren();
 
-            if (fullCommentKind != Polyfill.CommentKind.FullComment || fullCommentChildren < 1)
+            if (fullCommentKind != CommentKind.FullComment || fullCommentChildren < 1)
             {
                 return null;
             }
@@ -167,12 +166,12 @@ namespace iMobileDevice.Generator
 
             for (int i = 0; i < fullCommentChildren; i++)
             {
-                var childComment = Polyfill.NativeMethods.Comment_getChild(fullComment, (uint)i);
-                var childCommentKind = Polyfill.NativeMethods.Comment_getKind(childComment);
+                var childComment = fullComment.GetChild(i);
+                var childCommentKind = childComment.Kind;
 
-                if (childCommentKind != Polyfill.CommentKind.Paragraph
-                    && childCommentKind != Polyfill.CommentKind.ParamCommand
-                    && childCommentKind != Polyfill.CommentKind.BlockCommand)
+                if (childCommentKind != CommentKind.Paragraph
+                    && childCommentKind != CommentKind.ParamCommand
+                    && childCommentKind != CommentKind.BlockCommand)
                 {
                     continue;
                 }
@@ -186,15 +185,15 @@ namespace iMobileDevice.Generator
                     continue;
                 }
 
-                if (childCommentKind == Polyfill.CommentKind.Paragraph)
+                if (childCommentKind == CommentKind.Paragraph)
                 {
                     summary.Append(text);
                     hasComment = true;
                 }
-                else if (childCommentKind == Polyfill.CommentKind.ParamCommand)
+                else if (childCommentKind == CommentKind.ParamCommand)
                 {
                     // Get the parameter name
-                    var paramName = Polyfill.NativeMethods.ParamCommandComment_getParamName(childComment).ToString();
+                    var paramName = childComment.GetParamName();
 
                     if (hasParameter)
                     {
@@ -207,9 +206,9 @@ namespace iMobileDevice.Generator
                     hasComment = true;
                     hasParameter = true;
                 }
-                else if (childCommentKind == Polyfill.CommentKind.BlockCommand)
+                else if (childCommentKind == CommentKind.BlockCommand)
                 {
-                    var name = Polyfill.NativeMethods.BlockCommandComment_getCommandName(childComment).ToString();
+                    var name = childComment.GetCommandName();
 
                     if (name == "note")
                     {
@@ -261,13 +260,13 @@ namespace iMobileDevice.Generator
             return new CodeCommentStatement(comment.ToString(), docComment: true);
         }
 
-        private void GetCommentInnerText(Polyfill.Comment comment, StringBuilder builder)
+        private void GetCommentInnerText(Comment comment, StringBuilder builder)
         {
-            var commentKind = Polyfill.NativeMethods.Comment_getKind(comment);
+            var commentKind = comment.Kind;
 
-            if (commentKind == Polyfill.CommentKind.Text)
+            if (commentKind == CommentKind.Text)
             {
-                var text = Polyfill.NativeMethods.TextComment_getText(comment).ToString();
+                var text = comment.GetText();
                 text = text.Trim();
 
                 if (!string.IsNullOrWhiteSpace(text))
@@ -279,11 +278,11 @@ namespace iMobileDevice.Generator
             else
             {
                 // Recurse
-                var childCount = Polyfill.NativeMethods.Comment_getNumChildren(comment);
+                var childCount = comment.GetNumChildren();
 
                 for (int i = 0; i < childCount; i++)
                 {
-                    var child = Polyfill.NativeMethods.Comment_getChild(comment, (uint)i);
+                    var child = comment.GetChild(i);
                     this.GetCommentInnerText(child, builder);
                 }
             }

@@ -7,7 +7,6 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using Core.Clang;
-    using iMobileDevice.Generator.Polyfill;
 
     internal sealed class EnumVisitor
     {
@@ -101,33 +100,33 @@ namespace iMobileDevice.Generator
             // - Full Comment
             // - Paragraph Comment
             // - Text Comment
-            var fullComment = Polyfill.NativeMethods.Cursor_getParsedComment(cursor.ToCXCursor());
-            var fullCommentKind = Polyfill.NativeMethods.Comment_getKind(fullComment);
-            var fullCommentChildren = Polyfill.NativeMethods.Comment_getNumChildren(fullComment);
+            var fullComment = cursor.GetParsedComment();
+            var fullCommentKind = fullComment.Kind;
+            var fullCommentChildren = fullComment.GetNumChildren();
 
-            if (fullCommentKind != Polyfill.CommentKind.FullComment || fullCommentChildren != 1)
+            if (fullCommentKind != CommentKind.FullComment || fullCommentChildren != 1)
             {
                 return null;
             }
 
-            var paragraphComment = Polyfill.NativeMethods.Comment_getChild(fullComment, 0);
-            var paragraphCommentKind = Polyfill.NativeMethods.Comment_getKind(paragraphComment);
-            var paragraphCommentChildren = Polyfill.NativeMethods.Comment_getNumChildren(paragraphComment);
+            var paragraphComment = fullComment.GetChild(0);
+            var paragraphCommentKind = paragraphComment.Kind;
+            var paragraphCommentChildren = paragraphComment.GetNumChildren();
 
-            if (paragraphCommentKind != Polyfill.CommentKind.Paragraph || paragraphCommentChildren != 1)
+            if (paragraphCommentKind != CommentKind.Paragraph || paragraphCommentChildren != 1)
             {
                 return null;
             }
 
-            var textComment = Polyfill.NativeMethods.Comment_getChild(paragraphComment, 0);
-            var textCommentKind = Polyfill.NativeMethods.Comment_getKind(textComment);
+            var textComment = paragraphComment.GetChild(0);
+            var textCommentKind = textComment.Kind;
 
-            if (textCommentKind != Polyfill.CommentKind.Text)
+            if (textCommentKind != CommentKind.Text)
             {
                 return null;
             }
 
-            var text = Polyfill.NativeMethods.TextComment_getText(textComment).ToString();
+            var text = textComment.GetText();
 
             if (string.IsNullOrWhiteSpace(text))
             {
