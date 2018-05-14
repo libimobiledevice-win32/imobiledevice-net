@@ -272,6 +272,41 @@ namespace iMobileDevice.Generator
 
             safeHandle.Members.Add(equalsMethod);
 
+            // Override the operators
+            safeHandle.Members.Add(new CodeSnippetTypeMember($@"/// <summary>
+/// Determines whether two specified instances of <see cref=""{safeHandle.Name}""/> are equal.
+/// </summary>
+/// <param name=""value1"">
+/// The first pointer or handle to compare.
+/// </param>
+/// <param name=""value2"">
+/// The second pointer or handle to compare.
+/// </param>
+/// <returns>
+/// <see langword=""true""/> if <paramref name=""value1""/> equals <paramref name=""value2""/>; otherwise, <see langword=""false""/>.
+/// </returns>
+public static bool operator == ({safeHandle.Name} value1, {safeHandle.Name} value2) 
+{{
+    return value1.handle == value2.handle;
+}}"));
+
+            safeHandle.Members.Add(new CodeSnippetTypeMember($@"/// <summary>
+/// Determines whether two specified instances of <see cref=""{safeHandle.Name}""/> are not equal.
+/// </summary>
+/// <param name=""value1"">
+/// The first pointer or handle to compare.
+/// </param>
+/// <param name=""value2"">
+/// The second pointer or handle to compare.
+/// </param>
+/// <returns>
+/// <see langword=""true""/> if <paramref name=""value1""/> does not equal <paramref name=""value2""/>; otherwise, <see langword=""false""/>.
+/// </returns>
+public static bool operator != ({safeHandle.Name} value1, {safeHandle.Name} value2) 
+{{
+    return value1.handle != value2.handle;
+}}"));
+
             // Create the GetHashCode method
             // return this.handle.GetHashCode();
             CodeMemberMethod getHashCodeMethod = new CodeMemberMethod();

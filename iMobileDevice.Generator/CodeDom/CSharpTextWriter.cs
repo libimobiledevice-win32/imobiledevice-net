@@ -138,6 +138,12 @@
                 this.Generate(member, isInterface: type.IsInterface);
             }
 
+            foreach (var member in type.Members.OfType<CodeSnippetTypeMember>())
+            {
+                this.WriteLine();
+                this.Generate(member);
+            }
+
             this.Indent--;
             this.WriteLine("}");
         }
