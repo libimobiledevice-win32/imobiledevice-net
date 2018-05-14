@@ -7,8 +7,8 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
-    using ClangSharp;
     using System.Collections.ObjectModel;
+    using Core.Clang;
 
     internal static class Argument
     {
@@ -60,13 +60,13 @@ namespace iMobileDevice.Generator
             return value;
         }
 
-        public static CodeParameterDeclarationExpression GenerateArgument(this ModuleGenerator generator, CXType functionType, CXCursor paramCursor, uint index, FunctionType functionKind)
+        public static CodeParameterDeclarationExpression GenerateArgument(this ModuleGenerator generator, TypeInfo functionType, Cursor paramCursor, uint index, FunctionType functionKind)
         {
-            var numArgTypes = clang.getNumArgTypes(functionType);
-            var type = clang.getArgType(functionType, index);
-            var cursorType = clang.getCursorType(paramCursor);
+            var numArgTypes = functionType.GetNumArgTypes();
+            var type = functionType.GetArgType(index);
+            var cursorType = paramCursor.GetTypeInfo();
 
-            var name = clang.getCursorSpelling(paramCursor).ToString();
+            var name = paramCursor.GetSpelling();
             if (string.IsNullOrEmpty(name))
             {
                 name = "param" + index;
@@ -106,27 +106,27 @@ namespace iMobileDevice.Generator
             }
             else
             {
-                switch (type.kind)
+                switch (type.Kind)
                 {
-                    case CXTypeKind.CXType_Pointer:
-                        var pointee = clang.getPointeeType(type);
-                        switch (pointee.kind)
+                    case TypeKind.Pointer:
+                        var pointee = type.GetPointeeType();
+                        switch (pointee.Kind)
                         {
-                            case CXTypeKind.CXType_Pointer:
+                            case TypeKind.Pointer:
                                 parameter.Type = new CodeTypeReference(typeof(IntPtr));
                                 isPointer = true;
 
                                 break;
 
-                            case CXTypeKind.CXType_FunctionProto:
+                            case TypeKind.FunctionProto:
                                 parameter.Type = new CodeTypeReference(cursorType.ToClrType());
                                 break;
 
-                            case CXTypeKind.CXType_Void:
+                            case TypeKind.Void:
                                 parameter.Type = new CodeTypeReference(typeof(IntPtr));
                                 break;
 
-                            case CXTypeKind.CXType_Char_S:
+                            case TypeKind.Char_S:
                                 // In some of the read/write functions, const char is also used to represent data -- in that
                                 // case, it maps to a byte[] array or just an IntPtr.
                                 if (functionKind != FunctionType.PInvoke && type.IsPtrToConstChar())
@@ -153,7 +153,7 @@ namespace iMobileDevice.Generator
 
                                 break;
 
-                            case CXTypeKind.CXType_WChar:
+                            case TypeKind.WChar:
                                 if (type.IsPtrToConstChar())
                                 {
                                     parameter.Type = new CodeTypeReference(typeof(string));
@@ -166,14 +166,14 @@ namespace iMobileDevice.Generator
 
                                 break;
 
-                            case CXTypeKind.CXType_Record:
+                            case TypeKind.Record:
                                 if (functionKind != FunctionType.Delegate)
                                 {
-                                    var recordTypeCursor = clang.getTypeDeclaration(pointee);
-                                    var recordType = clang.getCursorType(recordTypeCursor);
+                                    var recordTypeCursor = pointee.GetTypeDeclaration();
+                                    var recordType = recordTypeCursor.GetTypeInfo();
 
                                     // Get the CLR name for the record
-                                    var clrName = generator.NameMapping[recordType.ToString()];
+                                    var clrName = generator.NameMapping[recordType.GetSpelling().ToString()];
                                     parameter.Type = new CodeTypeReference(clrName);
                                     isPointer = true;
                                 }
@@ -195,7 +195,7 @@ namespace iMobileDevice.Generator
                         break;
 
                     default:
-                        if (generator.NameMapping.ContainsKey(type.ToString()))
+                        if (generator.NameMapping.ContainsKey(type.GetSpelling().ToString()))
                         {
                             if (functionKind != FunctionType.Delegate)
                             {

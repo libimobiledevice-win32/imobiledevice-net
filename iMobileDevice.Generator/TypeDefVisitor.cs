@@ -8,7 +8,7 @@ namespace iMobileDevice.Generator
     using System.CodeDom;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using ClangSharp;
+    using Core.Clang;
 
     internal class TypeDefVisitor
     {
@@ -19,37 +19,37 @@ namespace iMobileDevice.Generator
             this.generator = generator;
         }
 
-        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
+        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
         {
-            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
+            if (!cursor.GetLocation().IsFromMainFile())
             {
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            CXCursorKind curKind = clang.getCursorKind(cursor);
-            if (curKind == CXCursorKind.CXCursor_TypedefDecl)
+            CursorKind curKind = cursor.Kind;
+            if (curKind == CursorKind.TypedefDecl)
             {
-                var nativeName = clang.getCursorSpelling(cursor).ToString();
+                var nativeName = cursor.GetSpelling();
                 var clrName = NameConversions.ToClrName(nativeName, NameConversion.Type);
 
                 // if we've printed these previously, skip them
                 if (this.generator.NameMapping.ContainsKey(nativeName))
                 {
-                    return CXChildVisitResult.CXChildVisit_Continue;
+                    return ChildVisitResult.Continue;
                 }
 
-                CXType type = clang.getCanonicalType(clang.getTypedefDeclUnderlyingType(cursor));
+                TypeInfo type = cursor.GetTypedefDeclUnderlyingType().GetCanonicalType();
 
                 // we handle enums and records in struct and enum visitors with forward declarations also
-                if (type.kind == CXTypeKind.CXType_Record || type.kind == CXTypeKind.CXType_Enum)
+                if (type.Kind == TypeKind.Record || type.Kind == TypeKind.Enum)
                 {
-                    return CXChildVisitResult.CXChildVisit_Continue;
+                    return ChildVisitResult.Continue;
                 }
 
-                if (type.kind == CXTypeKind.CXType_Pointer)
+                if (type.Kind == TypeKind.Pointer)
                 {
-                    var pointee = clang.getPointeeType(type);
-                    if (pointee.kind == CXTypeKind.CXType_Record || pointee.kind == CXTypeKind.CXType_Void)
+                    var pointee = type.GetPointeeType();
+                    if (pointee.Kind == TypeKind.Record || pointee.Kind == TypeKind.Void)
                     {
                         var types = Handles.CreateSafeHandle(clrName, this.generator).ToArray();
                         this.generator.AddType(nativeName, types[0]);
@@ -59,24 +59,24 @@ namespace iMobileDevice.Generator
                             this.generator.AddType(types[i].Name, types[i]);
                         }
 
-                        return CXChildVisitResult.CXChildVisit_Continue;
+                        return ChildVisitResult.Continue;
                     }
 
-                    if (pointee.kind == CXTypeKind.CXType_FunctionProto)
+                    if (pointee.Kind == TypeKind.FunctionProto)
                     {
-                        var functionType = clang.getTypedefDeclUnderlyingType(cursor);
-                        var pt = clang.getPointeeType(functionType);
+                        var functionType = cursor.GetTypedefDeclUnderlyingType();
+                        var pt = functionType.GetPointeeType();
                         CodeTypeDelegate delegateType = pt.ToDelegate(nativeName, cursor, this.generator);
                         this.generator.AddType(nativeName, delegateType);
 
-                        return CXChildVisitResult.CXChildVisit_Continue;
+                        return ChildVisitResult.Continue;
                     }
                 }
 
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            return CXChildVisitResult.CXChildVisit_Recurse;
+            return ChildVisitResult.Recurse;
         }
     }
 }

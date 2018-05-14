@@ -11,7 +11,6 @@ namespace iMobileDevice.Generator
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-    using ClangSharp;
     using System.Diagnostics;
 #if !NETSTANDARD1_5
     using System.Security.Permissions;
@@ -20,6 +19,8 @@ namespace iMobileDevice.Generator
     using CodeDom;
     using System.Runtime.Serialization;
     using System.Runtime.ExceptionServices;
+    using Core.Clang;
+    using Core.Clang.Diagnostics;
 
     internal class ModuleGenerator
     {
@@ -79,90 +80,98 @@ namespace iMobileDevice.Generator
             this.Types.Add(type);
             this.NameMapping.Add(nativeName, type.Name);
         }
-
         public void Generate(string targetDirectory, string libraryName = "imobiledevice")
         {
-            var createIndex = clang.createIndex(0, 0);
+            string[] arguments = 
+            {
+                // Use the C++ backend
+                "-x",
+                "c++",
 
-            string[] arguments = { "-x", "c++", "-Wdocumentation" };
+                // Parse the doxygen comments
+                "-Wdocumentation",
+
+                // Target 32-bit OS
+                "-m32"
+            };
+
             arguments = arguments.Concat(this.IncludeDirectories.Select(x => "-I" + x)).ToArray();
 
-            CXTranslationUnit translationUnit;
-            CXUnsavedFile unsavedFile;
-            var translationUnitError = clang.parseTranslationUnit2(createIndex, this.InputFile, arguments, arguments.Length, out unsavedFile, 0, 0, out translationUnit);
+            FunctionVisitor functionVisitor;
 
-            StringWriter errorWriter = new StringWriter();
-            var numDiagnostics = clang.getNumDiagnostics(translationUnit);
-
-            bool hasError = false;
-            bool hasWarning = false;
-
-            for (uint i = 0; i < numDiagnostics; ++i)
+            using (var createIndex = new Index(false, true))
+            using (var translationUnit = createIndex.ParseTranslationUnit(this.InputFile, arguments))
             {
-                var diagnostic = clang.getDiagnostic(translationUnit, i);
+                StringWriter errorWriter = new StringWriter();
+                var set = DiagnosticSet.FromTranslationUnit(translationUnit);
+                var numDiagnostics = set.GetNumDiagnostics();
 
-                var severity = clang.getDiagnosticSeverity(diagnostic);
+                bool hasError = false;
+                bool hasWarning = false;
 
-                switch (severity)
+                for (uint i = 0; i < numDiagnostics; ++i)
                 {
-                    case CXDiagnosticSeverity.CXDiagnostic_Error:
-                    case CXDiagnosticSeverity.CXDiagnostic_Fatal:
-                        hasError = true;
-                        break;
+                    Diagnostic diagnostic = set.GetDiagnostic(i);
+                    var severity = diagnostic.GetSeverity();
 
-                    case CXDiagnosticSeverity.CXDiagnostic_Warning:
-                        hasWarning = true;
-                        break;
+                    switch (severity)
+                    {
+                        case DiagnosticSeverity.Error:
+                        case DiagnosticSeverity.Fatal:
+                            hasError = true;
+                            break;
+
+                        case DiagnosticSeverity.Warning:
+                            hasWarning = true;
+                            break;
+                    }
+
+                    var location = diagnostic.GetLocation();
+                    var fileName = location.SourceFile;
+                    var line = location.Line;
+
+                    var message = diagnostic.GetSpelling();
+                    errorWriter.WriteLine($"{severity}: {fileName}:{line} {message}");
                 }
 
-                var location = clang.getDiagnosticLocation(diagnostic);
-                CXFile file;
-                uint line;
-                uint column;
-                uint offset;
+                if (hasError)
+                {
+                    throw new Exception(errorWriter.ToString());
+                }
 
-                clang.getFileLocation(location, out file, out line, out column, out offset);
+                if (hasWarning)
+                {
+                    // Dump the warnings to the console output.
+                    Console.WriteLine(errorWriter.ToString());
+                }
 
-                var fileName = clang.getFileName(file).ToString();
+                // Generate the marhaler types for string arrays (char **)
+                var arrayMarshalerGenerator = new ArrayMarshalerGenerator(this);
+                arrayMarshalerGenerator.Generate();
 
-                var message = clang.getDiagnosticSpelling(diagnostic).ToString();
-                errorWriter.WriteLine($"{severity}: {fileName}:{line} {message}");
-                clang.disposeDiagnostic(diagnostic);
+                // Creates enums
+                var enumVisitor = new EnumVisitor(this);
+                var realEnumVisitor = new DelegatingCursorVisitor(enumVisitor.Visit);
+                var cursor = translationUnit.GetCursor();
+                realEnumVisitor.VisitChildren(cursor);
+
+                // Creates structs
+                var structVisitor = new StructVisitor(this);
+                var realStructVisitor = new DelegatingCursorVisitor(structVisitor.Visit);
+                realStructVisitor.VisitChildren(translationUnit.GetCursor());
+
+                // Creates safe handles & delegates
+                var typeDefVisitor = new TypeDefVisitor(this);
+                var realTypeDefVisitor = new DelegatingCursorVisitor(typeDefVisitor.Visit);
+                realTypeDefVisitor.VisitChildren(translationUnit.GetCursor());
+
+                // Creates functions in a NativeMethods class
+                functionVisitor = new FunctionVisitor(this, libraryName);
+                var realFunctionVisitor = new DelegatingCursorVisitor(functionVisitor.Visit);
+                realFunctionVisitor.VisitChildren(translationUnit.GetCursor());
+
+                createIndex.Dispose();
             }
-
-            if (hasError)
-            {
-                throw new Exception(errorWriter.ToString());
-            }
-
-            if (hasWarning)
-            {
-                // Dump the warnings to the console output.
-                Console.WriteLine(errorWriter.ToString());
-            }
-
-            // Generate the marhaler types for string arrays (char **)
-            var arrayMarshalerGenerator = new ArrayMarshalerGenerator(this);
-            arrayMarshalerGenerator.Generate();
-
-            // Creates enums
-            var enumVisitor = new EnumVisitor(this);
-            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), enumVisitor.Visit, new CXClientData(IntPtr.Zero));
-
-            // Creates structs
-            var structVisitor = new StructVisitor(this);
-            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), structVisitor.Visit, new CXClientData(IntPtr.Zero));
-
-            // Creates safe handles & delegates
-            var typeDefVisitor = new TypeDefVisitor(this);
-            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), typeDefVisitor.Visit, new CXClientData(IntPtr.Zero));
-
-            // Creates functions in a NativeMethods class
-            var functionVisitor = new FunctionVisitor(this, libraryName);
-            clang.visitChildren(clang.getTranslationUnitCursor(translationUnit), functionVisitor.Visit, new CXClientData(IntPtr.Zero));
-
-            clang.disposeTranslationUnit(translationUnit);
-            clang.disposeIndex(createIndex);
 
             var moduleDirectory = Path.Combine(targetDirectory, this.Name);
 

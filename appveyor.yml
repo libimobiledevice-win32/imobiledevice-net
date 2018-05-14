@@ -1,21 +1,18 @@
 image: Visual Studio 2017
 
 before_build:
-  - nuget restore -NonInteractive
-  - nuget restore iMobileDevice.Generator\packages.config -SolutionDirectory .  -NonInteractive
   - dotnet restore
+  - dotnet restore iMobileDevice.Generator\iMobileDevice.Generator.csproj
   - if not exist ext mkdir ext
   - choco install -y wget
   - download.cmd
 
 cache:
-  - packages -> **\packages.config      # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
   - ext -> download.cmd
   - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # NuGet package for .NET Core
 
 build_script:
-  - msbuild iMobileDevice.Generator\iMobileDevice.Generator.csproj /p:Configuration=Debug /p:Platform=x86 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
-  - iMobileDevice.Generator\bin\x86\Debug\iMobileDevice.Generator.exe . .\iMobileDevice-net
+  - dotnet run --no-restore --project iMobileDevice.Generator\iMobileDevice.Generator.csproj . .\iMobileDevice-net
   - dotnet build imobiledevice-net\iMobileDevice-net.csproj
   - dotnet pack imobiledevice-net\iMobileDevice-net.csproj --version-suffix r%APPVEYOR_BUILD_NUMBER% -c Release
   - dotnet build runtime.win7-x64.vcruntime140\runtime.win7-x64.vcruntime140.csproj
@@ -33,7 +30,3 @@ on_success:
   - ps: Push-AppVeyorArtifact runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.0.24406.1.nupkg
   - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER)-win-x64.zip
   - ps: Push-AppVeyorArtifact libimobiledevice.1.2.1-r$($env:APPVEYOR_BUILD_NUMBER)-win-x86.zip
-
-nuget:
-  project_feed: true
-  account_feed: true

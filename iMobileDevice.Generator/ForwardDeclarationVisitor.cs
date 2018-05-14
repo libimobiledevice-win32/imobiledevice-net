@@ -5,41 +5,42 @@
 namespace iMobileDevice.Generator
 {
     using System;
-    using ClangSharp;
+    using Core.Clang;
 
-    internal sealed class ForwardDeclarationVisitor
+    internal sealed class ForwardDeclarationVisitor : CursorVisitor
     {
-        private readonly CXCursor beginningCursor;
-
+        private readonly Cursor beginningCursor;
+        private readonly bool skipSystemHeaderCheck;
         private bool beginningCursorReached;
 
-        public ForwardDeclarationVisitor(CXCursor beginningCursor)
+        public ForwardDeclarationVisitor(Cursor beginningCursor, bool skipSystemHeaderCheck = false)
         {
             this.beginningCursor = beginningCursor;
+            this.skipSystemHeaderCheck = skipSystemHeaderCheck;
         }
 
-        public CXCursor ForwardDeclarationCursor { get; private set; }
+        public Cursor ForwardDeclarationCursor { get; private set; }
 
-        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
+        protected override ChildVisitResult Visit(Cursor cursor, Cursor parent)
         {
-            if (cursor.IsInSystemHeader())
+            if (!this.skipSystemHeaderCheck && cursor.IsInSystemHeader())
             {
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            if (clang.equalCursors(cursor, this.beginningCursor) != 0)
+            if (cursor.Equals(this.beginningCursor))
             {
                 this.beginningCursorReached = true;
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
             if (this.beginningCursorReached)
             {
                 this.ForwardDeclarationCursor = cursor;
-                return CXChildVisitResult.CXChildVisit_Break;
+                return ChildVisitResult.Break;
             }
 
-            return CXChildVisitResult.CXChildVisit_Recurse;
+            return ChildVisitResult.Recurse;
         }
     }
 }

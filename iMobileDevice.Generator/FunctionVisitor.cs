@@ -4,11 +4,11 @@
 
 namespace iMobileDevice.Generator
 {
+    using Core.Clang;
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
     using System.Text;
-    using ClangSharp;
 
     internal sealed class FunctionVisitor
     {
@@ -30,11 +30,11 @@ namespace iMobileDevice.Generator
             }
         }
 
-        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, IntPtr data)
+        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
         {
-            if (clang.Location_isFromMainFile(clang.getCursorLocation(cursor)) == 0)
+            if (!cursor.GetLocation().IsFromMainFile())
             {
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
             if (this.nativeMethods == null)
@@ -54,29 +54,35 @@ namespace iMobileDevice.Generator
                 this.generator.Types.Add(this.nativeMethods);
             }
 
-            CXCursorKind curKind = clang.getCursorKind(cursor);
+            CursorKind curKind = cursor.Kind;
 
             // look only at function decls
-            if (curKind == CXCursorKind.CXCursor_FirstDecl)
+            /*
+            if (curKind == CursorKind.Cursor_FirstDecl)
             {
-                return CXChildVisitResult.CXChildVisit_Recurse;
+                return ChildVisitResult.Recurse;
+            }*/
+
+            if (curKind == CursorKind.UnexposedDecl)
+            {
+                return ChildVisitResult.Recurse;
             }
 
-            if (curKind == CXCursorKind.CXCursor_FunctionDecl)
+            if (curKind == CursorKind.FunctionDecl)
             {
                 var function = this.WriteFunctionInfoHelper(cursor);
                 this.nativeMethods.Members.Add(function);
-                return CXChildVisitResult.CXChildVisit_Continue;
+                return ChildVisitResult.Continue;
             }
 
-            return CXChildVisitResult.CXChildVisit_Continue;
+            return ChildVisitResult.Continue;
         }
 
-        private CodeMemberMethod WriteFunctionInfoHelper(CXCursor cursor)
+        private CodeMemberMethod WriteFunctionInfoHelper(Cursor cursor)
         {
-            var functionType = clang.getCursorType(cursor);
-            var nativeName = clang.getCursorSpelling(cursor).ToString();
-            var resultType = clang.getCursorResultType(cursor);
+            var functionType = cursor.GetTypeInfo();
+            var nativeName = cursor.GetSpelling();
+            var resultType = cursor.GetResultType();
 
             CodeMemberMethod method = new CodeMemberMethod();
             method.CustomAttributes.Add(this.DllImportAttribute(nativeName, functionType.GetCallingConvention()));
@@ -102,11 +108,11 @@ namespace iMobileDevice.Generator
                 functionKind = FunctionType.PInvoke;
             }
 
-            int numArgTypes = clang.getNumArgTypes(functionType);
+            int numArgTypes = functionType.GetNumArgTypes();
 
             for (uint i = 0; i < numArgTypes; ++i)
             {
-                var argument = Argument.GenerateArgument(this.generator, functionType, clang.Cursor_getArgument(cursor, i), i, functionKind);
+                var argument = Argument.GenerateArgument(this.generator, functionType, cursor.GetArgument(i), i, functionKind);
                 method.Parameters.Add(argument);
             }
 
@@ -135,17 +141,17 @@ namespace iMobileDevice.Generator
                         callingConvention.ToString())));
         }
 
-        private CodeCommentStatement GetComment(CXCursor cursor)
+        private CodeCommentStatement GetComment(Cursor cursor)
         {
             // Standard hierarchy:
             // - Full Comment
             // - Paragraph Comment or ParamCommand comment
             // - Text Comment
-            var fullComment = clang.Cursor_getParsedComment(cursor);
-            var fullCommentKind = clang.Comment_getKind(fullComment);
-            var fullCommentChildren = clang.Comment_getNumChildren(fullComment);
+            var fullComment = cursor.GetParsedComment();
+            var fullCommentKind = fullComment.Kind;
+            var fullCommentChildren = fullComment.GetNumChildren();
 
-            if (fullCommentKind != CXCommentKind.CXComment_FullComment || fullCommentChildren < 1)
+            if (fullCommentKind != CommentKind.FullComment || fullCommentChildren < 1)
             {
                 return null;
             }
@@ -160,12 +166,12 @@ namespace iMobileDevice.Generator
 
             for (int i = 0; i < fullCommentChildren; i++)
             {
-                var childComment = clang.Comment_getChild(fullComment, (uint)i);
-                var childCommentKind = clang.Comment_getKind(childComment);
+                var childComment = fullComment.GetChild(i);
+                var childCommentKind = childComment.Kind;
 
-                if (childCommentKind != CXCommentKind.CXComment_Paragraph
-                    && childCommentKind != CXCommentKind.CXComment_ParamCommand
-                    && childCommentKind != CXCommentKind.CXComment_BlockCommand)
+                if (childCommentKind != CommentKind.Paragraph
+                    && childCommentKind != CommentKind.ParamCommand
+                    && childCommentKind != CommentKind.BlockCommand)
                 {
                     continue;
                 }
@@ -179,15 +185,15 @@ namespace iMobileDevice.Generator
                     continue;
                 }
 
-                if (childCommentKind == CXCommentKind.CXComment_Paragraph)
+                if (childCommentKind == CommentKind.Paragraph)
                 {
                     summary.Append(text);
                     hasComment = true;
                 }
-                else if (childCommentKind == CXCommentKind.CXComment_ParamCommand)
+                else if (childCommentKind == CommentKind.ParamCommand)
                 {
                     // Get the parameter name
-                    var paramName = clang.ParamCommandComment_getParamName(childComment).ToString();
+                    var paramName = childComment.GetParamName();
 
                     if (hasParameter)
                     {
@@ -200,9 +206,9 @@ namespace iMobileDevice.Generator
                     hasComment = true;
                     hasParameter = true;
                 }
-                else if (childCommentKind == CXCommentKind.CXComment_BlockCommand)
+                else if (childCommentKind == CommentKind.BlockCommand)
                 {
-                    var name = clang.BlockCommandComment_getCommandName(childComment).ToString();
+                    var name = childComment.GetCommandName();
 
                     if (name == "note")
                     {
@@ -254,13 +260,13 @@ namespace iMobileDevice.Generator
             return new CodeCommentStatement(comment.ToString(), docComment: true);
         }
 
-        private void GetCommentInnerText(CXComment comment, StringBuilder builder)
+        private void GetCommentInnerText(Comment comment, StringBuilder builder)
         {
-            var commentKind = clang.Comment_getKind(comment);
+            var commentKind = comment.Kind;
 
-            if (commentKind == CXCommentKind.CXComment_Text)
+            if (commentKind == CommentKind.Text)
             {
-                var text = clang.TextComment_getText(comment).ToString();
+                var text = comment.GetText();
                 text = text.Trim();
 
                 if (!string.IsNullOrWhiteSpace(text))
@@ -272,11 +278,11 @@ namespace iMobileDevice.Generator
             else
             {
                 // Recurse
-                var childCount = clang.Comment_getNumChildren(comment);
+                var childCount = comment.GetNumChildren();
 
                 for (int i = 0; i < childCount; i++)
                 {
-                    var child = clang.Comment_getChild(comment, (uint)i);
+                    var child = comment.GetChild(i);
                     this.GetCommentInnerText(child, builder);
                 }
             }
