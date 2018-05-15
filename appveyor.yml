@@ -1,6 +1,24 @@
 image: Visual Studio 2017
 
+environment:
+  VCPKG_ROOT: C:\tools\vcpkg-libimobiledevice
+
 before_build:
+  - vcpkg version
+  - git version
+# Work around https://stackoverflow.com/questions/50093771/git-clone-warning-failed-to-restrict-file-handles
+  - choco install git
+  - git version
+  - ps: if( -not (Test-Path $env:VCPKG_ROOT -PathType Container)) { git clone -q --depth 1 -b ports/libimobiledevice https://github.com/libimobiledevice-win32/vcpkg $env:VCPKG_ROOT; Write-Host "Cloned repo to $env:VCPKG_ROOT" } else { Write-Host "$env:VCPKG_ROOT exists, not cloning repository." }
+  - cmd: git --git-dir %VCPKG_ROOT%\.git --work-tree %VCPKG_ROOT% fetch origin
+  - cmd: git --git-dir %VCPKG_ROOT%\.git --work-tree %VCPKG_ROOT% pull origin
+  - cmd: "%VCPKG_ROOT%\\bootstrap-vcpkg.bat"
+  - cmd: "%VCPKG_ROOT%\\vcpkg version"
+  - cmd: "%VCPKG_ROOT%\\vcpkg integrate install"
+  - cmd: "%VCPKG_ROOT%\\vcpkg install libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
+  - cmd: "%VCPKG_ROOT%\\vcpkg install libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
+  - cmd: "%VCPKG_ROOT%\\vcpkg update"
+
   - dotnet restore
   - dotnet restore iMobileDevice.Generator\iMobileDevice.Generator.csproj
   - if not exist ext mkdir ext
@@ -8,8 +26,7 @@ before_build:
   - download.cmd
 
 cache:
-  - ext -> download.cmd
-  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'  # NuGet package for .NET Core
+  - C:\tools\vcpkg-libimobiledevice
 
 build_script:
   - dotnet run --no-restore --project iMobileDevice.Generator\iMobileDevice.Generator.csproj . .\iMobileDevice-net
@@ -19,6 +36,8 @@ build_script:
   - dotnet pack runtime.win7-x64.vcruntime140\runtime.win7-x64.vcruntime140.csproj -c Release
   - dotnet build runtime.win7-x86.vcruntime140\runtime.win7-x86.vcruntime140.csproj
   - dotnet pack runtime.win7-x86.vcruntime140\runtime.win7-x86.vcruntime140.csproj -c Release
+
+  # Create a zip archive for libimobiledevice-win32
   - 7z x imobiledevice-net\bin\Release\imobiledevice-net.1.2.1-r%APPVEYOR_BUILD_NUMBER%.nupkg -ozip\
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip .\zip\runtimes\win7-x86\native\*
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip .\zip\runtimes\win7-x64\native\*
