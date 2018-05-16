@@ -33,21 +33,21 @@
   
   <ItemGroup>
     <!-- win7-x64 files which come from VcPkg packages-->
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/bin/*.*">
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/bin/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/*.*">
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/*.exe">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- win7-x86 files which come from NuGet packages-->
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.*">
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/*.*">
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/*.exe">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
