@@ -17,7 +17,7 @@ namespace iMobileDevice
         /// </summary>
         public static bool LibraryFound
         {
-#if !NETSTANDARD1_5
+#if !NETSTANDARD1_5 && !NETSTANDARD2_0
             get;
             private set;
 #else
@@ -47,7 +47,7 @@ namespace iMobileDevice
         /// </param>
         public static void Load(string directory)
         {
-#if !NETSTANDARD1_5
+#if !NETSTANDARD1_5 && !NETSTANDARD2_0
             if (directory == null)
             {
                 throw new ArgumentNullException(nameof(directory));
