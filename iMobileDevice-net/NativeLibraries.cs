@@ -6,8 +6,15 @@ using System.Runtime.InteropServices;
 
 namespace iMobileDevice
 {
+    /// <summary>
+    /// Provides access to the native libimobiledevice libraries. Theses are the .dll, .so or .dylib files libimobiledevice-net uses.
+    /// </summary>
     public static class NativeLibraries
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the native libraries have been found. This value is only relevant on the full .NET Framework;
+        /// it is always set to <see langword="true"/> on .NET Core.
+        /// </summary>
         public static bool LibraryFound
         {
 #if !NETSTANDARD1_5
@@ -24,11 +31,20 @@ namespace iMobileDevice
 #endif
         }
 
+        /// <summary>
+        /// Loads the native libraries.
+        /// </summary>
         public static void Load()
         {
             Load(Path.GetDirectoryName(typeof(NativeLibraries).GetTypeInfo().Assembly.Location));
         }
 
+        /// <summary>
+        /// Loads the native libraries.
+        /// </summary>
+        /// <param name="directory">
+        /// The path in which the native libraries are located.
+        /// </param>
         public static void Load(string directory)
         {
 #if !NETSTANDARD1_5
@@ -68,7 +84,7 @@ namespace iMobileDevice
                 {
                     "msvcr110",
                     "vcruntime140",
-                    "zlib",
+                    "zlib1",
                     "libiconv",
                     "getopt",
                     "libeay32",
