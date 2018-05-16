@@ -16,6 +16,7 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
+    <PackageProjectUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
