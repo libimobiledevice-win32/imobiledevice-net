@@ -17,39 +17,4 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ideviceinstaller" Version="1.1.0.19" />
-    <PackageReference Include="ideviceinstaller.redist" Version="1.1.0.19" />
-    <PackageReference Include="ideviceinstaller.symbols" Version="1.1.0.19" />
-    <PackageReference Include="libzip" Version="1.1.2.7" />
-    <PackageReference Include="libzip.redist" Version="1.1.2.7" />
-    <PackageReference Include="libimobiledevice" Version="1.2.1.196" />
-    <PackageReference Include="libimobiledevice.redist" Version="1.2.1.196" />
-    <PackageReference Include="libimobiledevice.symbols" Version="1.2.1.196" />
-    <PackageReference Include="libplist" Version="2.0.1.171" />
-    <PackageReference Include="libplist.symbols" Version="2.0.1.171" />
-    <PackageReference Include="libusbmuxd" Version="1.0.10.92" />
-    <PackageReference Include="libusbmuxd.redist" Version="1.0.10.92" />
-    <PackageReference Include="libusbmuxd.symbols" Version="1.0.10.92" />
-    <PackageReference Include="libideviceactivation" Version="1.0.0.23" />
-    <PackageReference Include="libideviceactivation.redist" Version="1.0.0.23" />
-    <PackageReference Include="libideviceactivation.symbols" Version="1.0.0.23" />
-    <PackageReference Include="usbmuxd" Version="1.1.0.106" />
-    <PackageReference Include="libiconv" Version="1.14.0.11" />
-    <PackageReference Include="fix8.dependencies.getopt" Version="1.0.20151130.1" />
-    <PackageReference Include="libiconv.redist" Version="1.14.0.11" />
-    <PackageReference Include="pthreads" Version="2.9.1.4" />
-    <PackageReference Include="pthreads.redist" Version="2.9.1.4" />
-    <PackageReference Include="openssl.v140.windesktop.msvcstl.dyn.rt-dyn" Version="1.0.2.0" />
-    <PackageReference Include="openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x64" Version="1.0.2.0" />
-    <PackageReference Include="openssl.v140.windesktop.msvcstl.dyn.rt-dyn.x86" Version="1.0.2.0" />
-    <PackageReference Include="zlib.v140.windesktop.msvcstl.dyn.rt-dyn" Version="1.2.8.8" />
-    <PackageReference Include="curl" Version="7.30.0.2" />
-    <PackageReference Include="curl.redist" Version="7.30.0.2" />
-    <PackageReference Include="libxml2" Version="2.7.8.7" />
-    <PackageReference Include="libxml2.redist" Version="2.7.8.7" />
-    <PackageReference Include="libssh2" Version="1.4.3.1" />
-    <PackageReference Include="libssh2.redist" Version="1.4.3.1" />
-  </ItemGroup>
 </Project>
