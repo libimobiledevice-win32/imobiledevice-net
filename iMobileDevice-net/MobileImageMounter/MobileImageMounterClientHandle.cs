@@ -165,6 +165,16 @@ namespace iMobileDevice.MobileImageMounter
         /// </returns>
         public static bool operator == (MobileImageMounterClientHandle value1, MobileImageMounterClientHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle == value2.handle;
         }
         
@@ -182,6 +192,16 @@ namespace iMobileDevice.MobileImageMounter
         /// </returns>
         public static bool operator != (MobileImageMounterClientHandle value1, MobileImageMounterClientHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle != value2.handle;
         }
     }

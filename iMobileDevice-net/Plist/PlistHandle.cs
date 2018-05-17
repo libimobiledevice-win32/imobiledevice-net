@@ -166,6 +166,16 @@ namespace iMobileDevice.Plist
         /// </returns>
         public static bool operator == (PlistHandle value1, PlistHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle == value2.handle;
         }
         
@@ -183,6 +193,16 @@ namespace iMobileDevice.Plist
         /// </returns>
         public static bool operator != (PlistHandle value1, PlistHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle != value2.handle;
         }
     }

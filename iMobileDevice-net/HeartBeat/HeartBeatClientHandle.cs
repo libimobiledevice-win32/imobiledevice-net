@@ -165,6 +165,16 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public static bool operator == (HeartBeatClientHandle value1, HeartBeatClientHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle == value2.handle;
         }
         
@@ -182,6 +192,16 @@ namespace iMobileDevice.HeartBeat
         /// </returns>
         public static bool operator != (HeartBeatClientHandle value1, HeartBeatClientHandle value2) 
         {
+            if (value1 == null && value2 == null)
+            {
+                return false;
+            }
+        
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+        
             return value1.handle != value2.handle;
         }
     }
