@@ -165,6 +165,16 @@ namespace iMobileDevice.SyslogRelay
         /// </returns>
         public static bool operator == (SyslogRelayClientHandle value1, SyslogRelayClientHandle value2) 
         {
+            if (object.Equals(value1, null) && object.Equals(value2, null))
+            {
+                return true;
+            }
+        
+            if (object.Equals(value1, null) || object.Equals(value2, null))
+            {
+                return false;
+            }
+        
             return value1.handle == value2.handle;
         }
         
@@ -182,6 +192,16 @@ namespace iMobileDevice.SyslogRelay
         /// </returns>
         public static bool operator != (SyslogRelayClientHandle value1, SyslogRelayClientHandle value2) 
         {
+            if (object.Equals(value1, null) && object.Equals(value2, null))
+            {
+                return false;
+            }
+        
+            if (object.Equals(value1, null) || object.Equals(value2, null))
+            {
+                return true;
+            }
+        
             return value1.handle != value2.handle;
         }
     }
