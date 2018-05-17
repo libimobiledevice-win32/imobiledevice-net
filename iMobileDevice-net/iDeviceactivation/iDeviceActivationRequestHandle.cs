@@ -166,12 +166,12 @@ namespace iMobileDevice.iDeviceActivation
         /// </returns>
         public static bool operator == (iDeviceActivationRequestHandle value1, iDeviceActivationRequestHandle value2) 
         {
-            if (value1 == null && value2 == null)
+            if (object.Equals(value1, null) && object.Equals(value2, null))
             {
-                return false;
+                return true;
             }
         
-            if (value1 == null || value2 == null)
+            if (object.Equals(value1, null) || object.Equals(value2, null))
             {
                 return false;
             }
@@ -193,14 +193,14 @@ namespace iMobileDevice.iDeviceActivation
         /// </returns>
         public static bool operator != (iDeviceActivationRequestHandle value1, iDeviceActivationRequestHandle value2) 
         {
-            if (value1 == null && value2 == null)
+            if (object.Equals(value1, null) && object.Equals(value2, null))
             {
                 return false;
             }
         
-            if (value1 == null || value2 == null)
+            if (object.Equals(value1, null) || object.Equals(value2, null))
             {
-                return false;
+                return true;
             }
         
             return value1.handle != value2.handle;
