@@ -324,6 +324,16 @@ Gets a value which represents a pointer or handle that has been initialized to z
 /// </returns>
 public static bool operator == ({safeHandle.Name} value1, {safeHandle.Name} value2) 
 {{
+    if (value1 == null && value2 == null)
+    {{
+        return true;
+    }}
+
+    if (value1 == null || value2 == null)
+    {{
+        return false;
+    }}
+
     return value1.handle == value2.handle;
 }}"));
 
@@ -341,6 +351,16 @@ public static bool operator == ({safeHandle.Name} value1, {safeHandle.Name} valu
 /// </returns>
 public static bool operator != ({safeHandle.Name} value1, {safeHandle.Name} value2) 
 {{
+    if (value1 == null && value2 == null)
+    {{
+        return false;
+    }}
+
+    if (value1 == null || value2 == null)
+    {{
+        return true;
+    }}
+
     return value1.handle != value2.handle;
 }}"));
 
