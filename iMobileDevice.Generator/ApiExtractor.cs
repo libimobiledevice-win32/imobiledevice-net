@@ -86,7 +86,7 @@ namespace iMobileDevice.Generator
             constructor.Comments.Add(new CodeCommentStatement("</summary>", true));
             constructor.Comments.Add(new CodeCommentStatement("<param name=\"parent\">", true));
             constructor.Comments.Add(new CodeCommentStatement($"The <see cref=\"ILibiMobileDeviceApi\"/> which owns this <see cref=\"{this.generator.Name}\"/>.", true));
-            constructor.Comments.Add(new CodeCommentStatement("</summary>", true));
+            constructor.Comments.Add(new CodeCommentStatement("</param>", true));
             constructor.Attributes = MemberAttributes.Public;
             constructor.Parameters.Add(
                 new CodeParameterDeclarationExpression(
@@ -138,7 +138,21 @@ namespace iMobileDevice.Generator
                     nativeInvocation.Parameters.Add(new CodeDirectionExpression(parameter.Direction, argumentRef));
                 }
 
-                if (method.ReturnType == null || method.ReturnType.BaseType == "System.Void")
+                if ((method.ReturnType == null || method.ReturnType.BaseType == "System.Void")
+                    && method.Name.StartsWith("plist")
+                    && (method.Name.EndsWith("set_item") || method.Name.EndsWith("insert_item"))
+                    && method.Parameters.OfType<CodeParameterDeclarationExpression>().Any(a => a.Name == "item"))
+                {
+                    // The plist API has set_item and insert_item methods such as plist_dict_insert_item
+                    // When these methods are called, the parent dictionary takes ownership of the handles and releases them.
+                    // The safe handles no longer need to free the memory (either it has been freed by the dict and the memory
+                    // is invalid, or it is still in use by the dict and we can't free it yet); so call .SetHandleAsInvalid on those handles
+                    classMethod.Statements.Add(nativeInvocation);
+
+                    // Add item.SetHandleAsInvalid();
+                    classMethod.Statements.Add(new CodeMethodInvokeExpression(new CodeArgumentReferenceExpression("item"), "SetHandleAsInvalid"));
+                }
+                else if (method.ReturnType == null || method.ReturnType.BaseType == "System.Void")
                 {
                     classMethod.Statements.Add(nativeInvocation);
                 }
@@ -187,7 +201,7 @@ namespace iMobileDevice.Generator
                         }
 
                         // The same also applies to the return value - if it is a safe handle, update the. Api property
-                        if(method.ReturnType.BaseType.EndsWith("Handle"))
+                        if (method.ReturnType.BaseType.EndsWith("Handle"))
                         {
                             classMethod.Statements.Add(
                                 new CodeAssignStatement(

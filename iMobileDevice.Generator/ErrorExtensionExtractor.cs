@@ -68,7 +68,7 @@ namespace iMobileDevice.Generator
             errorConstructor.Attributes = MemberAttributes.Public;
             errorConstructor.Comments.Add(
                 new CodeCommentStatement(
-                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error code.\r\n <summary>",
+                    $"<summary>\r\n Initializes a new instance of the <see cref=\"{exceptionType.Name}\"/> class with a specified error code.\r\n </summary>",
                     true));
             errorConstructor.Comments.Add(
                 new CodeCommentStatement(
