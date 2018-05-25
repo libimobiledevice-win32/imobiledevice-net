@@ -62,11 +62,11 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-x64/bin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-x64/sbin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
@@ -76,11 +76,11 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/bin/*">
-      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/sbin/*">
-      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     

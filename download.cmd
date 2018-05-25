@@ -25,6 +25,6 @@ REM extract files from the tar files
 7z x -aos ext\libimobiledevice-osx-x64-1.2.1-%LIBIMOBILEDEVICE_VERSION%.tar -oext\osx-x64
 7z x -aos ext\libideviceactivation-osx-x64-1.0.0-%LIBIDEVICEACTIVATION_VERSION%.tar -oext\osx-x64
 
-7z x -aos ext\usbmuxd-linux-x64-1.1.0-%USBMUXD_VERSION%.tar -oext\osx-x64
+7z x -aos ext\usbmuxd-linux-x64-1.1.0-%USBMUXD_VERSION%.tar -oext\linux-x64
 7z x -aos ext\libimobiledevice-linux-x64-1.2.1-%LIBIMOBILEDEVICE_VERSION%.tar -oext\linux-x64
 7z x -aos ext\libideviceactivation-linux-x64-1.0.0-%LIBIDEVICEACTIVATION_VERSION%.tar -oext\linux-x64
