@@ -33,23 +33,23 @@
   </ItemGroup>
   
   <ItemGroup>
-    <!-- win7-x64 files which come from VcPkg packages-->
+    <!-- win-x64 files which come from VcPkg packages-->
     <Content Include="$(VCPKG_ROOT)/installed/x64-windows/bin/*.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/*.exe">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <!-- win7-x86 files which come from NuGet packages-->
+    <!-- win-x86 files which come from NuGet packages-->
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.dll">
-      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/*.exe">
-      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     
@@ -85,12 +85,12 @@
     </Content>
     
     <!-- Pack the files are included in the current project dir-->
-    <Content Include="runtimes/win7-x64/native/*.*">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="runtimes/win-x64/native/*.*">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="runtimes/win7-x86/native/*.*">
-      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+    <Content Include="runtimes/win-x86/native/*.*">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="runtimes/osx-x64/native/*.*">
