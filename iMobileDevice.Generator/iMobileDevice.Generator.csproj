@@ -18,4 +18,13 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="HandleDelegateMarshaler.cs.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Handle.cs.template">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

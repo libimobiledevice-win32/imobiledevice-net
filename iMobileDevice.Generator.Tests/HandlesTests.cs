@@ -14,11 +14,12 @@ namespace iMobileDevice.Generator.Tests
         {
             var moduleGenerator = new ModuleGenerator();
             moduleGenerator.InputFile = "test.h";
-            var handle = Handles.CreateSafeHandle("TestHandle", moduleGenerator).First();
+            var handles = Handles.CreateSafeHandle("TestHandle", moduleGenerator).ToArray();
+            Assert.Equal(2, handles.Length);
 
             using (Stream stream = new MemoryStream())
             {
-                moduleGenerator.WriteType(stream, handle, string.Empty);
+                moduleGenerator.WriteType(stream, handles[0], string.Empty);
 
                 stream.Position = 0;
 
@@ -26,6 +27,21 @@ namespace iMobileDevice.Generator.Tests
                 {
                     var actual = reader.ReadToEnd();
                     var expected = File.ReadAllText("TestHandle.cs.txt");
+
+                    Assert.Equal(expected, actual);
+                }
+            }
+
+            using (Stream stream = new MemoryStream())
+            {
+                moduleGenerator.WriteType(stream, handles[1], string.Empty);
+
+                stream.Position = 0;
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    var actual = reader.ReadToEnd();
+                    var expected = File.ReadAllText("TestHandleDelegateMarshaler.cs.txt");
 
                     Assert.Equal(expected, actual);
                 }

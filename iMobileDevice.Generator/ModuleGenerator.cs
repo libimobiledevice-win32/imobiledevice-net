@@ -6,23 +6,20 @@ namespace iMobileDevice.Generator
 {
     using System;
     using System.CodeDom;
-    using System.CodeDom.Compiler;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-    using System.Diagnostics;
 #if !NETSTANDARD1_5
     using System.Security.Permissions;
     using System.Runtime.ConstrainedExecution;
 #endif
     using CodeDom;
-    using System.Runtime.Serialization;
-    using System.Runtime.ExceptionServices;
     using Core.Clang;
     using Core.Clang.Diagnostics;
     using System.Text;
     using global::Nustache.Core;
+    using iMobileDevice.Generator.Nustache;
 
     public class ModuleGenerator
     {
@@ -200,75 +197,14 @@ namespace iMobileDevice.Generator
                     continue;
                 }
 
+                var type = (HandleType)((NustacheGeneratedType)handle).Type;
+                type.ReleaseMethodName = freeMethod.Name;
+                type.ReleaseMethodReturnsValue = freeMethod.ReturnType.BaseType != "System.Void";
+
                 // Directly pass the IntPtr, becuase the handle itself will already be in the 'closed' state
                 // when this method is called.
                 freeMethod.Parameters[0].Type = new CodeTypeReference(typeof(IntPtr));
                 freeMethod.Parameters[0].Direction = FieldDirection.In;
-
-                var releaseMethod = ((CodeDomGeneratedType)handle).Declaration.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
-
-                // Sample statement:
-                //   System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-                //   this.Api.Plist.plist_free(this.handle);
-                //   return true;
-                releaseMethod.Statements.Clear();
-
-                // Trace the release call:
-                // Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
-                releaseMethod.Statements.Add(
-                    new CodeMethodInvokeExpression(
-                        new CodeMethodReferenceExpression(
-                            new CodeTypeReferenceExpression(typeof(Debug)),
-                            "WriteLine"),
-                        new CodePrimitiveExpression("Releasing {0} {1} using {2}. This object was created at {3}"),
-                        new CodePropertyReferenceExpression(
-                            new CodeMethodInvokeExpression(
-                                new CodeThisReferenceExpression(),
-                                nameof(GetType)),
-                                "Name"),
-                        new CodeFieldReferenceExpression(
-                            new CodeThisReferenceExpression(),
-                            "handle"),
-                        new CodePropertyReferenceExpression(
-                            new CodeThisReferenceExpression(),
-                            "Api"),
-                        new CodeFieldReferenceExpression(
-                            new CodeThisReferenceExpression(),
-                            "creationStackTrace")));
-
-                var freeMethodInvokeExpression =
-                    new CodeMethodInvokeExpression(
-                                    new CodeMethodReferenceExpression(
-                                    new CodePropertyReferenceExpression(
-                                        new CodePropertyReferenceExpression(
-                                            new CodeThisReferenceExpression(),
-                                            "Api"),
-                                            this.Name),
-                                    freeMethod.Name),
-                                    new CodeFieldReferenceExpression(
-                                        new CodeThisReferenceExpression(),
-                                        "handle"));
-
-                if (freeMethod.ReturnType.BaseType != "System.Void")
-                {
-                    // If the free method returns a value, it's an error code, and we can make sure the value indicates
-                    // success.
-                    releaseMethod.Statements.Add(
-                        new CodeMethodReturnStatement(
-                            new CodeBinaryOperatorExpression(
-                                freeMethodInvokeExpression,
-                                CodeBinaryOperatorType.IdentityEquality,
-                                new CodePropertyReferenceExpression(
-                                    new CodeTypeReferenceExpression($"{this.Name}Error"),
-                                    "Success"))));
-                }
-                else
-                {
-                    // If it does not, we always return true (which is a pitty, but this is how plist is implemented for now)
-                    // - on the other hand, in how many ways can free() really fail? :-)
-                    releaseMethod.Statements.Add(freeMethodInvokeExpression);
-                    releaseMethod.Statements.Add(new CodeMethodReturnStatement(new CodePrimitiveExpression(true)));
-                }
             }
 
             // Extract the API interface and class, as well as the Exception class. Used for DI.
@@ -339,7 +275,7 @@ namespace iMobileDevice.Generator
             }
 
             using (var reader = new StreamReader(generatedType.Template))
-            using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, bufferSize: 4096, leaveOpen: true))
+            using (StreamWriter writer = new StreamWriter(stream, Encoding.Default, bufferSize: 4096, leaveOpen: true))
             {
                 Render.Template(reader, generatedType.Type, writer);
             }
@@ -429,7 +365,7 @@ namespace iMobileDevice.Generator
                 content = content.Replace("public class", "public static class");
             }
 
-            using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, bufferSize: 4096, leaveOpen: true))
+            using (StreamWriter writer = new StreamWriter(stream, Encoding.Default, bufferSize: 4096, leaveOpen: true))
             {
                 writer.Write(content);
             }
