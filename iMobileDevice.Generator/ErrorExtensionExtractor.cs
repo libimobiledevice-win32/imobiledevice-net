@@ -234,7 +234,7 @@ namespace iMobileDevice.Generator
             exceptionType.Members.Add(serializedConstructor);
             serializedConstructor.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, "!core"));
 
-            this.generator.AddType(exceptionType.Name, exceptionType);
+            this.generator.AddType(exceptionType.Name, new CodeDomGeneratedType(exceptionType));
 
             CodeTypeDeclaration extensionsType = new CodeTypeDeclaration();
             extensionsType.Name = $"{errorEnum.Name}Extensions";
@@ -315,7 +315,7 @@ namespace iMobileDevice.Generator
 
             extensionsType.Members.Add(isErrorMethod);
 
-            this.generator.AddType(extensionsType.Name, extensionsType);
+            this.generator.AddType(extensionsType.Name, new CodeDomGeneratedType(extensionsType));
         }
     }
 }

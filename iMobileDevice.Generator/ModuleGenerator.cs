@@ -22,6 +22,7 @@ namespace iMobileDevice.Generator
     using Core.Clang;
     using Core.Clang.Diagnostics;
     using System.Text;
+    using global::Nustache.Core;
 
     public class ModuleGenerator
     {
@@ -42,8 +43,8 @@ namespace iMobileDevice.Generator
         public Collection<string> IncludeDirectories
         { get; } = new Collection<string>();
 
-        public Collection<CodeTypeDeclaration> Types
-        { get; } = new Collection<CodeTypeDeclaration>();
+        public Collection<IGeneratedType> Types
+        { get; } = new Collection<IGeneratedType>();
 
         public Dictionary<string, string> NameMapping
         { get; } = new Dictionary<string, string>();
@@ -51,7 +52,7 @@ namespace iMobileDevice.Generator
         public CodeTypeDeclaration StringArrayMarshalerType
         { get; set; }
 
-        public void AddType(string nativeName, CodeTypeDeclaration type)
+        public void AddType(string nativeName, IGeneratedType type)
         {
             if (string.IsNullOrEmpty(nativeName))
             {
@@ -204,7 +205,7 @@ namespace iMobileDevice.Generator
                 freeMethod.Parameters[0].Type = new CodeTypeReference(typeof(IntPtr));
                 freeMethod.Parameters[0].Direction = FieldDirection.In;
 
-                var releaseMethod = handle.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
+                var releaseMethod = ((CodeDomGeneratedType)handle).Declaration.Members.OfType<CodeMemberMethod>().Single(m => m.Name == "ReleaseHandle");
 
                 // Sample statement:
                 //   System.Diagnostics.Debug.WriteLine("Releasing {0} {1}", this.GetType().Name, this.handle);
@@ -300,23 +301,55 @@ namespace iMobileDevice.Generator
                     continue;
                 }
 
-                string suffix = string.Empty;
-                if (declaration.UserData.Contains("FileNameSuffix"))
-                {
-                    suffix = (string)declaration.UserData["FileNameSuffix"];
-                }
-
-                string path = Path.Combine(moduleDirectory, $"{declaration.Name}{suffix}.cs");
+                string path = Path.Combine(moduleDirectory, $"{declaration.Name}{declaration.FileNameSuffix}.cs");
 
                 using (var outFile = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
-                    WriteType(outFile, declaration, suffix);
+                    if (declaration is CodeDomGeneratedType)
+                    {
+                        WriteType(outFile, (CodeDomGeneratedType)declaration, declaration.FileNameSuffix);
+                    }
+                    else if (declaration is NustacheGeneratedType)
+                    {
+                        WriteType(outFile, (NustacheGeneratedType)declaration, declaration.FileNameSuffix);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException();
+                    }
                 }
             }
         }
 
-        public void WriteType(Stream stream, CodeTypeDeclaration declaration, string suffix)
+        public void WriteType(Stream stream, NustacheGeneratedType generatedType, string suffix)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (generatedType == null)
+            {
+                throw new ArgumentNullException(nameof(generatedType));
+            }
+
+            if (generatedType.Type == null)
+            {
+                throw new ArgumentOutOfRangeException(nameof(generatedType));
+            }
+
+            using (var reader = new StreamReader(generatedType.Template))
+            using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, bufferSize: 4096, leaveOpen: true))
+            {
+                Render.Template(reader, generatedType.Type, writer);
+            }
+
+        }
+
+        public void WriteType(Stream stream, CodeDomGeneratedType generatedType, string suffix)
+        {
+            var declaration = generatedType.Declaration;
+
             // Generate the container unit
             CodeCompileUnit program = new CodeCompileUnit();
 

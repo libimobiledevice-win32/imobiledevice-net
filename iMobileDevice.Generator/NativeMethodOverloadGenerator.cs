@@ -9,19 +9,19 @@
     {
         public static void Generate(ModuleGenerator generator)
         {
-            var nativeMethods = generator.Types.Single(t => t.Name.EndsWith("NativeMethods"));
+            var nativeMethods = (CodeDomGeneratedType)generator.Types.Single(t => t.Name.EndsWith("NativeMethods"));
 
             CodeTypeDeclaration overloads = new CodeTypeDeclaration();
-            generator.Types.Add(overloads);
+            generator.Types.Add(new CodeDomGeneratedType(overloads));
             overloads.UserData.Add("FileNameSuffix", ".Extensions");
             overloads.Name = nativeMethods.Name;
             overloads.IsPartial = true;
             overloads.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-            nativeMethods.IsPartial = true;
+            nativeMethods.Declaration.IsPartial = true;
 
             overloads.Name = nativeMethods.Name;
 
-            foreach (var method in nativeMethods.Members.OfType<CodeMemberMethod>())
+            foreach (var method in nativeMethods.Declaration.Members.OfType<CodeMemberMethod>())
             {
                 bool needsPatching = method
                     .Parameters

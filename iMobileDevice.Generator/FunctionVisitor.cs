@@ -51,7 +51,7 @@ namespace iMobileDevice.Generator
                         InitExpression = new CodePrimitiveExpression(this.libraryName)
                     });
 
-                this.generator.Types.Add(this.nativeMethods);
+                this.generator.Types.Add(new CodeDomGeneratedType(this.nativeMethods));
             }
 
             CursorKind curKind = cursor.Kind;

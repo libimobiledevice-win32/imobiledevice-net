@@ -121,7 +121,7 @@ namespace iMobileDevice.Generator
             cleanUpNativeDataMethod.Statements.Add(ifStatement);
             marshaler.Members.Add(cleanUpNativeDataMethod);
 
-            this.generator.AddType(marshaler.Name, marshaler);
+            this.generator.AddType(marshaler.Name, new CodeDomGeneratedType(marshaler));
             this.generator.StringArrayMarshalerType = marshaler;
         }
     }
