@@ -30,8 +30,8 @@ install:
 #- pip install --user azure-cli
 
 script:
-- dotnet build -c Release -f netstandard1.5 iMobileDevice-net/iMobileDevice-net.csproj
-#- dotnet pack -c Release iMobileDevice-net/iMobileDevice-net.csproj --version-suffix r$TRAVIS_BUILD_NUMBER
+- dotnet build -c Release iMobileDevice-net/iMobileDevice-net.csproj
+- dotnet pack -c Release iMobileDevice-net/iMobileDevice-net.csproj
 
 after_success:
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then az=$HOME/Library/Python/2.7/bin/az; fi
