@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice-net", "iMobil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice-net.Demo", "iMobileDevice-net.Demo\iMobileDevice-net.Demo.csproj", "{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iMobileDevice.Generator.Tests", "iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj", "{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,18 @@ Global
 		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x64.Build.0 = Release|Any CPU
 		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A6A6266-84EF-4E70-812C-1D13BDFB1BF2}.Release|x86.Build.0 = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|x64.Build.0 = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F0FD31E-6BDC-4DB6-A94F-2B08E40BACDD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

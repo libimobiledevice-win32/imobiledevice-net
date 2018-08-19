@@ -14,7 +14,7 @@ namespace iMobileDevice.Generator
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Diagnostics;
-    internal static class Handles
+    public static class Handles
     {
 #if !NETSTANDARD1_5
         public static CodeAttributeDeclaration SecurityPermissionDeclaration(SecurityAction action, bool unmanagedCode)

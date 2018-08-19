@@ -12,6 +12,7 @@
     <PackageReference Include="Core.Clang" Version="5.1.5-beta" />
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
     <PackageReference Include="Native.LibClang" Version="5.0.0" />
+    <PackageReference Include="Nustache" Version="1.16.0.8" />
   </ItemGroup>
 
   <ItemGroup>
