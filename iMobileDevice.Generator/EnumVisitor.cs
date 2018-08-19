@@ -88,7 +88,7 @@ namespace iMobileDevice.Generator
                     });
                 visitor.VisitChildren(cursor);
 
-                this.generator.AddType(nativeName, enumDeclaration);
+                this.generator.AddType(nativeName, new CodeDomGeneratedType(enumDeclaration));
             }
 
             return ChildVisitResult.Recurse;

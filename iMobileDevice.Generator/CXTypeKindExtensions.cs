@@ -21,7 +21,7 @@ namespace iMobileDevice.Generator
                 // Generate the delegate and add it to the list of members
                 nativeName = cursor.GetSpelling();
                 var delegateType = type.ToDelegate(nativeName, cursor, generator);
-                generator.AddType(nativeName, delegateType);
+                generator.AddType(nativeName, new CodeDomGeneratedType(delegateType));
             }
 
             if (nativeName.StartsWith("const "))

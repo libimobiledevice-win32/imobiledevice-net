@@ -223,8 +223,8 @@ namespace iMobileDevice.Generator
                 nativeClass.Members.Add(classMethod);
             }
 
-            this.generator.AddType(nativeInterface.Name, nativeInterface);
-            this.generator.AddType(nativeClass.Name, nativeClass);
+            this.generator.AddType(nativeInterface.Name, new CodeDomGeneratedType(nativeInterface));
+            this.generator.AddType(nativeClass.Name, new CodeDomGeneratedType(nativeClass));
         }
     }
 }

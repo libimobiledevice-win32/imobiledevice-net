@@ -53,7 +53,7 @@ namespace iMobileDevice.Generator
                     this.current = new CodeTypeDeclaration(clrName);
                     this.current.IsStruct = true;
                     this.current.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                    this.generator.AddType(nativeName, this.current);
+                    this.generator.AddType(nativeName, new CodeDomGeneratedType(this.current));
 
                     var layoutAttribute =
                         new CodeAttributeDeclaration(

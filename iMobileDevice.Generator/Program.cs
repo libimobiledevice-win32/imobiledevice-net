@@ -7,30 +7,18 @@ namespace iMobileDevice.Generator
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.IO;
     using System.Globalization;
-    using System.Runtime.InteropServices;
-    using System.Reflection;
+    using System.IO;
     using System.IO.Compression;
-    using System.Xml.Linq;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
 
     internal class Program
     {
         public static void Main(string[] args)
         {
-            string sourceDirectory = null;
             string targetDirectory = null;
-
-            if (args.Length >= 1)
-            {
-                sourceDirectory = args[0];
-            }
-            else
-            {
-                // Default value so that you can just F5 from within Visual Studio
-                sourceDirectory = @"..\..\..\..\";
-            }
 
             if (args.Length >= 2)
             {
@@ -44,11 +32,8 @@ namespace iMobileDevice.Generator
             RestoreClang();
 
             var packagesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".nuget", "packages");
-
-            sourceDirectory = Path.GetFullPath(sourceDirectory);
             targetDirectory = Path.GetFullPath(targetDirectory);
-
-            Console.WriteLine($"Reading libimobiledevice headers from: {sourceDirectory}");
+            
             Console.WriteLine($"Writing the C# files to: {targetDirectory}");
 
             var vcpkgPath = Environment.GetEnvironmentVariable("VCPKG_ROOT");

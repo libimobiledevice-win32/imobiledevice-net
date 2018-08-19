@@ -29,7 +29,9 @@ cache:
   - C:\tools\vcpkg-libimobiledevice
 
 build_script:
-  - dotnet run --no-restore --project iMobileDevice.Generator\iMobileDevice.Generator.csproj . .\iMobileDevice-net
+  - cd iMobileDevice.Generator
+  - dotnet run --no-restore iMobileDevice.Generator.csproj . ..\iMobileDevice-net
+  - cd ..
   - dotnet build imobiledevice-net\iMobileDevice-net.csproj
   - dotnet pack imobiledevice-net\iMobileDevice-net.csproj --version-suffix r%APPVEYOR_BUILD_NUMBER% -c Release
   - dotnet build runtime.win7-x64.vcruntime140\runtime.win7-x64.vcruntime140.csproj

@@ -67,7 +67,7 @@ namespace iMobileDevice.Generator
                         var functionType = cursor.GetTypedefDeclUnderlyingType();
                         var pt = functionType.GetPointeeType();
                         CodeTypeDelegate delegateType = pt.ToDelegate(nativeName, cursor, this.generator);
-                        this.generator.AddType(nativeName, delegateType);
+                        this.generator.AddType(nativeName, new CodeDomGeneratedType(delegateType));
 
                         return ChildVisitResult.Continue;
                     }
