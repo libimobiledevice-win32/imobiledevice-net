@@ -15,8 +15,9 @@
     <PackageTags>libimobiledevice;ios;iphone;ipad;imobiledevice;netcore</PackageTags>
     <PackageLicenseUrl>https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
     <PackageProjectUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</PackageProjectUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
@@ -30,6 +31,11 @@
     <PackageReference Include="System.Diagnostics.StackTrace" Version="4.3.0" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
     <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NerdBank.GitVersion" Version="2.1.65" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
   
   <ItemGroup>
