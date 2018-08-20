@@ -38,7 +38,7 @@ build_script:
   - dotnet pack runtime.win7-x86.vcruntime140\runtime.win7-x86.vcruntime140.csproj -c Release
 
   # Create a zip archive for libimobiledevice-win32
-  - 7z x imobiledevice-net\bin\Release\imobiledevice-net.1.2.1-r%APPVEYOR_BUILD_NUMBER%.nupkg -ozip\
+  - 7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip .\zip\runtimes\win-x86\native\*
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip .\zip\runtimes\win-x64\native\*
 
