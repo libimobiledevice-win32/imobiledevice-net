@@ -6,7 +6,7 @@ git:
 
 language: csharp
 mono: none
-dotnet: 2.1.4
+dotnet: 2.1.400
 
 install:
 - mkdir ext
