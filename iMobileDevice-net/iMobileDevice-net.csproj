@@ -5,31 +5,24 @@
     <AssemblyTitle>.NET client for iOS devices (libimobiledevice-net)</AssemblyTitle>
     <VersionPrefix>1.2.1</VersionPrefix>
     <Authors>Quamotion</Authors>
-    <TargetFrameworks>netstandard1.5;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net45</TargetFrameworks>
+    <TargetFramework Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>iMobileDevice-net</AssemblyName>
     <AssemblyOriginatorKeyFile>iMobileDevice.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageId>iMobileDevice-net</PackageId>
     <PackageTags>libimobiledevice;ios;iphone;ipad;imobiledevice;netcore</PackageTags>
     <PackageLicenseUrl>https://raw.githubusercontent.com/libimobiledevice-win32/imobiledevice-net/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</RepositoryUrl>
     <PackageProjectUrl>http://github.com/libimobiledevice-win32/imobiledevice-net</PackageProjectUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
-    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.StackTrace" Version="4.3.0" />
-    <PackageReference Include="System.Threading" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Win32.Primitives" Version="4.3.0" />
+  <ItemGroup>
+    <PackageReference Include="NerdBank.GitVersioning" Version="2.1.65" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
   
   <ItemGroup>
@@ -38,7 +31,19 @@
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/*.exe">
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libideviceactivation/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libimobiledevice/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libplist/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libusbmuxd/*.exe">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -48,7 +53,19 @@
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/*.exe">
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libideviceactivation/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libimobiledevice/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libplist/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libusbmuxd/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
