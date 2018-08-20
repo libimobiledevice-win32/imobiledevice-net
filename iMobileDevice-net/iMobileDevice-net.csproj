@@ -31,7 +31,19 @@
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/*.exe">
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libideviceactivation/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libimobiledevice/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libplist/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libusbmuxd/*.exe">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -41,7 +53,19 @@
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/*.exe">
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libideviceactivation/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libimobiledevice/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libplist/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libusbmuxd/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
