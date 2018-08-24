@@ -46,8 +46,17 @@ build_script:
 
 artifacts:
   - path: imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg
+    name: imobiledevice-net
   - path: runtime.win7-x64.vcruntime140\bin\Release\runtime.win7-x64.vcruntime140.14.*.nupkg
-  - path: runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.*.nupkg
   - path: runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.*.nupkg
   - path: libimobiledevice.*-win-x64.zip
   - path: libimobiledevice.*-win-x86.zip
+
+deploy:
+  provider: NuGet
+  on:
+    branch: master
+  api_key:
+    secure: Ato5KuMaGhWf+Fj6q7FYLbJhnzFBZcBu71GWLtq8d4X4Yrd2iXp+wpf6WXEv5myb
+  skip_symbols: true
+  artifact: imobiledevice-net
