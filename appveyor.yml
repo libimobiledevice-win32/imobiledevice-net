@@ -59,4 +59,4 @@ deploy:
   api_key:
     secure: Ato5KuMaGhWf+Fj6q7FYLbJhnzFBZcBu71GWLtq8d4X4Yrd2iXp+wpf6WXEv5myb
   skip_symbols: true
-  artifact: /.*imobiledevice-net*\.nupkg/
+  artifact: imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg
