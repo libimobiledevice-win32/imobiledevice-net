@@ -11,12 +11,16 @@ before_build:
   - git version
   - ps: if( -not (Test-Path $env:VCPKG_ROOT -PathType Container)) { git clone -q --depth 1 -b ports/libimobiledevice https://github.com/libimobiledevice-win32/vcpkg $env:VCPKG_ROOT; Write-Host "Cloned repo to $env:VCPKG_ROOT" } else { Write-Host "$env:VCPKG_ROOT exists, not cloning repository." }
   - cmd: git --git-dir %VCPKG_ROOT%\.git --work-tree %VCPKG_ROOT% fetch origin
-  - cmd: git --git-dir %VCPKG_ROOT%\.git --work-tree %VCPKG_ROOT% pull origin
+  - cmd: git --git-dir %VCPKG_ROOT%\.git --work-tree %VCPKG_ROOT% reset --hard origin/ports/libimobiledevice
   - cmd: "%VCPKG_ROOT%\\bootstrap-vcpkg.bat"
   - cmd: "%VCPKG_ROOT%\\vcpkg version"
   - cmd: "%VCPKG_ROOT%\\vcpkg integrate install"
-  - cmd: "%VCPKG_ROOT%\\vcpkg install libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
-  - cmd: "%VCPKG_ROOT%\\vcpkg install libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
+
+# Make sure we always compile 'our' packages from scratch
+  - cmd: "%VCPKG_ROOT%\\vcpkg remove libplist:x86-windows libusbmuxd:x86-windows libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
+  - cmd: "%VCPKG_ROOT%\\vcpkg remove libplist:x64-windows libusbmuxd:x64-windows libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
+  - cmd: "%VCPKG_ROOT%\\vcpkg install --head libplist:x86-windows libusbmuxd:x86-windows libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
+  - cmd: "%VCPKG_ROOT%\\vcpkg install --head libplist:x64-windows libusbmuxd:x64-windows libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
   - cmd: "%VCPKG_ROOT%\\vcpkg update"
 
   - dotnet restore
