@@ -10,54 +10,48 @@
 // <copyright file="NotificationProxyClientHandle.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+
+using System;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
 
 namespace iMobileDevice.NotificationProxy
 {
-    using System.Runtime.InteropServices;
-    using System.Diagnostics;
-    using iMobileDevice.iDevice;
-    using iMobileDevice.Lockdown;
-    using iMobileDevice.Afc;
-    using iMobileDevice.Plist;
-    
-    
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
-#endif
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, UnmanagedCode=true)]
-#endif
-    public partial class NotificationProxyClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
+    /// <summary>
+    /// Represents a wrapper class for NotificationProxy handles.
+    /// </summary>
+    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode=true)]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+    public partial class NotificationProxyClientHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        
         private string creationStackTrace;
-        
+
         private ILibiMobileDevice api;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationProxyClientHandle"/> class.
         /// </summary>
-        protected NotificationProxyClientHandle() : 
+        protected NotificationProxyClientHandle() :
                 base(true)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationProxyClientHandle"/> class, specifying whether the handle is to be reliably released.
         /// </summary>
         /// <param name="ownsHandle">
         /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
         /// </param>
-        protected NotificationProxyClientHandle(bool ownsHandle) : 
+        protected NotificationProxyClientHandle(bool ownsHandle) :
                 base(ownsHandle)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Gets or sets the API to use
         /// </summary>
@@ -72,7 +66,7 @@ namespace iMobileDevice.NotificationProxy
                 this.api = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a value which represents a pointer or handle that has been initialized to zero.
         /// </summary>
@@ -83,14 +77,13 @@ namespace iMobileDevice.NotificationProxy
                 return NotificationProxyClientHandle.DangerousCreate(System.IntPtr.Zero);
             }
         }
-        
+
         /// <inheritdoc/>
-#if !NETSTANDARD1_5
-        [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
-#endif
+        [ReliabilityContractAttribute(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
+            Debug.WriteLine($"Releasing {this.GetType().Name} {this.handle} using {this.Api}. This object was created at {this.creationStackTrace}");
+            Debug.Assert(this.Api != null, $"An instance of {this.GetType().Name} is being released but is not tied to an instance of the API.");
             return (this.Api.NotificationProxy.np_client_free(this.handle) == NotificationProxyError.Success);
         }
         
@@ -107,8 +100,7 @@ namespace iMobileDevice.NotificationProxy
         /// </returns>
         public static NotificationProxyClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
-            NotificationProxyClientHandle safeHandle;
-            safeHandle = new NotificationProxyClientHandle(ownsHandle);
+            NotificationProxyClientHandle safeHandle = new NotificationProxyClientHandle(ownsHandle);
             safeHandle.SetHandle(unsafeHandle);
             return safeHandle;
         }
@@ -135,7 +127,7 @@ namespace iMobileDevice.NotificationProxy
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (((obj != null) & (obj.GetType() == typeof(NotificationProxyClientHandle))))
+            if (obj != null && obj.GetType() == typeof(NotificationProxyClientHandle))
             {
                 return ((NotificationProxyClientHandle)obj).handle.Equals(this.handle);
             }

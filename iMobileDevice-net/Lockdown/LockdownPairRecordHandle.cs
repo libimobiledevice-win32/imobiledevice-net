@@ -10,54 +10,48 @@
 // <copyright file="LockdownPairRecordHandle.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+
+using System;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
 
 namespace iMobileDevice.Lockdown
 {
-    using System.Runtime.InteropServices;
-    using System.Diagnostics;
-    using iMobileDevice.iDevice;
-    using iMobileDevice.Lockdown;
-    using iMobileDevice.Afc;
-    using iMobileDevice.Plist;
-    
-    
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
-#endif
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, UnmanagedCode=true)]
-#endif
-    public partial class LockdownPairRecordHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
+    /// <summary>
+    /// Represents a wrapper class for Lockdown handles.
+    /// </summary>
+    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode=true)]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+    public partial class LockdownPairRecordHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        
         private string creationStackTrace;
-        
+
         private ILibiMobileDevice api;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LockdownPairRecordHandle"/> class.
         /// </summary>
-        protected LockdownPairRecordHandle() : 
+        protected LockdownPairRecordHandle() :
                 base(true)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LockdownPairRecordHandle"/> class, specifying whether the handle is to be reliably released.
         /// </summary>
         /// <param name="ownsHandle">
         /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
         /// </param>
-        protected LockdownPairRecordHandle(bool ownsHandle) : 
+        protected LockdownPairRecordHandle(bool ownsHandle) :
                 base(ownsHandle)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Gets or sets the API to use
         /// </summary>
@@ -72,7 +66,7 @@ namespace iMobileDevice.Lockdown
                 this.api = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a value which represents a pointer or handle that has been initialized to zero.
         /// </summary>
@@ -83,11 +77,9 @@ namespace iMobileDevice.Lockdown
                 return LockdownPairRecordHandle.DangerousCreate(System.IntPtr.Zero);
             }
         }
-        
+
         /// <inheritdoc/>
-#if !NETSTANDARD1_5
-        [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
-#endif
+        [ReliabilityContractAttribute(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
             return true;
@@ -106,8 +98,7 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         public static LockdownPairRecordHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
-            LockdownPairRecordHandle safeHandle;
-            safeHandle = new LockdownPairRecordHandle(ownsHandle);
+            LockdownPairRecordHandle safeHandle = new LockdownPairRecordHandle(ownsHandle);
             safeHandle.SetHandle(unsafeHandle);
             return safeHandle;
         }
@@ -134,7 +125,7 @@ namespace iMobileDevice.Lockdown
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (((obj != null) & (obj.GetType() == typeof(LockdownPairRecordHandle))))
+            if (obj != null && obj.GetType() == typeof(LockdownPairRecordHandle))
             {
                 return ((LockdownPairRecordHandle)obj).handle.Equals(this.handle);
             }

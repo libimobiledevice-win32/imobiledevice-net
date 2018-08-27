@@ -10,54 +10,48 @@
 // <copyright file="MobileImageMounterClientHandle.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+
+using System;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
 
 namespace iMobileDevice.MobileImageMounter
 {
-    using System.Runtime.InteropServices;
-    using System.Diagnostics;
-    using iMobileDevice.iDevice;
-    using iMobileDevice.Lockdown;
-    using iMobileDevice.Afc;
-    using iMobileDevice.Plist;
-    
-    
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
-#endif
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, UnmanagedCode=true)]
-#endif
-    public partial class MobileImageMounterClientHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
+    /// <summary>
+    /// Represents a wrapper class for MobileImageMounter handles.
+    /// </summary>
+    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode=true)]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+    public partial class MobileImageMounterClientHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        
         private string creationStackTrace;
-        
+
         private ILibiMobileDevice api;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MobileImageMounterClientHandle"/> class.
         /// </summary>
-        protected MobileImageMounterClientHandle() : 
+        protected MobileImageMounterClientHandle() :
                 base(true)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MobileImageMounterClientHandle"/> class, specifying whether the handle is to be reliably released.
         /// </summary>
         /// <param name="ownsHandle">
         /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
         /// </param>
-        protected MobileImageMounterClientHandle(bool ownsHandle) : 
+        protected MobileImageMounterClientHandle(bool ownsHandle) :
                 base(ownsHandle)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Gets or sets the API to use
         /// </summary>
@@ -72,7 +66,7 @@ namespace iMobileDevice.MobileImageMounter
                 this.api = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a value which represents a pointer or handle that has been initialized to zero.
         /// </summary>
@@ -83,14 +77,13 @@ namespace iMobileDevice.MobileImageMounter
                 return MobileImageMounterClientHandle.DangerousCreate(System.IntPtr.Zero);
             }
         }
-        
+
         /// <inheritdoc/>
-#if !NETSTANDARD1_5
-        [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
-#endif
+        [ReliabilityContractAttribute(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
-            System.Diagnostics.Debug.WriteLine("Releasing {0} {1} using {2}. This object was created at {3}", this.GetType().Name, this.handle, this.Api, this.creationStackTrace);
+            Debug.WriteLine($"Releasing {this.GetType().Name} {this.handle} using {this.Api}. This object was created at {this.creationStackTrace}");
+            Debug.Assert(this.Api != null, $"An instance of {this.GetType().Name} is being released but is not tied to an instance of the API.");
             return (this.Api.MobileImageMounter.mobile_image_mounter_free(this.handle) == MobileImageMounterError.Success);
         }
         
@@ -107,8 +100,7 @@ namespace iMobileDevice.MobileImageMounter
         /// </returns>
         public static MobileImageMounterClientHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
-            MobileImageMounterClientHandle safeHandle;
-            safeHandle = new MobileImageMounterClientHandle(ownsHandle);
+            MobileImageMounterClientHandle safeHandle = new MobileImageMounterClientHandle(ownsHandle);
             safeHandle.SetHandle(unsafeHandle);
             return safeHandle;
         }
@@ -135,7 +127,7 @@ namespace iMobileDevice.MobileImageMounter
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (((obj != null) & (obj.GetType() == typeof(MobileImageMounterClientHandle))))
+            if (obj != null && obj.GetType() == typeof(MobileImageMounterClientHandle))
             {
                 return ((MobileImageMounterClientHandle)obj).handle.Equals(this.handle);
             }
