@@ -31,12 +31,18 @@ namespace iMobileDevice.Generator
 
             RestoreClang();
 
-            var packagesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".nuget", "packages");
             targetDirectory = Path.GetFullPath(targetDirectory);
-            
+
             Console.WriteLine($"Writing the C# files to: {targetDirectory}");
 
             var vcpkgPath = Environment.GetEnvironmentVariable("VCPKG_ROOT");
+
+            if (vcpkgPath == null)
+            {
+                Console.Error.WriteLine("Please set the VCPKG_ROOT environment variable to the folder where you've installed VCPKG.");
+                return;
+            }
+
             vcpkgPath = Path.Combine(vcpkgPath, "installed", "x86-windows", "include");
             Console.WriteLine($"Reading include files from {vcpkgPath}");
 
@@ -50,10 +56,9 @@ namespace iMobileDevice.Generator
             Collection<string> names = new Collection<string>();
 
             var files = new List<string>();
-            files.Add(Path.Combine(packagesDirectory, Path.Combine(vcpkgPath, "usbmuxd.h")));
-            files.Add(Path.Combine(packagesDirectory, Path.Combine(vcpkgPath, "plist/plist.h")));
-            files.Add(Path.Combine(packagesDirectory, Path.Combine(vcpkgPath, "libideviceactivation.h")));
-
+            files.Add(Path.Combine(vcpkgPath, "usbmuxd.h"));
+            files.Add(Path.Combine(vcpkgPath, "plist/plist.h"));
+            files.Add(Path.Combine(vcpkgPath, "libideviceactivation.h"));
             var iMobileDeviceDirectory = Path.Combine(vcpkgPath, "libimobiledevice");
             files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
             files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
