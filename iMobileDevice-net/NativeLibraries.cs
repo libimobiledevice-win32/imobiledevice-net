@@ -11,6 +11,10 @@ namespace iMobileDevice
     /// </summary>
     public static class NativeLibraries
     {
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetDllDirectory(string lpPathName);
+
         /// <summary>
         /// Gets or sets a value indicating whether the native libraries have been found. This value is only relevant on the full .NET Framework;
         /// it is always set to <see langword="true"/> on .NET Core.
@@ -82,32 +86,27 @@ namespace iMobileDevice
             {
                 string[] windowsLibariesToLoad = new string[]
                 {
-                    "msvcr110",
-                    "vcruntime140",
-                    "zlib1",
-                    "libiconv",
-                    "getopt",
-                    "libeay32",
-                    "ssleay32",
                     "imobiledevice",
+                    "ideviceactivation",
                 };
 
-                string nativeLibrariesDirectory;
+                string nativeLibrariesDirectory = directory;
 
-                if (Environment.Is64BitProcess)
+                if (Environment.Is64BitProcess && Directory.Exists(Path.Combine(directory, "win7-x64")))
                 {
                     nativeLibrariesDirectory = Path.Combine(directory, "win7-x64");
                 }
-                else
+                else if (Directory.Exists(Path.Combine(directory, "win7-x86")))
                 {
                     nativeLibrariesDirectory = Path.Combine(directory, "win7-x86");
                 }
 
                 if (!Directory.Exists(nativeLibrariesDirectory))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(directory), $"The directory '{directory}' does not contain a subdirectory for the current architecture. The directory '{nativeLibrariesDirectory}' does not exist.");
+                    throw new ArgumentOutOfRangeException(nameof(directory), $"The directory '{nativeLibrariesDirectory}' does not exist.");
                 }
 
+                // Do a safety check first, and make sure the core files actually exist.
                 foreach (var libraryToLoad in windowsLibariesToLoad)
                 {
                     string path = Path.Combine(nativeLibrariesDirectory, string.Format("{0}.dll", libraryToLoad));
@@ -119,6 +118,14 @@ namespace iMobileDevice
                     {
                         throw new FileNotFoundException($"Could not load the library '{libraryToLoad}' at '{path}', because the file does not exist", path);
                     }
+                }
+
+                // Add the directory to the search path, and try to load the libraries one by one.
+                SetDllDirectory(nativeLibrariesDirectory);
+
+                foreach (var libraryToLoad in windowsLibariesToLoad)
+                {
+                    string path = Path.Combine(nativeLibrariesDirectory, string.Format("{0}.dll", libraryToLoad));
 
                     IntPtr result = NativeMethods.LoadLibrary(path);
                     if (result == IntPtr.Zero)
