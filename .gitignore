@@ -3,6 +3,7 @@ obj
 ext
 *.suo
 *.user
+libclang.dll
 .vs
 packages
 *.opendb

@@ -48,6 +48,13 @@ build_script:
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip .\zip\runtimes\win-x86\native\*
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip .\zip\runtimes\win-x64\native\*
 
+  # This should help the tests locate libimobiledevice and friends
+  - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\zip\runtimes\win-x64\native
+  - echo %PATH%
+  - dir %APPVEYOR_BUILD_FOLDER%\zip\runtimes\win-x64\native
+  - dotnet test iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj
+  - dotnet test iMobileDevice.Tests\iMobileDevice.Tests.csproj
+
 artifacts:
   - path: imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg
     name: imobiledevice-net
