@@ -34,7 +34,7 @@ cache:
 
 build_script:
   - cd iMobileDevice.Generator
-  - dotnet run --no-restore iMobileDevice.Generator.csproj . ..\iMobileDevice-net
+  - dotnet run . ..\iMobileDevice-net
   - cd ..
   - dotnet build imobiledevice-net\iMobileDevice-net.csproj
   - dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
