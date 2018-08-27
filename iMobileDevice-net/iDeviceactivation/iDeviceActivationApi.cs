@@ -89,6 +89,7 @@ namespace iMobileDevice.iDeviceActivation
         public virtual void idevice_activation_request_get_fields(iDeviceActivationRequestHandle request, out PlistHandle fields)
         {
             iDeviceActivationNativeMethods.idevice_activation_request_get_fields(request, out fields);
+            fields.Api = this.Parent;
         }
         
         public virtual void idevice_activation_request_set_fields(iDeviceActivationRequestHandle request, PlistHandle fields)
@@ -155,6 +156,7 @@ namespace iMobileDevice.iDeviceActivation
         public virtual void idevice_activation_response_get_fields(iDeviceActivationResponseHandle response, out PlistHandle fields)
         {
             iDeviceActivationNativeMethods.idevice_activation_response_get_fields(response, out fields);
+            fields.Api = this.Parent;
         }
         
         public virtual void idevice_activation_response_get_label(iDeviceActivationResponseHandle response, string key, out string value)
@@ -175,11 +177,13 @@ namespace iMobileDevice.iDeviceActivation
         public virtual void idevice_activation_response_get_activation_record(iDeviceActivationResponseHandle response, out PlistHandle activationRecord)
         {
             iDeviceActivationNativeMethods.idevice_activation_response_get_activation_record(response, out activationRecord);
+            activationRecord.Api = this.Parent;
         }
         
         public virtual void idevice_activation_response_get_headers(iDeviceActivationResponseHandle response, out PlistHandle headers)
         {
             iDeviceActivationNativeMethods.idevice_activation_response_get_headers(response, out headers);
+            headers.Api = this.Parent;
         }
         
         public virtual int idevice_activation_response_is_activation_acknowledged(iDeviceActivationResponseHandle response)
