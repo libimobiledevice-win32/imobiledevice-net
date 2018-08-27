@@ -1,5 +1,5 @@
 dist: trusty
-sudo: false
+sudo: true
 
 git:
   depth: false
@@ -9,31 +9,24 @@ mono: none
 dotnet: 2.1.400
 
 install:
+# Install libimobiledevice from the Quamotion PPA
+- sudo add-apt-repository -y ppa:quamotion/ppa
+- sudo apt-get update
+- sudo apt-get install -y libimobiledevice-dev libideviceactivation
+
 - mkdir ext
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-113.tar.gz -O ext/usbmuxd-osx-x64-1.1.0-113.tar.gz
-# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm-1.1.0-113.tar.gz
-# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-arm64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-x64-1.1.0-113.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz
-# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz
-# - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-arm-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz
 - tar -xvzf ext/usbmuxd-osx-x64-1.1.0-113.tar.gz -C ext
-# - tar -xvzf ext/usbmuxd-linux-arm-1.1.0-113.tar.gz -C ext
-# - tar -xvzf ext/usbmuxd-linux-arm64-1.1.0-113.tar.gz -C ext
 - tar -xvzf ext/usbmuxd-linux-x64-1.1.0-113.tar.gz -C ext
 - tar -xvzf ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz -C ext
-# - tar -xvzf ext/libimobiledevice-linux-arm64-1.2.1-146.tar.gz -C ext
-# - tar -xvzf ext/libimobiledevice-linux-arm-1.2.1-146.tar.gz -C ext
 - tar -xvzf ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz -C ext
 - dotnet restore iMobileDevice-net/iMobileDevice-net.csproj
-#- pip install --user azure-cli
 
 script:
 - dotnet build -c Release iMobileDevice-net/iMobileDevice-net.csproj
 - dotnet pack -c Release iMobileDevice-net/iMobileDevice-net.csproj
-
-after_success:
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then az=$HOME/Library/Python/2.7/bin/az; fi
-#- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then az=$HOME/.local/bin/az; fi
-#- $az storage blob upload -f iMobileDevice-net/bin/Release/iMobileDevice-net.1.2.1-$TRAVIS_BUILD_NUMBER.nupkg -c imobiledevice -n iMobileDevice-net.1.2.1-$TRAVIS_BUILD_NUMBER.nupkg
+- dotnet test iMobileDevice.Generator.Tests/iMobileDevice.Generator.Tests.csproj
+- dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj
