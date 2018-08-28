@@ -12,7 +12,7 @@ install:
 # Install libimobiledevice from the Quamotion PPA
 - sudo add-apt-repository -y ppa:quamotion/ppa
 - sudo apt-get update
-- sudo apt-get install -y libimobiledevice-dev libideviceactivation
+- sudo apt-get install -y libimobiledevice-dev libideviceactivation-dev
 
 - mkdir ext
 - wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-113.tar.gz -O ext/usbmuxd-osx-x64-1.1.0-113.tar.gz
