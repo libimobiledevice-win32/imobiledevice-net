@@ -11,6 +11,9 @@ namespace iMobileDevice
     /// </summary>
     public static class NativeLibraries
     {
+        private const string WindowsRuntime64Bit = "win-x64";
+        private const string WindowsRuntime32Bit = "win-x86";
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool SetDllDirectory(string lpPathName);
@@ -92,13 +95,13 @@ namespace iMobileDevice
 
                 string nativeLibrariesDirectory = directory;
 
-                if (Environment.Is64BitProcess && Directory.Exists(Path.Combine(directory, "win7-x64")))
+                if (Environment.Is64BitProcess && Directory.Exists(Path.Combine(directory, WindowsRuntime64Bit)))
                 {
-                    nativeLibrariesDirectory = Path.Combine(directory, "win7-x64");
+                    nativeLibrariesDirectory = Path.Combine(directory, WindowsRuntime64Bit);
                 }
-                else if (Directory.Exists(Path.Combine(directory, "win7-x86")))
+                else if (Directory.Exists(Path.Combine(directory, WindowsRuntime32Bit)))
                 {
-                    nativeLibrariesDirectory = Path.Combine(directory, "win7-x86");
+                    nativeLibrariesDirectory = Path.Combine(directory, WindowsRuntime32Bit);
                 }
 
                 if (!Directory.Exists(nativeLibrariesDirectory))
