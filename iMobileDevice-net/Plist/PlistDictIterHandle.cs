@@ -10,54 +10,48 @@
 // <copyright file="PlistDictIterHandle.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+
+using System;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
 
 namespace iMobileDevice.Plist
 {
-    using System.Runtime.InteropServices;
-    using System.Diagnostics;
-    using iMobileDevice.iDevice;
-    using iMobileDevice.Lockdown;
-    using iMobileDevice.Afc;
-    using iMobileDevice.Plist;
-    
-    
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
-#endif
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, UnmanagedCode=true)]
-#endif
-    public partial class PlistDictIterHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
+    /// <summary>
+    /// Represents a wrapper class for Plist handles.
+    /// </summary>
+    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode=true)]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+    public partial class PlistDictIterHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        
         private string creationStackTrace;
-        
+
         private ILibiMobileDevice api;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlistDictIterHandle"/> class.
         /// </summary>
-        protected PlistDictIterHandle() : 
+        protected PlistDictIterHandle() :
                 base(true)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlistDictIterHandle"/> class, specifying whether the handle is to be reliably released.
         /// </summary>
         /// <param name="ownsHandle">
         /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
         /// </param>
-        protected PlistDictIterHandle(bool ownsHandle) : 
+        protected PlistDictIterHandle(bool ownsHandle) :
                 base(ownsHandle)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Gets or sets the API to use
         /// </summary>
@@ -72,7 +66,7 @@ namespace iMobileDevice.Plist
                 this.api = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a value which represents a pointer or handle that has been initialized to zero.
         /// </summary>
@@ -83,11 +77,9 @@ namespace iMobileDevice.Plist
                 return PlistDictIterHandle.DangerousCreate(System.IntPtr.Zero);
             }
         }
-        
+
         /// <inheritdoc/>
-#if !NETSTANDARD1_5
-        [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
-#endif
+        [ReliabilityContractAttribute(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
             return true;
@@ -106,8 +98,7 @@ namespace iMobileDevice.Plist
         /// </returns>
         public static PlistDictIterHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
-            PlistDictIterHandle safeHandle;
-            safeHandle = new PlistDictIterHandle(ownsHandle);
+            PlistDictIterHandle safeHandle = new PlistDictIterHandle(ownsHandle);
             safeHandle.SetHandle(unsafeHandle);
             return safeHandle;
         }
@@ -134,7 +125,7 @@ namespace iMobileDevice.Plist
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (((obj != null) & (obj.GetType() == typeof(PlistDictIterHandle))))
+            if (obj != null && obj.GetType() == typeof(PlistDictIterHandle))
             {
                 return ((PlistDictIterHandle)obj).handle.Equals(this.handle);
             }

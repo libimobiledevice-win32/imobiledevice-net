@@ -8,7 +8,7 @@ namespace iMobileDevice.Tests
 {
     public class NativeStringArrayMarshalerTests
     {
-        [Fact]
+        [Fact (Skip = "This test should run in its own context")]
         public void TestRoundTrip()
         {
             NativeLibraries.Load();

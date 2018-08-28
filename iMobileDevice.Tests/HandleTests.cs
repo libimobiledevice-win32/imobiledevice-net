@@ -19,8 +19,8 @@
         [Fact]
         public void EqualsTest()
         {
-            AfcClientHandle handle = AfcClientHandle.DangerousCreate(new IntPtr(42));
-            AfcClientHandle handle2 = AfcClientHandle.DangerousCreate(new IntPtr(42));
+            AfcClientHandle handle = AfcClientHandle.DangerousCreate(new IntPtr(42), ownsHandle: false);
+            AfcClientHandle handle2 = AfcClientHandle.DangerousCreate(new IntPtr(42), ownsHandle: false);
             AfcClientHandle zero = AfcClientHandle.Zero;
 
             Assert.True(handle.Equals(handle));

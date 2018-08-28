@@ -118,6 +118,8 @@ namespace iMobileDevice.Generator
                         new CodeTypeReferenceExpression(this.visitor.NativeMethods.Name),
                         method.Name));
 
+                bool hasReturnValue = method.ReturnType != null && method.ReturnType.BaseType != "System.Void";
+
                 foreach (var parameter in method.Parameters.OfType<CodeParameterDeclarationExpression>())
                 {
                     var interfaceParameter = new CodeParameterDeclarationExpression();
@@ -152,10 +154,6 @@ namespace iMobileDevice.Generator
                     // Add item.SetHandleAsInvalid();
                     classMethod.Statements.Add(new CodeMethodInvokeExpression(new CodeArgumentReferenceExpression("item"), "SetHandleAsInvalid"));
                 }
-                else if (method.ReturnType == null || method.ReturnType.BaseType == "System.Void")
-                {
-                    classMethod.Statements.Add(nativeInvocation);
-                }
                 else
                 {
                     // If there are return values or "out" parameters which are safe handles, we should special case.
@@ -165,22 +163,36 @@ namespace iMobileDevice.Generator
                         && p.Type.BaseType.EndsWith("Handle"))
                         && !method.ReturnType.BaseType.EndsWith("Handle"))
                     {
-                        classMethod.Statements.Add(
-                            new CodeMethodReturnStatement(
-                                nativeInvocation));
+                        if (hasReturnValue)
+                        {
+                            classMethod.Statements.Add(
+                                new CodeMethodReturnStatement(
+                                    nativeInvocation));
+                        }
+                        else
+                        {
+                            classMethod.Statements.Add(nativeInvocation);
+                        }
                     }
                     else
                     {
-                        // Store the result in a variable and perform the invoke
-                        classMethod.Statements.Add(
-                            new CodeVariableDeclarationStatement(
-                                method.ReturnType,
-                                "returnValue"));
+                        if (hasReturnValue)
+                        {
+                            // Store the result in a variable and perform the invoke
+                            classMethod.Statements.Add(
+                                new CodeVariableDeclarationStatement(
+                                    method.ReturnType,
+                                    "returnValue"));
 
-                        classMethod.Statements.Add(
-                            new CodeAssignStatement(
-                                new CodeVariableReferenceExpression("returnValue"),
-                                nativeInvocation));
+                            classMethod.Statements.Add(
+                                new CodeAssignStatement(
+                                    new CodeVariableReferenceExpression("returnValue"),
+                                    nativeInvocation));
+                        }
+                        else
+                        {
+                            classMethod.Statements.Add(nativeInvocation);
+                        }
 
                         // For all "out" parameters which are safehandles, update the .Api property pointing
                         // to this instance of the API - making sure the same API which created the safe handle
@@ -201,21 +213,24 @@ namespace iMobileDevice.Generator
                         }
 
                         // The same also applies to the return value - if it is a safe handle, update the. Api property
-                        if (method.ReturnType.BaseType.EndsWith("Handle"))
+                        if (hasReturnValue)
                         {
-                            classMethod.Statements.Add(
-                                new CodeAssignStatement(
-                                    new CodePropertyReferenceExpression(
-                                        new CodeVariableReferenceExpression("returnValue"),
-                                        "Api"),
-                                    new CodePropertyReferenceExpression(
-                                        new CodeThisReferenceExpression(),
-                                        "Parent")));
-                        }
+                            if (method.ReturnType.BaseType.EndsWith("Handle"))
+                            {
+                                classMethod.Statements.Add(
+                                    new CodeAssignStatement(
+                                        new CodePropertyReferenceExpression(
+                                            new CodeVariableReferenceExpression("returnValue"),
+                                            "Api"),
+                                        new CodePropertyReferenceExpression(
+                                            new CodeThisReferenceExpression(),
+                                            "Parent")));
+                            }
 
-                        classMethod.Statements.Add(
-                            new CodeMethodReturnStatement(
-                                new CodeVariableReferenceExpression("returnValue")));
+                            classMethod.Statements.Add(
+                                new CodeMethodReturnStatement(
+                                    new CodeVariableReferenceExpression("returnValue")));
+                        }
                     }
                 }
 

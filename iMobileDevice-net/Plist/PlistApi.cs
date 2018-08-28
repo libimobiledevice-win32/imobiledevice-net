@@ -374,6 +374,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_dict_new_iter(PlistHandle node, out PlistDictIterHandle iter)
         {
             PlistNativeMethods.plist_dict_new_iter(node, out iter);
+            iter.Api = this.Parent;
         }
         
         /// <summary>
@@ -396,6 +397,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_dict_next_item(PlistHandle node, PlistDictIterHandle iter, out string key, out PlistHandle val)
         {
             PlistNativeMethods.plist_dict_next_item(node, iter, out key, out val);
+            val.Api = this.Parent;
         }
         
         /// <summary>
@@ -500,6 +502,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_dict_merge(out PlistHandle target, PlistHandle source)
         {
             PlistNativeMethods.plist_dict_merge(out target, source);
+            target.Api = this.Parent;
         }
         
         /// <summary>
@@ -860,6 +863,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_from_xml(string plistXml, uint length, out PlistHandle plist)
         {
             PlistNativeMethods.plist_from_xml(plistXml, length, out plist);
+            plist.Api = this.Parent;
         }
         
         /// <summary>
@@ -877,6 +881,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_from_bin(string plistBin, uint length, out PlistHandle plist)
         {
             PlistNativeMethods.plist_from_bin(plistBin, length, out plist);
+            plist.Api = this.Parent;
         }
         
         /// <summary>
@@ -896,6 +901,7 @@ namespace iMobileDevice.Plist
         public virtual void plist_from_memory(string plistData, uint length, out PlistHandle plist)
         {
             PlistNativeMethods.plist_from_memory(plistData, length, out plist);
+            plist.Api = this.Parent;
         }
         
         /// <summary>

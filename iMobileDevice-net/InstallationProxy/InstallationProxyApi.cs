@@ -577,6 +577,7 @@ namespace iMobileDevice.InstallationProxy
         public virtual void instproxy_status_get_current_list(PlistHandle status, ref ulong total, ref ulong currentIndex, ref ulong currentAmount, out PlistHandle list)
         {
             InstallationProxyNativeMethods.instproxy_status_get_current_list(status, ref total, ref currentIndex, ref currentAmount, out list);
+            list.Api = this.Parent;
         }
         
         /// <summary>

@@ -7,7 +7,7 @@ namespace iMobileDevice.Tests
 {
     public class NativeStringMarshalerTests
     {
-        [Fact]
+        [Fact(Skip = "This test should run in its own context")]
         public void NativeToManagedTest()
         {
             NativeLibraries.Load();

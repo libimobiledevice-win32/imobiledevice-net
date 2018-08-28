@@ -10,54 +10,48 @@
 // <copyright file="TestHandleHandle.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
-#pragma warning disable 1591
-#pragma warning disable 1572
-#pragma warning disable 1573
+
+using System;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using Microsoft.Win32.SafeHandles;
 
 namespace iMobileDevice.Test
 {
-    using System.Runtime.InteropServices;
-    using System.Diagnostics;
-    using iMobileDevice.iDevice;
-    using iMobileDevice.Lockdown;
-    using iMobileDevice.Afc;
-    using iMobileDevice.Plist;
-    
-    
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.InheritanceDemand, UnmanagedCode=true)]
-#endif
-#if !NETSTANDARD1_5
-    [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.Demand, UnmanagedCode=true)]
-#endif
-    public partial class TestHandleHandle : Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid
+    /// <summary>
+    /// Represents a wrapper class for Test handles.
+    /// </summary>
+    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode=true)]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+    public partial class TestHandleHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        
         private string creationStackTrace;
-        
+
         private ILibiMobileDevice api;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TestHandleHandle"/> class.
         /// </summary>
-        protected TestHandleHandle() : 
+        protected TestHandleHandle() :
                 base(true)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TestHandleHandle"/> class, specifying whether the handle is to be reliably released.
         /// </summary>
         /// <param name="ownsHandle">
         /// <see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).
         /// </param>
-        protected TestHandleHandle(bool ownsHandle) : 
+        protected TestHandleHandle(bool ownsHandle) :
                 base(ownsHandle)
         {
-            this.creationStackTrace = System.Environment.StackTrace;
+            this.creationStackTrace = Environment.StackTrace;
         }
-        
+
         /// <summary>
         /// Gets or sets the API to use
         /// </summary>
@@ -72,7 +66,7 @@ namespace iMobileDevice.Test
                 this.api = value;
             }
         }
-        
+
         /// <summary>
         /// Gets a value which represents a pointer or handle that has been initialized to zero.
         /// </summary>
@@ -83,11 +77,9 @@ namespace iMobileDevice.Test
                 return TestHandleHandle.DangerousCreate(System.IntPtr.Zero);
             }
         }
-        
+
         /// <inheritdoc/>
-#if !NETSTANDARD1_5
-        [System.Runtime.ConstrainedExecution.ReliabilityContractAttribute(System.Runtime.ConstrainedExecution.Consistency.WillNotCorruptState, System.Runtime.ConstrainedExecution.Cer.MayFail)]
-#endif
+        [ReliabilityContractAttribute(Consistency.WillNotCorruptState, Cer.MayFail)]
         protected override bool ReleaseHandle()
         {
             return true;
@@ -106,8 +98,7 @@ namespace iMobileDevice.Test
         /// </returns>
         public static TestHandleHandle DangerousCreate(System.IntPtr unsafeHandle, bool ownsHandle)
         {
-            TestHandleHandle safeHandle;
-            safeHandle = new TestHandleHandle(ownsHandle);
+            TestHandleHandle safeHandle = new TestHandleHandle(ownsHandle);
             safeHandle.SetHandle(unsafeHandle);
             return safeHandle;
         }
@@ -134,7 +125,7 @@ namespace iMobileDevice.Test
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (((obj != null) & (obj.GetType() == typeof(TestHandleHandle))))
+            if (obj != null && obj.GetType() == typeof(TestHandleHandle))
             {
                 return ((TestHandleHandle)obj).handle.Equals(this.handle);
             }
