@@ -58,6 +58,18 @@ build_script:
   - dotnet test iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj
   - dotnet test iMobileDevice.Tests\iMobileDevice.Tests.csproj
 
+  # Run integration tests
+  - mkdir packages
+  - nuget init iMobileDevice-net\bin\Release\ packages
+  - cd iMobileDevice.IntegrationTests.net45
+  - powershell -File PatchNuGet.ps1
+  - nuget restore
+  - msbuild.exe /p:Configuration=Release /p:Platform=x86
+  - msbuild.exe /p:Configuration=Release /p:Platform=x64
+  - bin\x86\Release\iMobileDevice.IntegrationTests.net45.exe
+  - bin\x64\Release\iMobileDevice.IntegrationTests.net45.exe
+  - cd ..
+
 artifacts:
   - path: imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg
     name: imobiledevice-net
