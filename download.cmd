@@ -1,6 +1,6 @@
 set USBMUXD_VERSION=132
 set LIBIMOBILEDEVICE_VERSION=169
-set LIBIDEVICEACTIVATION_VERSION=33
+set LIBIDEVICEACTIVATION_VERSION=40
 
 REM download the archives
 wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-%USBMUXD_VERSION%.tar.gz -O ext\usbmuxd-osx-x64-1.1.0-%USBMUXD_VERSION%.tar.gz

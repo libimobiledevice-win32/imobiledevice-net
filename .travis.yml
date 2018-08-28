@@ -1,6 +1,17 @@
 dist: trusty
 sudo: true
 
+matrix:
+  include:
+    - os: osx
+    - os: linux
+
+env:
+  global:
+    - USBMUXD_VERSION=132
+    - LIBIMOBILEDEVICE_VERSION=169
+    - LIBIDEVICEACTIVATION_VERSION=40
+
 git:
   depth: false
 
@@ -9,24 +20,25 @@ mono: none
 dotnet: 2.1.400
 
 install:
-# Install libimobiledevice from the Quamotion PPA
-- sudo add-apt-repository -y ppa:quamotion/ppa
-- sudo apt-get update
-- sudo apt-get install -y libimobiledevice-dev libideviceactivation-dev
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:quamotion/ppa; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update; fi
+- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y libimobiledevice-dev libideviceactivation-dev; fi
 
 - mkdir ext
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-113.tar.gz -O ext/usbmuxd-osx-x64-1.1.0-113.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-linux-x64-1.1.0-113.tar.gz -O ext/usbmuxd-linux-x64-1.1.0-113.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz
-- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-linux-x64-1.2.1-146.tar.gz -O ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz
-- tar -xvzf ext/usbmuxd-osx-x64-1.1.0-113.tar.gz -C ext
-- tar -xvzf ext/usbmuxd-linux-x64-1.1.0-113.tar.gz -C ext
-- tar -xvzf ext/libimobiledevice-osx-x64-1.2.1-146.tar.gz -C ext
-- tar -xvzf ext/libimobiledevice-linux-x64-1.2.1-146.tar.gz -C ext
+- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/usbmuxd-osx-x64-1.1.0-$USBMUXD_VERSION.tar.gz -O ext/usbmuxd-osx-x64-1.1.0-$USBMUXD_VERSION.tar.gz
+- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libimobiledevice-osx-x64-1.2.1-$LIBIMOBILEDEVICE_VERSION.tar.gz -O ext/libimobiledevice-osx-x64-1.2.1-$LIBIMOBILEDEVICE_VERSION.tar.gz
+- wget -nc https://qmcdn.blob.core.windows.net/imobiledevice/libideviceactivation-osx-x64-1.0.0-$LIBIDEVICEACTIVATION_VERSION.tar.gz -O ext/libideviceactivation-osx-x64-1.0.0-$LIBIDEVICEACTIVATION_VERSION.tar.gz
+- tar -xvzf ext/usbmuxd-osx-x64-1.1.0-$USBMUXD_VERSION.tar.gz -C ext
+- tar -xvzf ext/libimobiledevice-osx-x64-1.2.1-$LIBIMOBILEDEVICE_VERSION.tar.gz -C ext
+- tar -xvzf ext/libideviceactivation-osx-x64-1.0.0-$LIBIDEVICEACTIVATION_VERSION.tar.gz -C ext
 - dotnet restore iMobileDevice-net/iMobileDevice-net.csproj
 
 script:
 - dotnet build -c Release iMobileDevice-net/iMobileDevice-net.csproj
 - dotnet pack -c Release iMobileDevice-net/iMobileDevice-net.csproj
 - dotnet test iMobileDevice.Generator.Tests/iMobileDevice.Generator.Tests.csproj
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then export DYLD_PRINT_LIBRARIES=1; fi
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then export LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/ext/lib:$LD_LIBRARY_PATH; fi
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then ls $TRAVIS_BUILD_DIR/ext/lib; fi
+- if [ "$TRAVIS_OS_NAME" = "osx" ]; then echo $LD_LIBRARY_PATH; fi
 - dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj
