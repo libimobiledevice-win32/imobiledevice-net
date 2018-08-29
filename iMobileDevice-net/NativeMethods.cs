@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace iMobileDevice
 {
@@ -48,6 +45,10 @@ namespace iMobileDevice
         [DllImport(Kernel32, SetLastError = true)]
         public static extern IntPtr LoadLibrary(string dllToLoad);
 
+        [DllImport(Kernel32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetDllDirectory(string lpPathName);
+
         /// <summary>
         /// The function <see cref="dlopen"/> loads the dynamic library file named by the
         /// null-terminated string filename.
@@ -66,7 +67,7 @@ namespace iMobileDevice
         /// This method works on Linux only.
         /// </remarks>
         /// <seealso href="http://linux.die.net/man/3/dlopen"/>
-        [DllImport("libdl.so")]
+        [DllImport("dl")]
         public static extern IntPtr dlopen(string filename, DlOpenFlags flags);
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace iMobileDevice
         /// This method works on Linux only.
         /// </remarks>
         /// <seealso href="http://linux.die.net/man/3/dlopen"/>
-        [DllImport("libdl.so")]
+        [DllImport("dl")]
         public static extern IntPtr dlerror();
     }
 }

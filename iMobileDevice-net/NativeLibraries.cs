@@ -14,35 +14,32 @@ namespace iMobileDevice
         private const string WindowsRuntime64Bit = "win-x64";
         private const string WindowsRuntime32Bit = "win-x86";
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetDllDirectory(string lpPathName);
-
         /// <summary>
         /// Gets or sets a value indicating whether the native libraries have been found. This value is only relevant on the full .NET Framework;
         /// it is always set to <see langword="true"/> on .NET Core.
         /// </summary>
         public static bool LibraryFound
         {
-#if !NETSTANDARD1_5 && !NETSTANDARD2_0
             get;
             private set;
-#else
-            get 
-            { 
-                // .NET Core has a good story for loading unmanaged assemblies - you include them in the
-                // runtimes/<runtime>/native folder of the NuGet package. So we're letting .NET Core
-                // handle finding the assemblies and loading them.
-                return true; 
-            }
-#endif
         }
+#if NETCOREAPP
+            // .NET Core has a good story for loading unmanaged assemblies - you include them in the
+            // runtimes/<runtime>/native folder of the NuGet package. So we're letting .NET Core
+            // handle finding the assemblies and loading them.
+            = true;
+#endif
 
         /// <summary>
         /// Loads the native libraries.
         /// </summary>
         public static void Load()
         {
+            if (LibraryFound)
+            {
+                return;
+            }
+
             Load(Path.GetDirectoryName(typeof(NativeLibraries).GetTypeInfo().Assembly.Location));
         }
 
@@ -54,7 +51,6 @@ namespace iMobileDevice
         /// </param>
         public static void Load(string directory)
         {
-#if !NETSTANDARD1_5 && !NETSTANDARD2_0
             if (directory == null)
             {
                 throw new ArgumentNullException(nameof(directory));
@@ -73,7 +69,13 @@ namespace iMobileDevice
 
             bool isWindows = false;
             bool isLinux = false;
+            bool isMacOs = false;
 
+#if NETCOREAPP
+            isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            isMacOs = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+#else
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Win32NT:
@@ -84,6 +86,7 @@ namespace iMobileDevice
                     isLinux = true;
                     break;
             }
+#endif
 
             if (isWindows)
             {
@@ -124,7 +127,7 @@ namespace iMobileDevice
                 }
 
                 // Add the directory to the search path, and try to load the libraries one by one.
-                SetDllDirectory(nativeLibrariesDirectory);
+                NativeMethods.SetDllDirectory(nativeLibrariesDirectory);
 
                 foreach (var libraryToLoad in windowsLibariesToLoad)
                 {
@@ -141,8 +144,10 @@ namespace iMobileDevice
 
                 LibraryFound = true;
             }
-            else if (isLinux)
+            else if (isLinux || isMacOs)
             {
+                string suffix = isLinux ? "so" : "dylib";
+
                 string[] linuxLibariesToLoad = new string[]
                     {
                         "libimobiledevice",
@@ -154,7 +159,7 @@ namespace iMobileDevice
                 foreach (var libraryToLoad in linuxLibariesToLoad)
                 {
                     // Attempt to load the libraries. If they are not found, throw an error.
-                    IntPtr result = NativeMethods.dlopen($"{libraryToLoad}.so", DlOpenFlags.RTLD_NOW);
+                    IntPtr result = NativeMethods.dlopen($"{libraryToLoad}.{suffix}", DlOpenFlags.RTLD_NOW);
 
                     if (result == IntPtr.Zero)
                     {
@@ -169,11 +174,8 @@ namespace iMobileDevice
             }
             else
             {
-                throw new NotSupportedException("imobiledevice-net is supported on Windows (.NET FX, .NET Core), Linux (Mono, .NET Core) and OS X (.NET Core)");
+                throw new NotSupportedException("imobiledevice-net is supported on Windows (.NET FX, .NET Core), Linux (.NET Core) and OS X (.NET Core)");
             }
-#else
-            throw new NotSupportedException("Load is supported on .NET FX and Mono only. When using .NET Core, add the runtime.*.imobiledevice-net packages to your project to add the native libraries.");
-#endif
         }
     }
 }
