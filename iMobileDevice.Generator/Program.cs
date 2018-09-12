@@ -4,6 +4,7 @@
 
 namespace iMobileDevice.Generator
 {
+    using Microsoft.Extensions.CommandLineUtils;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -18,78 +19,113 @@ namespace iMobileDevice.Generator
     {
         public static void Main(string[] args)
         {
-            string targetDirectory = null;
+            CommandLineApplication commandLineApplication =
+                new CommandLineApplication(throwOnUnexpectedArg: false);
 
-            if (args.Length >= 2)
-            {
-                targetDirectory = args[1];
-            }
-            else
-            {
-                targetDirectory = @"..\..\..\..\..\iMobileDevice-net";
-            }
+            commandLineApplication.Name = "iMobileDevice.Generator";
+            commandLineApplication.HelpOption("-?|-h|--help");
 
-            RestoreClang();
 
-            targetDirectory = Path.GetFullPath(targetDirectory);
-
-            Console.WriteLine($"Writing the C# files to: {targetDirectory}");
-
-            var vcpkgPath = Environment.GetEnvironmentVariable("VCPKG_ROOT");
-
-            if (vcpkgPath == null)
-            {
-                Console.Error.WriteLine("Please set the VCPKG_ROOT environment variable to the folder where you've installed VCPKG.");
-                return;
-            }
-
-            vcpkgPath = Path.Combine(vcpkgPath, "installed", "x86-windows", "include");
-            Console.WriteLine($"Reading include files from {vcpkgPath}");
-
-            ModuleGenerator generator = new ModuleGenerator();
-            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
-            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio\Shared\14.0\VC\include"));
-            generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
-            generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
-            generator.IncludeDirectories.Add(Path.Combine(vcpkgPath));
-
-            Collection<string> names = new Collection<string>();
-
-            var files = new List<string>();
-            files.Add(Path.Combine(vcpkgPath, "usbmuxd.h"));
-            files.Add(Path.Combine(vcpkgPath, "plist/plist.h"));
-            files.Add(Path.Combine(vcpkgPath, "libideviceactivation.h"));
-            var iMobileDeviceDirectory = Path.Combine(vcpkgPath, "libimobiledevice");
-            files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
-            files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
-            files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));
-
-            var iMobileDeviceFileNames = Directory.GetFiles(iMobileDeviceDirectory, "*.h")
-                .Where(f => !files.Contains(f, StringComparer.OrdinalIgnoreCase));
-
-            files.AddRange(iMobileDeviceFileNames);
-
-            foreach (var file in files)
-            {
-                Console.WriteLine($"Processing {Path.GetFileName(file)}");
-                generator.InputFile = file;
-
-                if (string.Equals(Path.GetFileName(file), "libideviceactivation.h", StringComparison.OrdinalIgnoreCase))
+            commandLineApplication.Command(
+                "generate",
+                (runCommand) =>
                 {
-                    generator.Generate(targetDirectory, "ideviceactivation");
-                }
-                else
-                {
-                    generator.Generate(targetDirectory);
-                }
+                    runCommand.Description = "Generates the Interop source for imobiledevice-net based on the libimobiledevice headers";
 
-                generator.Types.Clear();
+                    CommandOption outputArgument = runCommand.Option(
+                        "-o|--output <dir>",
+                        "The output directory. The C# code will be generated in this directory.",
+                        CommandOptionType.SingleValue);
 
-                names.Add(generator.Name);
-            }
+                    CommandOption includeArgument = runCommand.Option(
+                        "-i|--include <dir>",
+                        "Include directory to use. Defaults to the include directory in VCPKG_ROOT.",
+                        CommandOptionType.SingleValue);
 
-            ApiGenerator apiGenerator = new ApiGenerator();
-            apiGenerator.Generate(names, targetDirectory);
+                    runCommand.HelpOption("-? | -h | --help");
+
+                    runCommand.OnExecute(() =>
+                    {
+                        string targetDirectory = @"..\..\..\..\..\iMobileDevice-net";
+                        if (outputArgument.HasValue())
+                        {
+                            targetDirectory = outputArgument.Value();
+                        }
+
+                        targetDirectory = Path.GetFullPath(targetDirectory);
+
+                        RestoreClang();
+
+                        ModuleGenerator generator = new ModuleGenerator();
+                        generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio 14.0\VC\include"));
+                        generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Microsoft Visual Studio\Shared\14.0\VC\include"));
+                        generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
+                        generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
+
+                        string sourceDir = null;
+
+                        if (includeArgument.HasValue())
+                        {
+                            sourceDir = includeArgument.Value();
+                        }
+                        else
+                        {
+                            var vcpkgPath = Environment.GetEnvironmentVariable("VCPKG_ROOT");
+
+                            if (vcpkgPath == null)
+                            {
+                                Console.Error.WriteLine("Please set the VCPKG_ROOT environment variable to the folder where you've installed VCPKG.");
+                                return -1;
+                            }
+
+                            vcpkgPath = Path.Combine(vcpkgPath, "installed", "x86-windows", "include");
+                            Console.WriteLine($"Reading include files from {vcpkgPath}");
+                            generator.IncludeDirectories.Add(Path.Combine(vcpkgPath));
+                        }
+
+                        Console.WriteLine($"Writing the C# files to: {targetDirectory}");
+
+                        Collection<string> names = new Collection<string>();
+
+                        var files = new List<string>();
+                        files.Add(Path.Combine(sourceDir, "usbmuxd.h"));
+                        files.Add(Path.Combine(sourceDir, "plist/plist.h"));
+                        // files.Add(Path.Combine(sourceDir, "libideviceactivation.h"));
+                        var iMobileDeviceDirectory = Path.Combine(sourceDir, "libimobiledevice");
+                        files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
+                        files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
+                        files.Add(Path.Combine(iMobileDeviceDirectory, "afc.h"));
+
+                        var iMobileDeviceFileNames = Directory.GetFiles(iMobileDeviceDirectory, "*.h")
+                            .Where(f => !files.Contains(f, StringComparer.OrdinalIgnoreCase));
+
+                        files.AddRange(iMobileDeviceFileNames);
+
+                        foreach (var file in files)
+                        {
+                            Console.WriteLine($"Processing {Path.GetFileName(file)}");
+                            generator.InputFile = file;
+
+                            if (string.Equals(Path.GetFileName(file), "libideviceactivation.h", StringComparison.OrdinalIgnoreCase))
+                            {
+                                generator.Generate(targetDirectory, "ideviceactivation");
+                            }
+                            else
+                            {
+                                generator.Generate(targetDirectory);
+                            }
+
+                            generator.Types.Clear();
+
+                            names.Add(generator.Name);
+                        }
+
+                        ApiGenerator apiGenerator = new ApiGenerator();
+                        apiGenerator.Generate(names, targetDirectory);
+
+                        return 0;
+                    });
+                });
         }
 
         static void RestoreClang()
