@@ -47,6 +47,10 @@
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/usbmuxd/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- win-x86 files which come from NuGet packages-->
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.dll">
@@ -66,6 +70,10 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libusbmuxd/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/usbmuxd/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
