@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="iMobileDevice-net" Version="{imobiledevice-version}" />
+    <PackageReference Include="iMobileDevice-net" Version="$(MobileDeviceDotNetNuGetVersion)" />
   </ItemGroup>
 
 </Project>

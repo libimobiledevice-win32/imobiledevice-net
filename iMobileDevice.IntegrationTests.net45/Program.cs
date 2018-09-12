@@ -4,6 +4,7 @@ using iMobileDevice.Lockdown;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 
 namespace iMobileDevice.IntegrationTests.net45
 {
@@ -16,7 +17,7 @@ namespace iMobileDevice.IntegrationTests.net45
             Console.WriteLine($"- Version {fvi.FileVersion}");
             Console.WriteLine($"- .NET 4.5");
 
-            if(Environment.Is64BitProcess)
+            if (Environment.Is64BitProcess)
             {
                 Console.WriteLine("- 64-bit process");
             }
@@ -56,6 +57,21 @@ namespace iMobileDevice.IntegrationTests.net45
             iDeviceActivationRequestHandle request;
             api.iDeviceActivation.idevice_activation_request_new(iDeviceActivationClientType.ClientItunes, out request);
             request.Dispose();
+
+            // Make sure usbmuxd, iproxy.exe exist
+            Console.WriteLine("utilities - making sure iproxy can be found");
+            if (!File.Exists(Utilities.GetProxyPath()))
+            {
+                Console.Error.WriteLine($"Could not locate iproxy at {Utilities.GetProxyPath()}");
+                return -1;
+            }
+
+            Console.WriteLine("utilities - making sure usbmuxd can be found");
+            if (!File.Exists(Utilities.GetUsbMuxdPath()))
+            {
+                Console.Error.WriteLine($"Could not locate usbmuxd at {Utilities.GetUsbMuxdPath()}");
+                return -1;
+            }
 
             return 0;
         }

@@ -47,6 +47,10 @@
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/usbmuxd/*.exe">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- win-x86 files which come from NuGet packages-->
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.dll">
@@ -66,6 +70,10 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libusbmuxd/*.exe">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/usbmuxd/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -135,4 +143,35 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <Target Name="WriteProperties" AfterTargets="Pack">
+    <ItemGroup>
+      <Line Include="line01">
+        <Text>&lt;!-- This file is auto-generated. Do not edit manually --&gt;</Text>
+      </Line>
+      <Line Include="line01">
+        <Text>&lt;Project&gt;</Text>
+      </Line>
+      <Line Include="line02">
+        <Text>  &lt;PropertyGroup&gt;</Text>
+      </Line>
+      <Line Include="line03">
+        <Text>    &lt;MobileDeviceDotNetNuGetVersion&gt;$(NuGetPackageVersion)&lt;/MobileDeviceDotNetNuGetVersion&gt;</Text>
+      </Line>
+      <Line Include="line04">
+        <Text>  &lt;/PropertyGroup&gt;</Text>
+      </Line>
+      <Line Include="line05">
+        <Text>&lt;/Project&gt;</Text>
+      </Line>
+      <LineText Include="%(Line.Text)" />
+    </ItemGroup>
+    <WriteLinesToFile
+       File="../iMobileDevice.IntegrationTest.netcoreapp20/Directory.Build.props"
+       Lines="@(LineText)"
+      Overwrite="true" />
+    <WriteLinesToFile
+       File="../iMobileDevice.IntegrationTests.net45/Directory.Build.props"
+       Lines="@(LineText)"
+      Overwrite="true" />
+  </Target>
 </Project>

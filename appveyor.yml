@@ -50,6 +50,7 @@ build_script:
   - 7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x86.zip .\zip\runtimes\win-x86\native\*
   - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-win-x64.zip .\zip\runtimes\win-x64\native\*
+  - 7z a -tzip libimobiledevice.1.2.1-r%APPVEYOR_BUILD_NUMBER%-osx-x64.zip .\zip\runtimes\osx-x64\native\*
 
   # This should help the tests locate libimobiledevice and friends
   - set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\zip\runtimes\win-x64\native
@@ -72,7 +73,6 @@ build_script:
 
   # Run integration tests for .NET Core 2.0
   - cd iMobileDevice.IntegrationTest.netcoreapp20
-  - powershell -File PatchCsproj.ps1
   - dotnet run
   - dotnet publish -r win7-x64 -c Release
   - bin\Release\netcoreapp2.0\win7-x64\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
@@ -86,6 +86,7 @@ artifacts:
   - path: runtime.win7-x86.vcruntime140\bin\Release\runtime.win7-x86.vcruntime140.14.*.nupkg
   - path: libimobiledevice.*-win-x64.zip
   - path: libimobiledevice.*-win-x86.zip
+  - path: libimobiledevice.*-osx-x64.zip
 
 deploy:
   provider: NuGet

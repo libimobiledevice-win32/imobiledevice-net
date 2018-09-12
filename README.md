@@ -70,6 +70,32 @@ foreach (var udid in udids)
 }
 ```
 
+## Binary distributions of libimobiledevice for Windows, macOS and Ubuntu Linux
+
+We also provide binary distributions of libimobiledevice for Windows, macOS, and Ubuntu Linux.
+
+For Windows and macOS, you can download a zip file with the libimobiledevice libraries and tools using the links below.
+For Ubuntu Linux, you can use our PPA (package archive) to install the latest libimobiledevice libraries and tools using `apt-get`.
+
+| Supported Platform                         | Downloads                                                                                                           | CI                                                                              |
+| -------------------------------------------| --------------------------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------|
+| Windows (x86)                              | [libimobiledevice-1.2.1-win-x86.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [AppVeyor](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/) |
+| Windows (x64)                              | [libimobiledevice-1.2.1-win-x64.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [AppVeyor](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/) |
+| macOS (x64)                                | [libimobiledevice-1.2.1-osx-x64.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [Travis](https://travis-ci.org/libimobiledevice-win32/imobiledevice-net)        |
+| Ubuntu (x64)                               | [Quamotion PPA](https://launchpad.net/~quamotion/+archive/ubuntu/ppa)                                               | [Travis](https://travis-ci.org/libimobiledevice-win32/imobiledevice-net)        |
+
+## VCPKG repositories
+
+If you want to install libimobiledevice from source on Windows, you can also use [vcpkg](https://github.com/microsoft/vcpkg). Follow the instructions
+on the VCPKG repository to install VCPKG. You can then install the 32-bit or 64-bit version of libimobiledevice using the following commands:
+
+```
+vcpkg install --head libplist:x86-windows libusbmuxd:x86-windows libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
+vcpkg install --head libplist:x64-windows libusbmuxd:x64-windows libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
+```
+
+Make sure to use `--head` so you get the latest version of libimobiledevice!
+
 ## Consulting, Training and Support
 This repository is maintained by [Quamotion](http://quamotion.mobi). Quamotion develops test software for iOS and 
 Android applications, based on the WebDriver protocol.
