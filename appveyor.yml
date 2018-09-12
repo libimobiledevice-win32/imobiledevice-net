@@ -73,7 +73,6 @@ build_script:
 
   # Run integration tests for .NET Core 2.0
   - cd iMobileDevice.IntegrationTest.netcoreapp20
-  - powershell -File PatchCsproj.ps1
   - dotnet run
   - dotnet publish -r win7-x64 -c Release
   - bin\Release\netcoreapp2.0\win7-x64\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe

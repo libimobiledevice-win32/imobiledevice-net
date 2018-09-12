@@ -62,12 +62,14 @@ namespace iMobileDevice.IntegrationTests.net45
             Console.WriteLine("utilities - making sure iproxy can be found");
             if (!File.Exists(Utilities.GetProxyPath()))
             {
+                Console.Error.WriteLine($"Could not locate iproxy at {Utilities.GetProxyPath()}");
                 return -1;
             }
 
             Console.WriteLine("utilities - making sure usbmuxd can be found");
             if (!File.Exists(Utilities.GetUsbMuxdPath()))
             {
+                Console.Error.WriteLine($"Could not locate usbmuxd at {Utilities.GetUsbMuxdPath()}");
                 return -1;
             }
 
