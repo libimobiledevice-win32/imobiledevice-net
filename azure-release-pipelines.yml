@@ -32,6 +32,7 @@ jobs:
   - script: |
       wget https://github.com/buildkite/github-release/releases/download/v1.0/github-release-linux-amd64 -O github-release
       chmod +x github-release
-      unzip $SYSTEM_ARTIFACTSDIRECTORY/iMobileDevice-net.*.nupkg
+      unzip $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg
 
+      
     displayName: Tag GitHub releases
