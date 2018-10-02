@@ -45,10 +45,11 @@ jobs:
       imobiledevice_net_commit=$BUILD_SOURCEVERSION
       version_number=`echo "cat Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()" | xmllint --nocdata --shell $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 
-      ./github-release $version_number --commit $libplist_commit --github-repository libplist-win32/libusbmuxd
-      ./github-release $version_number --commit $libusbmuxd_commit --github-repository libimobiledevice-win32/libusbmuxd
-      ./github-release $version_number --commit $libimobiledevice_commit --github-repository libimobiledevice-win32/libimobiledevice
-      ./github-release $version_number --commit $usbmuxd_commit --github-repository libimobiledevice-win32/usbmuxd
-      ./github-release $version_number --commit $libideviceactivation_commit --github-repository libimobiledevice-win32/libideviceactivation
-      ./github-release $version_number $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg binaries/*.zip --commit $imobiledevice_net_commit --github-repository libimobiledevice-win32/imobiledevice-net_commit
+      echo ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libplist-win32/libusbmuxd"
+      ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libplist-win32/libusbmuxd"
+      ./github-release "v$version_number" --commit "$libusbmuxd_commit" --github-repository "libimobiledevice-win32/libusbmuxd"
+      ./github-release "v$version_number" --commit "$libimobiledevice_commit" --github-repository "libimobiledevice-win32/libimobiledevice"
+      ./github-release "v$version_number" --commit "$usbmuxd_commit" --github-repository "libimobiledevice-win32/usbmuxd"
+      ./github-release "v$version_number" --commit "$libideviceactivation_commit" --github-repository "libimobiledevice-win32/libideviceactivation"
+      ./github-release "v$version_number" $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg binaries/*.zip --commit "$imobiledevice_net_commit" --github-repository "libimobiledevice-win32/imobiledevice-net_commit"
     displayName: Tag GitHub releases
