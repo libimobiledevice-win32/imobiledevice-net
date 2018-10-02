@@ -1,0 +1,96 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(libplistPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(libplistBuild)
+    downloadType: 'single'
+    artifactName: 'libplist'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download libplist artifacts'
+  
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(libusbmuxdPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(libusbmuxdBuild)
+    downloadType: 'single'
+    artifactName: 'libusbmuxd'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download libusbmuxd artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(libimobiledevicePipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(libimobiledeviceBuild)
+    downloadType: 'single'
+    artifactName: 'libimobiledevice'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download libimobiledevice artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(libideviceactivationPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(libideviceactivationBuild)
+    downloadType: 'single'
+    artifactName: 'libideviceactivation'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download libideviceactivation artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(libirecoveryPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(libirecoveryBuild)
+    downloadType: 'single'
+    artifactName: 'libirecovery'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download libirecovery artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(ideviceinstallerPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(ideviceInstallerBuild)
+    downloadType: 'single'
+    artifactName: 'ideviceinstaller'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download ideviceinstaller artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(usbmuxdPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(usbmuxdBuild)
+    downloadType: 'single'
+    artifactName: 'usbmuxd'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download usbmuxd artifacts'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(idevicerestorePipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(idevicerestoreBuild)
+    downloadType: 'single'
+    artifactName: 'idevicerestore'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download idevicerestore artifacts'

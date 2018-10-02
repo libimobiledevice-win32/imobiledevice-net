@@ -1,0 +1,137 @@
+variables:
+  libplistBuild: 187
+  libplistPipeline: 2
+  libusbmuxdBuild: 179
+  libusbmuxdPipeline: 3
+  libimobiledeviceBuild: 183
+  libimobiledevicePipeline: 4
+  libideviceactivationBuild: 181
+  libideviceactivationPipeline: 5
+  usbmuxdBuild: 182
+  usbmuxdPipeline: 6
+  libirecoveryBuild: 117
+  libirecoveryPipeline: 8
+  ideviceinstallerBuild: 104
+  ideviceinstallerPipeline: 7
+  idevicerestoreBuild: 120
+  idevicerestorePipeline: 9
+
+jobs:
+- job: windows_build
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - template: steps/download-artifacts.yml
+
+  - script: |
+      choco install -y 7zip NuGet.CommandLine
+    displayName: Install 7z, NuGet
+
+  - script: |
+      dotnet restore
+      dotnet restore iMobileDevice.Generator\iMobileDevice.Generator.csproj
+    displayName: Restore iMobileDevice.Generator, download binaries
+
+  - script: |
+      cd iMobileDevice.Generator
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      dotnet run -o ..\iMobileDevice-net -i SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      cd ..
+      dotnet build imobiledevice-net\iMobileDevice-net.csproj
+      dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
+    displayName: Generate code, build imobiledevice-net
+
+  - script: |
+      7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
+
+      mkdir %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
+      mkdir %BUILD_ARTIFACTSTAGINGDIRECTORY%\binaries
+      
+      7z a -tzip %BUILD_ARTIFACTSTAGINGDIRECTORY%\binaries\libimobiledevice.1.2.1-r%BUILD_BUILDID%-win-x86.zip .\zip\runtimes\win-x86\native\*
+      7z a -tzip %BUILD_ARTIFACTSTAGINGDIRECTORY%\binaries\libimobiledevice.1.2.1-r%BUILD_BUILDID%-win-x64.zip .\zip\runtimes\win-x64\native\*
+      7z a -tzip %BUILD_ARTIFACTSTAGINGDIRECTORY%\binaries\libimobiledevice.1.2.1-r%BUILD_BUILDID%-osx-x64.zip .\zip\runtimes\osx-x64\native\*
+
+      copy imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
+      copy iMobileDevice.IntegrationTests.net45\Directory.Build.props %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
+    displayName: Prepare artifacts
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/imobiledevice-net'
+      artifactName: imobiledevice-net
+    displayName: Publish artifacts
+    condition: always()
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/binaries'
+      artifactName: binaries
+    displayName: Publish artifacts
+    condition: always()
+
+- job: windows_test
+  dependsOn: windows_build
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      artifactName: imobiledevice-net
+
+  - script: |
+      choco install -y 7zip NuGet.CommandLine
+    displayName: Install 7z, NuGet
+
+  - script: |
+      7z x %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\iMobileDevice-net.*.nupkg -o%BUILD_SOURCESDIRECTORY%\zip
+      set PATH=%PATH%;%BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
+      dir %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
+      dotnet test iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj
+      dotnet test iMobileDevice.Tests\iMobileDevice.Tests.csproj
+    displayName: Run unit tests
+
+  - script: |
+      set PATH=%PATH%;"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\"
+      mkdir packages
+      nuget init %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\ packages
+      cd iMobileDevice.IntegrationTests.net45
+      powershell -File PatchNuGet.ps1
+      nuget restore
+      msbuild.exe /p:Configuration=Release /p:Platform=x86
+      msbuild.exe /p:Configuration=Release /p:Platform=x64
+      bin\x86\Release\iMobileDevice.IntegrationTests.net45.exe
+      bin\x64\Release\iMobileDevice.IntegrationTests.net45.exe
+      cd ..
+    displayName: Run integration tests (.NET 4.5)
+
+  - script: |
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\*.props iMobileDevice.IntegrationTest.netcoreapp20\
+      cd iMobileDevice.IntegrationTest.netcoreapp20
+      dotnet run
+      dotnet publish -r win7-x64 -c Release
+      dir bin\Release\netcoreapp2.0\win7-x64\publish\
+      bin\Release\netcoreapp2.0\win7-x64\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
+      dotnet publish -r win7-x86 -c Release
+      dir bin\Release\netcoreapp2.0\win7-x86\publish\
+      bin\Release\netcoreapp2.0\win7-x86\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
+    displayName: Run integration tests (.NET Core 2.0)
+
+- job: osx_test
+  dependsOn: windows_build
+  variables:
+    RID: osx-x64
+  pool:
+    vmImage: 'xcode9-macos10.13'
+  steps:
+  - template: steps/unix.yml
+
+- job: linux_test
+  dependsOn: windows_build
+  variables:
+    RID: ubuntu.16.04-x64
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - template: steps/unix.yml

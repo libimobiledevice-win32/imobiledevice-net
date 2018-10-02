@@ -24,57 +24,71 @@
     <PackageReference Include="NerdBank.GitVersioning" Version="2.1.65" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <!-- win-x64 files which come from VcPkg packages-->
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/bin/*.dll">
+    <!-- win-x64 files which come from VSTS artifacts -->
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x64/bin/*.dll">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libideviceactivation/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x64/bin/*.exe">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libimobiledevice/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x64/bin/*.dll">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libplist/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x64/bin/*.exe">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/libusbmuxd/*.exe">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x64-windows/tools/usbmuxd/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x64/bin/*">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- win-x86 files which come from NuGet packages-->
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/bin/*.dll">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x86/bin/*.dll">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libideviceactivation/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x86/bin/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libimobiledevice/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x86/bin/*.dll">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libplist/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x86/bin/*.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/libusbmuxd/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x86/bin/*">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(VCPKG_ROOT)/installed/x86-windows/tools/usbmuxd/*.exe">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+
+    <!-- Version information taken from the macOS builds -->
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/gitinfo">
+      <PackagePath>libplist.gitinfo</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/gitinfo">
+      <PackagePath>libusbmuxd.gitinfo</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/gitinfo">
+      <PackagePath>libimobiledevice.gitinfo</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/gitinfo">
+      <PackagePath>usbmuxd.gitinfo</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/gitinfo">
+      <PackagePath>libideviceactivation.gitinfo</PackagePath>
       <Pack>true</Pack>
     </Content>
     
@@ -82,33 +96,65 @@
          https://launchpad.net/~quamotion/+archive/ubuntu/ppa;
          but we keep the Ubuntu 16.04 archives for backward compatibility
          purposes. Starting with 18.04, you really need to use the PPAs, though :) -->
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-x64/lib/*.so">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/lib/*.so">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/*">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/linux-x64/sbin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/ubuntu.16.04-x64/lib/*.so">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/ubuntu.16.04-x64/bin/*">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/ubuntu.16.04-x64/bin/*">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/ubuntu.16.04-x64/bin/*">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/ubuntu.16.04-x64/sbin/*">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- macOS files come from the tarballs -->
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/lib/*.dylib">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/*">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)/../ext/osx-x64/sbin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
-    
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/bin/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/bin/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/bin/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/sbin/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+
     <!-- Pack the files are included in the current project dir-->
     <Content Include="runtimes/win-x64/native/*.*">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
@@ -122,7 +168,7 @@
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="runtimes/debian-x64/native/*.*">
+    <Content Include="runtimes/ubuntu.16.04-x64/native/*.*">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -165,13 +211,7 @@
       </Line>
       <LineText Include="%(Line.Text)" />
     </ItemGroup>
-    <WriteLinesToFile
-       File="../iMobileDevice.IntegrationTest.netcoreapp20/Directory.Build.props"
-       Lines="@(LineText)"
-      Overwrite="true" />
-    <WriteLinesToFile
-       File="../iMobileDevice.IntegrationTests.net45/Directory.Build.props"
-       Lines="@(LineText)"
-      Overwrite="true" />
+    <WriteLinesToFile File="../iMobileDevice.IntegrationTest.netcoreapp20/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
+    <WriteLinesToFile File="../iMobileDevice.IntegrationTests.net45/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
   </Target>
 </Project>
