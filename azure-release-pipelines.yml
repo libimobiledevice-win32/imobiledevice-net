@@ -1,5 +1,6 @@
-imobiledevicenetBuild: 190
-imobiledevicenetPipeline: 1
+variables:
+  imobiledevicenetBuild: 190
+  imobiledevicenetPipeline: 1
 
 jobs:
 - job: deploy
