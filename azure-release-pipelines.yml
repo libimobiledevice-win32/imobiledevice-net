@@ -43,7 +43,9 @@ jobs:
       usbmuxd_commit=`cat usbmuxd.gitinfo/gitinfo | tail -n 1`
       libideviceactivation_commit=`cat libideviceactivation.gitinfo/gitinfo | tail -n 1`
       imobiledevice_net_commit=$BUILD_SOURCEVERSION
-      version_number=`echo "cat Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()" | xmllint --nocdata --shell $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+      version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+      echo Releasing $version_number
 
       echo ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libplist-win32/libusbmuxd"
       ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libplist-win32/libusbmuxd"
@@ -53,3 +55,6 @@ jobs:
       ./github-release "v$version_number" --commit "$libideviceactivation_commit" --github-repository "libimobiledevice-win32/libideviceactivation"
       ./github-release "v$version_number" $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg binaries/*.zip --commit "$imobiledevice_net_commit" --github-repository "libimobiledevice-win32/imobiledevice-net_commit"
     displayName: Tag GitHub releases
+
+# TODO: Publish NuGet package
+# TODO: Publish usbmuxd Docker container
