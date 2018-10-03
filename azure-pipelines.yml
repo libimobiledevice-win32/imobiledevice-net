@@ -5,9 +5,9 @@ variables:
   libusbmuxdPipeline: 3
   libimobiledeviceBuild: 232
   libimobiledevicePipeline: 4
-  libideviceactivationBuild: 241
+  libideviceactivationBuild: 246
   libideviceactivationPipeline: 5
-  usbmuxdBuild: 243
+  usbmuxdBuild: 248
   usbmuxdPipeline: 6
   ideviceinstallerBuild: 242
   ideviceinstallerPipeline: 7
