@@ -6,10 +6,6 @@ steps:
 - script: |
     unzip $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg -d $BUILD_SOURCESDIRECTORY/zip
     ls -l $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native
-    export LD_LIBRARY_PATH=$BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native:$LD_LIBRARY_PATH
-    dotnet test iMobileDevice.Generator.Tests/iMobileDevice.Generator.Tests.csproj
-    dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj
-  displayName: Run unit tests
 
 - script: |
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/iproxy
@@ -17,6 +13,12 @@ steps:
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/iproxy --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/idevice_id --help
   displayName: Test utilities
+
+- script: |
+    export LD_LIBRARY_PATH=$BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native:$LD_LIBRARY_PATH
+    dotnet test iMobileDevice.Generator.Tests/iMobileDevice.Generator.Tests.csproj
+    dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj
+  displayName: Run unit tests
 
 - script: |
     mkdir packages
