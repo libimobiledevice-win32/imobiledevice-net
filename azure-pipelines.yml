@@ -95,14 +95,14 @@ jobs:
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\ideviceactivation.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\usbmuxd.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\ideviceinstaller.exe --help
-      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\irecovery.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\irecovery.exe
 
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\iproxy.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\idevice_id.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\ideviceactivation.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\usbmuxd.exe --help
       %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\ideviceinstaller.exe --help
-      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\irecovery.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\irecovery.exe
     displayName: Test utilities
 
   - script: |

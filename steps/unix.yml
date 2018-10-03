@@ -19,7 +19,7 @@ steps:
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceactivation --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/usbmuxd --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceinstaller --help
-    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/irecovery --help
+    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/irecovery
   displayName: Test utilities
 
 - script: |
