@@ -11,7 +11,7 @@ variables:
   usbmuxdPipeline: 6
   ideviceinstallerBuild: 258
   ideviceinstallerPipeline: 7
-  libirecoveryBuild: 117
+  libirecoveryBuild: 249
   libirecoveryPipeline: 8
   idevicerestoreBuild: 120
   idevicerestorePipeline: 9
@@ -37,6 +37,7 @@ jobs:
       copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
       copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
       copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
       dotnet run -o ..\iMobileDevice-net -i SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
       cd ..
       dotnet build imobiledevice-net\iMobileDevice-net.csproj
