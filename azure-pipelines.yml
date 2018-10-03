@@ -89,17 +89,17 @@ jobs:
       dir %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
       dir %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native
 
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\iproxy.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\idevice_id.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\ideviceactivation.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\usbmuxd.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\ideviceinstaller.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\iproxy.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\idevice_id.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\ideviceactivation.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\usbmuxd.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native\ideviceinstaller.exe --help
 
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\iproxy.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\idevice_id.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\ideviceactivation.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\usbmuxd.exe --help
-      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\ideviceinstaller.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\iproxy.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\idevice_id.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\ideviceactivation.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\usbmuxd.exe --help
+      %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native\ideviceinstaller.exe --help
     displayName: Test utilities
 
   - script: |
