@@ -347,7 +347,7 @@ namespace iMobileDevice.iDevice
         }
         
         /// <summary>
-        /// Gets the handle of the device. Depends on the connection type.
+        /// Gets the handle or (usbmux device id) of the device.
         /// </summary>
         public virtual iDeviceError idevice_get_handle(iDeviceHandle device, ref uint handle)
         {

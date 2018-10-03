@@ -27,7 +27,7 @@ namespace iMobileDevice.Usbmuxd
     public partial class UsbmuxdNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        const string libraryName = "usbmuxd";
         
         /// <summary>
         /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
@@ -302,6 +302,27 @@ namespace iMobileDevice.Usbmuxd
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_save_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_save_pair_record([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordData, uint recordSize);
+        
+        /// <summary>
+        /// Save a pairing record with device identifier
+        /// </summary>
+        /// <param name="record_id">
+        /// the record identifier of the pairing record to save
+        /// </param>
+        /// <param name="device_id">
+        /// the device identifier of the connected device, or 0
+        /// </param>
+        /// <param name="record_data">
+        /// buffer containing the pairing record data
+        /// </param>
+        /// <param name="record_size">
+        /// size of the buffer passed in record_data
+        /// </param>
+        /// <returns>
+        /// 0 on success, a negative error value otherwise.
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_save_pair_record_with_device_id", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_save_pair_record_with_device_id([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId, uint deviceId, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordData, uint recordSize);
         
         /// <summary>
         /// Delete a pairing record

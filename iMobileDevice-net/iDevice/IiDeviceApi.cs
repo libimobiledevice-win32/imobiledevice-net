@@ -276,7 +276,7 @@ namespace iMobileDevice.iDevice
         iDeviceError idevice_connection_get_fd(iDeviceConnectionHandle connection, ref int fd);
         
         /// <summary>
-        /// Gets the handle of the device. Depends on the connection type.
+        /// Gets the handle or (usbmux device id) of the device.
         /// </summary>
         iDeviceError idevice_get_handle(iDeviceHandle device, ref uint handle);
         

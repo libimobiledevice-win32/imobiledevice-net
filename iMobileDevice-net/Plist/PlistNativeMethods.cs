@@ -27,7 +27,7 @@ namespace iMobileDevice.Plist
     public partial class PlistNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        const string libraryName = "plist";
         
         /// <summary>
         /// Create a new root plist_t type #PLIST_DICT

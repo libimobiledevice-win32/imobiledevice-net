@@ -361,6 +361,29 @@ namespace iMobileDevice.Usbmuxd
         }
         
         /// <summary>
+        /// Save a pairing record with device identifier
+        /// </summary>
+        /// <param name="record_id">
+        /// the record identifier of the pairing record to save
+        /// </param>
+        /// <param name="device_id">
+        /// the device identifier of the connected device, or 0
+        /// </param>
+        /// <param name="record_data">
+        /// buffer containing the pairing record data
+        /// </param>
+        /// <param name="record_size">
+        /// size of the buffer passed in record_data
+        /// </param>
+        /// <returns>
+        /// 0 on success, a negative error value otherwise.
+        /// </returns>
+        public virtual int usbmuxd_save_pair_record_with_device_id(string recordId, uint deviceId, string recordData, uint recordSize)
+        {
+            return UsbmuxdNativeMethods.usbmuxd_save_pair_record_with_device_id(recordId, deviceId, recordData, recordSize);
+        }
+        
+        /// <summary>
         /// Delete a pairing record
         /// </summary>
         /// <param name="record_id">

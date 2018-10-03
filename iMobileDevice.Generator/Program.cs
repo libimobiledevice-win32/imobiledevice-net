@@ -17,14 +17,13 @@ namespace iMobileDevice.Generator
 
     internal class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             CommandLineApplication commandLineApplication =
                 new CommandLineApplication(throwOnUnexpectedArg: false);
 
             commandLineApplication.Name = "iMobileDevice.Generator";
             commandLineApplication.HelpOption("-?|-h|--help");
-
 
             commandLineApplication.Command(
                 "generate",
@@ -80,8 +79,10 @@ namespace iMobileDevice.Generator
 
                             vcpkgPath = Path.Combine(vcpkgPath, "installed", "x86-windows", "include");
                             Console.WriteLine($"Reading include files from {vcpkgPath}");
-                            generator.IncludeDirectories.Add(Path.Combine(vcpkgPath));
+                            sourceDir = vcpkgPath;
                         }
+
+                        generator.IncludeDirectories.Add(sourceDir);
 
                         Console.WriteLine($"Writing the C# files to: {targetDirectory}");
 
@@ -90,7 +91,7 @@ namespace iMobileDevice.Generator
                         var files = new List<string>();
                         files.Add(Path.Combine(sourceDir, "usbmuxd.h"));
                         files.Add(Path.Combine(sourceDir, "plist/plist.h"));
-                        // files.Add(Path.Combine(sourceDir, "libideviceactivation.h"));
+                        files.Add(Path.Combine(sourceDir, "libideviceactivation.h"));
                         var iMobileDeviceDirectory = Path.Combine(sourceDir, "libimobiledevice");
                         files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
                         files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
@@ -110,6 +111,14 @@ namespace iMobileDevice.Generator
                             {
                                 generator.Generate(targetDirectory, "ideviceactivation");
                             }
+                            else if(string.Equals(Path.GetFileName(file), "plist.h", StringComparison.OrdinalIgnoreCase))
+                            {
+                                generator.Generate(targetDirectory, "plist");
+                            }
+                            else if (string.Equals(Path.GetFileName(file), "usbmuxd.h", StringComparison.OrdinalIgnoreCase))
+                            {
+                                generator.Generate(targetDirectory, "usbmuxd");
+                            }
                             else
                             {
                                 generator.Generate(targetDirectory);
@@ -126,6 +135,8 @@ namespace iMobileDevice.Generator
                         return 0;
                     });
                 });
+
+            return commandLineApplication.Execute(args);
         }
 
         static void RestoreClang()
