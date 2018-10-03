@@ -191,6 +191,10 @@
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/osx-x64/lib/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- Pack the files are included in the current project dir-->
     <Content Include="runtimes/win-x64/native/*.*">
