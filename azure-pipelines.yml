@@ -1,7 +1,7 @@
 variables:
   libplistBuild: 209
   libplistPipeline: 2
-  libusbmuxdBuild: 230
+  libusbmuxdBuild: 260
   libusbmuxdPipeline: 3
   libimobiledeviceBuild: 232
   libimobiledevicePipeline: 4
