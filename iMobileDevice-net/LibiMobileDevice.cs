@@ -13,6 +13,7 @@ namespace iMobileDevice
     using iMobileDevice.Usbmuxd;
     using iMobileDevice.Plist;
     using iMobileDevice.iDeviceActivation;
+    using iMobileDevice.Recovery;
     using iMobileDevice.iDevice;
     using iMobileDevice.Lockdown;
     using iMobileDevice.Afc;
@@ -49,6 +50,8 @@ namespace iMobileDevice
         private IPlistApi plist;
         
         private IiDeviceActivationApi ideviceActivation;
+        
+        private IRecoveryApi recovery;
         
         private IiDeviceApi idevice;
         
@@ -103,6 +106,7 @@ namespace iMobileDevice
             this.usbmuxd = new UsbmuxdApi(this);
             this.plist = new PlistApi(this);
             this.ideviceActivation = new iDeviceActivationApi(this);
+            this.recovery = new RecoveryApi(this);
             this.idevice = new iDeviceApi(this);
             this.lockdown = new LockdownApi(this);
             this.afc = new AfcApi(this);
@@ -174,6 +178,18 @@ namespace iMobileDevice
             set
             {
                 this.ideviceActivation = value;
+            }
+        }
+        
+        public virtual IRecoveryApi Recovery
+        {
+            get
+            {
+                return this.recovery;
+            }
+            set
+            {
+                this.recovery = value;
             }
         }
         

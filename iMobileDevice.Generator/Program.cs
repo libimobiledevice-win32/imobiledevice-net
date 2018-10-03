@@ -92,6 +92,7 @@ namespace iMobileDevice.Generator
                         files.Add(Path.Combine(sourceDir, "usbmuxd.h"));
                         files.Add(Path.Combine(sourceDir, "plist/plist.h"));
                         files.Add(Path.Combine(sourceDir, "libideviceactivation.h"));
+                        files.Add(Path.Combine(sourceDir, "libirecovery.h"));
                         var iMobileDeviceDirectory = Path.Combine(sourceDir, "libimobiledevice");
                         files.Add(Path.Combine(iMobileDeviceDirectory, "libimobiledevice.h"));
                         files.Add(Path.Combine(iMobileDeviceDirectory, "lockdown.h"));
@@ -118,6 +119,10 @@ namespace iMobileDevice.Generator
                             else if (string.Equals(Path.GetFileName(file), "usbmuxd.h", StringComparison.OrdinalIgnoreCase))
                             {
                                 generator.Generate(targetDirectory, "usbmuxd");
+                            }
+                            else if (string.Equals(Path.GetFileName(file), "libirecovery.h", StringComparison.OrdinalIgnoreCase))
+                            {
+                                generator.Generate(targetDirectory, "irecovery");
                             }
                             else
                             {

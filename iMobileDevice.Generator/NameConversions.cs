@@ -14,6 +14,12 @@ namespace iMobileDevice.Generator
         {
             var patchedName = nativeName;
 
+            // Special case found in libirecovery
+            if (nativeName == "_")
+            {
+                return "RecoveryMode";
+            }
+
             patchedName = patchedName.Replace("DIAGNOSTICS_RELAY", "diagnosticsrelay");
             patchedName = patchedName.Replace("HOUSE_ARREST", "housearrest");
             patchedName = patchedName.Replace("MOBILE_IMAGE_MOUNTER", "mobileimagemounter");
@@ -22,6 +28,7 @@ namespace iMobileDevice.Generator
             patchedName = patchedName.Replace("FILE_RELAY", "filerelay");
             patchedName = patchedName.Replace("IDEVICE_ACTIVATION", "ideviceactivation");
             patchedName = patchedName.Replace("libideviceactivation", "ideviceactivation");
+            patchedName = patchedName.Replace("libirecovery", "irecv");
 
             List<string> parts = new List<string>(patchedName.Split('_'));
 
@@ -145,6 +152,10 @@ namespace iMobileDevice.Generator
                 {
                     parts[i] = "iDevice";
                     parts.Insert(i + 1, "Activation");
+                }
+                else if (parts[i] == "irecv")
+                {
+                    parts[i] = "Recovery";
                 }
 
                 if (conversion == NameConversion.Parameter && i == 0)

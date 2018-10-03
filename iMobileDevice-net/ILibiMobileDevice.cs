@@ -13,6 +13,7 @@ namespace iMobileDevice
     using iMobileDevice.Usbmuxd;
     using iMobileDevice.Plist;
     using iMobileDevice.iDeviceActivation;
+    using iMobileDevice.Recovery;
     using iMobileDevice.iDevice;
     using iMobileDevice.Lockdown;
     using iMobileDevice.Afc;
@@ -53,6 +54,11 @@ namespace iMobileDevice
         }
         
         IiDeviceActivationApi iDeviceActivation
+        {
+            get;
+        }
+        
+        IRecoveryApi Recovery
         {
             get;
         }

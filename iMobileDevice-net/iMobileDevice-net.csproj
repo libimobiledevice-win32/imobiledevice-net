@@ -43,11 +43,19 @@
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/win7-x64/bin/*">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x64/bin/*">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/win7-x64/bin/*">
+      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/win7-x64/bin/*">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -69,6 +77,10 @@
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/win7-x86/bin/*">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x86/bin/*">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
@@ -77,7 +89,10 @@
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/win7-x86/bin/*">
+      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- Version information taken from the macOS builds -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/gitinfo">
@@ -145,6 +160,14 @@
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/ubuntu.16.04-x64/lib/*.so">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/ubuntu.16.04-x64/bin/">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
 
     <!-- macOS files come from the tarballs -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/lib/*.dylib">
@@ -192,6 +215,14 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/osx-x64/lib/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/osx-x64/lib/*.dylib">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/osx-x64/bin/*">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
