@@ -1,13 +1,13 @@
 variables:
-  libplistBuild: 187
+  libplistBuild: 209
   libplistPipeline: 2
-  libusbmuxdBuild: 179
+  libusbmuxdBuild: 214
   libusbmuxdPipeline: 3
-  libimobiledeviceBuild: 183
+  libimobiledeviceBuild: 216
   libimobiledevicePipeline: 4
-  libideviceactivationBuild: 181
+  libideviceactivationBuild: 220
   libideviceactivationPipeline: 5
-  usbmuxdBuild: 182
+  usbmuxdBuild: 221
   usbmuxdPipeline: 6
   libirecoveryBuild: 117
   libirecoveryPipeline: 8
