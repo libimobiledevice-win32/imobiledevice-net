@@ -179,6 +179,10 @@
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/lib/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/sbin/*">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
