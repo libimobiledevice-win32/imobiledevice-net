@@ -5,14 +5,14 @@ variables:
   libusbmuxdPipeline: 3
   libimobiledeviceBuild: 232
   libimobiledevicePipeline: 4
-  libideviceactivationBuild: 220
+  libideviceactivationBuild: 241
   libideviceactivationPipeline: 5
-  usbmuxdBuild: 221
+  usbmuxdBuild: 243
   usbmuxdPipeline: 6
+  ideviceinstallerBuild: 242
+  ideviceinstallerPipeline: 7
   libirecoveryBuild: 117
   libirecoveryPipeline: 8
-  ideviceinstallerBuild: 104
-  ideviceinstallerPipeline: 7
   idevicerestoreBuild: 120
   idevicerestorePipeline: 9
 
@@ -86,8 +86,24 @@ jobs:
 
   - script: |
       7z x %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\iMobileDevice-net.*.nupkg -o%BUILD_SOURCESDIRECTORY%\zip
-      set PATH=%PATH%;%BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
       dir %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
+      dir %BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x86\native
+
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\iproxy.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\idevice_id.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\ideviceactivation.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\usbmuxd.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x64\native\ideviceinstaller.exe --help
+
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\iproxy.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\idevice_id.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\ideviceactivation.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\usbmuxd.exe --help
+      $BUILD_SOURCESDIRECTORY\zip\runtimes\win-x86\native\ideviceinstaller.exe --help
+    displayName: Test utilities
+
+  - script: |
+      set PATH=%PATH%;%BUILD_SOURCESDIRECTORY%\zip\runtimes\win-x64\native
       dotnet test iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj
       dotnet test iMobileDevice.Tests\iMobileDevice.Tests.csproj
     displayName: Run unit tests

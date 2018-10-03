@@ -10,8 +10,14 @@ steps:
 - script: |
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/iproxy
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/idevice_id
+    chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceactivation
+    chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/usbmuxd
+    chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceinstaller
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/iproxy --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/idevice_id --help
+    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceactivation --help
+    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/usbmuxd --help
+    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceinstaller --help
   displayName: Test utilities
 
 - script: |
