@@ -1,5 +1,5 @@
 variables:
-  imobiledevicenetBuild: 190
+  imobiledevicenetBuild: 223
   imobiledevicenetPipeline: 1
 
 jobs:
@@ -53,7 +53,7 @@ jobs:
       ./github-release "v$version_number" --commit "$libimobiledevice_commit" --github-repository "libimobiledevice-win32/libimobiledevice"
       ./github-release "v$version_number" --commit "$usbmuxd_commit" --github-repository "libimobiledevice-win32/usbmuxd"
       ./github-release "v$version_number" --commit "$libideviceactivation_commit" --github-repository "libimobiledevice-win32/libideviceactivation"
-      ./github-release "v$version_number" $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg binaries/*.zip --commit "$imobiledevice_net_commit" --github-repository "libimobiledevice-win32/imobiledevice-net"
+      ./github-release "v$version_number" $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg $SYSTEM_ARTIFACTSDIRECTORY/binaries/*.zip --commit "$imobiledevice_net_commit" --github-repository "libimobiledevice-win32/imobiledevice-net"
     displayName: Tag GitHub releases
 
 # TODO: Publish NuGet package
