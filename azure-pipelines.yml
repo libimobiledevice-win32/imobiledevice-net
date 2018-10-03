@@ -11,7 +11,7 @@ variables:
   usbmuxdPipeline: 6
   ideviceinstallerBuild: 258
   ideviceinstallerPipeline: 7
-  libirecoveryBuild: 249
+  libirecoveryBuild: 263
   libirecoveryPipeline: 8
   idevicerestoreBuild: 120
   idevicerestorePipeline: 9
