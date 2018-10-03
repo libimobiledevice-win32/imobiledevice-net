@@ -9,7 +9,7 @@ variables:
   libideviceactivationPipeline: 5
   usbmuxdBuild: 252
   usbmuxdPipeline: 6
-  ideviceinstallerBuild: 242
+  ideviceinstallerBuild: 251
   ideviceinstallerPipeline: 7
   libirecoveryBuild: 117
   libirecoveryPipeline: 8
