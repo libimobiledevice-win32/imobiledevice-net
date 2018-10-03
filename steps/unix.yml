@@ -13,11 +13,13 @@ steps:
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceactivation
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/usbmuxd
     chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceinstaller
+    chmod +x $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/irecovery
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/iproxy --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/idevice_id --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceactivation --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/usbmuxd --help
     $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/ideviceinstaller --help
+    $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/irecovery --help
   displayName: Test utilities
 
 - script: |
