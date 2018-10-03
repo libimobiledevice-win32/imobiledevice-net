@@ -116,7 +116,15 @@
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/ubuntu.16.04-x64/lib/*.so">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/ubuntu.16.04-x64/bin/*">
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/ubuntu.16.04-x64/lib/*.so">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -146,7 +154,15 @@
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/lib/*.dylib">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/bin/*">
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
