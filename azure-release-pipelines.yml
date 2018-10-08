@@ -47,8 +47,7 @@ jobs:
 
       echo Releasing $version_number
 
-      echo ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libimobiledevice-win32/libusbmuxd"
-      ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libimobiledevice-win32/libusbmuxd"
+      ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libimobiledevice-win32/libplist"
       ./github-release "v$version_number" --commit "$libusbmuxd_commit" --github-repository "libimobiledevice-win32/libusbmuxd"
       ./github-release "v$version_number" --commit "$libimobiledevice_commit" --github-repository "libimobiledevice-win32/libimobiledevice"
       ./github-release "v$version_number" --commit "$usbmuxd_commit" --github-repository "libimobiledevice-win32/usbmuxd"
