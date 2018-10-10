@@ -82,7 +82,7 @@ namespace iMobileDevice.Generator
 
             CodeConstructor constructor = new CodeConstructor();
             constructor.Comments.Add(new CodeCommentStatement("<summary>", true));
-            constructor.Comments.Add(new CodeCommentStatement($"Initializes a new instance of the <see cref\"{nativeClass.Name}\"/> class", true));
+            constructor.Comments.Add(new CodeCommentStatement($"Initializes a new instance of the <see cref=\"{nativeClass.Name}\"/> class", true));
             constructor.Comments.Add(new CodeCommentStatement("</summary>", true));
             constructor.Comments.Add(new CodeCommentStatement("<param name=\"parent\">", true));
             constructor.Comments.Add(new CodeCommentStatement($"The <see cref=\"ILibiMobileDeviceApi\"/> which owns this <see cref=\"{this.generator.Name}\"/>.", true));
