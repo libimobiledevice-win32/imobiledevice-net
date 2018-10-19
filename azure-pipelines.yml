@@ -110,6 +110,7 @@ jobs:
       dotnet test iMobileDevice.Generator.Tests\iMobileDevice.Generator.Tests.csproj
       dotnet test iMobileDevice.Tests\iMobileDevice.Tests.csproj
     displayName: Run unit tests
+    continueOnError: true
 
   - script: |
       set PATH=%PATH%;"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\"
@@ -124,6 +125,7 @@ jobs:
       bin\x64\Release\iMobileDevice.IntegrationTests.net45.exe
       cd ..
     displayName: Run integration tests (.NET 4.5)
+    continueOnError: true
 
   - script: |
       copy %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\*.props iMobileDevice.IntegrationTest.netcoreapp20\
@@ -136,6 +138,7 @@ jobs:
       dir bin\Release\netcoreapp2.0\win7-x86\publish\
       bin\Release\netcoreapp2.0\win7-x86\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
     displayName: Run integration tests (.NET Core 2.0)
+    continueOnError: true
 
 - job: osx_test
   dependsOn: windows_build
