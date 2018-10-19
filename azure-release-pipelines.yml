@@ -22,7 +22,7 @@ jobs:
     continueOnError: true
     inputs:
       command: push
-      packagesToPush: imobiledevice-net\iMobileDevice-net.*.nupkg
+      packagesToPush: '$(System.ArtifactsDirectory)\imobiledevice-net\iMobileDevice-net.*.nupkg'
       publishFeedCredentials: 'NuGet'
       nuGetFeedType: external
 
