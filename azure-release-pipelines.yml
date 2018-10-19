@@ -118,7 +118,7 @@ jobs:
 
       git clone https://github.com/libimobiledevice-win32/docker
 
-      docker build docker/$NAME/ -t quamotion/usbmuxd:$version_number$SUFFIX --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=$version_number
+      docker build docker/$NAME/ -t quamotion/usbmuxd:$version_number$SUFFIX --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=v$version_number
 
       docker tag quamotion/usbmuxd:$version_number$SUFFIX quamotion/usbmuxd:latest$SUFFIX
 
