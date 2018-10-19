@@ -78,5 +78,44 @@ jobs:
       ./github-release "v$version_number" $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg $SYSTEM_ARTIFACTSDIRECTORY/binaries/*.zip --commit "$imobiledevice_net_commit" --github-repository "libimobiledevice-win32/imobiledevice-net"
     displayName: Tag GitHub releases
 
-# TODO: Publish NuGet package
-# TODO: Publish usbmuxd Docker container
+- job: docker
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'specific'
+      project: 'imobiledevice-net'
+      pipeline: $(imobiledevicenetPipeline)
+      buildVersionToDownload: 'specific'
+      buildId: $(imobiledevicenetBuild)
+      downloadType: 'single'
+      artifactName: 'imobiledevice-net'
+      downloadPath: '$(System.ArtifactsDirectory)'
+    displayName: 'Download imobiledevice-net artifacts'
+  - script: |
+      version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+      echo Releasing $version_number
+
+      git clone https://github.com/libimobiledevice-win32/docker
+
+      docker build docker/alpine/ -t quamotion/usbmuxd:$version_number-alpine --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=$version_number
+      docker build docker/xenial/ -t quamotion/usbmuxd:$version_number --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=$version_number
+      docker build docker/bionic/ -t quamotion/usbmuxd:$version_number-bionic --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=$version_number
+
+      docker tag quamotion/usbmuxd:$version_number-alpine quamotion/usbmuxd:latest-alpine
+      docker tag quamotion/usbmuxd:$version_number quamotion/usbmuxd:latest
+      docker tag quamotion/usbmuxd:$version_number-bionic quamotion/usbmuxd:latest-bionic
+
+      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+
+      docker push quamotion/usbmuxd:$version_number-alpine
+      docker push quamotion/usbmuxd:$version_number
+      docker push quamotion/usbmuxd:$version_number-bionic
+
+      docker push quamotion/usbmuxd:latest-alpine
+      docker push quamotion/usbmuxd:latest
+      docker push quamotion/usbmuxd:latest-bionic
+
+    displayName: Build Docker containers
