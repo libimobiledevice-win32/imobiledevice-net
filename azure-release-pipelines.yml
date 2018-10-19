@@ -94,6 +94,8 @@ jobs:
       downloadPath: '$(System.ArtifactsDirectory)'
     displayName: 'Download imobiledevice-net artifacts'
   - script: |
+      sudo apt-get install -y libxml2-utils
+
       version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 
       echo Releasing $version_number
