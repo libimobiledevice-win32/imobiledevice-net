@@ -3,6 +3,29 @@ variables:
   imobiledevicenetPipeline: 1
 
 jobs:
+- job: nuget_deploy
+  pool:
+    vmImage: 'VS2017-Win2016'
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'specific'
+      project: 'imobiledevice-net'
+      pipeline: $(imobiledevicenetPipeline)
+      buildVersionToDownload: 'specific'
+      buildId: $(imobiledevicenetBuild)
+      downloadType: 'single'
+      artifactName: 'imobiledevice-net'
+      downloadPath: '$(System.ArtifactsDirectory)'
+    displayName: 'Download imobiledevice-net artifacts'
+  - task: NuGetCommand@2
+    continueOnError: true
+    inputs:
+      command: push
+      packagesToPush: imobiledevice-net\iMobileDevice-net.*.nupkg
+      publishFeedCredentials: 'NuGet'
+      nuGetFeedType: external
+
 - job: deploy
   pool:
     vmImage: 'ubuntu-16.04'
