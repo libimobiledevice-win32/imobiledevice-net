@@ -1,19 +1,19 @@
 variables:
-  libplistBuild: 281
+  libplistBuild: 317
   libplistPipeline: 2
-  libusbmuxdBuild: 303
+  libusbmuxdBuild: 318
   libusbmuxdPipeline: 3
-  libimobiledeviceBuild: 305
+  libimobiledeviceBuild: 319
   libimobiledevicePipeline: 4
-  libideviceactivationBuild: 292
+  libideviceactivationBuild: 320
   libideviceactivationPipeline: 5
-  usbmuxdBuild: 297
+  usbmuxdBuild: 321
   usbmuxdPipeline: 6
-  ideviceinstallerBuild: 293
+  ideviceinstallerBuild: 322
   ideviceinstallerPipeline: 7
-  libirecoveryBuild: 294
+  libirecoveryBuild: 323
   libirecoveryPipeline: 8
-  idevicerestoreBuild: 298
+  idevicerestoreBuild: 324
   idevicerestorePipeline: 9
 
 jobs:
@@ -58,18 +58,38 @@ jobs:
       copy iMobileDevice.IntegrationTests.net45\Directory.Build.props %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
     displayName: Prepare artifacts
 
+  - script: |
+      mkdir %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\libplist.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\libusbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\libimobiledevice.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\usbmuxd\usbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\libideviceactivation.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\ideviceinstaller\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\idevicerestore\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+
+    displayName: Publish tarballs
+
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)/imobiledevice-net'
       artifactName: imobiledevice-net
-    displayName: Publish artifacts
+    displayName: Publish imobiledevice-net
     condition: always()
 
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)/binaries'
       artifactName: binaries
-    displayName: Publish artifacts
+    displayName: Publish binaries
+    condition: always()
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/sources'
+      artifactName: sources
+    displayName: Publish sources
     condition: always()
 
 - job: windows_test
