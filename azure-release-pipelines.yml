@@ -182,9 +182,6 @@ jobs:
       export DEBEMAIL="frederik.carlier@quamotion.mobi"
       export DEBFULLNAME="Frederik Carlier"
 
-      git config --global user.name "$DEBFULLNAME"
-      git config --global user.email "$DEBEMAIL"
-
       cd $SYSTEM_ARTIFACTSDIRECTORY/sources/
 
       declare -A package_versions
