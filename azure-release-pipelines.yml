@@ -1,5 +1,5 @@
 variables:
-  imobiledevicenetBuild: 325
+  imobiledevicenetBuild: 344
   imobiledevicenetPipeline: 1
 
 jobs:
