@@ -128,3 +128,61 @@ jobs:
       docker push quamotion/usbmuxd:latest$SUFFIX
 
     displayName: Build Docker containers
+
+- job: ppa
+  strategy:
+    maxParallel: 4
+    matrix:
+      xenial:
+        DIST: xenial
+#      bionic:
+#        DIST: bionic
+#      precise:
+#        DIST: precise
+#      trusty:
+#        DIST: trusty
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'specific'
+      project: 'imobiledevice-net'
+      pipeline: $(imobiledevicenetPipeline)
+      buildVersionToDownload: 'specific'
+      buildId: $(imobiledevicenetBuild)
+      downloadType: 'single'
+      artifactName: 'sources'
+      downloadPath: '$(System.ArtifactsDirectory)'
+    displayName: 'Download imobiledevice-net artifacts'
+  - script: |
+      sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput osc fakeroot
+      version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+      export DEBEMAIL="frederik.carlier@quamotion.mobi"
+      export DEBFULLNAME="Frederik Carlier"
+
+      echo allow-loopback-pinentry > ~/.gnupg/gpg-agent.conf
+      gpg --allow-secret-key-import --import $BUILD_SOURCESDIRECTORY/ppa.asc
+      killall gpg-agent
+      echo "${GPG_PASSPHRASE}" >> /tmp/gpg_passphrase
+
+      git config --global user.name "$DEBFULLNAME"
+      git config --global user.email "$DEBEMAIL"
+
+      cd $SYSTEM_ARTIFACTSDIRECTORY/sources/
+
+      mkdir libplist
+      tar xvf libplist.orig.tar.gz -C libplist
+      mv libplist.orig.tar.gz libplist_${version_number}.orig.tar.gz
+      cd libplist
+
+      dch -v "${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
+      git add debian/changelog
+      git commit -m "imobiledevice-net ${version_number}"
+
+      debuild -S -k5314912C -p"$$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
+      dput ppa:quamotion/ppa ../libplist_${version_number}-0$DIST_source.changes
+
+      rm -rf /tmp/gpg_passphrase
+    displayName: Build Debian archives
