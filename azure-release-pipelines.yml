@@ -186,7 +186,7 @@ jobs:
 
       mkdir libplist
       tar xvf libplist.orig.tar.gz -C libplist
-      mv libplist.orig.tar.gz libplist_${version_number}.orig.tar.gz
+      mv libplist.orig.tar.gz libplist_1.14-${version_number}.orig.tar.gz
       cd libplist
 
       dch -v "1.14-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
