@@ -167,12 +167,12 @@ jobs:
       sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput osc fakeroot
     displayName: 'Install dependencies'
   - script: |
-    displayName: 'Configure GPG'
       mkdir -p  ~/.gnupg/
       echo allow-loopback-pinentry > ~/.gnupg/gpg-agent.conf
       gpg --allow-secret-key-import --import $BUILD_SOURCESDIRECTORY/ppa.asc
       killall gpg-agent
       echo "${GPG_PASSPHRASE}" >> /tmp/gpg_passphrase
+    displayName: 'Configure GPG'
   - script: |
       version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 
@@ -195,7 +195,6 @@ jobs:
 
       debuild -S -k5314912C -p"$$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
       dput ppa:quamotion/ppa ../libplist_${version_number}-0$DIST_source.changes
-
     displayName: Build Debian archives
   - script: |
       rm -rf /tmp/gpg_passphrase
