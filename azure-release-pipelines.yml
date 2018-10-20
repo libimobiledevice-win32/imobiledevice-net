@@ -164,7 +164,7 @@ jobs:
       downloadPath: '$(System.ArtifactsDirectory)'
     displayName: 'Download imobiledevice-net artifacts'
   - script: |
-      sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput osc fakeroot
+      sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput
     displayName: 'Install dependencies'
   - script: |
       mkdir -p  ~/.gnupg/
