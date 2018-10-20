@@ -196,8 +196,6 @@ jobs:
           cd libplist
 
           dch -v "$package_version-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
-          git add debian/changelog
-          git commit -m "imobiledevice-net ${version_number}"
 
           debuild -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
           copy ../$package_$package_version* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
