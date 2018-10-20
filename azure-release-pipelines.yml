@@ -185,17 +185,19 @@ jobs:
       cd $SYSTEM_ARTIFACTSDIRECTORY/sources/
 
       declare -A package_versions
-      package_versions=( ["libplist"]="2.0.2")
+      package_versions=( ["libplist"]="2.0.2" ["libusbmuxd"]="1.12.0" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1")
 
-      for package in libplist
+      for package in libplist libusbmuxd libimobiledevice usbmuxd libideviceactivation
       do
           package_version=${package_versions[$package]}
           mkdir $package
           tar xvf $package.orig.tar.gz -C $package
           mv $package.orig.tar.gz ${package}_${package_version}-${version_number}.orig.tar.gz
-          cd $package
+          cd libplist
 
           dch -v "${package_version}-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
+          git add debian/changelog
+          git commit -m "imobiledevice-net ${version_number}"
 
           debuild -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
           cp ../${package}_${package_version}* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
