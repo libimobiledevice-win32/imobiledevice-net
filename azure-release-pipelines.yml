@@ -203,7 +203,7 @@ jobs:
           debuild -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
           ls ../$package_$package_version*
 
-          dput ppa:quamotion/ppa ../libplist_$package_version-${version_number}-0${DIST}_source.changes
+          dput ppa:quamotion/ppa ../$package_$package_version-${version_number}-0${DIST}_source.changes
       done
     displayName: Build Debian archives
   - script: |
