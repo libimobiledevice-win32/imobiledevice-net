@@ -194,7 +194,9 @@ jobs:
       git commit -m "imobiledevice-net ${version_number}"
 
       debuild -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
-      dput ppa:quamotion/ppa ../libplist_1.14-${version_number}-0$DIST_source.changes
+      ls ../libplist_1.14*
+
+      dput ppa:quamotion/ppa ../libplist_1.14-${version_number}-0${DIST}_source.changes
     displayName: Build Debian archives
   - script: |
       rm -rf /tmp/gpg_passphrase
