@@ -6,8 +6,4 @@ export GPG_TTY=`tty`
 . /etc/lsb-release
 echo Running on $DISTRIB_CODENAME
 
-if [ "$DISTRIB_CODENAME" = "trusty" ]; then
-    cat $PWD_FILE | gpg --batch --passphrase-fd 0 --yes $@
-else
-    cat $PWD_FILE | gpg --batch --passphrase-fd 0 --pinentry-mode loopback --yes $@
-fi
+cat $PWD_FILE | gpg --batch --passphrase-fd 0 --yes $@
