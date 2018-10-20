@@ -190,7 +190,7 @@ jobs:
 
       for package in libplist
       do
-          $package_version = ${package_versions[$package]}
+          $package_version=${package_versions[$package]}
           mkdir $package
           tar xvf $package.orig.tar.gz -C $package
           mv $package.orig.tar.gz $package_$package_version-${version_number}.orig.tar.gz
