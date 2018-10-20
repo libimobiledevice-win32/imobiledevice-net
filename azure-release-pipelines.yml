@@ -1,5 +1,5 @@
 variables:
-  imobiledevicenetBuild: 306
+  imobiledevicenetBuild: 325
   imobiledevicenetPipeline: 1
 
 jobs:
@@ -91,9 +91,6 @@ jobs:
       alpine:
         SUFFIX: -alpine
         NAME: alpine
-      arm64v8:
-        SUFFIX: -arm64v8
-        NAME: arm64v8
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
