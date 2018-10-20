@@ -189,12 +189,12 @@ jobs:
       mv libplist.orig.tar.gz libplist_${version_number}.orig.tar.gz
       cd libplist
 
-      dch -v "${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
+      dch -v "1.14-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
       git add debian/changelog
       git commit -m "imobiledevice-net ${version_number}"
 
       debuild -S -k5314912C -p"$$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
-      dput ppa:quamotion/ppa ../libplist_${version_number}-0$DIST_source.changes
+      dput ppa:quamotion/ppa ../libplist_1.14-${version_number}-0$DIST_source.changes
     displayName: Build Debian archives
   - script: |
       rm -rf /tmp/gpg_passphrase
