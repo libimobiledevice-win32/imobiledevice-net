@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// <copyright file="UsbmuxdDeviceInfo.cs" company="Quamotion">
+// <copyright file="UsbmuxLookupOptions.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
@@ -24,20 +24,22 @@ namespace iMobileDevice.Usbmuxd
     using iMobileDevice.Plist;
     
     
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public struct UsbmuxdDeviceInfo
+    /// <summary>
+    /// Device lookup options for usbmuxd_get_device. 
+    /// </summary>
+    public enum UsbmuxLookupOptions : int
     {
         
-        public uint handle;
+        LookupUsbmux = 2,
         
-        public uint product_id;
+        /// <summary>
+        /// include USBMUX devices during lookup 
+        /// </summary>
+        LookupNetwork = 4,
         
-        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=44)]
-        public string udid;
-        
-        public UsbmuxConnectionType conn_type;
-        
-        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=200)]
-        public string conn_data;
+        /// <summary>
+        /// include network devices during lookup 
+        /// </summary>
+        LookupPreferNetwork = 8,
     }
 }

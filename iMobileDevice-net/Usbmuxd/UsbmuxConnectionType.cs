@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// <copyright file="UsbmuxdDeviceInfo.cs" company="Quamotion">
+// <copyright file="UsbmuxConnectionType.cs" company="Quamotion">
 // Copyright (c) 2016-2018 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
@@ -24,20 +24,14 @@ namespace iMobileDevice.Usbmuxd
     using iMobileDevice.Plist;
     
     
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public struct UsbmuxdDeviceInfo
+    /// <summary>
+    /// Type of connection a device is available on 
+    /// </summary>
+    public enum UsbmuxConnectionType : int
     {
         
-        public uint handle;
+        TypeUsb = 1,
         
-        public uint product_id;
-        
-        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=44)]
-        public string udid;
-        
-        public UsbmuxConnectionType conn_type;
-        
-        [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.ByValTStr, SizeConst=200)]
-        public string conn_data;
+        TypeNetwork = 2,
     }
 }

@@ -139,7 +139,7 @@ namespace iMobileDevice.Usbmuxd
         int usbmuxd_device_list_free(System.IntPtr deviceList);
         
         /// <summary>
-        /// Gets device information for the device specified by udid.
+        /// Looks up the device specified by UDID and returns device information.
         /// </summary>
         /// <param name="udid">
         /// A device UDID of the device to look for. If udid is NULL,
@@ -153,28 +153,62 @@ namespace iMobileDevice.Usbmuxd
         /// 0 if no matching device is connected, 1 if the device was found,
         /// or a negative value on error.
         /// </returns>
+        /// <remarks>
+        /// This function only considers devices connected through USB. To
+        /// query devices available via network, use usbmuxd_get_device().
+        /// </remarks>
         int usbmuxd_get_device_by_udid(string udid, ref UsbmuxdDeviceInfo device);
         
         /// <summary>
-        /// Request proxy connect to
+        /// Looks up the device specified by UDID with given options and returns
+        /// device information.
+        /// </summary>
+        /// <param name="udid">
+        /// A device UDID of the device to look for. If udid is NULL,
+        /// this function will return the first device found.
+        /// </param>
+        /// <param name="device">
+        /// Pointer to a previously allocated (or static)
+        /// usbmuxd_device_info_t that will be filled with the device info.
+        /// </param>
+        /// <param name="options">
+        /// Specifying what device connection types should be
+        /// considered during lookup. Accepts bitwise or'ed values of
+        /// usbmux_lookup_options.
+        /// If 0 (no option) is specified it will default to DEVICE_LOOKUP_USBMUX.
+        /// To lookup both USB and network-connected devices, pass
+        /// DEVICE_LOOKUP_USBMUX | DEVICE_LOOKUP_NETWORK. If a device is available
+        /// both via USBMUX *and* network, it will select the USB connection.
+        /// This behavior can be changed by adding DEVICE_LOOKUP_PREFER_NETWORK
+        /// to the options in which case it will select the network connection.
+        /// </param>
+        /// <returns>
+        /// 0 if no matching device is connected, 1 if the device was found,
+        /// or a negative value on error.
+        /// </returns>
+        int usbmuxd_get_device(string udid, ref UsbmuxdDeviceInfo device, int options);
+        
+        /// <summary>
+        /// Request proxy connection to the specified device and port.
         /// </summary>
         /// <param name="handle">
-        /// returned by 'usbmuxd_scan()'
+        /// returned in the usbmux_device_info_t structure via
+        /// usbmuxd_get_device() or usbmuxd_get_device_list().
         /// </param>
         /// <param name="tcp_port">
         /// TCP port number on device, in range 0-65535.
         /// common values are 62078 for lockdown, and 22 for SSH.
         /// </param>
         /// <returns>
-        /// file descriptor socket of the connection, or -1 on error
+        /// socket file descriptor of the connection, or -1 on error
         /// </returns>
-        int usbmuxd_connect(int handle, ushort tcpPort);
+        int usbmuxd_connect(uint handle, ushort tcpPort);
         
         /// <summary>
         /// Disconnect. For now, this just closes the socket file descriptor.
         /// </summary>
         /// <param name="sfd">
-        /// socker file descriptor returned by usbmuxd_connect()
+        /// socket file descriptor returned by usbmuxd_connect()
         /// </param>
         /// <returns>
         /// 0 on success, -1 on error.
