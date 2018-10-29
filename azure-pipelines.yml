@@ -1,9 +1,9 @@
 variables:
   libplistBuild: 317
   libplistPipeline: 2
-  libusbmuxdBuild: 347
+  libusbmuxdBuild: 368
   libusbmuxdPipeline: 3
-  libimobiledeviceBuild: 319
+  libimobiledeviceBuild: 370
   libimobiledevicePipeline: 4
   libideviceactivationBuild: 320
   libideviceactivationPipeline: 5
@@ -146,6 +146,13 @@ jobs:
       cd ..
     displayName: Run integration tests (.NET 4.5)
     continueOnError: true
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.SourcesDirectory)/iMobileDevice.IntegrationTests.net45/bin'
+      artifactName: net45-output
+    displayName: Publish .NET 4.5 output
+    condition: always()
 
   - script: |
       copy %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\*.props iMobileDevice.IntegrationTest.netcoreapp20\
