@@ -80,11 +80,14 @@ jobs:
 
 - job: docker
   strategy:
-    maxParallel: 4
+    maxParallel: 5
     matrix:
       xenial:
         SUFFIX:
         NAME: xenial
+      xenial:
+        SUFFIX: -arm64
+        NAME: xenial-arm64
       bionic:
         SUFFIX: -bionic
         NAME: bionic
