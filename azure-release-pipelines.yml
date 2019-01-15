@@ -85,7 +85,7 @@ jobs:
       xenial:
         SUFFIX:
         NAME: xenial
-      xenial:
+      xenial-arm64:
         SUFFIX: -arm64
         NAME: xenial-arm64
       bionic:
