@@ -88,6 +88,9 @@ jobs:
       bionic:
         SUFFIX: -bionic
         NAME: bionic
+      bionic-arm64:
+        SUFFIX: -bionic-arm64
+        NAME: bionic-arm64
       alpine:
         SUFFIX: -alpine
         NAME: alpine
