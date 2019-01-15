@@ -1,5 +1,5 @@
 variables:
-  imobiledevicenetBuild: 405
+  imobiledevicenetBuild: 407
   imobiledevicenetPipeline: 1
 
 jobs:
