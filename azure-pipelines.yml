@@ -20,11 +20,7 @@ jobs:
 
   - script: |
       cd iMobileDevice.Generator
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      dotnet run -o ..\iMobileDevice-net -i SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      dotnet run -o ..\iMobileDevice-net -i %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\include\
       cd ..
       dotnet build imobiledevice-net\iMobileDevice-net.csproj
       dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
