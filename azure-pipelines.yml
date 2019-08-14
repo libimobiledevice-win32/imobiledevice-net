@@ -115,14 +115,25 @@ jobs:
     continueOnError: true
 
   - script: |
-      set PATH=%PATH%;"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\"
+      set PATH=%PATH%;"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+      echo "Creating NuGet repository"
       mkdir packages
       nuget init %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\ packages
       cd iMobileDevice.IntegrationTests.net45
+
+      echo "Patching the NuGet package paths"
       powershell -File PatchNuGet.ps1
+
+      echo "Restoring dependencies"
+      dir ..\packages
+
       nuget restore
+
+      echo "Building integration tests"
       msbuild.exe /p:Configuration=Release /p:Platform=x86
       msbuild.exe /p:Configuration=Release /p:Platform=x64
+
+      echo "Running integration tests"
       bin\x86\Release\iMobileDevice.IntegrationTests.net45.exe
       bin\x64\Release\iMobileDevice.IntegrationTests.net45.exe
       cd ..
