@@ -167,6 +167,9 @@ jobs:
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
+  - script: |
+      ls -l /usr/lib/libcurl*
+      brew install curl
   - template: steps/unix.yml
 
 - job: linux_test
