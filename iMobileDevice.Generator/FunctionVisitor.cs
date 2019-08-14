@@ -143,6 +143,15 @@ namespace iMobileDevice.Generator
 
         private CodeCommentStatement GetComment(Cursor cursor)
         {
+            // Somehow, GetParsedComment() is no longer available in the NuGet packages published
+            // for Core.Clang. This remains as a TBD.
+            var commentText = cursor.GetRawCommentText();
+            return null;
+        }
+
+        /*
+        private CodeCommentStatement GetComment(Cursor cursor)
+        {
             // Standard hierarchy:
             // - Full Comment
             // - Paragraph Comment or ParamCommand comment
@@ -286,6 +295,6 @@ namespace iMobileDevice.Generator
                     this.GetCommentInnerText(child, builder);
                 }
             }
-        }
+        }*/
     }
 }

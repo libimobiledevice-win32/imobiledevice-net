@@ -4,12 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Platforms>x64</Platforms>
-    <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'native'">
-    <PackageReference Include="Core.Clang" Version="5.1.5-beta" />
+  <ItemGroup>
+    <PackageReference Include="Core.Clang" Version="5.0.0-alpha2" />
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
     <PackageReference Include="Native.LibClang" Version="5.0.0" />
     <PackageReference Include="Nustache" Version="1.16.0.8" />
