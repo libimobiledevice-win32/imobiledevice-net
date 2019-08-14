@@ -35,5 +35,5 @@ steps:
     ls packages/
 
     cd iMobileDevice.IntegrationTest.netcoreapp20
-    dotnet run
+    LD_DEBUG=all dotnet run
   displayName: Run integration tests
