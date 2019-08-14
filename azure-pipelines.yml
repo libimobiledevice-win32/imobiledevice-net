@@ -10,8 +10,8 @@ jobs:
   - template: steps/download-artifacts.yml
 
   - script: |
-      choco install -y 7zip NuGet.CommandLine
-    displayName: Install 7z, NuGet
+      choco install -y 7zip
+    displayName: Install 7z
 
   - script: |
       dotnet restore
@@ -46,14 +46,14 @@ jobs:
 
   - script: |
       mkdir %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\libplist.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\libusbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\libimobiledevice.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\usbmuxd\usbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\libideviceactivation.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\ideviceinstaller\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\idevicerestore\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libplist.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libusbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libimobiledevice.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\usbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libideviceactivation.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
 
     displayName: Publish tarballs
 
