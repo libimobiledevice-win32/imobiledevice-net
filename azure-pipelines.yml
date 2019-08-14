@@ -171,6 +171,10 @@ jobs:
       ls -l /usr/lib/libcurl*
       brew install curl
   - template: steps/unix.yml
+  - script: |
+      otool -L $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/libideviceactivation.dylib
+      nm -gU $BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native/libideviceactivation.dylib      
+    condition: always()
 
 - job: linux_test
   dependsOn: windows_build
