@@ -7,6 +7,6 @@ steps:
     buildVersionToDownload: 'specific'
     buildId: $(nativeBuild)
     downloadType: 'single'
-    artifactName: 'libplist'
+    artifactName: 'libimobiledevice'
     downloadPath: '$(System.ArtifactsDirectory)'
   displayName: 'Download native artifacts'
