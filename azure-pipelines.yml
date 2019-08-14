@@ -1,20 +1,6 @@
 variables:
-  libplistBuild: 417
-  libplistPipeline: 2
-  libusbmuxdBuild: 418
-  libusbmuxdPipeline: 3
-  libimobiledeviceBuild: 395
-  libimobiledevicePipeline: 4
-  libideviceactivationBuild: 320
-  libideviceactivationPipeline: 5
-  usbmuxdBuild: 400
-  usbmuxdPipeline: 6
-  ideviceinstallerBuild: 322
-  ideviceinstallerPipeline: 7
-  libirecoveryBuild: 415
-  libirecoveryPipeline: 8
-  idevicerestoreBuild: 412
-  idevicerestorePipeline: 9
+  nativeBuild: 593
+  nativePipeline: 12
 
 jobs:
 - job: windows_build
