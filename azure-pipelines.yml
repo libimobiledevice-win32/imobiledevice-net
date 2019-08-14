@@ -10,10 +10,6 @@ jobs:
   - template: steps/download-artifacts.yml
 
   - script: |
-      choco install -y 7zip
-    displayName: Install 7z
-
-  - script: |
       dotnet restore
       dotnet restore iMobileDevice.Generator\iMobileDevice.Generator.csproj
     displayName: Restore iMobileDevice.Generator, download binaries
@@ -25,6 +21,10 @@ jobs:
       dotnet build imobiledevice-net\iMobileDevice-net.csproj
       dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
     displayName: Generate code, build imobiledevice-net
+
+  - script: |
+      choco install -y 7zip
+    displayName: Install 7z
 
   - script: |
       7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
