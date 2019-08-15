@@ -41,7 +41,8 @@
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/*.exe">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/*.exe"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/ideviceactivation.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -60,7 +61,8 @@
       <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/*"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/ideviceactivation">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -74,7 +76,8 @@
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/*"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/ideviceactivation">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
