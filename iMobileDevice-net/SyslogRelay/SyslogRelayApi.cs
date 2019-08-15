@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="SyslogRelayApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.SyslogRelay
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"SyslogRelayApi"/> class
+        /// Initializes a new instance of the <see cref="SyslogRelayApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="SyslogRelay"/>.

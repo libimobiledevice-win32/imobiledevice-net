@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.iDevice
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"iDeviceApi"/> class
+        /// Initializes a new instance of the <see cref="iDeviceApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="iDevice"/>.
@@ -89,7 +89,7 @@ namespace iMobileDevice.iDevice
         /// to the registered callback function.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
         public virtual iDeviceError idevice_event_subscribe(iDeviceEventCallBack callback, System.IntPtr userData)
         {
@@ -101,7 +101,7 @@ namespace iMobileDevice.iDevice
         /// idevice_event_subscribe().
         /// </summary>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
         public virtual iDeviceError idevice_event_unsubscribe()
         {
@@ -119,7 +119,7 @@ namespace iMobileDevice.iDevice
         /// Number of devices found.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
         public virtual iDeviceError idevice_get_device_list(out System.Collections.ObjectModel.ReadOnlyCollection<string> devices, ref int count)
         {

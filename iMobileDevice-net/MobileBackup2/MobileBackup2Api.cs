@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="MobileBackup2Api.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.MobileBackup2
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"MobileBackup2Api"/> class
+        /// Initializes a new instance of the <see cref="MobileBackup2Api"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="MobileBackup2"/>.
@@ -228,7 +228,7 @@ namespace iMobileDevice.MobileBackup2
         /// </returns>
         /// <remarks>
         /// This function returns MOBILEBACKUP2_E_SUCCESS even if no data
-        /// has been received (unless a communication error occured).
+        /// has been received (unless a communication error occurred).
         /// The fourth parameter is required and must be checked to know how
         /// many bytes were actually received.
         /// </remarks>

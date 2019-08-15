@@ -57,7 +57,7 @@ namespace iMobileDevice.FileRelay
         
         /// <summary>
         /// Initializes a new instance of the <see cref="FileRelayException"/> class with a specified error code and error message.
-        /// <summary>
+        /// </summary>
         /// <param name="error">
         /// The error code of the error that occurred.
         /// </param>
