@@ -36,18 +36,5 @@ steps:
 
     cd iMobileDevice.IntegrationTest.netcoreapp20
 
-    export DYLD_PRINT_OPTS="1"
-    export DYLD_PRINT_ENV="1"
-    export DYLD_PRINT_LIBRARIES="1"
-    export DYLD_PRINT_LIBRARIES_POST_LAUNCH="1"
-    export DYLD_PRINT_APIS="1"
-    export DYLD_PRINT_BINDINGS="1"
-    export DYLD_PRINT_INITIALIZERS="1"
-    export DYLD_PRINT_REBASINGS="1"
-    export DYLD_PRINT_SEGMENTS="1"
-    export DYLD_PRINT_STATISTICS="1"
-    export DYLD_PRINT_DOFS="1"
-    export DYLD_PRINT_RPATHS="1"
-
     dotnet run
   displayName: Run integration tests
