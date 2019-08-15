@@ -1,20 +1,6 @@
 variables:
-  libplistBuild: 417
-  libplistPipeline: 2
-  libusbmuxdBuild: 418
-  libusbmuxdPipeline: 3
-  libimobiledeviceBuild: 395
-  libimobiledevicePipeline: 4
-  libideviceactivationBuild: 320
-  libideviceactivationPipeline: 5
-  usbmuxdBuild: 400
-  usbmuxdPipeline: 6
-  ideviceinstallerBuild: 322
-  ideviceinstallerPipeline: 7
-  libirecoveryBuild: 415
-  libirecoveryPipeline: 8
-  idevicerestoreBuild: 412
-  idevicerestorePipeline: 9
+  nativeBuild: 593
+  nativePipeline: 12
 
 jobs:
 - job: windows_build
@@ -24,25 +10,21 @@ jobs:
   - template: steps/download-artifacts.yml
 
   - script: |
-      choco install -y 7zip NuGet.CommandLine
-    displayName: Install 7z, NuGet
-
-  - script: |
       dotnet restore
       dotnet restore iMobileDevice.Generator\iMobileDevice.Generator.csproj
     displayName: Restore iMobileDevice.Generator, download binaries
 
   - script: |
       cd iMobileDevice.Generator
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\win7-x64\include\*.h %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
-      dotnet run -o ..\iMobileDevice-net -i SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win7-x64\include\
+      dotnet run -o ..\iMobileDevice-net -i %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\include\
       cd ..
       dotnet build imobiledevice-net\iMobileDevice-net.csproj
       dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
     displayName: Generate code, build imobiledevice-net
+
+  - script: |
+      choco install -y 7zip
+    displayName: Install 7z
 
   - script: |
       7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
@@ -60,14 +42,14 @@ jobs:
 
   - script: |
       mkdir %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libplist\libplist.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libusbmuxd\libusbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\libimobiledevice.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\usbmuxd\usbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libideviceactivation\libideviceactivation.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\ideviceinstaller\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\libirecovery\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
-      copy %SYSTEM_ARTIFACTSDIRECTORY%\idevicerestore\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libplist.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libusbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libimobiledevice.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\usbmuxd.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libideviceactivation.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+      copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\win-x86\sources\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
 
     displayName: Publish tarballs
 
@@ -133,14 +115,25 @@ jobs:
     continueOnError: true
 
   - script: |
-      set PATH=%PATH%;"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\"
+      set PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\
+      echo "Creating NuGet repository"
       mkdir packages
       nuget init %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\ packages
       cd iMobileDevice.IntegrationTests.net45
+
+      echo "Patching the NuGet package paths"
       powershell -File PatchNuGet.ps1
+
+      echo "Restoring dependencies"
+      dir ..\packages
+
       nuget restore
+
+      echo "Building integration tests"
       msbuild.exe /p:Configuration=Release /p:Platform=x86
       msbuild.exe /p:Configuration=Release /p:Platform=x64
+
+      echo "Running integration tests"
       bin\x86\Release\iMobileDevice.IntegrationTests.net45.exe
       bin\x64\Release\iMobileDevice.IntegrationTests.net45.exe
       cd ..
@@ -174,6 +167,9 @@ jobs:
   pool:
     vmImage: 'xcode9-macos10.13'
   steps:
+  - script: |
+      ls -l /usr/lib/libcurl*
+      brew install curl
   - template: steps/unix.yml
 
 - job: linux_test

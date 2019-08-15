@@ -27,92 +27,29 @@
 
   <ItemGroup>
     <!-- win-x64 files which come from VSTS artifacts -->
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x64/bin/*.dll">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/*.dll">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x64/bin/*.exe">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x64/bin/*.dll">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x64/bin/*.exe">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/win7-x64/bin/*">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x64/bin/*">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/win7-x64/bin/*">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/win7-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/*.exe">
       <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- win-x86 files which come from NuGet packages-->
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x86/bin/*.dll">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/*.dll">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win7-x86/bin/*.exe">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x86/bin/*.dll">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/win7-x86/bin/*.exe">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/win7-x86/bin/*">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/win7-x86/bin/*">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/win7-x86/bin/*">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/win7-x86/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/*.exe"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/ideviceactivation.exe">
       <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <!-- Version information taken from the macOS builds -->
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/gitinfo">
-      <PackagePath>libplist.gitinfo</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/gitinfo">
-      <PackagePath>libusbmuxd.gitinfo</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/gitinfo">
-      <PackagePath>libimobiledevice.gitinfo</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/gitinfo">
-      <PackagePath>usbmuxd.gitinfo</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/gitinfo">
-      <PackagePath>libideviceactivation.gitinfo</PackagePath>
+    <!-- Version information taken from the Windows builds -->
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/gitinfo/*">
+      <PackagePath>%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     
@@ -124,47 +61,12 @@
       <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/*"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/ideviceactivation">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/ubuntu.16.04-x64/lib/*.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/ubuntu.16.04-x64/bin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/ubuntu.16.04-x64/bin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/ubuntu.16.04-x64/lib/*.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/ubuntu.16.04-x64/bin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/ubuntu.16.04-x64/lib/*.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/ubuntu.16.04-x64/sbin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/ubuntu.16.04-x64/bin/*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/ubuntu.16.04-x64/lib/*.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/ubuntu.16.04-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/sbin/*">
       <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
@@ -174,55 +76,12 @@
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/*"
+             Exclude="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/ideviceactivation">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/lib/*.dylib">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libideviceactivation/osx-x64/bin/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/bin/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libplist/osx-x64/lib/*.dylib">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/bin/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libusbmuxd/osx-x64/lib/*.dylib">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/lib/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/usbmuxd/osx-x64/sbin/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/osx-x64/bin/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/ideviceinstaller/osx-x64/lib/*">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/osx-x64/lib/*.dylib">
-      <PackagePath>runtimes/osx-x64/native/</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libirecovery/osx-x64/bin/*">
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/sbin/*">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
