@@ -7,6 +7,7 @@ namespace iMobileDevice.Generator
     using System;
     using System.CodeDom;
     using Core.Clang;
+    using iMobileDevice.Generator.Clang;
 
     internal sealed class EnumVisitor
     {
@@ -102,23 +103,23 @@ namespace iMobileDevice.Generator
             // - Text Comment
             var fullComment = cursor.GetParsedComment();
             var fullCommentKind = fullComment.Kind;
-            var fullCommentChildren = fullComment.GetNumChildren();
+            var fullCommentChildren = fullComment.ChildrenCount;
 
             if (fullCommentKind != CommentKind.FullComment || fullCommentChildren != 1)
             {
                 return null;
             }
 
-            var paragraphComment = fullComment.GetChild(0);
+            var paragraphComment = fullComment.GetChildAt(0);
             var paragraphCommentKind = paragraphComment.Kind;
-            var paragraphCommentChildren = paragraphComment.GetNumChildren();
+            var paragraphCommentChildren = paragraphComment.ChildrenCount;
 
             if (paragraphCommentKind != CommentKind.Paragraph || paragraphCommentChildren != 1)
             {
                 return null;
             }
 
-            var textComment = paragraphComment.GetChild(0);
+            var textComment = paragraphComment.GetChildAt(0);
             var textCommentKind = textComment.Kind;
 
             if (textCommentKind != CommentKind.Text)

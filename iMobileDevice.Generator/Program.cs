@@ -20,10 +20,12 @@ namespace iMobileDevice.Generator
         public static int Main(string[] args)
         {
             CommandLineApplication commandLineApplication =
-                new CommandLineApplication(throwOnUnexpectedArg: false);
+                new CommandLineApplication(throwOnUnexpectedArg: true);
 
-            commandLineApplication.Name = "iMobileDevice.Generator";
+            commandLineApplication.Name = ThisAssembly.AssemblyName;
             commandLineApplication.HelpOption("-?|-h|--help");
+            commandLineApplication.ShortVersionGetter = () => ThisAssembly.AssemblyFileVersion;
+            commandLineApplication.LongVersionGetter = () => ThisAssembly.AssemblyInformationalVersion;
 
             commandLineApplication.Command(
                 "generate",
@@ -36,10 +38,15 @@ namespace iMobileDevice.Generator
                         "The output directory. The C# code will be generated in this directory.",
                         CommandOptionType.SingleValue);
 
+                    CommandOption headerArgument = runCommand.Option(
+                        "-s|--source <dir>",
+                        "Include directory to use, which contains the libimobiledevice headers. Defaults to the include directory in VCPKG_ROOT.",
+                        CommandOptionType.SingleValue);
+
                     CommandOption includeArgument = runCommand.Option(
                         "-i|--include <dir>",
                         "Include directory to use. Defaults to the include directory in VCPKG_ROOT.",
-                        CommandOptionType.SingleValue);
+                        CommandOptionType.MultipleValue);
 
                     runCommand.HelpOption("-? | -h | --help");
 
@@ -61,11 +68,19 @@ namespace iMobileDevice.Generator
                         generator.IncludeDirectories.Add(GetWindowsKitUcrtFolder());
                         generator.IncludeDirectories.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Windows Kits", "8.1", "include", "shared"));
 
-                        string sourceDir = null;
-
                         if (includeArgument.HasValue())
                         {
-                            sourceDir = includeArgument.Value();
+                            foreach(var path in includeArgument.Values)
+                            {
+                                generator.IncludeDirectories.Add(path);
+                            }
+                        }
+
+                        string sourceDir = null;
+
+                        if (headerArgument.HasValue())
+                        {
+                            sourceDir = headerArgument.Value();
                         }
                         else
                         {
@@ -141,7 +156,12 @@ namespace iMobileDevice.Generator
                     });
                 });
 
-            return commandLineApplication.Execute(args);
+            Console.WriteLine(ThisAssembly.AssemblyName);
+            commandLineApplication.ShowVersion();
+
+            var exit = commandLineApplication.Execute(args);
+            Console.WriteLine($"Exiting with code {exit}");
+            return exit;
         }
 
         static void RestoreClang()

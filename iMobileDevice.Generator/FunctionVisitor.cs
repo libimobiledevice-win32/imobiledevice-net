@@ -5,6 +5,7 @@
 namespace iMobileDevice.Generator
 {
     using Core.Clang;
+    using iMobileDevice.Generator.Clang;
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
@@ -141,16 +142,7 @@ namespace iMobileDevice.Generator
                         callingConvention.ToString())));
         }
 
-        private CodeCommentStatement GetComment(Cursor cursor)
-        {
-            // Somehow, GetParsedComment() is no longer available in the NuGet packages published
-            // for Core.Clang. This remains as a TBD.
-            var commentText = cursor.GetRawCommentText();
-            return null;
-        }
-
-        /*
-        private CodeCommentStatement GetComment(Cursor cursor)
+        public CodeCommentStatement GetComment(Cursor cursor)
         {
             // Standard hierarchy:
             // - Full Comment
@@ -158,7 +150,7 @@ namespace iMobileDevice.Generator
             // - Text Comment
             var fullComment = cursor.GetParsedComment();
             var fullCommentKind = fullComment.Kind;
-            var fullCommentChildren = fullComment.GetNumChildren();
+            var fullCommentChildren = fullComment.ChildrenCount;
 
             if (fullCommentKind != CommentKind.FullComment || fullCommentChildren < 1)
             {
@@ -175,7 +167,7 @@ namespace iMobileDevice.Generator
 
             for (int i = 0; i < fullCommentChildren; i++)
             {
-                var childComment = fullComment.GetChild(i);
+                var childComment = fullComment.GetChildAt(i);
                 var childCommentKind = childComment.Kind;
 
                 if (childCommentKind != CommentKind.Paragraph
@@ -287,14 +279,14 @@ namespace iMobileDevice.Generator
             else
             {
                 // Recurse
-                var childCount = comment.GetNumChildren();
+                var childCount = comment.ChildrenCount;
 
                 for (int i = 0; i < childCount; i++)
                 {
-                    var child = comment.GetChild(i);
+                    var child = comment.GetChildAt(i);
                     this.GetCommentInnerText(child, builder);
                 }
             }
-        }*/
+        }
     }
 }
