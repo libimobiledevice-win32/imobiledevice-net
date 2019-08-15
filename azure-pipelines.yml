@@ -15,8 +15,9 @@ jobs:
     displayName: Restore iMobileDevice.Generator, download binaries
 
   - script: |
+      SET ECHO ON
       cd iMobileDevice.Generator
-      dotnet run -o ..\iMobileDevice-net -i %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\include\
+      dotnet run -- generate -o ..\iMobileDevice-net --source %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\include\ -i %VCPKG%\installed\x64-windows\include
       cd ..
       dotnet build imobiledevice-net\iMobileDevice-net.csproj
       dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
