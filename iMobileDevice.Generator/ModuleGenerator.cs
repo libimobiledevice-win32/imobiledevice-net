@@ -4,25 +4,24 @@
 
 namespace iMobileDevice.Generator
 {
+    using CodeDom;
+    using Core.Clang;
+    using Core.Clang.Diagnostics;
+    using iMobileDevice.Generator.Nustache;
+    using Stubble.Core;
+    using Stubble.Core.Builders;
     using System;
     using System.CodeDom;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-#if !NETSTANDARD1_5
-    using System.Security.Permissions;
-    using System.Runtime.ConstrainedExecution;
-#endif
-    using CodeDom;
-    using Core.Clang;
-    using Core.Clang.Diagnostics;
     using System.Text;
-    using global::Nustache.Core;
-    using iMobileDevice.Generator.Nustache;
 
     public class ModuleGenerator
     {
+        private readonly StubbleVisitorRenderer stubble = new StubbleBuilder().Build();
+
         public string Name
         {
             get
@@ -274,12 +273,13 @@ namespace iMobileDevice.Generator
                 throw new ArgumentOutOfRangeException(nameof(generatedType));
             }
 
-            using (var reader = new StreamReader(generatedType.Template))
-            using (StreamWriter writer = new StreamWriter(stream, Encoding.Default, bufferSize: 4096, leaveOpen: true))
-            {
-                Render.Template(reader, generatedType.Type, writer);
-            }
+            var template = File.ReadAllText(generatedType.Template);
+            var rendered = this.stubble.Render(template, generatedType.Type);
 
+            using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen: true))
+            {
+                writer.Write(rendered);
+            }
         }
 
         public void WriteType(Stream stream, CodeDomGeneratedType generatedType, string suffix)
