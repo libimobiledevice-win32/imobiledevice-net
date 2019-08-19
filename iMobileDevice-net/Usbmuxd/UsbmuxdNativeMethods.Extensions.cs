@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="UsbmuxdNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -27,16 +27,6 @@ namespace iMobileDevice.Usbmuxd
     public partial class UsbmuxdNativeMethods
     {
         
-        public static int usbmuxd_get_tcp_endpoint(out string host, ref ushort port)
-        {
-            System.Runtime.InteropServices.ICustomMarshaler hostMarshaler = NativeStringMarshaler.GetInstance(null);
-            System.IntPtr hostNative = System.IntPtr.Zero;
-            int returnValue = UsbmuxdNativeMethods.usbmuxd_get_tcp_endpoint(out hostNative, ref port);
-            host = ((string)hostMarshaler.MarshalNativeToManaged(hostNative));
-            hostMarshaler.CleanUpNativeData(hostNative);
-            return returnValue;
-        }
-        
         public static int usbmuxd_read_buid(out string buid)
         {
             System.Runtime.InteropServices.ICustomMarshaler buidMarshaler = NativeStringMarshaler.GetInstance(null);
@@ -54,6 +44,16 @@ namespace iMobileDevice.Usbmuxd
             int returnValue = UsbmuxdNativeMethods.usbmuxd_read_pair_record(recordId, out recordDataNative, ref recordSize);
             recordData = ((string)recordDataMarshaler.MarshalNativeToManaged(recordDataNative));
             recordDataMarshaler.CleanUpNativeData(recordDataNative);
+            return returnValue;
+        }
+        
+        public static int usbmuxd_get_tcp_endpoint(out string host, ref ushort port)
+        {
+            System.Runtime.InteropServices.ICustomMarshaler hostMarshaler = NativeStringMarshaler.GetInstance(null);
+            System.IntPtr hostNative = System.IntPtr.Zero;
+            int returnValue = UsbmuxdNativeMethods.usbmuxd_get_tcp_endpoint(out hostNative, ref port);
+            host = ((string)hostMarshaler.MarshalNativeToManaged(hostNative));
+            hostMarshaler.CleanUpNativeData(hostNative);
             return returnValue;
         }
     }
