@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceActivationApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.iDeviceActivation
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"iDeviceActivationApi"/> class
+        /// Initializes a new instance of the <see cref="iDeviceActivationApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="iDeviceActivation"/>.
@@ -164,6 +164,11 @@ namespace iMobileDevice.iDeviceActivation
             iDeviceActivationNativeMethods.idevice_activation_response_get_label(response, key, out value);
         }
         
+        public virtual void idevice_activation_response_get_placeholder(iDeviceActivationResponseHandle response, string key, out string value)
+        {
+            iDeviceActivationNativeMethods.idevice_activation_response_get_placeholder(response, key, out value);
+        }
+        
         public virtual void idevice_activation_response_get_title(iDeviceActivationResponseHandle response, out string title)
         {
             iDeviceActivationNativeMethods.idevice_activation_response_get_title(response, out title);
@@ -199,6 +204,11 @@ namespace iMobileDevice.iDeviceActivation
         public virtual int idevice_activation_response_field_requires_input(iDeviceActivationResponseHandle response, string key)
         {
             return iDeviceActivationNativeMethods.idevice_activation_response_field_requires_input(response, key);
+        }
+        
+        public virtual int idevice_activation_response_field_secure_input(iDeviceActivationResponseHandle response, string key)
+        {
+            return iDeviceActivationNativeMethods.idevice_activation_response_field_secure_input(response, key);
         }
         
         public virtual int idevice_activation_response_has_errors(iDeviceActivationResponseHandle response)

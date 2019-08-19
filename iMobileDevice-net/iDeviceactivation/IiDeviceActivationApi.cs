@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="IiDeviceActivationApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -73,6 +73,8 @@ namespace iMobileDevice.iDeviceActivation
         
         void idevice_activation_response_get_label(iDeviceActivationResponseHandle response, string key, out string value);
         
+        void idevice_activation_response_get_placeholder(iDeviceActivationResponseHandle response, string key, out string value);
+        
         void idevice_activation_response_get_title(iDeviceActivationResponseHandle response, out string title);
         
         void idevice_activation_response_get_description(iDeviceActivationResponseHandle response, out string description);
@@ -86,6 +88,8 @@ namespace iMobileDevice.iDeviceActivation
         int idevice_activation_response_is_authentication_required(iDeviceActivationResponseHandle response);
         
         int idevice_activation_response_field_requires_input(iDeviceActivationResponseHandle response, string key);
+        
+        int idevice_activation_response_field_secure_input(iDeviceActivationResponseHandle response, string key);
         
         int idevice_activation_response_has_errors(iDeviceActivationResponseHandle response);
         
