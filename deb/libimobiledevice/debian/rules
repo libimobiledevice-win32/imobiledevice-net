@@ -37,3 +37,7 @@ override_dh_python2:
 
 override_dh_makeshlibs:
 	dh_makeshlibs -- -c4
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f $(CURDIR)/cython/Makefile

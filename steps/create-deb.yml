@@ -40,10 +40,12 @@ steps:
         dch -v "${package_version}-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
 
         debuild -uc -us
-        cp ../*.* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
+        debuild -S -uc -us
 
         cd ..
     done
+
+    cp *.* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
   displayName: Build Debian archives
 - task: PublishBuildArtifacts@1
   inputs:
