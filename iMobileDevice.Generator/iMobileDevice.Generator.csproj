@@ -11,7 +11,7 @@
     <PackageReference Include="Core.Clang" Version="5.0.0-alpha2" />
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
     <PackageReference Include="Native.LibClang" Version="5.0.0" />
-    <PackageReference Include="Nustache" Version="1.16.0.8" />
+    <PackageReference Include="Stubble.Core" Version="1.4.12" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
     <PackageReference Include="NerdBank.GitVersioning" Version="2.1.65" PrivateAssets="all" />
   </ItemGroup>
