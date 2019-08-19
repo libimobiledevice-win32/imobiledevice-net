@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceActivationNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -69,6 +69,15 @@ namespace iMobileDevice.iDeviceActivation
             System.Runtime.InteropServices.ICustomMarshaler valueMarshaler = NativeStringMarshaler.GetInstance(null);
             System.IntPtr valueNative = System.IntPtr.Zero;
             iDeviceActivationNativeMethods.idevice_activation_response_get_label(response, key, out valueNative);
+            value = ((string)valueMarshaler.MarshalNativeToManaged(valueNative));
+            valueMarshaler.CleanUpNativeData(valueNative);
+        }
+        
+        public static void idevice_activation_response_get_placeholder(iDeviceActivationResponseHandle response, string key, out string value)
+        {
+            System.Runtime.InteropServices.ICustomMarshaler valueMarshaler = NativeStringMarshaler.GetInstance(null);
+            System.IntPtr valueNative = System.IntPtr.Zero;
+            iDeviceActivationNativeMethods.idevice_activation_response_get_placeholder(response, key, out valueNative);
             value = ((string)valueMarshaler.MarshalNativeToManaged(valueNative));
             valueMarshaler.CleanUpNativeData(valueNative);
         }

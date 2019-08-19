@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceActivationNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -86,6 +86,9 @@ namespace iMobileDevice.iDeviceActivation
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_get_label", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void idevice_activation_response_get_label(iDeviceActivationResponseHandle response, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, out System.IntPtr value);
         
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_get_placeholder", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void idevice_activation_response_get_placeholder(iDeviceActivationResponseHandle response, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, out System.IntPtr value);
+        
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_get_title", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void idevice_activation_response_get_title(iDeviceActivationResponseHandle response, out System.IntPtr title);
         
@@ -106,6 +109,9 @@ namespace iMobileDevice.iDeviceActivation
         
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_field_requires_input", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int idevice_activation_response_field_requires_input(iDeviceActivationResponseHandle response, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key);
+        
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_field_secure_input", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int idevice_activation_response_field_secure_input(iDeviceActivationResponseHandle response, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key);
         
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.libraryName, EntryPoint="idevice_activation_response_has_errors", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int idevice_activation_response_has_errors(iDeviceActivationResponseHandle response);
