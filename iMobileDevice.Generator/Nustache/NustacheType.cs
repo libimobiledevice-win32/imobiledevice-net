@@ -1,4 +1,6 @@
-﻿namespace iMobileDevice.Generator.Nustache
+﻿using System;
+
+namespace iMobileDevice.Generator.Nustache
 {
     /// <summary>
     /// A common class for all types which are generated using a Nustache template. This class, or any of its
@@ -23,5 +25,7 @@
             get;
             set;
         }
+
+        public int Year { get; } = DateTime.Today.Year;
     }
 }

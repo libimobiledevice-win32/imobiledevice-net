@@ -16,6 +16,8 @@ namespace iMobileDevice.Generator
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
+    using System.Runtime.ConstrainedExecution;
+    using System.Security.Permissions;
     using System.Text;
 
     public class ModuleGenerator
