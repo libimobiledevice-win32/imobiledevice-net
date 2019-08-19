@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="InstallationProxyNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -44,7 +44,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success, or an INSTPROXY_E_* error value
-        /// when an error occured.
+        /// when an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out InstallationProxyClientHandle client);
@@ -105,7 +105,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_browse", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_browse(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result);
@@ -133,7 +133,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_browse_with_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_browse_with_callback(InstallationProxyClientHandle client, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
@@ -158,7 +158,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_lookup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_lookup(InstallationProxyClientHandle client, System.IntPtr appids, PlistHandle clientOptions, out PlistHandle result);
@@ -190,7 +190,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -230,7 +230,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -263,7 +263,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -290,7 +290,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_lookup_archives", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_lookup_archives(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result);
@@ -322,7 +322,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -357,7 +357,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -392,7 +392,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -423,7 +423,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_check_capabilities_match", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_check_capabilities_match(InstallationProxyClientHandle client, out System.IntPtr capabilities, PlistHandle clientOptions, out PlistHandle result);
@@ -582,7 +582,7 @@ namespace iMobileDevice.InstallationProxy
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success, INSTPROXY_E_OP_FAILED if
         /// the path could not be determined or an INSTPROXY_E_* error
-        /// value if an error occured.
+        /// value if an error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_get_path_for_bundle_identifier", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_get_path_for_bundle_identifier(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string bundleId, out System.IntPtr path);

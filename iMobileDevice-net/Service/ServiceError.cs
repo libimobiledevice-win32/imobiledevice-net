@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="ServiceError.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -39,6 +39,10 @@ namespace iMobileDevice.Service
         SslError = -4,
         
         StartServiceError = -5,
+        
+        NotEnoughData = -6,
+        
+        Timeout = -7,
         
         UnknownError = -256,
     }

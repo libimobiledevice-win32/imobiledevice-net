@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="InstallationProxyApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.InstallationProxy
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"InstallationProxyApi"/> class
+        /// Initializes a new instance of the <see cref="InstallationProxyApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="InstallationProxy"/>.
@@ -67,7 +67,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success, or an INSTPROXY_E_* error value
-        /// when an error occured.
+        /// when an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out InstallationProxyClientHandle client)
         {
@@ -140,7 +140,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_browse(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result)
         {
@@ -173,7 +173,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_browse_with_callback(InstallationProxyClientHandle client, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData)
         {
@@ -200,7 +200,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_lookup(InstallationProxyClientHandle client, System.Collections.ObjectModel.ReadOnlyCollection<string> appids, PlistHandle clientOptions, out PlistHandle result)
         {
@@ -237,7 +237,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -279,7 +279,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -314,7 +314,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -343,7 +343,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_lookup_archives(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result)
         {
@@ -380,7 +380,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -417,7 +417,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -454,7 +454,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         /// <remarks>
         /// If a callback function is given (async mode), this function returns
@@ -487,7 +487,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
-        /// an error occured.
+        /// an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_check_capabilities_match(InstallationProxyClientHandle client, out string capabilities, PlistHandle clientOptions, out PlistHandle result)
         {
@@ -673,7 +673,7 @@ namespace iMobileDevice.InstallationProxy
         /// <returns>
         /// INSTPROXY_E_SUCCESS on success, INSTPROXY_E_OP_FAILED if
         /// the path could not be determined or an INSTPROXY_E_* error
-        /// value if an error occured.
+        /// value if an error occurred.
         /// </returns>
         public virtual InstallationProxyError instproxy_client_get_path_for_bundle_identifier(InstallationProxyClientHandle client, string bundleId, out string path)
         {

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="ScreenshotrApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.Screenshotr
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"ScreenshotrApi"/> class
+        /// Initializes a new instance of the <see cref="ScreenshotrApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Screenshotr"/>.
@@ -143,7 +143,7 @@ namespace iMobileDevice.Screenshotr
         /// <returns>
         /// SCREENSHOTR_E_SUCCESS on success, SCREENSHOTR_E_INVALID_ARG if
         /// one or more parameters are invalid, or another error code if an
-        /// error occured.
+        /// error occurred.
         /// </returns>
         public virtual ScreenshotrError screenshotr_take_screenshot(ScreenshotrClientHandle client, ref System.IntPtr imgdata, ref ulong imgsize)
         {
