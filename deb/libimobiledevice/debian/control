@@ -1,0 +1,86 @@
+Source: libimobiledevice
+Section: libs
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: gtkpod Maintainers <pkg-gtkpod-devel@lists.alioth.debian.org>
+Uploaders: Julien Lavergne <julien.lavergne@gmail.com>
+Standards-Version: 3.9.6
+Build-Depends: debhelper (>= 9),
+               libssl-dev,
+               libusb-1.0-0-dev (>= 1.0.3) [linux-any],
+               libglib2.0-dev (>= 2.14.1),
+               libplist-dev (>= 1.11),
+               libplist++-dev (>= 1.11),
+               libusbmuxd-dev (>= 1.0.9),
+               libtasn1-3-dev (>= 1.1) | libtasn1-6-dev (>= 1.1),
+               libreadline-dev,
+               python-all-dev (>= 2.6.6-3~),
+               dh-autoreconf
+Homepage: http://libimobiledevice.org/
+Vcs-Git: git://git.debian.org/git/pkg-gtkpod/packages/libimobiledevice.git
+Vcs-Browser: http://git.debian.org/?p=pkg-gtkpod/packages/libimobiledevice.git
+DM-Upload-Allowed: yes
+
+Package: libimobiledevice6
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Recommends: usbmuxd
+Suggests: libusbmuxd-tools
+Conflicts: libiphone0
+Replaces: libiphone0, libimobiledevice1, libimobiledevice0
+Description: Library for communicating with the iPhone and iPod Touch
+ libimobiledevice is a library that talks the native Apple USB protocols that
+ the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
+ not depend on using any existing libraries from Apple.
+
+Package: libimobiledevice-dev
+Architecture: any
+Multi-Arch: foreign
+Section: libdevel
+Depends: libimobiledevice6 (= ${binary:Version}),
+         ${misc:Depends},
+         libglib2.0-dev,
+         libplist-dev,
+         libusbmuxd-dev,
+         libssl-dev,
+         libtasn1-3-dev (>= 1.1) | libtasn1-6-dev (>= 1.1)
+Description: Library for communicating with iPhone and iPod Touch devices
+ libimobiledevice is a library that talks the native Apple USB protocols that
+ the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
+ not depend on using any existing libraries from Apple.
+ .
+ This package contains the development files.
+
+Package: libimobiledevice6-dbg
+Architecture: any
+Multi-Arch: same
+Section: debug
+Priority: extra
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libimobiledevice6 (= ${binary:Version}),
+         ${misc:Depends}
+Conflicts: libimobiledevice3-dbg, libimobiledevice2-dbg,
+  libimobiledevice1-dbg, libimobiledevice0-dbg
+Replaces: libimobiledevice3-dbg, libimobiledevice2-dbg,
+  libimobiledevice1-dbg, libimobiledevice0-dbg
+Description: Library for communicating with iPhone and iPod Touch devices
+ libimobiledevice is a library that talks the native Apple USB protocols that
+ the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
+ not depend on using any existing libraries from Apple.
+ .
+ This package contains the debugging symbols.
+
+Package: libimobiledevice-utils
+Architecture: any
+Section: utils
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Library for communicating with iPhone and iPod Touch devices
+ libimobiledevice is a library that talks the native Apple USB protocols that
+ the iPhone and iPod Touch use. Unlike other projects, libimobiledevice does
+ not depend on using any existing libraries from Apple.
+ .
+ This package contains utilities and examples which use libimobiledevice.

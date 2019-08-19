@@ -1,0 +1,3 @@
+version=3
+
+http://www.libimobiledevice.org/ downloads/libideviceactivation-(.*).tar.bz2

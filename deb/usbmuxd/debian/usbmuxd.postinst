@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+# creating plugdev group if he isn't already there
+if ! getent group plugdev >/dev/null; then
+        addgroup --system plugdev
+fi
+
+# creating usbmux user if he isn't already there
+if ! getent passwd usbmux >/dev/null; then
+        adduser --system --ingroup plugdev \
+                --home /var/lib/usbmux --no-create-home \
+                --gecos "usbmux daemon" \
+                usbmux
+fi
+
+#DEBHELPER#

@@ -1,0 +1,54 @@
+Source: libideviceactivation
+Priority: optional
+Maintainer: Frederik Carlier <frederik.carlier@quamotion.mobi>
+Uploaders: Frederik Carlier <frederik.carlier@quamotion.mobi>
+Build-Depends: debhelper (>= 9.0.0),
+               dh-autoreconf,
+               pkg-config,
+               libplist-dev (>= 1.11),
+               libimobiledevice-dev (>= 1.1.6),
+               libcurl4-openssl-dev,
+               libxml2-dev
+Standards-Version: 3.9.6
+Section: libs
+Homepage: https://github.com/libimobiledevice-win32/libideviceactivation
+Vcs-Git: https://github.com/libimobiledevice-win32/libideviceactivation
+Vcs-Browser: https://github.com/libimobiledevice-win32/libideviceactivation
+
+Package: libideviceactivation-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libideviceactivation (= ${binary:Version}), ${misc:Depends}
+Description: A library to manage the activation process of Apple iOS devices.
+ .
+ This package contains the development files.
+
+Package: libideviceactivation
+Section: libs
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A library to manage the activation process of Apple iOS devices.
+ .
+ This package contains the shared library.
+
+Package: libideviceactivation-tools
+Section: utils
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A library to manage the activation process of Apple iOS devices.
+ .
+ This package contains the ideviceactivation tool that allows you to activate
+ iOS devices.
+
+Package: libideviceactivation-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: libideviceactivation (= ${binary:Version}),
+         ${misc:Depends}
+Description: A library to manage the activation process of Apple iOS devices.
+ .
+ This package contains the debugging symbols.

@@ -1,0 +1,19 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(imobiledevicenetPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(imobiledevicenetBuild)
+    downloadType: 'single'
+    artifactName: 'imobiledevice-net'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download imobiledevice-net artifacts'
+- task: NuGetCommand@2
+  continueOnError: true
+  inputs:
+    command: push
+    packagesToPush: '$(System.ArtifactsDirectory)\imobiledevice-net\iMobileDevice-net.*.nupkg'
+    publishFeedCredentials: 'NuGet'
+    nuGetFeedType: external

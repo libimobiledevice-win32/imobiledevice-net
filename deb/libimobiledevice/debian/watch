@@ -1,0 +1,2 @@
+version=3
+opts=dversionmangle=s/\+dfsg// http://libimobiledevice.org/ downloads/libimobiledevice-(.+)\.tar\.bz2

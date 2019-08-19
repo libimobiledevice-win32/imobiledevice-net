@@ -1,0 +1,72 @@
+Authors:
+ Nikias Bassen
+ Hector Martin
+ Bastien Nocera
+ Paul Sladen
+ Martin Szulecki
+Download: http://marcansoft.com/uploads/usbmuxd/
+
+Files: *
+Copyright:
+ Copyright (C) 2009	Hector Martin "marcan" <hector@marcansoft.com>
+ Copyright (C) 2009	Nikias Bassen <nikias@gmx.li>
+ Copyright (C) 2009	Martin Szulecki <opensuse@sukimashita.com>
+ Copyright (C) 2009	Paul Sladen <libiphone@paul.sladen.org>
+ Copyright (c) 2008 	Jing Su.
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 2 or version 3.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+On Debian systems, the complete text of the GNU General Public License
+can be found in `/usr/share/common-licenses/GPL-2'.
+
+Files: libusbmuxd/*
+       common/utils.*
+Copyright:
+ Copyright (C) 2009	Hector Martin "marcan" <hector@marcansoft.com>
+ Copyright (C) 2009	Nikias Bassen <nikias@gmx.li>
+ Copyright (C) 2009	Martin Szulecki <opensuse@sukimashita.com>
+ Copyright (C) 2009	Paul Sladen <libiphone@paul.sladen.org>
+License: LGPL-2.1+
+ This library is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation, either version 2.1 of the
+ License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+On Debian systems, the complete text of the GNU General Public License
+can be found in `/usr/share/common-licenses/LGPL-2.1'.
+
+Files: debian/*
+Copyright: (C) 2009 Julien Lavergne <julien.lavergne@gmail.com>
+License: LGPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License along
+ with this program; if not, write to the Free Software Foundation, Inc.,
+ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+On Debian systems, the complete text of the GNU General Public License
+can be found in `/usr/share/common-licenses/LGPL-2.1'.

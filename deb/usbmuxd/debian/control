@@ -1,0 +1,46 @@
+Source: usbmuxd
+Section: utils
+Priority: optional
+Maintainer: gtkpod Maintainers <pkg-gtkpod-devel@lists.alioth.debian.org>
+Uploaders: Julien Lavergne <julien.lavergne@gmail.com>
+Standards-Version: 3.9.6
+Build-Depends: debhelper (>= 9),
+               dh-autoreconf,
+               pkg-config,
+               libusb-1.0-0-dev (>= 1.0.3) [linux-any],
+               udev [linux-any],
+               systemd [linux-any],
+               libusb2-dev (>= 8.0-4) [kfreebsd-any],
+               libplist-dev (>= 0.15),
+               libimobiledevice-dev (>= 1.1.6)
+Homepage: http://marcansoft.com/blog/iphonelinux/usbmuxd/
+Vcs-Git: git://git.debian.org/git/pkg-gtkpod/packages/usbmuxd.git
+Vcs-Browser: http://git.debian.org/?p=pkg-gtkpod/packages/usbmuxd.git
+
+Package: usbmuxd
+Architecture: linux-any kfreebsd-any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         adduser
+Description: USB multiplexor daemon for iPhone and iPod Touch devices
+ usbmuxd, the USB multiplexor daemon, is in charge of coordinating
+ access to iPhone and iPod Touch services over USB. Synchronization and
+ management applications for the iPhone and iPod Touch need this daemon
+ to communicate with such devices concurrently.
+ .
+ This package includes udev rules to start the daemon when a supported
+ device is plugged in, and stop it when all devices are removed.
+
+Package: usbmuxd-dbg
+Architecture: linux-any kfreebsd-any
+Section: debug
+Priority: extra
+Depends: usbmuxd (= ${binary:Version}),
+         ${misc:Depends}
+Description: USB multiplexor daemon for iPhone and iPod Touch devices - debug
+ usbmuxd, the USB multiplexor daemon, is in charge of coordinating
+ access to iPhone and iPod Touch services over USB. Synchronization and
+ management applications for the iPhone and iPod Touch need this daemon
+ to communicate with such devices concurrently.
+ .
+ This package contains the debugging symbols.

@@ -1,0 +1,561 @@
+libimobiledevice (1.2.0+dfsg-3~ubuntu0.2) xenial-security; urgency=medium
+
+  * No change rebuild for -security pocket.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 02 Jun 2016 10:20:15 -0400
+
+libimobiledevice (1.2.0+dfsg-3~ubuntu0.1) xenial; urgency=medium
+
+  * debian/patches/git_gnutls_proxy.patch:
+    - Fix installation_proxy when using GnuTLS instead of OpenSSL
+      (lp: #1388743)
+  * debian/patches/git_local_socket.patch:
+    - [security fix] Make sure sockets only listen locally
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 23 May 2016 12:48:38 +0200
+
+libimobiledevice (1.2.0+dfsg-2.1build1) xenial; urgency=medium
+
+  * No-change rebuild for gnutls transition.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 17 Feb 2016 22:26:12 +0000
+
+libimobiledevice (1.2.0+dfsg-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+
+  [ Andreas Metzler ]
+  * Apply 0001-Updated-cert-callback-to-gnutls3-API.patch from
+    https://github.com/kalev/libimobiledevice/  to fix FTBFS against
+    gnutls >= 3.4. Closes: #782828
+
+ -- Mattia Rizzolo <mattia@debian.org>  Mon, 25 Jan 2016 15:01:41 +0000
+
+libimobiledevice (1.2.0+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Reupload to unstable (Closes: #809797)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Mon, 04 Jan 2016 18:37:03 +0800
+
+libimobiledevice (1.2.0+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * [b3d792c] Imported Upstream version 1.2.0+dfsg
+  * [68cab55] Drop 01-libs.private.patch.
+    No longer needed.
+  * [9084b8b] Rename lib package for ABI bump
+  * [48168a2] Update symbols file
+
+ -- Chow Loong Jin <hyperair@debian.org>  Wed, 04 Feb 2015 15:52:54 +0800
+
+libimobiledevice (1.1.7+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * [51f31a3] Imported Upstream version 1.1.7+dfsg
+  * [6dace3c] Drop symbol-script patch.
+    No longer needed since upstream uses -fvisibility=hidden
+  * [c385d6b] Update packaging for soname bump
+  * [794ea11] Update symbols file
+  * [4945173] Bump Standards-Version to 3.9.6 (no changes)
+  * [7b02a17] Build-dep on dh-python
+  * [1d52426] Add idevicedebug.1 manpage
+
+ -- Chow Loong Jin <hyperair@debian.org>  Wed, 29 Oct 2014 18:42:40 +0800
+
+libimobiledevice (1.1.6+dfsg-4) unstable; urgency=medium
+
+  * [073ba50] Update libimobiledevice-dev's gcrypt deps.
+    Whoops, missed this in the previous upload. (Closes: #747536)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Thu, 24 Jul 2014 16:06:32 +0800
+
+libimobiledevice (1.1.6+dfsg-3) unstable; urgency=medium
+
+  * Team upload
+  * [1855046] Update gnutls and gcrypt build-deps (Closes: #747536)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Wed, 23 Jul 2014 16:01:23 +0800
+
+libimobiledevice (1.1.6+dfsg-2) unstable; urgency=medium
+
+  * [169b453] Fix libimobiledevice-utils.manpages.
+     - Drop duplicate idevicebackup.1 entry
+     - Add idevicename.1 and idevicecrashreport.1
+    Thanks to Artur Rona (Closes: #750955)
+  * [583a454] Fix dependency on transitional libtasn1-3-dev package
+    (Closes: #731707)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Mon, 23 Jun 2014 14:43:38 +0800
+
+libimobiledevice (1.1.6+dfsg-1) unstable; urgency=medium
+
+  * Team upload
+  * [51f7f7a] Imported Upstream version 1.1.6
+  * [ed48bf8] Update build-dependencies
+  * [052c1b3] Bump Standards-Version to 3.9.5 (no changes required)
+  * [b89ebca] Refresh patches
+  * [dbe83f7] Build-dep on libtasn-1-6-dev instead of libtasn-1-3-dev
+    (Closes: #731707)
+  * [09293bb] Downgrade usbmuxd dependency to recommends and suggest
+    libusbmuxd-tools
+    (Closes: #658541)
+  * [0a602f1] Use symbol script to hide private symbols
+  * [f85dcf3] Update symbols file.
+    Drop private symbols, and add new symbols
+  * [7338f73] Drop unused patches
+  * [99e4676] Exclude jquery.js
+  * [64e7829] Update copyright file
+
+ -- Chow Loong Jin <hyperair@debian.org>  Mon, 14 Apr 2014 02:22:41 +0800
+
+libimobiledevice (1.1.5-2) unstable; urgency=low
+
+  * [0052e46] Drop hal fdi file.
+    That stuff doesn't work anymore. (Closes: #728151)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Wed, 30 Oct 2013 01:42:21 +0800
+
+libimobiledevice (1.1.5-1) experimental; urgency=low
+
+  * Team upload.
+  * Ack NMU from Andreas Metzler
+  * [1282e33] Imported Upstream version 1.1.5 (Closes: #709369):
+    - Adapt to libusbmuxd API changes (Closes: #682275)
+  * [27231df] Refresh or drop patches
+    - 00git_ios5_support.patch: Drop, applied upstream
+    - 01-libs.private.patch: Refresh
+    - 02-add-missing-linking.patch: Drop, applied upstream
+    - 03_ac_pkg_swig_m4_fixed.patch: Drop, no longer relevant
+    - 04_libplist_DSO_linking.patch: Drop, applied upstream
+    - 05_remove_gcry_need.patch: Drop, no longer relevant
+  * [0f497a0] Drop --host and --build arguments from configure.
+    This is already applied by dh_auto_configure automatically.
+  * [a370ab0] Reindent build-depends and drop trailing whitespace
+  * [a3fffe5] Bump dh compat to 9 for buildflags
+  * [40725ee] Enable multi-arch
+  * [65d74c4] Move dh --with parameter after $@
+  * [596a2b7] Update command for removing *.la for multiarch path
+  * [979998b] Update .manpages file for new utilities
+  * [3c37d78] Don't ship embedded jquery.js
+
+ -- Chow Loong Jin <hyperair@debian.org>  Mon, 28 Oct 2013 23:01:08 +0800
+
+libimobiledevice (1.1.5-0.2) experimental; urgency=low
+
+  * Non-maintainer upload.
+  * libimobiledevice4-dbg replaces/conflicts libimobiledevice2-dbg.
+    Closes: #726752
+
+ -- Andreas Metzler <ametzler@debian.org>  Sat, 19 Oct 2013 14:42:15 +0200
+
+libimobiledevice (1.1.5-0.1) experimental; urgency=low
+
+  * Non-maintainer upload.
+  * Sync from Ubuntu.
+    + New upstream version. Closes: #709369
+    + Includes fix for CVE-2013-2142: insecure /tmp usage. Closes: #710885
+    + Compatible with newer libusbmuxd. Closes: #682275
+    + New upstream version does not use gnutls_*_set_priority functions
+      anymore. Closes: #624066
+    + Package builds. Closes: #713689
+    + Does not depend on libusbmuxd1. Closes: #725637
+  * configure with --disable-silent-rules
+  * Delete ubuntu-revision on symbol string_concat@Base in 
+    debian/libimobiledevice4.symbols.
+  * Update authors and download location in debian/copyright.
+
+ -- Andreas Metzler <ametzler@debian.org>  Sat, 12 Oct 2013 18:49:30 +0200
+
+libimobiledevice (1.1.5-0ubuntu2) saucy; urgency=low
+
+  * SECURITY UPDATE: insecure /tmp usage (LP: #1164263)
+    - debian/patches/CVE-2013-2142.patch: fall back to getpwuid_r instead
+      of using /tmp in src/userpref.c. Added string_concat() function in
+      src/Makefile.am, src/utils.c, src/utils.h.
+    - added new symbol to debian/libimobiledevice4.symbols.
+    - CVE-2013-2142
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 14 Aug 2013 12:43:31 -0400
+
+libimobiledevice (1.1.5-0ubuntu1) saucy; urgency=low
+
+  * New upstream release. (LP: #1207038)
+    - soname was bumped
+  * debian/control:
+    - Bump minimum cython dependency
+    - Don't have the -doc package depend on the library
+  * Dropped patches applied in new version:
+    - 06_cython_detection.patch
+    - 07_cython_0.16_check.patch
+    - 08_cython_0.16_fix.patch
+    - git_handle_unset_environment.patch
+    - git_utf8_devices_names.patch
+  * debian/patches/link_against_pthread.patch:
+    - Fix underlinking against pthread
+  * debian/patches/git_explicitly_cast_ssl_enabled.patch:
+    - Backport patch to fix build failure due to implicit conversion
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Wed, 31 Jul 2013 15:34:39 -0400
+
+libimobiledevice (1.1.4-1ubuntu6) raring; urgency=low
+
+  * Added missing gcrypt lib to link, fixing FTBFS.
+  * Updated d/libimobiledevice3.symbols.
+
+ -- Daniel T Chen <crimsun@ubuntu.com>  Tue, 02 Apr 2013 16:47:51 -0400
+
+libimobiledevice (1.1.4-1ubuntu5) raring; urgency=low
+
+  * 08_cython_0.16_fix.patch: Follow-up cython fix from Michael Bienia:
+    - Mark BaseError as not inline in the .pxd file too, to match the
+      definition from the .pyx file and fix the FTBFS with cython 0.17.
+  * 09_use_python_config.patch: Use python-config to find the python
+    include paths, and fix the build failure with multi-arched python.
+
+ -- Adam Conrad <adconrad@ubuntu.com>  Sat, 19 Jan 2013 06:11:28 -0700
+
+libimobiledevice (1.1.4-1ubuntu4) raring; urgency=low
+
+  * No-change rebuild for raring to work around a Launchpad copying bug.
+
+ -- Colin Watson <cjwatson@ubuntu.com>  Thu, 17 Jan 2013 09:40:41 +0000
+
+libimobiledevice (1.1.4-1ubuntu3) quantal-proposed; urgency=low
+
+  * git_utf8_devices_names.patch:
+    - fix incorrect naming of e.g iphone devices (lp: #1049991)
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 24 Oct 2012 12:01:08 +0200
+
+libimobiledevice (1.1.4-1ubuntu2) quantal; urgency=low
+
+  * debian/patches/git_handle_unset_environment.patch:
+    - don't segfault when the environment variable are unset (lp: #1034067)
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 05 Oct 2012 16:39:56 +0200
+
+libimobiledevice (1.1.4-1ubuntu1) quantal; urgency=low
+
+  * debian/rules: use --disable-openssl, we use gnutls
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 30 Jul 2012 11:38:16 +0200
+
+libimobiledevice (1.1.4-1~quantal) quantal; urgency=low
+
+  * Upload Debian version (which is waiting for sponsoring) to quantal
+
+  [ Julien Lavergne ]
+  * New upstream release.
+  * debian/patches:
+   - 00git_ios5_support.patch: Merged upstream.
+   - 06_git_ios5_handle_error.patch: Merged upstream.
+   - 01-libs.private.patch: Refreshed.
+   - 02-add-missing-linking.patch & 03_ac_pkg_swig_m4_fixed.patch:
+     Removed, not necessary since swig is not used now.
+   - 04_libplist_DSO_linking.patch: Merged upstream.
+   - 05_remove_gcry_need.patch: Refreshed.
+   - 06_cython_detection.patch: From upstream, correctly check cython version.
+   - 07_cython_0.16_check.patch: From upstream, fix building with cython 0.16. 
+  * debian/control, debian/rules, debian/libimobiledevice3.*
+   - Bump soname.
+  * debian/control:
+   - Build depends on libusbmuxd-dev (>= 1.0.8).
+   - Replace build depends on swig by cython.
+   - Build-depends on libplist-dev (>= 1.8-2~) for cython support. 
+  * debian/libimobiledevice3.install:
+   - Drop hal file, it's deprecated.
+  * debian/libimobiledevice3.symbols:
+   - Update.
+  * debian/python-plist.install:
+   - Update files installed by cython.
+  * debian/rules:
+   - Update location of .a and .la files.
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Sun, 29 Jul 2012 11:31:31 +0200
+
+libimobiledevice (1.1.1-4) unstable; urgency=low
+
+  [ Robert Hooker ]
+  * Add 06_git_ios5_handle_error.patch, backport from git commit 
+    e855f246b3 to allow mounting ios 5 devices. (LP: #877440)
+
+  [ Julien Lavergne ]
+  * debian/control:
+   - Remove build-depend on libusb2-dev. Thanks Robert Millan (Closes: #659625)
+   - Update Standards-Version to 3.9.3 (no change needed).
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 18 Mar 2012 16:25:27 +0100
+
+libimobiledevice (1.1.1-3) unstable; urgency=low
+
+  * debian/patches:
+   - 05_remove_gcry_need.patch: Remove check and link to gcrypt
+     (Closes: #638417)
+   - 00git_ios5_support.patch: Fix "Unhandled lockdown error" for iOS 5.
+     (LP: #795475)
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 25 Oct 2011 01:02:45 +0200
+
+libimobiledevice (1.1.1-2) unstable; urgency=low
+
+  * Upload to unstable, most of the API should be stable now.
+  * debian/patches/
+   - 02-add-missing-linking.patch: Refresh
+   - 03_ac_pkg_swig_m4_fixed.patch: Fix building python bindings. Thanks
+     Sebastian Ramacher for the patch (Closes: #631821).
+   - 04_libplist_DSO_linking.patch: Add libplist to LDFLAGS.
+  * debian/control:
+   - Build-depends on dh-autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
+   - Add DM-Upload-Allowed: yes
+  * debian/rules:
+   - Run dh --with autoreconf for 03_ac_pkg_swig_m4_fixed.patch.
+   - Remove .la files for python bindings also.
+   - Remove .a files from python bindings.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 16 Sep 2011 00:01:44 +0200
+
+libimobiledevice (1.1.1-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/changelog: Fix typo in previous entry.
+  * debian/patches:
+   - 90_fix_4.3_iOS.patch: Merged upstream.
+  * debian/libimobiledevice-utils.manpages:
+   - Add man page for idevicebackup2.
+   - Add man page for idevicedate.
+   - Add upstream man pages for ideviceenterrecovery and idevicepair.
+  * debian/control:
+   - Remove Conflitcs of libimobiledevice2 to make it installable with
+     libimobiledevice1 (Closes: #620065).
+   - Add Conflicts/Replaces also on libimobiledevice0-dbg (LP: #693895)
+   - Remove python-support from Build-Depends.
+   - Increase required python-all-dev package version to 2.6.6-3~.
+   - Remove XB-Python-Version fields.
+   - Add X-Python-Version field.
+   - Bump Standards-Version to 3.9.2.0 (no change needed).
+  * debian/copyright:
+   - Update copyright years.
+  * debian/libimobiledevice2.symbols:
+   - Update with new symbols.
+  * debian/rules:
+   - Use --with python2.
+   - Pass --no-guessing-versions to dh_python2 to build only with default
+     python version.
+  * debian/pycompat:
+   - Removed.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 30 Apr 2011 13:28:43 +0200
+
+libimobiledevice (1.1.0-3) experimental; urgency=low
+
+  * debian/control:
+   - Add Conflicts / Replaces on libimobiledevice1 and libimobiledevice0, since
+     they provide the same fdi file. LP: #753015, Closes: #620065
+   - Update Maintainer field, and add me to Uploaders.
+   - Update Vcs-*.
+   - Remove duplicate section.
+  * debian/gbp.conf:
+   - Add specific gbp.conf.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 10 Apr 2011 22:37:36 +0200
+
+libimobiledevice (1.1.0-2) experimental; urgency=low
+
+  * debian/control:
+    - Add Conflicts/Replaces for libimobiledevice2-dbg with previous version.
+  * debian/31-apple-mobile-device.fdi
+   - Re-add HAL fdi file, until Amarok don't rely on it.
+     Closes: #615107, LP: #362182
+  * debian/libimobiledevice2.install:
+   - Install the HAL fdi file.
+  * debian/patches:
+   - 90_fix_4.3_iOS.patch: From upstream, fix corrupted bytes in iOS 4.3.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 26 Mar 2011 21:03:07 +0100
+
+libimobiledevice (1.1.0-1) experimental; urgency=low
+
+  * New upstream development release, API is considered unstable.
+  * debian/libimobiledevice1*, debian/rules, debian/control:
+   - Bump SONAME for libimobiledevice library.
+  * debian/copyright:
+   - Update copyright holders.
+  * debian/libimobiledevice2.symbols:
+   - Update with new symbols.
+  * debian/ideviceenterrecovery.1:
+   - Add new manpage.
+  * debian/libimobiledevice-utils.manpages:
+   - Install the new manpage.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 19 Dec 2010 00:11:04 +0100
+
+libimobiledevice (1.0.4-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/docs: Install upstream documentation.
+  * debian/rules:
+   - Remove additional CFLAGS to pass correct flags.
+   - Add additional LDFLAGS.
+   - Use filter instead of findstring to find noopt.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 28 Nov 2010 01:05:51 +0100
+
+libimobiledevice (1.0.3-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/control:
+   - Bump Standards-Version to 3.9.1.0 (no change needed).
+   - Fix spelling error in description (Closes: #593383).
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Thu, 14 Oct 2010 00:10:07 +0200
+
+libimobiledevice (1.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * libimobiledevice1.symbols: Update with new symbols.
+  * debian/idevicepair.1: Add manpage for the new utility.
+  * debian/libimobiledevice-utils.manpages: Add the new manpage.
+  * debian/control:
+   - Use the new homepage (Closes: #586249).
+   - Use better build-depends for libusb. Thanks Aurelien Jarno for the advise.
+    (Closes: #585635).
+   - Bump Standards-Version to 3.9.0.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 13 Jul 2010 20:29:18 +0200
+
+libimobiledevice (1.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/watch: Update.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Mon, 24 May 2010 23:39:58 +0200
+
+libimobiledevice (1.0.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump SONAME to libimobiledevice1.
+  * debian/watch: Fixed by using githubredir.debian.net redirection.
+  * debian/libimobiledevice-utils.manpages: Update to use upstream manpages.
+  * debian/*.1: Remove manpages, there are now shipped upstream.
+  * debian/control: Fix wrong description. (Closes: #571586)
+  * debian/patches:
+    - 02-add-missing-linking.patch: Refresh.
+    - 03-fix-python-import.patch: Dropped, merged upstream.
+  * debian/libimobiledevice1.install: Remove fdi file, not shipped anymore.
+  * debian/rules: Remove installed manpages, handle by *.manpages.
+  * debian/*.manpages: Update location of the manpages.
+  * debian/*.symbols: Update.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 26 Mar 2010 21:28:14 +0100
+
+libimobiledevice (0.9.7-2) unstable; urgency=medium
+
+  * debian/rules & debian/libimobiledevice-doc.install
+   - Install directly documentation using dh_install to avoid FTBFS. 
+     Thanks Onkar Shinde for the fix (Closes: #569192).
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 12 Feb 2010 01:07:31 +0100
+
+libimobiledevice (0.9.7-1) unstable; urgency=medium
+
+  * Urgency set to medium to fix RC bug (#565665).
+  * New upstream release, previously named libiphone (Closes: #568136, #568137)
+  * Replace all libiphone occurence to libimobiledevice.
+  * Remove python-iphone.preinst, not needed since the package was renamed.
+  * debian/copyright: Update copyright holders and authors.
+  * debian/libimobiledevice-dev & debian/rules: Remove *.la files.
+  * debian/rules:
+   - Rewrite to use dh7.
+   - Pass --enable-dev-tools.
+  * debian/control:
+   - Build-depends on debhelper (>= 7.0.50~).
+   - Add VCS-* fields.
+   - Build-depends on libusb2-dev on kfreebsd (Closes: #565665).
+   - Remove libusb-1.0-0-dev depends for libimobiledevice-dev.
+   - Wrap depends.
+   - Add Conflicts/Replaces with libiphone0 for .fdi file.
+   - Bump Standards-Version to 3.8.4, no change needed.
+  * debian/libimobiledevice0.symbols: Rewrite with only remaining symbols.
+  * debian/patches:
+    - 01-libs.private.patch: Use Requires.private in *.pc files to not add
+      unecessary links.
+    - 02-add-missing-linking.patch: Add missing LDFLAG on plist for python
+      bindings.
+    - 03-fix-python-import.patch: Fix name of the python module.
+  * Switch to dpkg-source 3.0 (quilt) format.
+  * debian/libimobiledevice-doc.*: Add the documentation to it's own package.
+  * Add debian/idevicebackup.1.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 02 Feb 2010 21:19:51 +0100
+
+libiphone (0.9.5-1) unstable; urgency=medium
+
+  * New maintainer, thanks Bradley Smith for his work (Closes: #548595).
+  * Urgency set to medium to fix RC bug (#560619).
+  * New upstream release (Closes: #557642)
+   - Build with new libplist (Closes: #560619)
+  * debian/control & debian/libiphone-utils:
+   - Put executable binaries in a separate package.
+  * debian/control :
+   - Change python-libiphone to python-iphone binary, to reflect the change of
+     the module.
+   - Build against libusb-1.0-0-dev (>= 1.0.3), libusbmuxd-dev (>= 1.0.0),
+     libtasn1-3-dev (>= 1.1), libplist++-dev (>= 0.15), python-all-dev,
+     libreadline-dev and python-plist.
+   - Build depends on python-support.
+   - Update build-depends on libplist-dev to (>= 0.15) and swig to (>= 1.3.36).
+   - Wrap build-depends.
+   - Make libiphone-dev depends on libusbmuxd-dev and libtasn1-3-dev.
+   - Make libiphone0 depends on usbmuxd.
+  * debian/libiphone0.install: 
+   - Remove udev rules, not shipped by upstream.
+   - Only install 0 library number. 
+  * debian/python-iphone: Update installation location for python 2.6.
+  * debian/rules & debian/python-iphone.preinst: Switch to python-support.
+  * debian/libiphone-utils.manpages: Add man pages.
+  * Bump Standards-Version to 3.8.3, no change needed.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Mon, 14 Dec 2009 21:16:05 +0100
+
+libiphone (0.9.1-3) unstable; urgency=low
+
+  * Fix udev rule installation path. Closes: #529650.
+
+ -- Bradley Smith <bradsmith@debian.org>  Wed, 20 May 2009 22:29:26 +0100
+
+libiphone (0.9.1-2) unstable; urgency=low
+
+  * Add missing Depends on libplist-dev.
+
+ -- Bradley Smith <bradsmith@debian.org>  Sun, 17 May 2009 14:08:18 +0100
+
+libiphone (0.9.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    - Remove unneeded Build-Depends, and add libplist-dev.
+    - Correct -dbg section.
+    - Drop libiphone-utils package, binaries no longer present.
+    - Add python-libiphone package.
+  * Drop quilt patch system:
+    - Drop fix-gnutls-depend.diff - Gone upstream.
+  * Add watch file.
+
+ -- Bradley Smith <bradsmith@debian.org>  Tue, 12 May 2009 18:30:54 +0100
+
+libiphone (0.1.0~git+20090323-1) experimental; urgency=low
+
+  * New upstream snapshot.
+  * Add quilt patch system.
+    - fix-gnutls-depend.diff - Remove versioned depends on gnutls. Since it
+      is not needed. Closes: #520871, #520859.
+  * Update Standards-Version to 3.8.1. (No changes).
+
+ -- Bradley Smith <bradsmith@debian.org>  Mon, 23 Mar 2009 20:33:14 +0000
+
+libiphone (0.1.0~git+20090210-1) experimental; urgency=low
+
+  * Initial release. Closes: #501727.
+
+ -- Bradley Smith <bradsmith@debian.org>  Tue, 10 Feb 2009 12:34:49 +0000

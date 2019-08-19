@@ -1,0 +1,32 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(imobiledevicenetPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(imobiledevicenetBuild)
+    downloadType: 'single'
+    artifactName: 'imobiledevice-net'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download imobiledevice-net artifacts'
+- script: |
+    sudo apt-get install -y libxml2-utils
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+    version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+    echo Releasing $version_number
+
+    git clone https://github.com/libimobiledevice-win32/docker
+
+    docker build docker/$NAME/ -t quamotion/usbmuxd:$version_number$SUFFIX --build-arg LIBIMOBILEDEVICE_WIN32_VERSION=v$version_number
+
+    docker tag quamotion/usbmuxd:$version_number$SUFFIX quamotion/usbmuxd:latest$SUFFIX
+
+    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+
+    docker push quamotion/usbmuxd:$version_number$SUFFIX
+    docker push quamotion/usbmuxd:latest$SUFFIX
+
+  displayName: Build Docker containers

@@ -1,0 +1,73 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(imobiledevicenetPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(imobiledevicenetBuild)
+    downloadType: 'single'
+    artifactName: 'sources'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download sources'
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: 'imobiledevice-net'
+    pipeline: $(imobiledevicenetPipeline)
+    buildVersionToDownload: 'specific'
+    buildId: $(imobiledevicenetBuild)
+    downloadType: 'single'
+    artifactName: 'imobiledevice-net'
+    downloadPath: '$(System.ArtifactsDirectory)'
+  displayName: 'Download imobiledevice-net artifacts'
+- script: |
+    sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput
+  displayName: 'Install dependencies'
+- script: |
+    mkdir -p  ~/.gnupg/
+    echo allow-loopback-pinentry > ~/.gnupg/gpg-agent.conf
+    gpg --allow-secret-key-import --import $BUILD_SOURCESDIRECTORY/ppa.asc
+    killall gpg-agent
+    echo "${GPG_PASSPHRASE}" >> /tmp/gpg_passphrase
+  displayName: 'Configure GPG'
+- script: |
+    set -e
+    version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+    mkdir -p $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
+
+    export DEBEMAIL="frederik.carlier@quamotion.mobi"
+    export DEBFULLNAME="Frederik Carlier"
+
+    cd $SYSTEM_ARTIFACTSDIRECTORY/sources/
+
+    declare -A package_versions
+    package_versions=( ["libplist"]="2.0.2" ["libusbmuxd"]="1.12.0" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1")
+
+    for package in libplist libusbmuxd libimobiledevice usbmuxd libideviceactivation
+    do
+        package_version=${package_versions[$package]}
+        mkdir $package
+        tar xvf $package.orig.tar.gz -C $package
+        mv $package.orig.tar.gz ${package}_${package_version}-${version_number}.orig.tar.gz
+        cd $package
+
+        dch -v "${package_version}-${version_number}-0$DIST" --distribution $DIST "imobiledevice-net ${version_number}"
+
+        debuild -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase"
+        cp ../${package}_${package_version}* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
+
+        dput ppa:quamotion/ppa ../${package}_${package_version}-${version_number}-0${DIST}_source.changes
+        cd ..
+    done
+  displayName: Build Debian archives
+- script: |
+    rm -rf /tmp/gpg_passphrase
+  displayName: 'Cleanup GPG key'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/deb' 
+    artifactName: 'deb' 
+    publishLocation: 'Container'
+  displayName: Publish
