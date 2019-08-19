@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="PlistApi.cs" company="Quamotion">
-// Copyright (c) 2016-2018 Quamotion. All rights reserved.
+// Copyright (c) 2016-2019 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -33,7 +33,7 @@ namespace iMobileDevice.Plist
         private ILibiMobileDevice parent;
         
         /// <summary>
-        /// Initializes a new instance of the <see cref"PlistApi"/> class
+        /// Initializes a new instance of the <see cref="PlistApi"/> class
         /// </summary>
         /// <param name="parent">
         /// The <see cref="ILibiMobileDeviceApi"/> which owns this <see cref="Plist"/>.
@@ -274,7 +274,7 @@ namespace iMobileDevice.Plist
         /// the node
         /// </param>
         /// <returns>
-        /// the node index
+        /// the node index or UINT_MAX if node index can't be determined
         /// </returns>
         public virtual uint plist_array_get_item_index(PlistHandle node)
         {
@@ -348,6 +348,54 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
+        /// Remove a node that is a child node of a #PLIST_ARRAY node.
+        /// node will be freed using #plist_free.
+        /// </summary>
+        /// <param name="node">
+        /// The node to be removed from its #PLIST_ARRAY parent.
+        /// </param>
+        public virtual void plist_array_item_remove(PlistHandle node)
+        {
+            PlistNativeMethods.plist_array_item_remove(node);
+        }
+        
+        /// <summary>
+        /// Create an iterator of a #PLIST_ARRAY node.
+        /// The allocated iterator should be freed with the standard free function.
+        /// </summary>
+        /// <param name="node">
+        /// The node of type #PLIST_ARRAY
+        /// </param>
+        /// <param name="iter">
+        /// Location to store the iterator for the array.
+        /// </param>
+        public virtual void plist_array_new_iter(PlistHandle node, out PlistArrayIterHandle iter)
+        {
+            PlistNativeMethods.plist_array_new_iter(node, out iter);
+            iter.Api = this.Parent;
+        }
+        
+        /// <summary>
+        /// Increment iterator of a #PLIST_ARRAY node.
+        /// </summary>
+        /// <param name="node">
+        /// The node of type #PLIST_ARRAY.
+        /// </param>
+        /// <param name="iter">
+        /// Iterator of the array
+        /// </param>
+        /// <param name="item">
+        /// Location to store the item. The caller must *not* free the
+        /// returned item. Will be set to NULL when no more items are left
+        /// to iterate.
+        /// </param>
+        public virtual void plist_array_next_item(PlistHandle node, PlistArrayIterHandle iter, out PlistHandle item)
+        {
+            PlistNativeMethods.plist_array_next_item(node, iter, out item);
+            item.Api = this.Parent;
+        }
+        
+        /// <summary>
         /// Get size of a #PLIST_DICT node.
         /// </summary>
         /// <param name="node">
@@ -366,10 +414,10 @@ namespace iMobileDevice.Plist
         /// The allocated iterator should be freed with the standard free function.
         /// </summary>
         /// <param name="node">
-        /// the node of type #PLIST_DICT
+        /// The node of type #PLIST_DICT.
         /// </param>
         /// <param name="iter">
-        /// iterator of the #PLIST_DICT node
+        /// Location to store the iterator for the dictionary.
         /// </param>
         public virtual void plist_dict_new_iter(PlistHandle node, out PlistDictIterHandle iter)
         {
@@ -381,18 +429,19 @@ namespace iMobileDevice.Plist
         /// Increment iterator of a #PLIST_DICT node.
         /// </summary>
         /// <param name="node">
-        /// the node of type #PLIST_DICT
+        /// The node of type #PLIST_DICT
         /// </param>
         /// <param name="iter">
-        /// iterator of the dictionary
+        /// Iterator of the dictionary
         /// </param>
         /// <param name="key">
-        /// a location to store the key, or NULL. The caller is responsible
+        /// Location to store the key, or NULL. The caller is responsible
         /// for freeing the the returned string.
         /// </param>
         /// <param name="val">
-        /// a location to store the value, or NULL. The caller should *not*
-        /// free the returned value.
+        /// Location to store the value, or NULL. The caller must *not*
+        /// free the returned value. Will be set to NULL when no more
+        /// key/value pairs are left to iterate.
         /// </param>
         public virtual void plist_dict_next_item(PlistHandle node, PlistDictIterHandle iter, out string key, out PlistHandle val)
         {
@@ -401,10 +450,10 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
-        /// Get key associated to an item. Item must be member of a dictionary
+        /// Get key associated key to an item. Item must be member of a dictionary.
         /// </summary>
         /// <param name="node">
-        /// the node
+        /// the item
         /// </param>
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
@@ -431,6 +480,23 @@ namespace iMobileDevice.Plist
         {
             PlistHandle returnValue;
             returnValue = PlistNativeMethods.plist_dict_get_item(node, key);
+            returnValue.Api = this.Parent;
+            return returnValue;
+        }
+        
+        /// <summary>
+        /// Get key node associated to an item. Item must be member of a dictionary.
+        /// </summary>
+        /// <param name="node">
+        /// the item
+        /// </param>
+        /// <returns>
+        /// the key node of the given item, or NULL.
+        /// </returns>
+        public virtual PlistHandle plist_dict_item_get_key(PlistHandle node)
+        {
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_dict_item_get_key(node);
             returnValue.Api = this.Parent;
             return returnValue;
         }
@@ -811,7 +877,7 @@ namespace iMobileDevice.Plist
         /// <summary>
         /// Frees the memory allocated by plist_to_xml
         /// </summary>
-        /// <param name="plist_xml">
+        /// <param name="plist_bin">
         /// The object allocated by plist_to_xml
         /// </param>
         public virtual void plist_to_xml_free(System.IntPtr plistXml)
