@@ -1,11 +1,13 @@
 # .NET bindings for imobiledevice
 [![Build Status](https://dev.azure.com/libimobiledevice-win32/imobiledevice-net/_apis/build/status/libimobiledevice-win32.imobiledevice-net?branchName=master)](https://dev.azure.com/libimobiledevice-win32/imobiledevice-net/_build/latest?definitionId=1&branchName=master) [![NuGet Status](http://img.shields.io/nuget/v/imobiledevice-net.svg?style=flat)](https://www.nuget.org/packages/imobiledevice-net/)
 
-imobiledevice-net is a library which allows you to interact with iOS devices on Windows using any of the .NET Framework
+imobiledevice-net is a library which allows you to interact with iOS devices on Windows, macOS and Linux using .NET
 languages (such as C# or Visual Basic). It is based on the libimobiledevice library.
 
+imobiledevice-net is compatible with recent versions of .NET Framework and .NET Core.
+
 ## Installing
-You can install imobiledev-net as a NuGet package
+You can install imobiledevice-net as a [NuGet package](https://www.nuget.org/packages/imobiledevice-net)
 
 ```
 PM> Install-Package imobiledevice-net
@@ -74,27 +76,19 @@ foreach (var udid in udids)
 
 We also provide binary distributions of libimobiledevice for Windows, macOS, and Ubuntu Linux.
 
-For Windows and macOS, you can download a zip file with the libimobiledevice libraries and tools using the links below.
+For Windows and macOS, you can download a zip file with the libimobiledevice libraries and tools using the
+[GitHub releases page](https://github.com/libimobiledevice-win32/imobiledevice-net/releases).
+
 For Ubuntu Linux, you can use our PPA (package archive) to install the latest libimobiledevice libraries and tools using `apt-get`.
+See the [Quamotion PPA](https://launchpad.net/~quamotion/+archive/ubuntu/ppa) for more information.
 
-| Supported Platform                         | Downloads                                                                                                           | CI                                                                              |
-| -------------------------------------------| --------------------------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------------|
-| Windows (x86)                              | [libimobiledevice-1.2.1-win-x86.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [AppVeyor](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/) |
-| Windows (x64)                              | [libimobiledevice-1.2.1-win-x64.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [AppVeyor](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/) |
-| macOS (x64)                                | [libimobiledevice-1.2.1-osx-x64.zip](https://ci.appveyor.com/project/qmfrederik/imobiledevice-net/build/artifacts)  | [Travis](https://travis-ci.org/libimobiledevice-win32/imobiledevice-net)        |
-| Ubuntu (x64)                               | [Quamotion PPA](https://launchpad.net/~quamotion/+archive/ubuntu/ppa)                                               | [Travis](https://travis-ci.org/libimobiledevice-win32/imobiledevice-net)        |
+The native binaries are all built from the various repositories ([libplist](https://github.com/libimobiledevice-win32/libplist),
+[libusbmuxd](https://github.com/libimobiledevice-win32/libusbmuxd), [libimobiledevice](https://github.com/libimobiledevice-win32/libimobiledevice),
+to name a few) in the [libimobiledevice-win32](https://github.com/libimobiledevice-win32) organization.
 
-## VCPKG repositories
-
-If you want to install libimobiledevice from source on Windows, you can also use [vcpkg](https://github.com/microsoft/vcpkg). Follow the instructions
-on the VCPKG repository to install VCPKG. You can then install the 32-bit or 64-bit version of libimobiledevice using the following commands:
-
-```
-vcpkg install --head libplist:x86-windows libusbmuxd:x86-windows libimobiledevice:x86-windows usbmuxd:x86-windows ideviceinstaller:x86-windows libideviceactivation:x86-windows"
-vcpkg install --head libplist:x64-windows libusbmuxd:x64-windows libimobiledevice:x64-windows usbmuxd:x64-windows ideviceinstaller:x64-windows libideviceactivation:x64-windows"
-```
-
-Make sure to use `--head` so you get the latest version of libimobiledevice!
+For macOS and Linux, you can use autotools to compile and install the native binaries from source.
+For Windows, you can use the Visual Studio solution and projects hosted in the [libimobiledevice-vs](https://github.com/libimobiledevice-win32/libimobiledevice-vs)
+repository.
 
 ## Consulting, Training and Support
 This repository is maintained by [Quamotion](http://quamotion.mobi). Quamotion develops test software for iOS and 
