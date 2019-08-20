@@ -1,25 +1,11 @@
 steps:
 - task: DownloadBuildArtifacts@0
   inputs:
-    buildType: 'specific'
-    project: 'imobiledevice-net'
-    pipeline: $(imobiledevicenetPipeline)
-    buildVersionToDownload: 'specific'
-    buildId: $(imobiledevicenetBuild)
-    downloadType: 'single'
     artifactName: 'imobiledevice-net'
-    downloadPath: '$(System.ArtifactsDirectory)'
   displayName: 'Download imobiledevice-net artifacts'
 - task: DownloadBuildArtifacts@0
   inputs:
-    buildType: 'specific'
-    project: 'imobiledevice-net'
-    pipeline: $(imobiledevicenetPipeline)
-    buildVersionToDownload: 'specific'
-    buildId: $(imobiledevicenetBuild)
-    downloadType: 'single'
     artifactName: 'binaries'
-    downloadPath: '$(System.ArtifactsDirectory)'
   displayName: 'Download binary artifacts'
 - script: |
     wget https://github.com/buildkite/github-release/releases/download/v1.0/github-release-linux-amd64 -O github-release
@@ -29,11 +15,11 @@ steps:
 
     unzip $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg
 
-    libplist_commit=`cat libplist.gitinfo/gitinfo | tail -n 1`
-    libusbmuxd_commit=`cat libusbmuxd.gitinfo/gitinfo | tail -n 1`
-    libimobiledevice_commit=`cat libimobiledevice.gitinfo/gitinfo | tail -n 1`
-    usbmuxd_commit=`cat usbmuxd.gitinfo/gitinfo | tail -n 1`
-    libideviceactivation_commit=`cat libideviceactivation.gitinfo/gitinfo | tail -n 1`
+    libplist_commit=`cat gitinfo/libplist | tail -n 1`
+    libusbmuxd_commit=`cat gitinfo/libusbmuxd | tail -n 1`
+    libimobiledevice_commit=`cat gitinfo/libimobiledevice | tail -n 1`
+    usbmuxd_commit=`cat gitinfo/usbmuxd | tail -n 1`
+    libideviceactivation_commit=`cat gitinfo/libideviceactivation | tail -n 1`
     imobiledevice_net_commit=$BUILD_SOURCEVERSION
     version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 

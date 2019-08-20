@@ -49,7 +49,7 @@
 
     <!-- Version information taken from the Windows builds -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/gitinfo/*">
-      <PackagePath>%(Filename)%(Extension)</PackagePath>
+      <PackagePath>gitinfo/</PackagePath>
       <Pack>true</Pack>
     </Content>
     
