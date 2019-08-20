@@ -1,0 +1,220 @@
+usbmuxd (1.1.0-2) unstable; urgency=medium
+
+  * Team upload
+  * [5d6e390] Set Arch to linux-any, kfreebsd-any
+    hurd-i386 does not have libusb.
+
+ -- Chow Loong Jin <hyperair@debian.org>  Mon, 04 Jan 2016 17:50:27 +0800
+
+usbmuxd (1.1.0-1) experimental; urgency=medium
+
+  * Team upload
+  * [5fb30fe] Imported Upstream version 1.1.0
+  * [50e9e00] Drop systemd patch (upstreamed)
+  * [b363fda] Patch to fix FTBFS in kfreebsd-*
+    Thanks to Steven Chamberlain <steven@pyro.eu.org> (Closes: #765010)
+  * [e5ebda6] Build-dep on udev and systemd on linux
+  * [67fc433] Drop downstream manpage in favour of upstream one
+  * [feeffbe] No-change Standards-Version bump to 3.9.6
+
+ -- Chow Loong Jin <hyperair@debian.org>  Tue, 11 Nov 2014 17:59:14 +0800
+
+usbmuxd (1.0.8+git20140527.e72f2f7-1) unstable; urgency=medium
+
+  * Team upload
+  * [70ded53] Imported Upstream snapshot 1.0.8+git20140527.e72f2f7
+    (Closes: #746634)
+  * [2e1ea72] Change build to use autofoo things.
+    Thanks to Takahide Nojima
+  * [362bc62] Drop README.devel from usbmuxd.docs.
+    Thanks to Takahide Nojima
+  * [4654006] Drop libusbmuxd-dev build-dep.
+    Thanks to Takahide Nojima
+  * [c294c25] Drop useless variable declarations at the top of d/rules
+  * [5c9a3a1] Drop debian/iproxy.1 manpage altogether.
+    Thanks to Takahide Nojima
+  * [c2315fc] Drop upstreamed and obsolete patches.
+    Thanks to Takahide Nojima
+  * [96a7dd0] Update Add-systemd-service-file….patch for autofoo.
+    Thanks to Takahide Nojima
+  * [a4211fb] Build-dep on pkg-config
+  * [d108968] Build-dep on libimobiledevice-dev
+
+ -- Chow Loong Jin <hyperair@debian.org>  Tue, 09 Sep 2014 18:05:52 +0800
+
+usbmuxd (1.0.8-5) unstable; urgency=medium
+
+  * Team upload
+  * [9004918] Don't install iproxy.1 manpage (Closes: #743605)
+
+ -- Chow Loong Jin <hyperair@debian.org>  Wed, 09 Apr 2014 02:59:45 +0800
+
+usbmuxd (1.0.8-4) unstable; urgency=medium
+
+  * Team upload
+  * [46d0953] Drop internal libusbmuxd bits (Closes: #743605)
+  * [6416634] Reexport old patches from gilir using gbp-pq
+  * [0a4a669] Patch out building of libusbmuxd and tools
+  * [4ad35d6] Don't install usr/bin/* in usbmuxd.
+    The only thing there is iproxy, and that's been removed.
+  * [eb120df] Reintroduce dbg package as usbmuxd-dbg
+
+ -- Chow Loong Jin <hyperair@debian.org>  Fri, 04 Apr 2014 15:53:36 +0800
+
+usbmuxd (1.0.8-3) unstable; urgency=medium
+
+  * Team upload
+  * [0bb9553] Add systemd support (Closes: #741338)
+  * [925558c] Install systemd unit file
+  * [cdc7937] Bump Standards-Version to 3.9.5 (no changes required)
+  * [526d353] Set home directory when creating user
+
+ -- Chow Loong Jin <hyperair@debian.org>  Sat, 15 Mar 2014 03:11:05 +0800
+
+usbmuxd (1.0.8-2) unstable; urgency=low
+
+  * Team upload
+  * Upload to unstable
+  * Bump Standards-Version to 3.9.4
+
+ -- Chow Loong Jin <hyperair@debian.org>  Sun, 08 Sep 2013 23:55:52 +0800
+
+usbmuxd (1.0.8-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/patches:
+   - 90-cve-2012-0065.patch: Remove, merged upstream.
+   - 02-udev-usbmux-owner.patch: Refreshed.
+   - 03-revert-ifdef-USBMUXD_DAEMON.patch: Refreshed.
+  * debian/compat
+   - Update to 9.
+  * debian/control:
+   - Update to match new SONAME.
+   - Update Standards-Version to 3.9.3 (no change needed).
+   - Build-depend on debhelper (>= 9).
+  * debian/rules:
+   - Update to match new SONAME.
+   - Use DEB_*_MAINT_APPEND.
+  * debian/libusbmuxd*.install & debian/libusbmuxd*.symbols
+   - Update to match new SONAME.
+  * debian/libusbmuxd2.symbols:
+   - Update with new symbols.
+  * debian/watch:
+   - Update location of the tarballs.
+  * debian/copyright:
+   - Update with new license on common/*.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 02 May 2012 12:20:18 +0200
+
+usbmuxd (1.0.7-2) unstable; urgency=high
+
+  * debian/control:
+   - Update Maintainer field, and add me to Uploaders.
+   - Update Vcs-*.
+  * debian/patches/90-cve-2012-0065.patch:
+   - From upstream, fix possible buffer overflow (CVE-2012-0065).
+     Closes: #656581
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Fri, 20 Jan 2012 22:49:38 +0100
+
+usbmuxd (1.0.7-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/install:
+   - Don't install udev rules on all archs.
+  * debian/rules:
+   - Install udev files only on archs which have udev.
+  * debian/patches
+   - 02-udev-usbmux-owner.patch: Refreshed.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 22 Mar 2011 20:30:45 +0100
+
+usbmuxd (1.0.6-2) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 13 Feb 2011 23:34:34 +0100
+
+usbmuxd (1.0.6-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/patches/02-udev-usbmux-owner.patch: Refresh.
+  * debian/libusbmuxd1.symbols: Add new symbol.
+  * debian/rules:
+   - Remove additional CFLAGS to pass correct flags.
+   - Add additional LDFLAGS.
+   - Use filter instead of findstring to find noopt.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 28 Nov 2010 00:23:47 +0100
+
+usbmuxd (1.0.5-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/control:
+   - Build-depends on libplist-dev (>= 0.15) to activate plist support.
+   - Use better build-depends for libusb. Thanks Aurelien Jarno for the advise.
+     Closes: #585634
+   - Bump Standards-Version to 3.9.1.0.
+  * debian/patch/03-revert-ifdef-USBMUXD_DAEMON.patch:
+   - Revert upstream commit which only help WIN32 compilation.
+  * debian/libusbmuxd1.symbols:
+   - Updated.
+ 
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 13 Oct 2010 23:52:09 +0200
+
+usbmuxd (1.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+   - Add Apple iPad USB IDs. Closes: #576474
+  * debian/control:
+   - Mention that usbmuxd only runs when devices are connected. Closes: #577269
+  * debian/patches
+   - 01-libs.private.patch: Remove, merged upstream.
+   - 02-udev-usbmux-owner.patch: Refreshed.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Mon, 24 May 2010 23:11:05 +0200
+
+usbmuxd (1.0.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/patches/02-udev-usbmux-owner.patch: Refreshed.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Tue, 23 Mar 2010 19:37:05 +0100
+
+usbmuxd (1.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control:
+   - Bump Standards-Version to 3.8.4, no change needed.
+   - Add Homepage field.
+  * debian/usbmuxd.docs
+   - Install README, README.devel and AUTHORS (Closes: #568758)
+  * debian/patches/02-udev-usbmux-owner.patch 
+   - Set the owner to usbmux to fix permissions issues (Closes: #572867)
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 07 Mar 2010 14:22:22 +0100
+
+usbmuxd (1.0.0-2) unstable; urgency=low
+
+  * debian/rules: Rewriten to use dh7.
+  * debian/control: 
+   - Set debhelper build-depends to (>= 7.0.50~), using overrides in 
+     debian/rules.
+   - Wrap build-depends and depends.
+   - Build-depends on libusb2-dev on kfreebsd.
+   - Add VCS-* fields.
+  * debian/copyright:
+   - Licence the package under LGPL2.1+ and set the copyright to me, the parts
+     based on another package was rewritten. Closes: #562572
+   - Fix typo in license notice.
+  * debian/01-libs.private.patch: Remove Requires in *.pc file, libusb is only
+    used in the daemon.
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sat, 23 Jan 2010 16:53:27 +0100
+
+usbmuxd (1.0.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #558310)
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Wed, 09 Dec 2009 21:04:24 +0100

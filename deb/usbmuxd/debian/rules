@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_install:
+
+#Install udev files only on arch which have udev 
+#see https://buildd.debian.org/quinn-diff/sid/Packages-arch-specific
+ifeq (,$(filter $(DEB_HOST_ARCH), kfreebsd-amd64 kfreebsd-i386 hurd-i386))
+	dh_install -pusbmuxd lib/udev/rules.d/*
+	dh_install -pusbmuxd lib/systemd/system/*
+endif
+	rm -f debian/tmp/lib/udev/rules.d/* debian/tmp/lib/systemd/system/*
+
+	dh_install --fail-missing
+
+override_dh_strip:
+	dh_strip --dbg-package=usbmuxd-dbg

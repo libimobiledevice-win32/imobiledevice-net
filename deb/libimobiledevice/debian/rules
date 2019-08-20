@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+configure_flags += \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--enable-dev-tools \
+                --without-cython \
+		--disable-silent-rules \
+                --enable-debug-code
+
+%:
+	dh $@ --with=python2,autoreconf
+
+override_dh_auto_configure:
+	dh_auto_configure -- 	$(configure_flags)
+
+override_dh_install:
+	#Remove .la files.
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/*/*.la
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/python*/*-packages/imobiledevice/*.la
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/python*/*-packages/*.la
+	#Remove .a files from python bindings.
+	rm -rf $(CURDIR)/debian/tmp//usr/lib/python*/dist-packages/imobiledevice/*.a
+	rm -rf $(CURDIR)/debian/tmp//usr/lib/python*/dist-packages/*.a
+	#Remove installed man pages, installed by *.manpages
+	rm -f $(CURDIR)/debian/tmp/usr/share/man/man1/*.1
+	dh_install --fail-missing
+
+override_dh_strip:
+	dh_strip --dbg-package=libimobiledevice6-dbg
+
+override_dh_python2:
+	# Only build for the current version of python, not all supported.
+	dh_python2 --no-guessing-versions
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -c4
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f $(CURDIR)/cython/Makefile

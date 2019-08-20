@@ -1,0 +1,42 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'deb'
+  displayName: 'Download Debian artifacts'
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'imobiledevice-net'
+  displayName: 'Download imobiledevice-net artifacts'
+- script: |
+    sudo apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput
+  displayName: 'Install dependencies'
+- script: |
+    mkdir -p  ~/.gnupg/
+    echo allow-loopback-pinentry > ~/.gnupg/gpg-agent.conf
+    gpg --allow-secret-key-import --import $BUILD_SOURCESDIRECTORY/ppa.asc
+    killall gpg-agent
+    echo "${GPG_PASSPHRASE}" >> /tmp/gpg_passphrase
+  displayName: 'Configure GPG'
+- script: |
+    ls -l /tmp/gpg_passphrase
+  displayName: 'Determine passphrase'
+- script: |
+    set -e
+    version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+    cd $SYSTEM_ARTIFACTSDIRECTORY/deb/
+
+    declare -A package_versions
+    package_versions=( ["libplist"]="2.0.2" ["libusbmuxd"]="1.12.0" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1")
+
+    for package in libplist libusbmuxd libimobiledevice usbmuxd libideviceactivation
+    do
+        package_version=${package_versions[$package]}
+        
+        debsign -S -k5314912C -p"$BUILD_SOURCESDIRECTORY/gpg-pass.sh /tmp/gpg_passphrase" ${package}_${package_version}-${version_number}-0${DIST}_source.changes
+        dput ppa:quamotion/ppa ${package}_${package_version}-${version_number}-0${DIST}_source.changes
+    done
+  displayName: Build Debian archives
+- script: |
+    rm -rf /tmp/gpg_passphrase
+  displayName: 'Cleanup GPG key'
