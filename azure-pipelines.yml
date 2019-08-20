@@ -188,10 +188,8 @@ stages:
           DIST: xenial
         bionic:
           DIST: bionic
-        precise:
-          DIST: precise
-        trusty:
-          DIST: trusty
+        disco:
+          DIST: disco
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
@@ -244,10 +242,8 @@ stages:
           DIST: xenial
         bionic:
           DIST: bionic
-        precise:
-          DIST: precise
-        trusty:
-          DIST: trusty
+        disco:
+          DIST: disco
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
