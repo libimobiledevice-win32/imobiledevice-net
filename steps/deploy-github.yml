@@ -15,15 +15,21 @@ steps:
 
     unzip $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/iMobileDevice-net.*.nupkg
 
-    libplist_commit=`cat gitinfo/libplist | tail -n 1`
-    libusbmuxd_commit=`cat gitinfo/libusbmuxd | tail -n 1`
-    libimobiledevice_commit=`cat gitinfo/libimobiledevice | tail -n 1`
-    usbmuxd_commit=`cat gitinfo/usbmuxd | tail -n 1`
-    libideviceactivation_commit=`cat gitinfo/libideviceactivation | tail -n 1`
+    libplist_commit=`cat gitinfo/libplist | head -n 1`
+    libusbmuxd_commit=`cat gitinfo/libusbmuxd | head -n 1`
+    libimobiledevice_commit=`cat gitinfo/libimobiledevice | head -n 1`
+    usbmuxd_commit=`cat gitinfo/usbmuxd | head -n 1`
+    libideviceactivation_commit=`cat gitinfo/libideviceactivation | head -n 1`
     imobiledevice_net_commit=$BUILD_SOURCEVERSION
     version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 
     echo Releasing $version_number
+    echo - libplist: $libplist_commit
+    echo - libusbmuxd: $libusbmuxd_commit
+    echo - libimobiledevice: $libimobiledevice_commit
+    echo - usbmuxd: $usbmuxd_commit
+    echo - libideviceactivation: $libideviceactivation_commit
+    echo - imobiledevice-net: $imobiledevice_net_commit
 
     ./github-release "v$version_number" --commit "$libplist_commit" --github-repository "libimobiledevice-win32/libplist"
     ./github-release "v$version_number" --commit "$libusbmuxd_commit" --github-repository "libimobiledevice-win32/libusbmuxd"

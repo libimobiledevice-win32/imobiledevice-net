@@ -198,19 +198,21 @@ stages:
 - stage: Deploy
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
-  - job: nuget_deploy
-    pool:
-      vmImage: 'VS2017-Win2016'
-    steps:
-    - template: steps/deploy-nuget.yml
-
   - job: github_deploy
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
     - template: steps/deploy-github.yml
 
+  - job: nuget_deploy
+    dependsOn: github_deploy
+    pool:
+      vmImage: 'VS2017-Win2016'
+    steps:
+    - template: steps/deploy-nuget.yml
+
   - job: docker_deploy
+    dependsOn: github_deploy
     strategy:
       maxParallel: 5
       matrix:
@@ -235,6 +237,7 @@ stages:
     - template: steps/deploy-docker.yml
 
   - job: ppa_deploy
+    dependsOn: github_deploy
     strategy:
       maxParallel: 4
       matrix:
