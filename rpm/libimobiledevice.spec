@@ -47,7 +47,7 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS COPYING.LESSER README
+%doc AUTHORS COPYING.LESSER README.md
 %doc %{_datadir}/man/man1/idevice*
 %{_bindir}/idevice*
 %{_libdir}/libimobiledevice.so.*
