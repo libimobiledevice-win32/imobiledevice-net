@@ -27,7 +27,7 @@ iPad and Apple TV devices. It allows multiple services on the device to be
 accessed simultaneously.
 
 %prep
-%setup -q
+%setup -q -n usbmuxd
 
 # Set the owner of the device node to be usbmuxd
 sed -i.owner 's/OWNER="usbmux"/OWNER="usbmuxd"/' udev/39-usbmuxd.rules.in
