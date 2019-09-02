@@ -1,5 +1,5 @@
 Name:          usbmuxd
-Version:       1.1.0.build
+Version:       1.1.2.build
 Release:       11%{?dist}
 Summary:       Daemon for communicating with Apple's iOS devices
 
