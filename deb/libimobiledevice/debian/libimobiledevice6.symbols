@@ -218,6 +218,14 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  np_set_notify_callback@Base 0.9.7
  pinvoke_free_string@Base 1.2.1.97-0xenial
  pinvoke_get_string_length@Base 1.2.1.97-0xenial
+ preboard_client_free@Base 1.2.2-1.2.121
+ preboard_client_new@Base 1.2.2-1.2.121
+ preboard_client_start_service@Base 1.2.2-1.2.121
+ preboard_commit_stashbag@Base 1.2.2-1.2.121
+ preboard_create_stashbag@Base 1.2.2-1.2.121
+ preboard_receive@Base 1.2.2-1.2.121
+ preboard_receive_with_timeout@Base 1.2.2-1.2.121
+ preboard_send@Base 1.2.2-1.2.121
  property_list_service_client_free@Base 1.1.7
  property_list_service_client_new@Base 1.1.7
  property_list_service_disable_ssl@Base 1.1.7
