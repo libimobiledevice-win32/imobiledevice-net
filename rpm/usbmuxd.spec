@@ -60,7 +60,7 @@ exit 0
 %systemd_postun_with_restart usbmuxd.service 
 
 %files
-%doc AUTHORS README COPYING.GPLv2 COPYING.GPLv3
+%doc AUTHORS README.md COPYING.GPLv2 COPYING.GPLv3
 /usr/share/man/man8/usbmuxd.8.gz
 /usr/lib/udev/rules.d/39-usbmuxd.rules
 /usr/lib/systemd/system/usbmuxd.service
