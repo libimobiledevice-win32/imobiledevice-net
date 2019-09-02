@@ -26,7 +26,7 @@ Requires: pkgconfig
 %{name}, development headers and libraries.
 
 %prep
-%setup -q
+%setup -q -n libplist
 
 %build
 ./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes
