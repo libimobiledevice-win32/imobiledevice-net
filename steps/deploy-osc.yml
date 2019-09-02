@@ -53,7 +53,7 @@ steps:
       echo "Updated contents of $(pwd):"
       ls
       
-      osc add ${package}_${package_version}-${version_number}.tar.gz
+      osc add ${package}-${package_version}.${version_number}.tar.gz
       osc add ${package}.spec
 
       echo "Committing updates"
