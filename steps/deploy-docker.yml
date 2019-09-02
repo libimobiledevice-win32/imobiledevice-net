@@ -4,6 +4,7 @@ steps:
     artifactName: 'imobiledevice-net'
   displayName: 'Download imobiledevice-net artifacts'
 - script: |
+    sudo apt-get update
     sudo apt-get install -y libxml2-utils
     docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
