@@ -45,6 +45,7 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING README.md
 %{_bindir}/iproxy
+%{_bindir}/icat
 %{_libdir}/libusbmuxd.so.*
 
 %files devel
