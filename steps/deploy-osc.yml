@@ -45,7 +45,7 @@ steps:
       osc rm *.tar.gz
       osc rm *.spec
 
-      cp $SYSTEM_ARTIFACTSDIRECTORY/sources/${package}.orig.tar.gz ./${package}_${package_version}-${version_number}.tar.gz
+      cp $SYSTEM_ARTIFACTSDIRECTORY/sources/${package}.orig.tar.gz ./${package}-${package_version}.${version_number}.tar.gz
       cp $BUILD_SOURCESDIRECTORY/rpm/${package}.spec .
       
       sed -i "s/${package_version}.build/${package_version}.${version_number}/" ${package}.spec
