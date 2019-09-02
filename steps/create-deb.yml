@@ -31,7 +31,7 @@ steps:
     do
         package_version=${package_versions[$package]}
         mkdir $package
-        tar xvf $package.orig.tar.gz -C $package
+        tar xvf $package.orig.tar.gz -C .
         mv $package.orig.tar.gz ${package}_${package_version}-${version_number}.orig.tar.gz
         cd $package
 
