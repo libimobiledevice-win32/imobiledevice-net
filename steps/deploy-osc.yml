@@ -1,0 +1,64 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'imobiledevice-net'
+  displayName: 'Download imobiledevice-net artifacts'
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'sources'
+  displayName: 'Download source artifacts'
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y libxml2-utils osc
+  displayName: 'Install dependencies'
+- script: |
+    echo "[general]" > ~/.oscrc
+    echo "apiurl = https://api.opensuse.org" >> ~/.oscrc
+    echo "[https://api.opensuse.org]" >> ~/.oscrc
+    echo "user = $OSC_USER" >> ~/.oscrc
+    echo "pass = $OSC_PASSWORD" >> ~/.oscrc
+  displayName: 'Configure OSC'
+- script: |
+    set -ex
+    version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+    repository="home:qmfrederik"
+
+    mkdir -p ~/osc
+    cd ~/osc
+    osc checkout ${repository}
+
+    declare -A package_versions
+
+    package_versions=( ["libplist"]="2.0.2" ["libusbmuxd"]="1.12.0" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1")
+
+    for package in libplist libusbmuxd libimobiledevice usbmuxd
+    do
+      package_version=${package_versions[$package]}
+
+      echo "Processing $package $package_version"
+
+      cd ~/osc/${repository}/$package
+
+      echo "Updating $package. Current contents of $(pwd):"
+      ls
+
+      osc rm *.tar.gz
+      osc rm *.spec
+
+      cp $SYSTEM_ARTIFACTSDIRECTORY/sources/${package}.orig.tar.gz ./${package}_${package_version}-${version_number}.tar.gz
+      cp $BUILD_SOURCESDIRECTORY/rpm/${package}.spec .
+      
+      sed -i "s/${package_version}.build/${package_version}.${version_number}/" ${package}.spec
+
+      echo "Updated contents of $(pwd):"
+      ls
+      
+      osc add ${package}_${package_version}-${version_number}.tar.gz
+      osc add ${package}.spec
+
+      echo "Committing updates"
+      osc commit -m "Update for Azure CI build ${version_number}"
+      echo "Done!"
+    done
+
+    cd ~/osc/${repository}
