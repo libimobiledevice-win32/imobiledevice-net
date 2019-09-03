@@ -1,0 +1,40 @@
+Source: ideviceinstaller
+Section: utils
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Julien Lavergne <julien.lavergne@gmail.com>
+Standards-Version: 3.9.1.0
+Build-Depends: debhelper (>= 7.0.50~),
+               dh-autoreconf,
+               libimobiledevice-dev (>= 1.2.0),
+               libplist-dev (>= 0.15),
+               libzip-dev (>= 0.8)
+Homepage: http://libimobiledevice.org/
+
+Package: ideviceinstaller
+Architecture: any
+Depends: ${shlibs:Depends}, 
+         ${misc:Depends}
+Description: Utility to manage installed applications on an iDevice
+ ideviceinstaller is a tool to interact with the installation_proxy
+ of an iDevice allowing to install, upgrade, uninstall, archive, restore,
+ and enumerate installed or archived applications.
+ .
+ It makes use of the libimobiledevice library that allows communication
+ with the devices.
+
+Package: ideviceinstaller-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: ideviceinstaller (= ${binary:Version}),
+         ${misc:Depends}
+Description: Utility to manage installed applications on an iDevice - debug
+ ideviceinstaller is a tool to interact with the installation_proxy
+ of an iDevice allowing to install, upgrade, uninstall, archive, restore,
+ and enumerate installed or archived applications.
+ .
+ It makes use of the libimobiledevice library that allows communication
+ with the devices.
+ .
+ This package contains the debugging symbols.

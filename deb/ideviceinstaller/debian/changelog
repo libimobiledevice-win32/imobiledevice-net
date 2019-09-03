@@ -1,0 +1,117 @@
+ideviceinstaller (1.1.0-0ubuntu4) disco; urgency=medium
+
+  * No-change rebuild against latest libzip
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Mon, 26 Nov 2018 08:06:24 -0500
+
+ideviceinstaller (1.1.0-0ubuntu3) bionic; urgency=high
+
+  * No change rebuild to pick up -fPIE compiler default
+
+ -- Balint Reczey <rbalint@ubuntu.com>  Tue, 03 Apr 2018 12:28:46 +0000
+
+ideviceinstaller (1.1.0-0ubuntu2) xenial; urgency=medium
+
+  * debian/patches/build-without-werror.patch:
+    - don't error out on warning to unblock the libimobiledevice 
+      transition, cleaning out the code would be nice still though
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 19 Nov 2015 16:24:45 +0100
+
+ideviceinstaller (1.1.0-0ubuntu1) xenial; urgency=medium
+
+  * New upstream version
+  * debian/control:
+    - updated libimobiledevice requirement
+  * debian/patches/git-new-imobiledevice.patch:
+    - updated for new libimobiledevice
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 19 Nov 2015 15:50:37 +0100
+
+ideviceinstaller (1.0.1-0.2build4) xenial; urgency=medium
+
+  * No change rebuild for the new libimobiledevice
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 11 Nov 2015 10:31:33 +0100
+
+ideviceinstaller (1.0.1-0.2build3) wily; urgency=medium
+
+  * No-change rebuild for libzip soname change
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 12 Sep 2015 01:25:30 +0000
+
+ideviceinstaller (1.0.1-0.2build2) wily; urgency=medium
+
+  * No change rebuilds for the new libplist soname
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 23 Jul 2015 18:22:25 +0200
+
+ideviceinstaller (1.0.1-0.2build1) utopic; urgency=high
+
+  * No change rebuild against plist2.
+
+ -- Dimitri John Ledkov <xnox@ubuntu.com>  Mon, 28 Apr 2014 02:21:41 +0100
+
+ideviceinstaller (1.0.1-0.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Upload to unstable to aid libimobiledevice4 transition.
+
+ -- Modestas Vainius <modax@debian.org>  Wed, 20 Nov 2013 00:24:54 +0200
+
+ideviceinstaller (1.0.1-0.1) experimental; urgency=low
+
+  * Non-maintainer upload.
+  * Sync from Ubuntu.
+    + Includes fix for building against libimobiledevice4. Closes: #726341
+
+ -- Andreas Metzler <ametzler@debian.org>  Sat, 09 Nov 2013 12:53:52 +0100
+
+ideviceinstaller (1.0.1-0ubuntu3) saucy; urgency=low
+
+  * Run dh_autoreconf so that the previous patch applies
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Thu, 08 Aug 2013 12:48:17 -0400
+
+ideviceinstaller (1.0.1-0ubuntu2) saucy; urgency=low
+
+  * debian/patches/build-against-libimobiledevice4.patch:
+    - Backport patch to build against latest libimobiledevice
+
+ -- Jeremy Bicha <jbicha@ubuntu.com>  Thu, 08 Aug 2013 12:31:15 -0400
+
+ideviceinstaller (1.0.1-0ubuntu1) quantal; urgency=low
+
+  * New upstream version
+  * debian/patches/01-fix-manpage.patch,
+    debian/patches/653893-libzip-0.10.patch:
+    - dropped, the fixes are in the new version
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Mon, 06 Aug 2012 18:43:22 +0200
+
+ideviceinstaller (1.0.0-1.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix build failure on architectures where sizeof(long) is 4.
+    (Closes: #656938)
+    Thanks to peter green <plugwash@p10link.net> for the patch.
+    + updated patch: 653893-libzip-0.10.patch
+
+ -- Ansgar Burchardt <ansgar@debian.org>  Tue, 07 Feb 2012 10:10:12 +0100
+
+ideviceinstaller (1.0.0-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix build failure with libzip-0.10. (Closes: #653893)
+    Thanks to Fathi Boudra <fabo@debian.org> for the patch.
+    + new patch: 653893-libzip-0.10.patch
+
+ -- Ansgar Burchardt <ansgar@debian.org>  Fri, 20 Jan 2012 20:32:30 +0100
+
+ideviceinstaller (1.0.0-1) unstable; urgency=low
+
+  * Initial release. Closes: #618973
+  * debian/patches/01-fix-manpage.patch
+   - Fix minus not escaped in manpage.
+
+ -- Julien Lavergne <julien.lavergne@gmail.com>  Sun, 20 Mar 2011 01:20:17 +0100

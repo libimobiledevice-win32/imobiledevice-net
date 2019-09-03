@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+LDFLAGS += -Wl,--as-needed
+
+ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+    CFLAGS += -O0
+else
+    CFLAGS += -O2
+endif
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_install:
+	#Remove installed man pages, installed by *.manpages
+	rm -f $(CURDIR)/debian/tmp/usr/share/man/man1/*.1
+	dh_install --fail-missing
+
+override_dh_strip:
+	dh_strip --dbg-package=ideviceinstaller-dbg
