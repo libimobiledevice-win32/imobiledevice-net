@@ -1,0 +1,42 @@
+Source: ios-webkit-debug-proxy
+Section: debug
+Priority: optional
+Maintainer: Frederik Carlier <frederik.carlier@quamotion.mobi>
+Build-Depends: dh-autoreconf,
+               debhelper (>= 9.0.0),
+               libusb-1.0-0-dev (>= 1.0.3) [linux-any],
+               libplist-dev (>= 0.15),
+               libimobiledevice-dev (>= 1.1.6)
+Standards-Version: 3.9.4
+Homepage: https://github.com/google/ios-webkit-debug-proxy
+Vcs-Git: git://github.com/google/ios-webkit-debug-proxy.git
+
+Package: ios-webkit-debug-proxy
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libios-webkit-debug-proxy0 (= ${binary:Version})
+Description: A DevTools proxy for iOS devices.
+ A DevTools proxy (Chrome Remote Debugging Protocol) 
+ for iOS devices (Safari Remote Web Inspector).
+
+Package: libios-webkit-debug-proxy0
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}
+Description: A DevTools proxy for iOS devices.
+ A DevTools proxy (Chrome Remote Debugging Protocol)
+ for iOS devices (Safari Remote Web Inspector).
+ .
+ This package contains the shared library files.
+
+Package: libios-webkit-debug-proxy-dev
+Architecture: any
+Depends: ${misc:Depends},
+         libios-webkit-debug-proxy0 (= ${binary:Version})
+Description: A DevTools proxy for iOS devices.
+ A DevTools proxy (Chrome Remote Debugging Protocol)
+ for iOS devices (Safari Remote Web Inspector).
+ .
+ This package contains the development files.
+ 
