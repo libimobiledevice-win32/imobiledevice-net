@@ -1,5 +1,5 @@
 variables:
-  nativeBuild: 768
+  nativeBuild: 788
   nativePipeline: 12
   runTests: true
   createDeb: true
@@ -51,6 +51,7 @@ stages:
         copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\sources\ideviceinstaller.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
         copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\sources\libirecovery.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
         copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\sources\idevicerestore.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
+        copy %SYSTEM_ARTIFACTSDIRECTORY%\libimobiledevice\osx-x64\sources\ios-webkit-debug-proxy.orig.tar.gz %BUILD_ARTIFACTSTAGINGDIRECTORY%\sources\
 
       displayName: Publish tarballs
 

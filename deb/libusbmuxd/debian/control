@@ -1,7 +1,6 @@
 Source: libusbmuxd
 Priority: optional
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: gtkpod Maintainers <pkg-gtkpod-devel@lists.alioth.debian.org>
+Maintainer: Frederik Carlier <frederik.carlier@quamotion.mobi>
 Uploaders: Chow Loong Jin <hyperair@debian.org>
 Build-Depends: debhelper (>= 9.0.0),
                dh-autoreconf,
