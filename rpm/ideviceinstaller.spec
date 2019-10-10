@@ -26,7 +26,7 @@ BuildRoot:     %{_tmppath}/%{name}-%{version}-root
 ideviceinstaller allows to list, install, uninstall and archive apps of iPhone and iPhone Touch.
 
 %prep
-%setup -q
+%setup -q -n ideviceinstaller
 
 %build
 ./autogen.sh --prefix=/usr
@@ -39,7 +39,7 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %defattr(-,root,root)
 %{_bindir}/ideviceinstaller
 %{_mandir}/man1/ideviceinstaller.1.gz
-%doc AUTHORS COPYING NEWS README.md
+%doc AUTHORS COPYING NEWS README
 
 %changelog
 * Thu Sep 11 2014 Silvan Calarco <silvan.calarco@mambasoft.it> 1.0.1.20140911git-1mamba
