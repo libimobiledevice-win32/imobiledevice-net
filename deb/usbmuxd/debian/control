@@ -1,8 +1,7 @@
 Source: usbmuxd
 Section: utils
 Priority: optional
-Maintainer: gtkpod Maintainers <pkg-gtkpod-devel@lists.alioth.debian.org>
-Uploaders: Julien Lavergne <julien.lavergne@gmail.com>
+Maintainer: Frederik Carlier <frederik.carlier@quamotion.mobi>
 Standards-Version: 3.9.6
 Build-Depends: debhelper (>= 9),
                dh-autoreconf,
