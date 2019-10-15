@@ -226,18 +226,9 @@ stages:
         xenial:
           SUFFIX:
           NAME: xenial
-        xenial-arm64:
-          SUFFIX: -arm64
-          NAME: xenial-arm64
         bionic:
           SUFFIX: -bionic
           NAME: bionic
-        bionic-arm64:
-          SUFFIX: -bionic-arm64
-          NAME: bionic-arm64
-        alpine:
-          SUFFIX: -alpine
-          NAME: alpine
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
