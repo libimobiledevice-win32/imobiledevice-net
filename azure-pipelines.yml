@@ -197,6 +197,8 @@ stages:
           DIST: bionic
         disco:
           DIST: disco
+        disco:
+          DIST: eoan
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
@@ -245,6 +247,8 @@ stages:
           DIST: bionic
         disco:
           DIST: disco
+        disco:
+          DIST: eoan
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
