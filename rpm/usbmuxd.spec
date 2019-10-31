@@ -14,6 +14,7 @@ BuildRequires: libusbx-devel
 BuildRequires: libusbmuxd-devel
 BuildRequires: libimobiledevice-devel
 BuildRequires: gcc-c++
+BuildRequires: gdb
 # For the systemd RPM macros
 BuildRequires: systemd
 Requires(pre): shadow-utils
