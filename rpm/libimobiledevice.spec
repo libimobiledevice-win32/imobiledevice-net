@@ -33,7 +33,7 @@ Files for development with libimobiledevice.
 %setup -q -n libimobiledevice
 
 %build
-./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes --without-cython
+./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes
 make
 
 %install

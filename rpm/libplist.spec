@@ -11,6 +11,7 @@ URL:           http://www.libimobiledevice.org/
 Source0:       http://www.libimobiledevice.org/downloads/%{name}-%{version}.tar.gz
 
 BuildRequires: gcc-c++
+BuildRequires: gdb
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -28,7 +29,7 @@ Requires: pkgconfig
 %setup -q -n libplist
 
 %build
-./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes --without-cython
+./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes
 make
 
 %install

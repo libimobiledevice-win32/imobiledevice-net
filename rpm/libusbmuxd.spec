@@ -29,7 +29,7 @@ Requires: pkgconfig
 %setup -q -n libusbmuxd
 
 %build
-./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes --without-cython
+./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes
 make
 
 %install
