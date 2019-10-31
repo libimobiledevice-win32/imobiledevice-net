@@ -44,7 +44,7 @@ steps:
 
         cd ..
 
-        if [ "$package" -ne "ios-webkit-debug-proxy" ]
+        if [ "$package" != "ios-webkit-debug-proxy" ]
         then
           sudo dpkg -i $package*.deb
         fi
