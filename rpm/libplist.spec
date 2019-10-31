@@ -10,7 +10,6 @@ License:       LGPLv2+
 URL:           http://www.libimobiledevice.org/
 Source0:       http://www.libimobiledevice.org/downloads/%{name}-%{version}.tar.gz
 
-BuildRequires: swig
 BuildRequires: gcc-c++
 
 %description
@@ -29,7 +28,7 @@ Requires: pkgconfig
 %setup -q -n libplist
 
 %build
-./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes
+./autogen.sh --prefix=/usr --without-cython --libdir=/usr/lib64 --enable-static=no --enable-shared=yes --without-cython
 make
 
 %install
