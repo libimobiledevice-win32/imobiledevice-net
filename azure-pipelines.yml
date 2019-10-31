@@ -193,13 +193,26 @@ stages:
       matrix:
         xenial:
           DIST: xenial
+          imageName: ubuntu:16.04
         bionic:
           DIST: bionic
+          imageName: ubuntu:18.04
         disco:
           DIST: disco
+          imageName: ubuntu:19.04
+        eoan:
+          DIST: eoan
+          imageName: ubuntu:19.10
     pool:
       vmImage: 'ubuntu-16.04'
+    container:
+      image: $(imageName)
+      options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
     steps:
+    - script: |
+        /tmp/docker exec -t -u 0 ci-container \
+        sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
+      displayName: Set up sudo
     - template: steps/create-deb.yml
 
 - stage: Deploy
@@ -245,6 +258,8 @@ stages:
           DIST: bionic
         disco:
           DIST: disco
+        eoan:
+          DIST: eoan
     pool:
       vmImage: 'ubuntu-16.04'
     steps:

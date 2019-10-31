@@ -10,8 +10,8 @@ License:       LGPLv2+
 URL:           http://www.libimobiledevice.org/
 Source0:       http://www.libimobiledevice.org/downloads/%{name}-%{version}.tar.gz
 
-BuildRequires: swig
 BuildRequires: gcc-c++
+BuildRequires: gdb
 BuildRequires: libplist-devel
 
 %description
