@@ -16,6 +16,7 @@ BuildRequires: libplist-devel
 BuildRequires: glib2-devel
 BuildRequires: readline-devel
 BuildRequires: libusbmuxd-devel
+BuildRequires: gdb
 
 %description
 libimobiledevice is a library for connecting to mobile devices including phones 
