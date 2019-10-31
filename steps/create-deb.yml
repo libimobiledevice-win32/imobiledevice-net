@@ -44,7 +44,10 @@ steps:
 
         cd ..
 
-        sudo dpkg -i $package*.deb
+        if [ "$package" -ne "ios-webkit-debug-proxy" ]
+        then
+          sudo dpkg -i $package*.deb
+        fi
     done
 
     cp *.* $BUILD_ARTIFACTSTAGINGDIRECTORY/deb/
