@@ -3,8 +3,6 @@ Version:       1.8.6.build
 Release:       1%{?dist}
 Summary:       A DevTools proxy for iOS devices.
 Group:         System/Management
-Vendor:        openmamba
-Distribution:  openmamba
 Packager:      Frederik Carlier <frederik.carlier@quamotion.mobi>
 URL:           https://github.com/google/ios-webkit-debug-proxy/
 Source:        https://github.com/google/ios-webkit-debug-proxy/master/ios-webkit-debug-proxy-%{version}.tar.gz

@@ -3,8 +3,6 @@ Version:       1.1.3.build
 Release:       1%{?dist}
 Summary:       Manage applications of an iPhone or iPod Touch
 Group:         System/Management
-Vendor:        openmamba
-Distribution:  openmamba
 Packager:      Stefano Cotta Ramusino <stefano.cotta@openmamba.org>
 URL:           http://cgit.sukimashita.com/ideviceinstaller.git
 Source:        https://github.com/libimobiledevice-win32/ideviceinstaller.git/master/ideviceinstaller-%{version}.tar.gz
