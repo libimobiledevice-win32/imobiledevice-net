@@ -1,0 +1,30 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'imobiledevice-net'
+  displayName: 'Download NuGet packages'
+
+- script: |
+    sudo rpm -Uvh https://packages.microsoft.com/config/centos/${VERSION}/packages-microsoft-prod.rpm
+    # Work around https://github.com/dotnet/core/issues/3853
+    sudo yum install -y https://packages.microsoft.com/centos/7/prod/netstandard-targeting-pack-2.1.0-x64.rpm
+    sudo yum install -y dotnet-sdk-3.0
+  displayName: Install .NET 3.0 SDK
+
+
+# TODO: Replace this with RPM packages built by CI
+- script: |
+    sudo yum-config-manager -y --add-repo https://download.opensuse.org/repositories/home:/qmfrederik/${DIST}/home:qmfrederik.repo
+    sudo yum install -y libplist libusbmuxd libimobiledevice libideviceactivation ideviceinstaller usbmuxd
+  displayName: Install libimobiledevice native binaries
+
+- script: |
+    mkdir packages
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.nupkg packages/
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTest.netcoreapp30/
+    ls packages/
+
+    cd iMobileDevice.IntegrationTest.netcoreapp30
+
+    dotnet run    
+  displayName: Run integration tests
