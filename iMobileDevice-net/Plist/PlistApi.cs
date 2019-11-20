@@ -274,7 +274,7 @@ namespace iMobileDevice.Plist
         /// the node
         /// </param>
         /// <returns>
-        /// the node index or UINT_MAX if node index can't be determined
+        /// the node index
         /// </returns>
         public virtual uint plist_array_get_item_index(PlistHandle node)
         {
@@ -345,18 +345,6 @@ namespace iMobileDevice.Plist
         public virtual void plist_array_remove_item(PlistHandle node, uint n)
         {
             PlistNativeMethods.plist_array_remove_item(node, n);
-        }
-        
-        /// <summary>
-        /// Remove a node that is a child node of a #PLIST_ARRAY node.
-        /// node will be freed using #plist_free.
-        /// </summary>
-        /// <param name="node">
-        /// The node to be removed from its #PLIST_ARRAY parent.
-        /// </param>
-        public virtual void plist_array_item_remove(PlistHandle node)
-        {
-            PlistNativeMethods.plist_array_item_remove(node);
         }
         
         /// <summary>
@@ -450,10 +438,10 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
-        /// Get key associated key to an item. Item must be member of a dictionary.
+        /// Get key associated to an item. Item must be member of a dictionary
         /// </summary>
         /// <param name="node">
-        /// the item
+        /// the node
         /// </param>
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
@@ -480,23 +468,6 @@ namespace iMobileDevice.Plist
         {
             PlistHandle returnValue;
             returnValue = PlistNativeMethods.plist_dict_get_item(node, key);
-            returnValue.Api = this.Parent;
-            return returnValue;
-        }
-        
-        /// <summary>
-        /// Get key node associated to an item. Item must be member of a dictionary.
-        /// </summary>
-        /// <param name="node">
-        /// the item
-        /// </param>
-        /// <returns>
-        /// the key node of the given item, or NULL.
-        /// </returns>
-        public virtual PlistHandle plist_dict_item_get_key(PlistHandle node)
-        {
-            PlistHandle returnValue;
-            returnValue = PlistNativeMethods.plist_dict_item_get_key(node);
             returnValue.Api = this.Parent;
             return returnValue;
         }
@@ -877,7 +848,7 @@ namespace iMobileDevice.Plist
         /// <summary>
         /// Frees the memory allocated by plist_to_xml
         /// </summary>
-        /// <param name="plist_bin">
+        /// <param name="plist_xml">
         /// The object allocated by plist_to_xml
         /// </param>
         public virtual void plist_to_xml_free(System.IntPtr plistXml)

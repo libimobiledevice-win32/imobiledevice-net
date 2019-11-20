@@ -108,7 +108,7 @@ namespace iMobileDevice.Screenshotr
         /// <returns>
         /// SCREENSHOTR_E_SUCCESS on success, SCREENSHOTR_E_INVALID_ARG if
         /// one or more parameters are invalid, or another error code if an
-        /// error occurred.
+        /// error occured.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_take_screenshot", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_take_screenshot(ScreenshotrClientHandle client, ref System.IntPtr imgdata, ref ulong imgsize);

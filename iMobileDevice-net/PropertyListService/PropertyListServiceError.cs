@@ -39,8 +39,6 @@ namespace iMobileDevice.PropertyListService
         
         ReceiveTimeout = -5,
         
-        NotEnoughData = -6,
-        
         UnknownError = -256,
     }
 }

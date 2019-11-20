@@ -38,10 +38,6 @@ namespace iMobileDevice.SyslogRelay
         
         SslError = -3,
         
-        NotEnoughData = -4,
-        
-        Timeout = -5,
-        
         UnknownError = -256,
     }
 }

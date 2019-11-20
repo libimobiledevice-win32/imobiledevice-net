@@ -40,10 +40,6 @@ namespace iMobileDevice.HeartBeat
         
         SslError = -4,
         
-        NotEnoughData = -5,
-        
-        Timeout = -6,
-        
         UnknownError = -256,
     }
 }

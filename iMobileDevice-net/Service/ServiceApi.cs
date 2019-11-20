@@ -115,7 +115,7 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG when client is invalid, or a
-        /// SERVICE_E_UNKNOWN_ERROR when another error occurred.
+        /// SERVICE_E_UNKNOWN_ERROR when another error occured.
         /// </returns>
         public virtual ServiceError service_client_free(System.IntPtr client)
         {
@@ -196,9 +196,7 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG when one or more parameters are
-        /// invalid, SERVICE_E_NOT_ENOUGH_DATA when not enough data
-        /// received, SERVICE_E_TIMEOUT when the connection times out,
-        /// SERVICE_E_MUX_ERROR when a communication error
+        /// invalid, SERVICE_E_MUX_ERROR when a communication error
         /// occurs, or SERVICE_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
@@ -216,9 +214,7 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG if client or client->connection is
-        /// NULL, SERVICE_E_NOT_ENOUGH_DATA when not enough data
-        /// received, SERVICE_E_TIMEOUT when the connection times out,
-        /// SERVICE_E_SSL_ERROR when SSL could not be enabled,
+        /// NULL, SERVICE_E_SSL_ERROR when SSL could not be enabled,
         /// or SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
         public virtual ServiceError service_enable_ssl(ServiceClientHandle client)

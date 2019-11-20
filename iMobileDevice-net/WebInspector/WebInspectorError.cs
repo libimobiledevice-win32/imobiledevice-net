@@ -40,10 +40,6 @@ namespace iMobileDevice.WebInspector
         
         SslError = -4,
         
-        ReceiveTimeout = -5,
-        
-        NotEnoughData = -6,
-        
         UnknownError = -256,
     }
 }

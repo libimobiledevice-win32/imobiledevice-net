@@ -66,7 +66,7 @@ namespace iMobileDevice.iDevice
         /// to the registered callback function.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
         iDeviceError idevice_event_subscribe(iDeviceEventCallBack callback, System.IntPtr userData);
         
@@ -75,7 +75,7 @@ namespace iMobileDevice.iDevice
         /// idevice_event_subscribe().
         /// </summary>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
         iDeviceError idevice_event_unsubscribe();
         
@@ -90,7 +90,7 @@ namespace iMobileDevice.iDevice
         /// Number of devices found.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
         iDeviceError idevice_get_device_list(out System.Collections.ObjectModel.ReadOnlyCollection<string> devices, ref int count);
         
