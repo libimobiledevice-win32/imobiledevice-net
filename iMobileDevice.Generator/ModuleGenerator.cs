@@ -4,9 +4,9 @@
 
 namespace iMobileDevice.Generator
 {
+    using ClangSharp;
+    using ClangSharp.Interop;
     using CodeDom;
-    using Core.Clang;
-    using Core.Clang.Diagnostics;
     using iMobileDevice.Generator.Nustache;
     using Stubble.Core;
     using Stubble.Core.Builders;
@@ -87,7 +87,7 @@ namespace iMobileDevice.Generator
             this.WriteTypes(targetDirectory);
         }
 
-        public void GenerateTypes(string libraryName = "imobiledevice")
+        public unsafe void GenerateTypes(string libraryName = "imobiledevice")
         {
             string[] arguments =
             {
@@ -106,38 +106,39 @@ namespace iMobileDevice.Generator
 
             FunctionVisitor functionVisitor;
 
-            using (var createIndex = new Index(false, true))
-            using (var translationUnit = createIndex.ParseTranslationUnit(this.InputFile, arguments))
+            using (var createIndex = Index.Create(false, true))
+            using (var translationUnit = CXTranslationUnit.Parse(createIndex.Handle, this.InputFile, arguments, null, CXTranslationUnit_Flags.CXTranslationUnit_None))
             {
                 StringWriter errorWriter = new StringWriter();
-                var set = DiagnosticSet.FromTranslationUnit(translationUnit);
-                var numDiagnostics = set.GetNumDiagnostics();
+                var set = translationUnit.DiagnosticSet;
+                var numDiagnostics = set.NumDiagnostics;
 
                 bool hasError = false;
                 bool hasWarning = false;
 
                 for (uint i = 0; i < numDiagnostics; ++i)
                 {
-                    Diagnostic diagnostic = set.GetDiagnostic(i);
-                    var severity = diagnostic.GetSeverity();
+                    CXDiagnostic diagnostic = set.GetDiagnostic(i);
+                    var severity = diagnostic.Severity;
 
                     switch (severity)
                     {
-                        case DiagnosticSeverity.Error:
-                        case DiagnosticSeverity.Fatal:
+                        case CXDiagnosticSeverity.CXDiagnostic_Error:
+                        case CXDiagnosticSeverity.CXDiagnostic_Fatal:
                             hasError = true;
                             break;
 
-                        case DiagnosticSeverity.Warning:
+                        case CXDiagnosticSeverity.CXDiagnostic_Warning:
                             hasWarning = true;
                             break;
                     }
 
-                    var location = diagnostic.GetLocation();
-                    var fileName = location.SourceFile;
-                    var line = location.Line;
+                    var location = diagnostic.Location;
 
-                    var message = diagnostic.GetSpelling();
+                    location.GetFileLocation(out CXFile file, out uint line, out _, out _);
+                    var fileName = file.Name.CString;
+
+                    var message = diagnostic.Spelling.CString;
                     errorWriter.WriteLine($"{severity}: {fileName}:{line} {message}");
                 }
 
@@ -158,24 +159,23 @@ namespace iMobileDevice.Generator
 
                 // Creates enums
                 var enumVisitor = new EnumVisitor(this);
-                var realEnumVisitor = new DelegatingCursorVisitor(enumVisitor.Visit);
-                var cursor = translationUnit.GetCursor();
-                realEnumVisitor.VisitChildren(cursor);
+                var realEnumVisitor = new DelegatingCXCursorVisitor(enumVisitor.Visit);
+                translationUnit.Cursor.VisitChildren(realEnumVisitor.Visit, new CXClientData());
 
                 // Creates structs
                 var structVisitor = new StructVisitor(this);
-                var realStructVisitor = new DelegatingCursorVisitor(structVisitor.Visit);
-                realStructVisitor.VisitChildren(translationUnit.GetCursor());
+                var realStructVisitor = new DelegatingCXCursorVisitor(structVisitor.Visit);
+                translationUnit.Cursor.VisitChildren(realStructVisitor.Visit, new CXClientData());
 
                 // Creates safe handles & delegates
                 var typeDefVisitor = new TypeDefVisitor(this);
-                var realTypeDefVisitor = new DelegatingCursorVisitor(typeDefVisitor.Visit);
-                realTypeDefVisitor.VisitChildren(translationUnit.GetCursor());
+                var realTypeDefVisitor = new DelegatingCXCursorVisitor(typeDefVisitor.Visit);
+                translationUnit.Cursor.VisitChildren(realTypeDefVisitor.Visit, new CXClientData());
 
                 // Creates functions in a NativeMethods class
                 functionVisitor = new FunctionVisitor(this, libraryName);
-                var realFunctionVisitor = new DelegatingCursorVisitor(functionVisitor.Visit);
-                realFunctionVisitor.VisitChildren(translationUnit.GetCursor());
+                var realFunctionVisitor = new DelegatingCXCursorVisitor(functionVisitor.Visit);
+                translationUnit.Cursor.VisitChildren(realFunctionVisitor.Visit, new CXClientData());
 
                 createIndex.Dispose();
             }

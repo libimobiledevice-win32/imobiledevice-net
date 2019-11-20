@@ -1,18 +1,18 @@
-﻿using Core.Clang;
+﻿using ClangSharp.Interop;
 using System;
 
 namespace iMobileDevice.Generator
 {
-    internal class DelegatingCursorVisitor : CursorVisitor
+    internal class DelegatingCXCursorVisitor
     {
-        private readonly Func<Cursor, Cursor, ChildVisitResult> visitor;
+        private readonly Func<CXCursor, CXCursor, CXChildVisitResult> visitor;
 
-        public DelegatingCursorVisitor(Func<Cursor, Cursor, ChildVisitResult> visitor)
+        public DelegatingCXCursorVisitor(Func<CXCursor, CXCursor, CXChildVisitResult> visitor)
         {
             this.visitor = visitor;
         }
 
-        protected override ChildVisitResult Visit(Cursor cursor, Cursor parent)
+        public unsafe CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, void* client_data)
         {
             return visitor(cursor, parent);
         }

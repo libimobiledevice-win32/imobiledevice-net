@@ -475,7 +475,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <param name="capabilities">
         /// An array of char* with capability names that MUST have a
-        /// terminatingÂ NULL entry.
+        /// terminating NULL entry.
         /// </param>
         /// <param name="client_options">
         /// The client options to use, as PLIST_DICT, or NULL.
@@ -545,7 +545,7 @@ namespace iMobileDevice.InstallationProxy
         /// </param>
         /// <returns>
         /// INSTPROXY_E_SUCCESS if no error is found or an INSTPROXY_E_* error
-        /// value matching the error that áºƒas found in the status.
+        /// value matching the error that ẃas found in the status.
         /// </returns>
         public virtual InstallationProxyError instproxy_status_get_error(PlistHandle status, out string name, out string description, ref ulong code)
         {

@@ -4,43 +4,42 @@
 
 namespace iMobileDevice.Generator
 {
-    using System;
-    using Core.Clang;
+    using ClangSharp.Interop;
 
-    internal sealed class ForwardDeclarationVisitor : CursorVisitor
+    internal sealed class ForwardDeclarationVisitor
     {
-        private readonly Cursor beginningCursor;
+        private readonly CXCursor beginningCXCursor;
         private readonly bool skipSystemHeaderCheck;
-        private bool beginningCursorReached;
+        private bool beginningCXCursorReached;
 
-        public ForwardDeclarationVisitor(Cursor beginningCursor, bool skipSystemHeaderCheck = false)
+        public ForwardDeclarationVisitor(CXCursor beginningCXCursor, bool skipSystemHeaderCheck = false)
         {
-            this.beginningCursor = beginningCursor;
+            this.beginningCXCursor = beginningCXCursor;
             this.skipSystemHeaderCheck = skipSystemHeaderCheck;
         }
 
-        public Cursor ForwardDeclarationCursor { get; private set; }
+        public CXCursor ForwardDeclarationCXCursor { get; private set; }
 
-        protected override ChildVisitResult Visit(Cursor cursor, Cursor parent)
+        public unsafe CXChildVisitResult Visit(CXCursor cursor, CXCursor parent, void* client_data)
         {
             if (!this.skipSystemHeaderCheck && cursor.IsInSystemHeader())
             {
-                return ChildVisitResult.Continue;
+                return CXChildVisitResult.CXChildVisit_Continue;
             }
 
-            if (cursor.Equals(this.beginningCursor))
+            if (cursor.Equals(this.beginningCXCursor))
             {
-                this.beginningCursorReached = true;
-                return ChildVisitResult.Continue;
+                this.beginningCXCursorReached = true;
+                return CXChildVisitResult.CXChildVisit_Continue;
             }
 
-            if (this.beginningCursorReached)
+            if (this.beginningCXCursorReached)
             {
-                this.ForwardDeclarationCursor = cursor;
-                return ChildVisitResult.Break;
+                this.ForwardDeclarationCXCursor = cursor;
+                return CXChildVisitResult.CXChildVisit_Break;
             }
 
-            return ChildVisitResult.Recurse;
+            return CXChildVisitResult.CXChildVisit_Recurse;
         }
     }
 }

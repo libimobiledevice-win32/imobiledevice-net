@@ -490,7 +490,7 @@ namespace iMobileDevice.Lockdown
         }
         
         /// <summary>
-        /// Deactivates the device, returning it to the locked â€œActivate with iTunesâ€
+        /// Deactivates the device, returning it to the locked “Activate with iTunes”
         /// screen.
         /// </summary>
         /// <param name="client">

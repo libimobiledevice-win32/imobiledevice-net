@@ -4,56 +4,56 @@
 
 namespace iMobileDevice.Generator
 {
+    using ClangSharp.Interop;
     using System;
     using System.CodeDom;
     using System.Runtime.InteropServices;
-    using Core.Clang;
 
     internal static class CXTypeExtensions
     {
-        public static CallingConvention GetCallingConvention(this TypeInfo type)
+        public static CallingConvention GetCallingConvention(this CXType type)
         {
             return CallingConvention.Cdecl;
         }
 
-        public static bool IsDoubleCharPointer(this TypeInfo type)
+        public static bool IsDoubleCharPointer(this CXType type)
         {
             return IsCharPointer(type, 1);
         }
 
-        public static bool IsTripleCharPointer(this TypeInfo type)
+        public static bool IsTripleCharPointer(this CXType type)
         {
             return IsCharPointer(type, 2);
         }
 
-        public static bool IsCharPointer(this TypeInfo type, int depth)
+        public static bool IsCharPointer(this CXType type, int depth)
         {
             var pointee = type;
 
             for (int i = 0; i < depth; i++)
             {
-                pointee = pointee.GetPointeeType();
+                pointee = pointee.PointeeType;
 
-                if (pointee.Kind != TypeKind.Pointer)
+                if (pointee.kind != CXTypeKind.CXType_Pointer)
                 {
                     return false;
                 }
             }
 
-            pointee = pointee.GetPointeeType();
+            pointee = pointee.PointeeType;
 
-            return pointee.Kind == TypeKind.Char_S;
+            return pointee.kind == CXTypeKind.CXType_Char_S;
         }
 
-        public static bool IsPtrToChar(this TypeInfo type)
+        public static bool IsPtrToChar(this CXType type)
         {
-            var pointee = type.GetPointeeType();
+            var pointee = type.PointeeType;
 
-            if (!pointee.IsConstQualified())
+            if (!pointee.IsConstQualified)
             {
-                switch (pointee.Kind)
+                switch (pointee.kind)
                 {
-                    case TypeKind.Char_S:
+                    case CXTypeKind.CXType_Char_S:
                         return true;
                 }
             }
@@ -61,15 +61,15 @@ namespace iMobileDevice.Generator
             return false;
         }
 
-        public static bool IsPtrToConstChar(this TypeInfo type)
+        public static bool IsPtrToConstChar(this CXType type)
         {
-            var pointee = type.GetPointeeType();
+            var pointee = type.PointeeType;
 
-            if (pointee.IsConstQualified())
+            if (pointee.IsConstQualified)
             {
-                switch (pointee.Kind)
+                switch (pointee.kind)
                 {
-                    case TypeKind.Char_S:
+                    case CXTypeKind.CXType_Char_S:
                         return true;
                 }
             }
@@ -77,35 +77,35 @@ namespace iMobileDevice.Generator
             return false;
         }
 
-        public static bool IsArrayOfCharPointers(this TypeInfo type)
+        public static bool IsArrayOfCharPointers(this CXType type)
         {
-            if (type.Kind != TypeKind.IncompleteArray)
+            if (type.kind != CXTypeKind.CXType_IncompleteArray)
             {
                 return false;
             }
 
-            var elementType = type.GetArrayElementType();
+            var elementType = type.ArrayElementType;
 
-            if (elementType.Kind != TypeKind.Pointer)
+            if (elementType.kind != CXTypeKind.CXType_Pointer)
             {
                 return false;
             }
 
-            var pointeeType = elementType.GetPointeeType();
+            var pointeeType = elementType.PointeeType;
 
-            return pointeeType.Kind == TypeKind.Char_S;
+            return pointeeType.kind == CXTypeKind.CXType_Char_S;
         }
 
-        public static bool IsDoublePtrToConstChar(this TypeInfo type)
+        public static bool IsDoublePtrToConstChar(this CXType type)
         {
-            if (type.Kind != TypeKind.Pointer)
+            if (type.kind != CXTypeKind.CXType_Pointer)
             {
                 return false;
             }
 
-            var pointee = type.GetPointeeType();
+            var pointee = type.PointeeType;
 
-            if (pointee.Kind != TypeKind.Pointer)
+            if (pointee.kind != CXTypeKind.CXType_Pointer)
             {
                 return false;
             }
@@ -113,10 +113,10 @@ namespace iMobileDevice.Generator
             return pointee.IsPtrToConstChar();
         }
 
-        public static CodeTypeDelegate ToDelegate(this TypeInfo type, string nativeName, Cursor cursor, ModuleGenerator generator)
+        public unsafe static CodeTypeDelegate ToDelegate(this CXType type, string nativeName, CXCursor cursor, ModuleGenerator generator)
         {
-            if (type.Kind != TypeKind.FunctionProto
-                && type.Kind != TypeKind.Unexposed)
+            if (type.kind != CXTypeKind.CXType_FunctionProto
+                && type.kind != CXTypeKind.CXType_Unexposed)
             {
                 throw new InvalidOperationException();
             }
@@ -134,21 +134,21 @@ namespace iMobileDevice.Generator
 
             delegateType.Attributes = MemberAttributes.Public | MemberAttributes.Final;
             delegateType.Name = clrName;
-            delegateType.ReturnType = new CodeTypeReference(type.GetResultType().ToClrType());
+            delegateType.ReturnType = new CodeTypeReference(type.ResultType.ToClrType());
 
             uint argumentCounter = 0;
 
-            var cursorVisitor = new DelegatingCursorVisitor(
-                delegate (Cursor c, Cursor parent1)
+            var cursorVisitor = new DelegatingCXCursorVisitor(
+                delegate (CXCursor c, CXCursor parent1)
                 {
-                    if (c.Kind == CursorKind.ParmDecl)
+                    if (c.Kind == CXCursorKind.CXCursor_ParmDecl)
                     {
                         delegateType.Parameters.Add(Argument.GenerateArgument(generator, type, c, argumentCounter++, FunctionType.Delegate));
                     }
 
-                    return ChildVisitResult.Continue;
+                    return CXChildVisitResult.CXChildVisit_Continue;
                 });
-            cursorVisitor.VisitChildren(cursor);
+            cursor.VisitChildren(cursorVisitor.Visit, new CXClientData());
 
             return delegateType;
         }

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Core.Clang" Version="5.0.0-alpha2" />
+    <PackageReference Include="ClangSharp" Version="8.0.0-beta" />
     <PackageReference Include="System.CodeDom" Version="4.4.0" />
     <PackageReference Include="Native.LibClang" Version="5.0.0" />
     <PackageReference Include="Stubble.Core" Version="1.4.12" />
