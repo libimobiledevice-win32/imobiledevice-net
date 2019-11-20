@@ -44,11 +44,17 @@ namespace iMobileDevice.Generator
                 this.nativeMethods.Attributes = /*MemberAttributes.Static |*/ MemberAttributes.Public | MemberAttributes.Final;
                 this.nativeMethods.IsPartial = true;
                 this.nativeMethods.Members.Add(
-                    new CodeMemberField(typeof(string), "libraryName")
+                    new CodeMemberField(typeof(string), "LibraryName")
                     {
-                        Attributes = MemberAttributes.Const,
+                        Attributes = MemberAttributes.Const | MemberAttributes.Public,
                         InitExpression = new CodePrimitiveExpression(this.libraryName)
                     });
+
+                var constructor = new CodeTypeConstructor();
+                constructor.Statements.Add(
+                    new CodeMethodInvokeExpression(
+                        new CodeMethodReferenceExpression(new CodeTypeReferenceExpression("LibraryResolver"), "EnsureRegistered")));
+                this.nativeMethods.Members.Add(constructor);
 
                 this.generator.Types.Add(new CodeDomGeneratedType(this.nativeMethods));
             }
@@ -129,7 +135,7 @@ namespace iMobileDevice.Generator
         {
             return new CodeAttributeDeclaration(
                 new CodeTypeReference(typeof(DllImportAttribute)),
-                new CodeAttributeArgument(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(this.nativeMethods.Name), "libraryName")),
+                new CodeAttributeArgument(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(this.nativeMethods.Name), "LibraryName")),
                 new CodeAttributeArgument(
                     "EntryPoint",
                     new CodePrimitiveExpression(entryPoint)),

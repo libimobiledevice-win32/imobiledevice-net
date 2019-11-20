@@ -102,6 +102,11 @@ namespace iMobileDevice.Generator
 
             foreach (var method in this.visitor.NativeMethods.Members.OfType<CodeMemberMethod>())
             {
+                if (method is CodeTypeConstructor || method is CodeTypeConstructor)
+                {
+                    continue;
+                }
+
                 var interfaceMethod = new CodeMemberMethod();
                 interfaceMethod.Name = method.Name;
                 interfaceMethod.ReturnType = method.ReturnType;

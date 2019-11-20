@@ -20,7 +20,7 @@ namespace iMobileDevice.InstallationProxy
     public partial class InstallationProxyNativeMethods
     {
         /// <include file='IInstallationProxyApi.xml' path='/IInstallationProxyApi/instproxy_client_options_add/*'/>
-        [DllImport(libraryName, EntryPoint = "instproxy_client_options_add", CharSet = CharSet.Ansi, BestFitMapping = false, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(LibraryName, EntryPoint = "instproxy_client_options_add", CharSet = CharSet.Ansi, BestFitMapping = false, CallingConvention = CallingConvention.Cdecl)]
         public static extern void instproxy_client_options_add(PlistHandle client_options, string key, string value, byte term);
     }
 }

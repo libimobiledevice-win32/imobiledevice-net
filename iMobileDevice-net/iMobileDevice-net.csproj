@@ -5,8 +5,8 @@
     <AssemblyTitle>.NET client for iOS devices (libimobiledevice-net)</AssemblyTitle>
     <VersionPrefix>1.2.1</VersionPrefix>
     <Authors>Quamotion</Authors>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net45</TargetFrameworks>
-    <TargetFramework Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0</TargetFramework>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.0;netcoreapp2.0;net45</TargetFrameworks>
+    <TargetFramework Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.0;netcoreapp2.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>iMobileDevice-net</AssemblyName>
     <AssemblyOriginatorKeyFile>iMobileDevice.snk</AssemblyOriginatorKeyFile>

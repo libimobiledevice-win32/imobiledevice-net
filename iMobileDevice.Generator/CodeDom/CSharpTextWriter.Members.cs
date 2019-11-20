@@ -202,6 +202,23 @@
             this.WriteLine("}");
         }
 
+        private void Generate(CodeTypeDeclaration type, CodeTypeConstructor member)
+        {
+            this.WriteDocumentation(member.Comments);
+            this.Write("static ");
+
+            this.WriteName(type.Name);
+            this.WriteLine("()");
+
+            this.WriteLine("{");
+            this.Indent++;
+
+            this.Generate(member.Statements);
+
+            this.Indent--;
+            this.WriteLine("}");
+        }
+
         private void Generate(CodeMemberMethod member, bool isInterface = false)
         {
             this.WriteDocumentation(member.Comments);
