@@ -27,7 +27,12 @@ namespace iMobileDevice.Afc
     public partial class AfcNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static AfcNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Makes a connection to the AFC service on the device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.Afc
         /// invalid, AFC_E_MUX_ERROR if the connection cannot be established,
         /// or AFC_E_NO_MEM if there is a memory allocation problem.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out AfcClientHandle client);
         
         /// <summary>
@@ -67,7 +72,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success, or an AFC_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_client_start_service(iDeviceHandle device, out AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -77,7 +82,7 @@ namespace iMobileDevice.Afc
         /// <param name="client">
         /// The client to free.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_client_free(System.IntPtr client);
         
         /// <summary>
@@ -96,7 +101,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_get_device_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_get_device_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_get_device_info(AfcClientHandle client, out System.IntPtr deviceInformation);
         
         /// <summary>
@@ -116,7 +121,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_read_directory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_read_directory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_read_directory(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path, out System.IntPtr directoryInformation);
         
         /// <summary>
@@ -136,7 +141,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_get_file_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_get_file_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_get_file_info(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string filename, out System.IntPtr fileInformation);
         
         /// <summary>
@@ -157,7 +162,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_open", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_open", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_open(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string filename, AfcFileMode fileMode, ref ulong handle);
         
         /// <summary>
@@ -169,7 +174,7 @@ namespace iMobileDevice.Afc
         /// <param name="handle">
         /// File handle of a previously opened file.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_close", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_close", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_close(AfcClientHandle client, ulong handle);
         
         /// <summary>
@@ -187,7 +192,7 @@ namespace iMobileDevice.Afc
         /// AFC_LOCK_SH (shared lock), AFC_LOCK_EX (exclusive lock), or
         /// AFC_LOCK_UN (unlock).
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_lock", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_lock", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_lock(AfcClientHandle client, ulong handle, AfcLockOp operation);
         
         /// <summary>
@@ -211,7 +216,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_read", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_read", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_read(AfcClientHandle client, ulong handle, byte[] data, uint length, ref uint bytesRead);
         
         /// <summary>
@@ -235,7 +240,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_write", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_write", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_write(AfcClientHandle client, ulong handle, byte[] data, uint length, ref uint bytesWritten);
         
         /// <summary>
@@ -256,7 +261,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_seek", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_seek", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_seek(AfcClientHandle client, ulong handle, long offset, int whence);
         
         /// <summary>
@@ -274,7 +279,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_tell", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_tell", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_tell(AfcClientHandle client, ulong handle, ref ulong position);
         
         /// <summary>
@@ -296,7 +301,7 @@ namespace iMobileDevice.Afc
         /// This function is more akin to ftruncate than truncate, and truncate
         /// calls would have to open the file before calling this, sadly.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_file_truncate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_file_truncate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_file_truncate(AfcClientHandle client, ulong handle, ulong newsize);
         
         /// <summary>
@@ -311,7 +316,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_remove_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_remove_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_remove_path(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path);
         
         /// <summary>
@@ -329,7 +334,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_rename_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_rename_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_rename_path(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string from, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string to);
         
         /// <summary>
@@ -345,7 +350,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_make_directory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_make_directory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_make_directory(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path);
         
         /// <summary>
@@ -363,7 +368,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_truncate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_truncate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_truncate(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path, ulong newsize);
         
         /// <summary>
@@ -384,7 +389,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_make_link", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_make_link", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_make_link(AfcClientHandle client, AfcLinkType linktype, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string target, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string linkname);
         
         /// <summary>
@@ -402,7 +407,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_set_file_time", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_set_file_time", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_set_file_time(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path, ulong mtime);
         
         /// <summary>
@@ -420,7 +425,7 @@ namespace iMobileDevice.Afc
         /// <remarks>
         /// Only available in iOS 6 and later.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_remove_path_and_contents", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_remove_path_and_contents", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_remove_path_and_contents(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path);
         
         /// <summary>
@@ -440,7 +445,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_get_device_info_key", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_get_device_info_key", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_get_device_info_key(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, out System.IntPtr value);
         
         /// <summary>
@@ -452,7 +457,7 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.libraryName, EntryPoint="afc_dictionary_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_dictionary_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_dictionary_free(System.IntPtr dictionary);
     }
 }

@@ -27,7 +27,12 @@ namespace iMobileDevice.Screenshotr
     public partial class ScreenshotrNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static ScreenshotrNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the screenshotr service on the specified device.
@@ -51,7 +56,7 @@ namespace iMobileDevice.Screenshotr
         /// This service is only available if a developer disk image has been
         /// mounted.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.LibraryName, EntryPoint="screenshotr_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out ScreenshotrClientHandle client);
         
         /// <summary>
@@ -73,7 +78,7 @@ namespace iMobileDevice.Screenshotr
         /// SCREENSHOTR_E_SUCCESS on success, or an SCREENSHOTR_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.LibraryName, EntryPoint="screenshotr_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_client_start_service(iDeviceHandle device, out ScreenshotrClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -87,7 +92,7 @@ namespace iMobileDevice.Screenshotr
         /// SCREENSHOTR_E_SUCCESS on success, or SCREENSHOTR_E_INVALID_ARG
         /// if client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.LibraryName, EntryPoint="screenshotr_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_client_free(System.IntPtr client);
         
         /// <summary>
@@ -110,7 +115,7 @@ namespace iMobileDevice.Screenshotr
         /// one or more parameters are invalid, or another error code if an
         /// error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_take_screenshot", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.LibraryName, EntryPoint="screenshotr_take_screenshot", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_take_screenshot(ScreenshotrClientHandle client, ref System.IntPtr imgdata, ref ulong imgsize);
         
         /// <summary>
@@ -122,7 +127,7 @@ namespace iMobileDevice.Screenshotr
         /// <returns>
         /// SCREENSHOTR_E_SUCCESS on success
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.libraryName, EntryPoint="screenshotr_screenshot_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ScreenshotrNativeMethods.LibraryName, EntryPoint="screenshotr_screenshot_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ScreenshotrError screenshotr_screenshot_free(System.IntPtr imgdata);
     }
 }

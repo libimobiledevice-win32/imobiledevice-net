@@ -27,7 +27,12 @@ namespace iMobileDevice.Plist
     public partial class PlistNativeMethods
     {
         
-        const string libraryName = "plist";
+        public const string LibraryName = "plist";
+        
+        static PlistNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Create a new root plist_t type #PLIST_DICT
@@ -35,7 +40,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created plist
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_dict", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_dict", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_dict();
         
         /// <summary>
@@ -44,7 +49,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created plist
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_array", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_array", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_array();
         
         /// <summary>
@@ -56,7 +61,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_string([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string val);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_bool", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_bool", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_bool(char val);
         
         /// <summary>
@@ -80,7 +85,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_uint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_uint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_uint(ulong val);
         
         /// <summary>
@@ -92,7 +97,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_real", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_real", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_real(double val);
         
         /// <summary>
@@ -107,7 +112,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_data", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_data", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_data([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string val, ulong length);
         
         /// <summary>
@@ -122,7 +127,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_date", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_date", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_date(int sec, int usec);
         
         /// <summary>
@@ -134,7 +139,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the created item
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_new_uid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_new_uid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_new_uid(ulong val);
         
         /// <summary>
@@ -143,7 +148,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist">
         /// the plist to free
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_free(System.IntPtr plist);
         
         /// <summary>
@@ -155,7 +160,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// copied plist
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_copy", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_copy", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_copy(PlistHandle node);
         
         /// <summary>
@@ -167,7 +172,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// size of the #PLIST_ARRAY node
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_get_size", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_get_size", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern uint plist_array_get_size(PlistHandle node);
         
         /// <summary>
@@ -182,7 +187,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the nth item or NULL if node is not of type #PLIST_ARRAY
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_get_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_get_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_array_get_item(PlistHandle node, uint n);
         
         /// <summary>
@@ -194,7 +199,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the node index
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_get_item_index", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_get_item_index", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern uint plist_array_get_item_index(PlistHandle node);
         
         /// <summary>
@@ -210,7 +215,7 @@ namespace iMobileDevice.Plist
         /// <param name="n">
         /// the index of the item to get. Range is [0, array_size[. Assert if n is not in range.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_set_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_set_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_set_item(PlistHandle node, PlistHandle item, uint n);
         
         /// <summary>
@@ -222,7 +227,7 @@ namespace iMobileDevice.Plist
         /// <param name="item">
         /// the new item. The array is responsible for freeing item when it is no longer needed.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_append_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_append_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_append_item(PlistHandle node, PlistHandle item);
         
         /// <summary>
@@ -237,7 +242,7 @@ namespace iMobileDevice.Plist
         /// <param name="n">
         /// The position at which the node will be stored. Range is [0, array_size[. Assert if n is not in range.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_insert_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_insert_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_insert_item(PlistHandle node, PlistHandle item, uint n);
         
         /// <summary>
@@ -250,7 +255,7 @@ namespace iMobileDevice.Plist
         /// <param name="n">
         /// The position to remove. Range is [0, array_size[. Assert if n is not in range.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_remove_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_remove_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_remove_item(PlistHandle node, uint n);
         
         /// <summary>
@@ -263,7 +268,7 @@ namespace iMobileDevice.Plist
         /// <param name="iter">
         /// Location to store the iterator for the array.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_new_iter", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_new_iter", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_new_iter(PlistHandle node, out PlistArrayIterHandle iter);
         
         /// <summary>
@@ -280,7 +285,7 @@ namespace iMobileDevice.Plist
         /// returned item. Will be set to NULL when no more items are left
         /// to iterate.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_next_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_array_next_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_next_item(PlistHandle node, PlistArrayIterHandle iter, out PlistHandle item);
         
         /// <summary>
@@ -292,7 +297,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// size of the #PLIST_DICT node
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_get_size", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_get_size", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern uint plist_dict_get_size(PlistHandle node);
         
         /// <summary>
@@ -305,7 +310,7 @@ namespace iMobileDevice.Plist
         /// <param name="iter">
         /// Location to store the iterator for the dictionary.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_new_iter", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_new_iter", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_new_iter(PlistHandle node, out PlistDictIterHandle iter);
         
         /// <summary>
@@ -326,7 +331,7 @@ namespace iMobileDevice.Plist
         /// free the returned value. Will be set to NULL when no more
         /// key/value pairs are left to iterate.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_next_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_next_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_next_item(PlistHandle node, PlistDictIterHandle iter, out System.IntPtr key, out PlistHandle val);
         
         /// <summary>
@@ -338,7 +343,7 @@ namespace iMobileDevice.Plist
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_get_item_key", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_get_item_key", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_get_item_key(PlistHandle node, out System.IntPtr key);
         
         /// <summary>
@@ -354,7 +359,7 @@ namespace iMobileDevice.Plist
         /// the item or NULL if node is not of type #PLIST_DICT. The caller should not free
         /// the returned node.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_get_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_get_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_dict_get_item(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key);
         
         /// <summary>
@@ -371,7 +376,7 @@ namespace iMobileDevice.Plist
         /// <param name="key">
         /// the identifier of the item to set.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_set_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_set_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_set_item(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, PlistHandle item);
         
         /// <summary>
@@ -386,7 +391,7 @@ namespace iMobileDevice.Plist
         /// <param name="key">
         /// The identifier of the item to insert.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_insert_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_insert_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_insert_item(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, PlistHandle item);
         
         /// <summary>
@@ -399,7 +404,7 @@ namespace iMobileDevice.Plist
         /// <param name="key">
         /// The identifier of the item to remove. Assert if identifier is not present.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_remove_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_remove_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_remove_item(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key);
         
         /// <summary>
@@ -413,7 +418,7 @@ namespace iMobileDevice.Plist
         /// <param name="source">
         /// node of type #PLIST_DICT that should be merged into target
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_merge", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_dict_merge", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_dict_merge(out PlistHandle target, PlistHandle source);
         
         /// <summary>
@@ -422,7 +427,7 @@ namespace iMobileDevice.Plist
         /// <param name="node">
         /// the parent (NULL if node is root)
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_parent", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_parent", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_get_parent(PlistHandle node);
         
         /// <summary>
@@ -434,7 +439,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the type of the node
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_node_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_node_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistType plist_get_node_type(PlistHandle node);
         
         /// <summary>
@@ -448,7 +453,7 @@ namespace iMobileDevice.Plist
         /// a pointer to a C-string. This function allocates the memory,
         /// caller is responsible for freeing it.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_key_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_key_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_key_val(PlistHandle node, out System.IntPtr val);
         
         /// <summary>
@@ -462,7 +467,7 @@ namespace iMobileDevice.Plist
         /// a pointer to a C-string. This function allocates the memory,
         /// caller is responsible for freeing it. Data is UTF-8 encoded.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_string_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_string_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_string_val(PlistHandle node, out System.IntPtr val);
         
         /// <summary>
@@ -475,7 +480,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// a pointer to a uint8_t variable.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_bool_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_bool_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_bool_val(PlistHandle node, ref char val);
         
         /// <summary>
@@ -488,7 +493,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// a pointer to a uint64_t variable.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_uint_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_uint_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_uint_val(PlistHandle node, ref ulong val);
         
         /// <summary>
@@ -501,7 +506,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// a pointer to a double variable.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_real_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_real_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_real_val(PlistHandle node, ref double val);
         
         /// <summary>
@@ -518,7 +523,7 @@ namespace iMobileDevice.Plist
         /// <param name="length">
         /// the length of the buffer
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_data_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_data_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_data_val(PlistHandle node, out System.IntPtr val, ref ulong length);
         
         /// <summary>
@@ -534,7 +539,7 @@ namespace iMobileDevice.Plist
         /// <param name="usec">
         /// a pointer to an int32_t variable. Represents the number of microseconds
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_date_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_date_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_date_val(PlistHandle node, ref int sec, ref int usec);
         
         /// <summary>
@@ -547,7 +552,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// a pointer to a uint64_t variable.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_get_uid_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_get_uid_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_get_uid_val(PlistHandle node, ref ulong val);
         
         /// <summary>
@@ -560,7 +565,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// the key value
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_key_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_key_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_key_val(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string val);
         
         /// <summary>
@@ -574,7 +579,7 @@ namespace iMobileDevice.Plist
         /// the string value. The string is copied when set and will be
         /// freed by the node.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_string_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_string_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_string_val(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string val);
         
         /// <summary>
@@ -587,7 +592,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// the boolean value
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_bool_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_bool_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_bool_val(PlistHandle node, char val);
         
         /// <summary>
@@ -600,7 +605,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// the unsigned integer value
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_uint_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_uint_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_uint_val(PlistHandle node, ulong val);
         
         /// <summary>
@@ -613,7 +618,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// the real value
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_real_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_real_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_real_val(PlistHandle node, double val);
         
         /// <summary>
@@ -630,7 +635,7 @@ namespace iMobileDevice.Plist
         /// <param name="length">
         /// the length of the buffer
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_data_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_data_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_data_val(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string val, ulong length);
         
         /// <summary>
@@ -646,7 +651,7 @@ namespace iMobileDevice.Plist
         /// <param name="usec">
         /// the number of microseconds
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_date_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_date_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_date_val(PlistHandle node, int sec, int usec);
         
         /// <summary>
@@ -659,7 +664,7 @@ namespace iMobileDevice.Plist
         /// <param name="val">
         /// the unsigned integer value
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_set_uid_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_set_uid_val", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_set_uid_val(PlistHandle node, ulong val);
         
         /// <summary>
@@ -675,7 +680,7 @@ namespace iMobileDevice.Plist
         /// <param name="length">
         /// a pointer to an uint32_t variable. Represents the length of the allocated buffer.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_xml", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_to_xml", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_to_xml(PlistHandle plist, out System.IntPtr plistXml, ref uint length);
         
         /// <summary>
@@ -684,7 +689,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist_xml">
         /// The object allocated by plist_to_xml
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_xml_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_to_xml_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_to_xml_free(System.IntPtr plistXml);
         
         /// <summary>
@@ -700,7 +705,7 @@ namespace iMobileDevice.Plist
         /// <param name="length">
         /// a pointer to an uint32_t variable. Represents the length of the allocated buffer.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_bin", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_to_bin", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_to_bin(PlistHandle plist, out System.IntPtr plistBin, ref uint length);
         
         /// <summary>
@@ -709,7 +714,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist_bin">
         /// The object allocated by plist_to_bin
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_bin_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_to_bin_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_to_bin_free(System.IntPtr plistBin);
         
         /// <summary>
@@ -724,7 +729,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist">
         /// a pointer to the imported plist.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_from_xml", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_from_xml", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_from_xml([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistXml, uint length, out PlistHandle plist);
         
         /// <summary>
@@ -739,7 +744,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist">
         /// a pointer to the imported plist.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_from_bin", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_from_bin", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_from_bin([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistBin, uint length, out PlistHandle plist);
         
         /// <summary>
@@ -756,7 +761,7 @@ namespace iMobileDevice.Plist
         /// <param name="plist">
         /// a pointer to the imported plist.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_from_memory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_from_memory", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_from_memory([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistData, uint length, out PlistHandle plist);
         
         /// <summary>
@@ -776,7 +781,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// 1 if the buffer is a binary plist, 0 otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_is_binary", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_is_binary", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int plist_is_binary([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plistData, uint length);
         
         /// <summary>
@@ -793,7 +798,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the value to access.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_access_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_access_path", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_access_path(PlistHandle plist, uint length);
         
         /// <summary>
@@ -811,7 +816,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// the value to access.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_access_pathv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_access_pathv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_access_pathv(PlistHandle plist, uint length, System.IntPtr v);
         
         /// <summary>
@@ -826,7 +831,7 @@ namespace iMobileDevice.Plist
         /// <returns>
         /// TRUE is type and value match, FALSE otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_compare_node_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.LibraryName, EntryPoint="plist_compare_node_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern sbyte plist_compare_node_value(PlistHandle nodeL, PlistHandle nodeR);
     }
 }

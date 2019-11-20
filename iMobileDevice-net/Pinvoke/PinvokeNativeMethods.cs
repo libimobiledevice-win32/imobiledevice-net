@@ -27,7 +27,12 @@ namespace iMobileDevice.Pinvoke
     public partial class PinvokeNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static PinvokeNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Frees a string that was previously allocated by libimobiledevice.
@@ -38,7 +43,7 @@ namespace iMobileDevice.Pinvoke
         /// <returns>
         /// Always returns PINVOKE_E_SUCCESS.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PinvokeNativeMethods.libraryName, EntryPoint="pinvoke_free_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PinvokeNativeMethods.LibraryName, EntryPoint="pinvoke_free_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PinvokeError pinvoke_free_string(System.IntPtr @string);
         
         /// <summary>
@@ -53,7 +58,7 @@ namespace iMobileDevice.Pinvoke
         /// <returns>
         /// Always returns PINVOKE_E_SUCCESS.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PinvokeNativeMethods.libraryName, EntryPoint="pinvoke_get_string_length", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PinvokeNativeMethods.LibraryName, EntryPoint="pinvoke_get_string_length", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PinvokeError pinvoke_get_string_length(System.IntPtr @string, out ulong length);
     }
 }

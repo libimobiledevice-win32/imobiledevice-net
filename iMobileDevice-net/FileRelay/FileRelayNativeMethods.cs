@@ -27,7 +27,12 @@ namespace iMobileDevice.FileRelay
     public partial class FileRelayNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static FileRelayNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the file_relay service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.FileRelay
         /// FILE_RELAY_E_INVALID_ARG when one of the parameters is invalid,
         /// or FILE_RELAY_E_MUX_ERROR when the connection failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.libraryName, EntryPoint="file_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.LibraryName, EntryPoint="file_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern FileRelayError file_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out FileRelayClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.FileRelay
         /// FILE_RELAY_E_SUCCESS on success, or an FILE_RELAY_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.libraryName, EntryPoint="file_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.LibraryName, EntryPoint="file_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern FileRelayError file_relay_client_start_service(iDeviceHandle device, out FileRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -85,7 +90,7 @@ namespace iMobileDevice.FileRelay
         /// is invalid, or FILE_RELAY_E_UNKNOWN_ERROR when the was an error
         /// freeing the parent property_list_service client.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.libraryName, EntryPoint="file_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.LibraryName, EntryPoint="file_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern FileRelayError file_relay_client_free(System.IntPtr client);
         
         /// <summary>
@@ -128,7 +133,7 @@ namespace iMobileDevice.FileRelay
         /// A directory mobile_file_relay.XXXX used for creating the archive will
         /// remain in the /tmp directory otherwise.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.libraryName, EntryPoint="file_relay_request_sources", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.LibraryName, EntryPoint="file_relay_request_sources", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern FileRelayError file_relay_request_sources(FileRelayClientHandle client, out System.IntPtr sources, out iDeviceConnectionHandle connection);
         
         /// <summary>
@@ -169,7 +174,7 @@ namespace iMobileDevice.FileRelay
         /// A directory mobile_file_relay.XXXX used for creating the archive will
         /// remain in the /tmp directory otherwise.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.libraryName, EntryPoint="file_relay_request_sources_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(FileRelayNativeMethods.LibraryName, EntryPoint="file_relay_request_sources_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern FileRelayError file_relay_request_sources_timeout(FileRelayClientHandle client, out System.IntPtr sources, out iDeviceConnectionHandle connection, uint timeout);
     }
 }

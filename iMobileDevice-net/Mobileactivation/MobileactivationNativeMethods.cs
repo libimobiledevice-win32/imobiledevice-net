@@ -27,7 +27,12 @@ namespace iMobileDevice.Mobileactivation
     public partial class MobileactivationNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MobileactivationNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the mobileactivation service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_INVALID_ARG when one of the parameters is invalid,
         /// or MOBILEACTIVATION_E_MUX_ERROR when the connection failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileactivationClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_client_start_service(iDeviceHandle device, out MobileactivationClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -85,7 +90,7 @@ namespace iMobileDevice.Mobileactivation
         /// is invalid, or MOBILEACTIVATION_E_UNKNOWN_ERROR when the was an
         /// error freeing the parent property_list_service client.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_client_free(System.IntPtr client);
         
         /// <summary>
@@ -104,7 +109,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_get_activation_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_get_activation_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_get_activation_state(MobileactivationClientHandle client, out PlistHandle state);
         
         /// <summary>
@@ -123,7 +128,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_create_activation_session_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_create_activation_session_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_create_activation_session_info(MobileactivationClientHandle client, out PlistHandle blob);
         
         /// <summary>
@@ -142,7 +147,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_create_activation_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_create_activation_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_create_activation_info(MobileactivationClientHandle client, out PlistHandle info);
         
         /// <summary>
@@ -167,7 +172,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_create_activation_info_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_create_activation_info_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_create_activation_info_with_session(MobileactivationClientHandle client, PlistHandle handshakeResult, out PlistHandle info);
         
         /// <summary>
@@ -185,7 +190,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_activate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_activate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_activate(MobileactivationClientHandle client, PlistHandle activationRecord);
         
         /// <summary>
@@ -207,7 +212,7 @@ namespace iMobileDevice.Mobileactivation
         /// MOBILEACTIVATION_E_SUCCESS on success, or an MOBILEACTIVATION_E_*
         /// error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_activate_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_activate_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_activate_with_session(MobileactivationClientHandle client, PlistHandle activationRecord, PlistHandle headers);
         
         /// <summary>
@@ -216,7 +221,7 @@ namespace iMobileDevice.Mobileactivation
         /// <param name="client">
         /// The mobileactivation client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.libraryName, EntryPoint="mobileactivation_deactivate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_deactivate", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileactivationError mobileactivation_deactivate(MobileactivationClientHandle client);
     }
 }

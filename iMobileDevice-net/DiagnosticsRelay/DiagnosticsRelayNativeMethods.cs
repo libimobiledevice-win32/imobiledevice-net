@@ -27,7 +27,12 @@ namespace iMobileDevice.DiagnosticsRelay
     public partial class DiagnosticsRelayNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static DiagnosticsRelayNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the diagnostics_relay service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_INVALID_ARG when one of the parameters is invalid,
         /// or DIAGNOSTICS_RELAY_E_MUX_ERROR when the connection failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out DiagnosticsRelayClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_SUCCESS on success, or an DIAGNOSTICS_RELAY_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_client_start_service(iDeviceHandle device, out DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -85,7 +90,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// is invalid, or DIAGNOSTICS_RELAY_E_UNKNOWN_ERROR when the was an
         /// error freeing the parent property_list_service client.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_client_free(System.IntPtr client);
         
         /// <summary>
@@ -100,7 +105,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
         /// request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_goodbye", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_goodbye", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_goodbye(DiagnosticsRelayClientHandle client);
         
         /// <summary>
@@ -115,7 +120,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
         /// request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_sleep", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_sleep", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_sleep(DiagnosticsRelayClientHandle client);
         
         /// <summary>
@@ -137,7 +142,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
         /// request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_restart", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_restart", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_restart(DiagnosticsRelayClientHandle client, DiagnosticsRelayAction flags);
         
         /// <summary>
@@ -159,7 +164,7 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
         /// request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_shutdown", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_shutdown", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_shutdown(DiagnosticsRelayClientHandle client, DiagnosticsRelayAction flags);
         
         /// <summary>
@@ -181,16 +186,16 @@ namespace iMobileDevice.DiagnosticsRelay
         /// DIAGNOSTICS_RELAY_E_PLIST_ERROR if the device did not acknowledge the
         /// request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_request_diagnostics", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_request_diagnostics", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_request_diagnostics(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string type, out PlistHandle diagnostics);
         
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_query_mobilegestalt", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_query_mobilegestalt", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_query_mobilegestalt(DiagnosticsRelayClientHandle client, PlistHandle keys, out PlistHandle result);
         
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_query_ioregistry_entry", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_query_ioregistry_entry", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string name, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string classname, out PlistHandle result);
         
-        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.libraryName, EntryPoint="diagnostics_relay_query_ioregistry_plane", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_query_ioregistry_plane", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_query_ioregistry_plane(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plane, out PlistHandle result);
     }
 }

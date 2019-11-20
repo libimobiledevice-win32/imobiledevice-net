@@ -27,7 +27,12 @@ namespace iMobileDevice.Misagent
     public partial class MisagentNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MisagentNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the misagent service on the specified device.
@@ -46,7 +51,7 @@ namespace iMobileDevice.Misagent
         /// MISAGENT_E_SUCCESS on success, MISAGENT_E_INVALID_ARG when
         /// client is NULL, or an MISAGENT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MisagentClientHandle client);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.Misagent
         /// MISAGENT_E_SUCCESS on success, or an MISAGENT_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_client_start_service(iDeviceHandle device, out MisagentClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -82,7 +87,7 @@ namespace iMobileDevice.Misagent
         /// MISAGENT_E_SUCCESS on success, MISAGENT_E_INVALID_ARG when
         /// client is NULL, or an MISAGENT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_client_free(System.IntPtr client);
         
         /// <summary>
@@ -99,7 +104,7 @@ namespace iMobileDevice.Misagent
         /// MISAGENT_E_SUCCESS on success, MISAGENT_E_INVALID_ARG when
         /// client is invalid, or an MISAGENT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_install", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_install", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_install(MisagentClientHandle client, PlistHandle profile);
         
         /// <summary>
@@ -123,7 +128,7 @@ namespace iMobileDevice.Misagent
         /// still returns MISAGENT_E_SUCCESS and profiles will just point to an
         /// empty array.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_copy", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_copy", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_copy(MisagentClientHandle client, out PlistHandle profiles);
         
         /// <summary>
@@ -147,7 +152,7 @@ namespace iMobileDevice.Misagent
         /// still returns MISAGENT_E_SUCCESS and profiles will just point to an
         /// empty array.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_copy_all", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_copy_all", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_copy_all(MisagentClientHandle client, out PlistHandle profiles);
         
         /// <summary>
@@ -164,7 +169,7 @@ namespace iMobileDevice.Misagent
         /// MISAGENT_E_SUCCESS on success, MISAGENT_E_INVALID_ARG when
         /// client is invalid, or an MISAGENT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_remove", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_remove", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MisagentError misagent_remove(MisagentClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string profileid);
         
         /// <summary>
@@ -176,7 +181,7 @@ namespace iMobileDevice.Misagent
         /// <returns>
         /// -1 if client is invalid, or the status code from the last operation
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.libraryName, EntryPoint="misagent_get_status_code", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MisagentNativeMethods.LibraryName, EntryPoint="misagent_get_status_code", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int misagent_get_status_code(MisagentClientHandle client);
     }
 }

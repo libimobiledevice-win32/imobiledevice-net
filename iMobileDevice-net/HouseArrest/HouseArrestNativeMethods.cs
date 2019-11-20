@@ -27,7 +27,12 @@ namespace iMobileDevice.HouseArrest
     public partial class HouseArrestNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static HouseArrestNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the house_arrest service on the specified device.
@@ -46,7 +51,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_SUCCESS on success, HOUSE_ARREST_E_INVALID_ARG when
         /// client is NULL, or an HOUSE_ARREST_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out HouseArrestClientHandle client);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_SUCCESS on success, or an HOUSE_ARREST_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_client_start_service(iDeviceHandle device, out HouseArrestClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -88,7 +93,7 @@ namespace iMobileDevice.HouseArrest
         /// a proper cleanup. Do not call this function if you still need to
         /// perform AFC operations since it will close the connection.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_client_free(System.IntPtr client);
         
         /// <summary>
@@ -112,7 +117,7 @@ namespace iMobileDevice.HouseArrest
         /// that the request was successful. To check for success or failure you
         /// need to call house_arrest_get_result().
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_send_request", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_send_request", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_send_request(HouseArrestClientHandle client, PlistHandle dict);
         
         /// <summary>
@@ -140,7 +145,7 @@ namespace iMobileDevice.HouseArrest
         /// that the command was successful. To check for success or failure you
         /// need to call house_arrest_get_result().
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_send_command", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_send_command", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_send_command(HouseArrestClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string command, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string appid);
         
         /// <summary>
@@ -161,7 +166,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_INVALID_MODE if the client is not in the correct mode,
         /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="house_arrest_get_result", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="house_arrest_get_result", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HouseArrestError house_arrest_get_result(HouseArrestClientHandle client, out PlistHandle dict);
         
         /// <summary>
@@ -188,7 +193,7 @@ namespace iMobileDevice.HouseArrest
         /// Only call house_arrest_client_free() if all AFC operations have
         /// completed since it will close the connection.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.libraryName, EntryPoint="afc_client_new_from_house_arrest_client", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HouseArrestNativeMethods.LibraryName, EntryPoint="afc_client_new_from_house_arrest_client", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AfcError afc_client_new_from_house_arrest_client(HouseArrestClientHandle client, out AfcClientHandle afcClient);
     }
 }

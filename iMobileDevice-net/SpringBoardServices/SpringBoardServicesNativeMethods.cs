@@ -27,7 +27,12 @@ namespace iMobileDevice.SpringBoardServices
     public partial class SpringBoardServicesNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static SpringBoardServicesNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the springboardservices service on the specified device.
@@ -46,7 +51,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when
         /// client is NULL, or an SBSERVICES_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out SpringBoardServicesClientHandle client);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, or an SBSERVICES_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_client_start_service(iDeviceHandle device, out SpringBoardServicesClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -82,7 +87,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when
         /// client is NULL, or an SBSERVICES_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_client_free(System.IntPtr client);
         
         /// <summary>
@@ -105,7 +110,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when
         /// client or state is invalid, or an SBSERVICES_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_get_icon_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_get_icon_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_get_icon_state(SpringBoardServicesClientHandle client, out PlistHandle state, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string formatVersion);
         
         /// <summary>
@@ -121,7 +126,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when
         /// client or newstate is NULL, or an SBSERVICES_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_set_icon_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_set_icon_state", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_set_icon_state(SpringBoardServicesClientHandle client, PlistHandle newstate);
         
         /// <summary>
@@ -147,7 +152,7 @@ namespace iMobileDevice.SpringBoardServices
         /// client, bundleId, or pngdata are invalid, or an SBSERVICES_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_get_icon_pngdata", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_get_icon_pngdata", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_get_icon_pngdata(SpringBoardServicesClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string bundleid, ref System.IntPtr pngdata, ref ulong pngsize);
         
         /// <summary>
@@ -163,7 +168,7 @@ namespace iMobileDevice.SpringBoardServices
         /// SBSERVICES_E_SUCCESS on success, SBSERVICES_E_INVALID_ARG when
         /// client or state is invalid, or an SBSERVICES_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_get_interface_orientation", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_get_interface_orientation", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_get_interface_orientation(SpringBoardServicesClientHandle client, ref SpringBoardServicesInterfaceOrientation interfaceOrientation);
         
         /// <summary>
@@ -186,7 +191,7 @@ namespace iMobileDevice.SpringBoardServices
         /// client or pngdata are invalid, or an SBSERVICES_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.libraryName, EntryPoint="sbservices_get_home_screen_wallpaper_pngdata", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SpringBoardServicesNativeMethods.LibraryName, EntryPoint="sbservices_get_home_screen_wallpaper_pngdata", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SpringBoardServicesError sbservices_get_home_screen_wallpaper_pngdata(SpringBoardServicesClientHandle client, ref System.IntPtr pngdata, ref ulong pngsize);
     }
 }

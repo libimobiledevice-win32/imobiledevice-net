@@ -27,7 +27,12 @@ namespace iMobileDevice.iDevice
     public partial class iDeviceNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static iDeviceNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Sets the callback to invoke when writing out debug messages. If this callback is set, messages
@@ -36,7 +41,7 @@ namespace iMobileDevice.iDevice
         /// <param name="callback">
         /// The callback which will receive the debug messages. Set to NULL to redirect to stdout.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_set_debug_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_set_debug_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void idevice_set_debug_callback(iDeviceDebugCallBack callback);
         
         /// <summary>
@@ -47,7 +52,7 @@ namespace iMobileDevice.iDevice
         /// When set to 2, the values of buffers being sent across the wire are printed out as well, this results in very
         /// verbose output.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void idevice_set_debug_level(int level);
         
         /// <summary>
@@ -64,7 +69,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_event_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_event_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_event_subscribe(iDeviceEventCallBack callback, System.IntPtr userData);
         
         /// <summary>
@@ -74,7 +79,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_event_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_event_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_event_unsubscribe();
         
         /// <summary>
@@ -90,7 +95,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_get_device_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_get_device_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_get_device_list(out System.IntPtr devices, ref int count);
         
         /// <summary>
@@ -102,7 +107,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// Always returnes IDEVICE_E_SUCCESS.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_device_list_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_device_list_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_device_list_free(System.IntPtr devices);
         
         /// <summary>
@@ -123,7 +128,7 @@ namespace iMobileDevice.iDevice
         /// The resulting idevice_t structure has to be freed with
         /// idevice_free() if it is no longer used.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_new(out iDeviceHandle device, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string udid);
         
         /// <summary>
@@ -134,7 +139,7 @@ namespace iMobileDevice.iDevice
         /// <param name="device">
         /// idevice_t to free.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_free(System.IntPtr device);
         
         /// <summary>
@@ -153,7 +158,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connect(iDeviceHandle device, ushort port, out iDeviceConnectionHandle connection);
         
         /// <summary>
@@ -165,7 +170,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_disconnect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_disconnect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_disconnect(System.IntPtr connection);
         
         /// <summary>
@@ -187,7 +192,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_send(iDeviceConnectionHandle connection, byte[] data, uint len, ref uint sentBytes);
         
         /// <summary>
@@ -215,7 +220,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_receive_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_receive_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_receive_timeout(iDeviceConnectionHandle connection, byte[] data, uint len, ref uint recvBytes, uint timeout);
         
         /// <summary>
@@ -239,7 +244,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_receive(iDeviceConnectionHandle connection, byte[] data, uint len, ref uint recvBytes);
         
         /// <summary>
@@ -253,7 +258,7 @@ namespace iMobileDevice.iDevice
         /// is NULL or connection->ssl_data is non-NULL, or IDEVICE_E_SSL_ERROR when
         /// SSL initialization, setup, or handshake fails.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_enable_ssl(iDeviceConnectionHandle connection);
         
         /// <summary>
@@ -267,7 +272,7 @@ namespace iMobileDevice.iDevice
         /// is NULL. This function also returns IDEVICE_E_SUCCESS when SSL is not
         /// enabled and does no further error checking on cleanup.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_disable_ssl(iDeviceConnectionHandle connection);
         
         /// <summary>
@@ -282,19 +287,19 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_connection_get_fd", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_connection_get_fd", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_connection_get_fd(iDeviceConnectionHandle connection, ref int fd);
         
         /// <summary>
         /// Gets the handle or (usbmux device id) of the device.
         /// </summary>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_get_handle", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_get_handle", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_get_handle(iDeviceHandle device, ref uint handle);
         
         /// <summary>
         /// Gets the unique id for the device.
         /// </summary>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_get_udid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_get_udid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_get_udid(iDeviceHandle device, out System.IntPtr udid);
         
         /// <summary>
@@ -307,7 +312,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_set_socket_type(int value);
         
         /// <summary>
@@ -320,7 +325,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_get_socket_type(ref int value);
         
         /// <summary>
@@ -336,7 +341,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_set_tcp_endpoint([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string host, ushort port);
         
         /// <summary>
@@ -353,7 +358,7 @@ namespace iMobileDevice.iDevice
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.libraryName, EntryPoint="idevice_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(iDeviceNativeMethods.LibraryName, EntryPoint="idevice_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern iDeviceError idevice_get_tcp_endpoint(out System.IntPtr host, ref ushort port);
     }
 }

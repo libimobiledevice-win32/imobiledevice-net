@@ -27,7 +27,12 @@ namespace iMobileDevice.MobileBackup2
     public partial class MobileBackup2NativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MobileBackup2NativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the mobilebackup2 service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.MobileBackup2
         /// if one or more parameter is invalid, or MOBILEBACKUP2_E_BAD_VERSION
         /// if the mobilebackup2 version on the device is newer.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileBackup2ClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.MobileBackup2
         /// MOBILEBACKUP2_E_SUCCESS on success, or an MOBILEBACKUP2_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_client_start_service(iDeviceHandle device, out MobileBackup2ClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.MobileBackup2
         /// MOBILEBACKUP2_E_SUCCESS on success, or MOBILEBACKUP2_E_INVALID_ARG
         /// if client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_client_free(System.IntPtr client);
         
         /// <summary>
@@ -103,7 +108,7 @@ namespace iMobileDevice.MobileBackup2
         /// will be inserted into this plist before sending it. This parameter
         /// can be NULL if message is not NULL.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_send_message", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_send_message", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_send_message(MobileBackup2ClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string message, PlistHandle options);
         
         /// <summary>
@@ -130,7 +135,7 @@ namespace iMobileDevice.MobileBackup2
         /// or is not a DL* message plist, or MOBILEBACKUP2_E_MUX_ERROR if
         /// receiving from the device failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_receive_message", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_receive_message", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_receive_message(MobileBackup2ClientHandle client, out PlistHandle msgPlist, out System.IntPtr dlmessage);
         
         /// <summary>
@@ -158,7 +163,7 @@ namespace iMobileDevice.MobileBackup2
         /// requested length has been sent. The fourth parameter is required and
         /// must be checked to ensure if the whole data has been sent.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_send_raw", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_send_raw", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_send_raw(MobileBackup2ClientHandle client, byte[] data, uint length, ref uint bytes);
         
         /// <summary>
@@ -188,7 +193,7 @@ namespace iMobileDevice.MobileBackup2
         /// The fourth parameter is required and must be checked to know how
         /// many bytes were actually received.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_receive_raw", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_receive_raw", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_receive_raw(MobileBackup2ClientHandle client, byte[] data, uint length, ref uint bytes);
         
         /// <summary>
@@ -210,7 +215,7 @@ namespace iMobileDevice.MobileBackup2
         /// MOBILEBACKUP2_E_SUCCESS on success, or a MOBILEBACKUP2_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_version_exchange", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_version_exchange", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_version_exchange(MobileBackup2ClientHandle client, System.IntPtr localVersions, sbyte count, ref double remoteVersion);
         
         /// <summary>
@@ -233,7 +238,7 @@ namespace iMobileDevice.MobileBackup2
         /// MOBILEBACKUP2_E_SUCCESS if the request was successfully sent,
         /// or a MOBILEBACKUP2_E_* error value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_send_request", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_send_request", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_send_request(MobileBackup2ClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string request, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string targetIdentifier, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string sourceIdentifier, PlistHandle options);
         
         /// <summary>
@@ -256,7 +261,7 @@ namespace iMobileDevice.MobileBackup2
         /// MOBILEBACKUP2_E_SUCCESS on success, MOBILEBACKUP2_E_INVALID_ARG
         /// if client is invalid, or another MOBILEBACKUP2_E_* otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.libraryName, EntryPoint="mobilebackup2_send_status_response", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackup2NativeMethods.LibraryName, EntryPoint="mobilebackup2_send_status_response", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackup2Error mobilebackup2_send_status_response(MobileBackup2ClientHandle client, int statusCode, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string status1, PlistHandle status2);
     }
 }

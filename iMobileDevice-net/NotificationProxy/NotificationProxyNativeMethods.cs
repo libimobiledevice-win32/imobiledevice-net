@@ -27,7 +27,12 @@ namespace iMobileDevice.NotificationProxy
     public partial class NotificationProxyNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static NotificationProxyNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the notification_proxy on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.NotificationProxy
         /// or NP_E_CONN_FAILED when the connection to the device could not be
         /// established.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out NotificationProxyClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.NotificationProxy
         /// NP_E_SUCCESS on success, or an NP_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_client_start_service(iDeviceHandle device, out NotificationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -82,7 +87,7 @@ namespace iMobileDevice.NotificationProxy
         /// <returns>
         /// NP_E_SUCCESS on success, or NP_E_INVALID_ARG when client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_client_free(System.IntPtr client);
         
         /// <summary>
@@ -97,7 +102,7 @@ namespace iMobileDevice.NotificationProxy
         /// <returns>
         /// NP_E_SUCCESS on success, or an error returned by np_plist_send
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_post_notification", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_post_notification", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_post_notification(NotificationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string notification);
         
         /// <summary>
@@ -113,7 +118,7 @@ namespace iMobileDevice.NotificationProxy
         /// NP_E_SUCCESS on success, NP_E_INVALID_ARG when client or
         /// notification are NULL, or an error returned by np_plist_send.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_observe_notification", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_observe_notification", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_observe_notification(NotificationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string notification);
         
         /// <summary>
@@ -131,7 +136,7 @@ namespace iMobileDevice.NotificationProxy
         /// NP_E_SUCCESS on success, NP_E_INVALID_ARG when client is null,
         /// or an error returned by np_observe_notification.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_observe_notifications", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_observe_notifications", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_observe_notifications(NotificationProxyClientHandle client, out System.IntPtr notificationSpec);
         
         /// <summary>
@@ -163,7 +168,7 @@ namespace iMobileDevice.NotificationProxy
         /// Only one callback function can be registered at the same time;
         /// any previously set callback function will be removed automatically.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.libraryName, EntryPoint="np_set_notify_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(NotificationProxyNativeMethods.LibraryName, EntryPoint="np_set_notify_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern NotificationProxyError np_set_notify_callback(NotificationProxyClientHandle client, NotificationProxyNotifyCallBack notifyCallBack, System.IntPtr userdata);
     }
 }

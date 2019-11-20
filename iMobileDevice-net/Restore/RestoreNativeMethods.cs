@@ -27,7 +27,12 @@ namespace iMobileDevice.Restore
     public partial class RestoreNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static RestoreNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Creates a new restored client for the device.
@@ -44,7 +49,7 @@ namespace iMobileDevice.Restore
         /// <returns>
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_client_new(iDeviceHandle device, out RestoreClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -57,7 +62,7 @@ namespace iMobileDevice.Restore
         /// <returns>
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_client_free(System.IntPtr client);
         
         /// <summary>
@@ -76,7 +81,7 @@ namespace iMobileDevice.Restore
         /// <returns>
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_query_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_query_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_query_type(RestoreClientHandle client, out System.IntPtr type, ref ulong version);
         
         /// <summary>
@@ -94,7 +99,7 @@ namespace iMobileDevice.Restore
         /// <returns>
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL, RESTORE_E_PLIST_ERROR if value for key can't be found
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_query_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_query_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_query_value(RestoreClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, out PlistHandle value);
         
         /// <summary>
@@ -112,7 +117,7 @@ namespace iMobileDevice.Restore
         /// <returns>
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL, RESTORE_E_PLIST_ERROR if value for key can't be found
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_get_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_get_value", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_get_value(RestoreClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key, out PlistHandle value);
         
         /// <summary>
@@ -132,7 +137,7 @@ namespace iMobileDevice.Restore
         /// This function is low-level and should only be used if you need to send
         /// a new type of message.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_send(RestoreClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -148,7 +153,7 @@ namespace iMobileDevice.Restore
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client or
         /// plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_receive(RestoreClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -161,7 +166,7 @@ namespace iMobileDevice.Restore
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG when client is NULL,
         /// RESTORE_E_PLIST_ERROR if the device did not acknowledge the request
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_goodbye", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_goodbye", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_goodbye(RestoreClientHandle client);
         
         /// <summary>
@@ -180,7 +185,7 @@ namespace iMobileDevice.Restore
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG if a parameter
         /// is NULL, RESTORE_E_START_RESTORE_FAILED if the request fails
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_start_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_start_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_start_restore(RestoreClientHandle client, PlistHandle options, ulong version);
         
         /// <summary>
@@ -193,7 +198,7 @@ namespace iMobileDevice.Restore
         /// RESTORE_E_SUCCESS on success, RESTORE_E_INVALID_ARG if a parameter
         /// is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_reboot", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_reboot", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern RestoreError restored_reboot(RestoreClientHandle client);
         
         /// <summary>
@@ -205,7 +210,7 @@ namespace iMobileDevice.Restore
         /// <param name="label">
         /// The label to set or NULL to disable sending a label
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.libraryName, EntryPoint="restored_client_set_label", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(RestoreNativeMethods.LibraryName, EntryPoint="restored_client_set_label", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void restored_client_set_label(RestoreClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
     }
 }
