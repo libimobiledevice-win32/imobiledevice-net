@@ -4,10 +4,9 @@
 
 namespace iMobileDevice.Generator
 {
+    using ClangSharp.Interop;
     using System;
     using System.CodeDom;
-    using Core.Clang;
-    using iMobileDevice.Generator.Clang;
 
     internal sealed class EnumVisitor
     {
@@ -18,19 +17,19 @@ namespace iMobileDevice.Generator
             this.generator = generator;
         }
 
-        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
+        public unsafe CXChildVisitResult Visit(CXCursor cursor, CXCursor parent)
         {
-            if (!cursor.GetLocation().IsFromMainFile())
+            if (!cursor.Location.IsFromMainFile)
             {
-                return ChildVisitResult.Continue;
+                return CXChildVisitResult.CXChildVisit_Continue;
             }
 
-            CursorKind curKind = cursor.Kind;
+            CXCursorKind curKind = cursor.Kind;
 
-            if (curKind == CursorKind.EnumDecl)
+            if (curKind == CXCursorKind.CXCursor_EnumDecl)
             {
-                var nativeName = cursor.GetSpelling();
-                var type = cursor.GetEnumDeclIntegerType().ToClrType();
+                var nativeName = cursor.Spelling.CString;
+                var type = cursor.EnumDecl_IntegerType.ToClrType();
                 var enumComment = this.GetComment(cursor, forType: true);
 
                 // enumName can be empty because of typedef enum { .. } enumName;
@@ -39,8 +38,8 @@ namespace iMobileDevice.Generator
                 if (string.IsNullOrEmpty(nativeName))
                 {
                     var forwardDeclaringVisitor = new ForwardDeclarationVisitor(cursor, skipSystemHeaderCheck: true);
-                    forwardDeclaringVisitor.VisitChildren(cursor.GetLexicalParent());
-                    nativeName = forwardDeclaringVisitor.ForwardDeclarationCursor.GetSpelling();
+                    cursor.LexicalParent.VisitChildren(forwardDeclaringVisitor.Visit, new CXClientData());
+                    nativeName = forwardDeclaringVisitor.ForwardDeclarationCXCursor.Spelling.CString;
 
                     if (string.IsNullOrEmpty(nativeName))
                     {
@@ -53,7 +52,7 @@ namespace iMobileDevice.Generator
                 // if we've printed these previously, skip them
                 if (this.generator.NameMapping.ContainsKey(nativeName))
                 {
-                    return ChildVisitResult.Continue;
+                    return CXChildVisitResult.CXChildVisit_Continue;
                 }
 
                 CodeTypeDeclaration enumDeclaration = new CodeTypeDeclaration();
@@ -68,14 +67,14 @@ namespace iMobileDevice.Generator
                 }
 
                 // visit all the enum values
-                DelegatingCursorVisitor visitor = new DelegatingCursorVisitor(
+                DelegatingCXCursorVisitor visitor = new DelegatingCXCursorVisitor(
                     (c, vistor) =>
                     {
                         var field =
                             new CodeMemberField()
                             {
-                                Name = NameConversions.ToClrName(c.GetSpelling(), NameConversion.Field),
-                                InitExpression = new CodePrimitiveExpression(c.GetEnumConstantDeclValue())
+                                Name = NameConversions.ToClrName(c.Spelling.CString, NameConversion.Field),
+                                InitExpression = new CodePrimitiveExpression(c.EnumConstantDeclValue)
                             };
 
                         var fieldComment = this.GetComment(c, forType: true);
@@ -85,49 +84,49 @@ namespace iMobileDevice.Generator
                         }
 
                         enumDeclaration.Members.Add(field);
-                        return ChildVisitResult.Continue;
+                        return CXChildVisitResult.CXChildVisit_Continue;
                     });
-                visitor.VisitChildren(cursor);
+                cursor.VisitChildren(visitor.Visit, new CXClientData());
 
                 this.generator.AddType(nativeName, new CodeDomGeneratedType(enumDeclaration));
             }
 
-            return ChildVisitResult.Recurse;
+            return CXChildVisitResult.CXChildVisit_Recurse;
         }
 
-        private CodeCommentStatement GetComment(Cursor cursor, bool forType)
+        private CodeCommentStatement GetComment(CXCursor cursor, bool forType)
         {
             // Standard hierarchy:
             // - Full Comment
             // - Paragraph Comment
             // - Text Comment
-            var fullComment = cursor.GetParsedComment();
+            var fullComment = cursor.ParsedComment;
             var fullCommentKind = fullComment.Kind;
-            var fullCommentChildren = fullComment.ChildrenCount;
+            var fullCommentChildren = fullComment.NumChildren;
 
-            if (fullCommentKind != CommentKind.FullComment || fullCommentChildren != 1)
+            if (fullCommentKind != CXCommentKind.CXComment_FullComment || fullCommentChildren != 1)
             {
                 return null;
             }
 
-            var paragraphComment = fullComment.GetChildAt(0);
+            var paragraphComment = fullComment.GetChild(0);
             var paragraphCommentKind = paragraphComment.Kind;
-            var paragraphCommentChildren = paragraphComment.ChildrenCount;
+            var paragraphCommentChildren = paragraphComment.NumChildren;
 
-            if (paragraphCommentKind != CommentKind.Paragraph || paragraphCommentChildren != 1)
+            if (paragraphCommentKind != CXCommentKind.CXComment_Paragraph || paragraphCommentChildren != 1)
             {
                 return null;
             }
 
-            var textComment = paragraphComment.GetChildAt(0);
+            var textComment = paragraphComment.GetChild(0);
             var textCommentKind = textComment.Kind;
 
-            if (textCommentKind != CommentKind.Text)
+            if (textCommentKind != CXCommentKind.CXComment_Text)
             {
                 return null;
             }
 
-            var text = textComment.GetText();
+            var text = textComment.TextComment_Text.CString;
 
             if (string.IsNullOrWhiteSpace(text))
             {

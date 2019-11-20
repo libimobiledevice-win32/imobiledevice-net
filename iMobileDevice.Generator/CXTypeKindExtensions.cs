@@ -4,22 +4,22 @@
 
 namespace iMobileDevice.Generator
 {
+    using ClangSharp.Interop;
     using System;
     using System.CodeDom;
-    using Core.Clang;
 
     internal static class TypeKindExtensions
     {
-        public static CodeTypeReference ToCodeTypeReference(this TypeInfo type, Cursor cursor, ModuleGenerator generator)
+        public static CodeTypeReference ToCodeTypeReference(this CXType type, CXCursor cursor, ModuleGenerator generator)
         {
-            var nativeName = type.GetSpelling();
-            var canonical = type.GetCanonicalType();
+            var nativeName = type.Spelling.CString;
+            var canonical = type.CanonicalType;
 
             // Special case: function prototypes embedded in the function declaration
-            if (canonical.Kind == TypeKind.FunctionProto)
+            if (canonical.kind == CXTypeKind.CXType_FunctionProto)
             {
                 // Generate the delegate and add it to the list of members
-                nativeName = cursor.GetSpelling();
+                nativeName = cursor.Spelling.CString;
                 var delegateType = type.ToDelegate(nativeName, cursor, generator);
                 generator.AddType(nativeName, new CodeDomGeneratedType(delegateType));
             }
@@ -39,59 +39,59 @@ namespace iMobileDevice.Generator
             }
         }
 
-        public static Type ToClrType(this TypeInfo type)
+        public static Type ToClrType(this CXType type)
         {
-            var canonical = type.GetCanonicalType();
+            var canonical = type.CanonicalType;
 
-            switch (canonical.Kind)
+            switch (canonical.kind)
             {
-                case TypeKind.Bool:
+                case CXTypeKind.CXType_Bool:
                     return typeof(bool);
 
-                case TypeKind.UChar:
-                case TypeKind.Char_U:
+                case CXTypeKind.CXType_UChar:
+                case CXTypeKind.CXType_Char_U:
                     return typeof(char);
 
-                case TypeKind.SChar:
-                case TypeKind.Char_S:
+                case CXTypeKind.CXType_SChar:
+                case CXTypeKind.CXType_Char_S:
                     return typeof(sbyte);
 
-                case TypeKind.UShort:
+                case CXTypeKind.CXType_UShort:
                     return typeof(ushort);
 
-                case TypeKind.Short:
+                case CXTypeKind.CXType_Short:
                     return typeof(short);
 
-                case TypeKind.Float:
+                case CXTypeKind.CXType_Float:
                     return typeof(float);
 
-                case TypeKind.Double:
+                case CXTypeKind.CXType_Double:
                     return typeof(double);
 
-                case TypeKind.Int:
-                case TypeKind.Enum:
+                case CXTypeKind.CXType_Int:
+                case CXTypeKind.CXType_Enum:
                     return typeof(int);
 
-                case TypeKind.UInt:
+                case CXTypeKind.CXType_UInt:
                     return typeof(uint);
 
-                case TypeKind.Pointer:
-                case TypeKind.IncompleteArray:
+                case CXTypeKind.CXType_Pointer:
+                case CXTypeKind.CXType_IncompleteArray:
                     return typeof(IntPtr);
 
-                case TypeKind.Long:
+                case CXTypeKind.CXType_Long:
                     return typeof(int);
 
-                case TypeKind.ULong:
+                case CXTypeKind.CXType_ULong:
                     return typeof(int);
 
-                case TypeKind.LongLong:
+                case CXTypeKind.CXType_LongLong:
                     return typeof(long);
 
-                case TypeKind.ULongLong:
+                case CXTypeKind.CXType_ULongLong:
                     return typeof(ulong);
 
-                case TypeKind.Void:
+                case CXTypeKind.CXType_Void:
                     return typeof(void);
 
                 default:

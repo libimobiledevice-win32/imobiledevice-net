@@ -4,11 +4,9 @@
 
 namespace iMobileDevice.Generator
 {
-    using System;
+    using ClangSharp.Interop;
     using System.CodeDom;
     using System.Linq;
-    using System.Runtime.InteropServices;
-    using Core.Clang;
 
     internal class TypeDefVisitor
     {
@@ -19,37 +17,37 @@ namespace iMobileDevice.Generator
             this.generator = generator;
         }
 
-        public ChildVisitResult Visit(Cursor cursor, Cursor parent)
+        public CXChildVisitResult Visit(CXCursor cursor, CXCursor parent)
         {
-            if (!cursor.GetLocation().IsFromMainFile())
+            if (!cursor.Location.IsFromMainFile)
             {
-                return ChildVisitResult.Continue;
+                return CXChildVisitResult.CXChildVisit_Continue;
             }
 
-            CursorKind curKind = cursor.Kind;
-            if (curKind == CursorKind.TypedefDecl)
+            CXCursorKind curKind = cursor.Kind;
+            if (curKind == CXCursorKind.CXCursor_TypedefDecl)
             {
-                var nativeName = cursor.GetSpelling();
+                var nativeName = cursor.Spelling.CString;
                 var clrName = NameConversions.ToClrName(nativeName, NameConversion.Type);
 
                 // if we've printed these previously, skip them
                 if (this.generator.NameMapping.ContainsKey(nativeName))
                 {
-                    return ChildVisitResult.Continue;
+                    return CXChildVisitResult.CXChildVisit_Continue;
                 }
 
-                TypeInfo type = cursor.GetTypedefDeclUnderlyingType().GetCanonicalType();
+                CXType type = cursor.TypedefDeclUnderlyingType.CanonicalType;
 
                 // we handle enums and records in struct and enum visitors with forward declarations also
-                if (type.Kind == TypeKind.Record || type.Kind == TypeKind.Enum)
+                if (type.kind == CXTypeKind.CXType_Record|| type.kind == CXTypeKind.CXType_Enum)
                 {
-                    return ChildVisitResult.Continue;
+                    return CXChildVisitResult.CXChildVisit_Continue;
                 }
 
-                if (type.Kind == TypeKind.Pointer)
+                if (type.kind == CXTypeKind.CXType_Pointer)
                 {
-                    var pointee = type.GetPointeeType();
-                    if (pointee.Kind == TypeKind.Record || pointee.Kind == TypeKind.Void)
+                    var pointee = type.PointeeType;
+                    if (pointee.kind == CXTypeKind.CXType_Record|| pointee.kind == CXTypeKind.CXType_Void)
                     {
                         var types = Handles.CreateSafeHandle(clrName, this.generator).ToArray();
                         this.generator.AddType(nativeName, types[0]);
@@ -59,24 +57,24 @@ namespace iMobileDevice.Generator
                             this.generator.AddType(types[i].Name, types[i]);
                         }
 
-                        return ChildVisitResult.Continue;
+                        return CXChildVisitResult.CXChildVisit_Continue;
                     }
 
-                    if (pointee.Kind == TypeKind.FunctionProto)
+                    if (pointee.kind == CXTypeKind.CXType_FunctionProto)
                     {
-                        var functionType = cursor.GetTypedefDeclUnderlyingType();
-                        var pt = functionType.GetPointeeType();
+                        var functionType = cursor.TypedefDeclUnderlyingType;
+                        var pt = functionType.PointeeType;
                         CodeTypeDelegate delegateType = pt.ToDelegate(nativeName, cursor, this.generator);
                         this.generator.AddType(nativeName, new CodeDomGeneratedType(delegateType));
 
-                        return ChildVisitResult.Continue;
+                        return CXChildVisitResult.CXChildVisit_Continue;
                     }
                 }
 
-                return ChildVisitResult.Continue;
+                return CXChildVisitResult.CXChildVisit_Continue;
             }
 
-            return ChildVisitResult.Recurse;
+            return CXChildVisitResult.CXChildVisit_Recurse;
         }
     }
 }
