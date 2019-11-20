@@ -108,7 +108,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_INVALID_ARG if client or dict is invalid,
         /// HOUSE_ARREST_E_PLIST_ERROR if dict is not a plist of type PLIST_DICT,
         /// HOUSE_ARREST_E_INVALID_MODE if the client is not in the correct mode,
-        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occurred.
+        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occured.
         /// </returns>
         /// <remarks>
         /// If this function returns HOUSE_ARREST_E_SUCCESS it does not mean
@@ -135,7 +135,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_SUCCESS if the command was successfully sent,
         /// HOUSE_ARREST_E_INVALID_ARG if client, command, or appid is invalid,
         /// HOUSE_ARREST_E_INVALID_MODE if the client is not in the correct mode,
-        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occurred.
+        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occured.
         /// </returns>
         /// <remarks>
         /// If this function returns HOUSE_ARREST_E_SUCCESS it does not mean
@@ -160,7 +160,7 @@ namespace iMobileDevice.HouseArrest
         /// HOUSE_ARREST_E_SUCCESS if a result plist was retrieved,
         /// HOUSE_ARREST_E_INVALID_ARG if client is invalid,
         /// HOUSE_ARREST_E_INVALID_MODE if the client is not in the correct mode,
-        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occurred.
+        /// or HOUSE_ARREST_E_CONN_FAILED if a connection error occured.
         /// </returns>
         HouseArrestError house_arrest_get_result(HouseArrestClientHandle client, out PlistHandle dict);
         

@@ -30,69 +30,83 @@ namespace iMobileDevice.Usbmuxd
         const string libraryName = "usbmuxd";
         
         /// <summary>
-        /// Subscribe a callback function to be called upon device add/remove events.
-        /// This method can be called multiple times to register multiple callbacks
-        /// since every subscription will have its own context (returned in the
-        /// first parameter).
+        /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
         /// </summary>
-        /// <param name="context">
-        /// A pointer to a usbmuxd_subscription_context_t that will be
-        /// set upon creation of the subscription. The returned context must be
-        /// passed to usbmuxd_events_unsubscribe() to unsubscribe the callback.
-        /// </param>
-        /// <param name="callback">
-        /// A callback function that is executed when an event occurs.
-        /// </param>
-        /// <param name="user_data">
-        /// Custom data passed on to the callback function. The data
-        /// needs to be kept available until the callback function is unsubscribed.
+        /// <param name="value">
+        /// SOCKET_TYPE_UNIX or SOCKET_TYPE_TCP
         /// </param>
         /// <returns>
-        /// 0 on success or a negative errno value.
+        /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_events_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_events_subscribe(out UsbmuxdSubscriptionContextHandle context, UsbmuxdEventCallBack callback, System.IntPtr userData);
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_set_socket_type(int value);
         
         /// <summary>
-        /// Unsubscribe callback function
+        /// Gets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
+        /// to usbmuxd.
         /// </summary>
-        /// <param name="context">
-        /// A valid context as returned from usbmuxd_events_subscribe().
+        /// <param name="value">
+        /// A pointer to an integer which will reveive the current socket type
         /// </param>
         /// <returns>
-        /// 0 on success or a negative errno value.
+        /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_events_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_events_unsubscribe(UsbmuxdSubscriptionContextHandle context);
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_get_socket_type(ref int value);
         
         /// <summary>
-        /// Subscribe a callback (deprecated)
+        /// Sets the TCP endpoint to which usbmuxd will connect if the socket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// The hostname or IP address to which to connect
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect.
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_set_tcp_endpoint([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string host, ushort port);
+        
+        /// <summary>
+        /// Gets the TCP endpoint to which usbmuxd will connect if th esocket type is set to
+        /// SOCKET_TYPE_TCP
+        /// </summary>
+        /// <param name="host">
+        /// A pointer which will be set to the hostname or IP address to which to connect.
+        /// The caller must free this string.
+        /// </param>
+        /// <param name="port">
+        /// The port to which to connect
+        /// </param>
+        /// <returns>
+        /// 0 on success or negative on error
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int usbmuxd_get_tcp_endpoint(out System.IntPtr host, ref ushort port);
+        
+        /// <summary>
+        /// Subscribe a callback function so that applications get to know about
+        /// device add/remove events.
         /// </summary>
         /// <param name="callback">
         /// A callback function that is executed when an event occurs.
-        /// </param>
-        /// <param name="user_data">
-        /// Custom data passed on to the callback function. The data
-        /// needs to be kept available until the callback function is unsubscribed.
         /// </param>
         /// <returns>
         /// 0 on success or negative on error.
         /// </returns>
-        /// <remarks>
-        /// Deprecated. Use usbmuxd_events_subscribe and usbmuxd_events_unsubscribe instead.
-        /// </remarks>
         [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_subscribe(UsbmuxdEventCallBack callback, System.IntPtr userData);
         
         /// <summary>
-        /// Unsubscribe callback (deprecated)
+        /// Unsubscribe callback.
         /// </summary>
         /// <returns>
-        /// 0 on success or negative on error.
+        /// only 0 for now.
         /// </returns>
-        /// <remarks>
-        /// Deprecated. Use usbmuxd_events_subscribe and usbmuxd_events_unsubscribe instead.
-        /// </remarks>
         [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_unsubscribe();
         
@@ -369,64 +383,5 @@ namespace iMobileDevice.Usbmuxd
         
         [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="libusbmuxd_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void libusbmuxd_set_debug_level(int level);
-        
-        /// <summary>
-        /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
-        /// to usbmuxd.
-        /// </summary>
-        /// <param name="value">
-        /// SOCKET_TYPE_UNIX or SOCKET_TYPE_TCP
-        /// </param>
-        /// <returns>
-        /// 0 on success or negative on error
-        /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_set_socket_type(int value);
-        
-        /// <summary>
-        /// Gets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
-        /// to usbmuxd.
-        /// </summary>
-        /// <param name="value">
-        /// A pointer to an integer which will reveive the current socket type
-        /// </param>
-        /// <returns>
-        /// 0 on success or negative on error
-        /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_get_socket_type(ref int value);
-        
-        /// <summary>
-        /// Sets the TCP endpoint to which usbmuxd will connect if the socket type is set to
-        /// SOCKET_TYPE_TCP
-        /// </summary>
-        /// <param name="host">
-        /// The hostname or IP address to which to connect
-        /// </param>
-        /// <param name="port">
-        /// The port to which to connect.
-        /// </param>
-        /// <returns>
-        /// 0 on success or negative on error
-        /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_set_tcp_endpoint([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string host, ushort port);
-        
-        /// <summary>
-        /// Gets the TCP endpoint to which usbmuxd will connect if th esocket type is set to
-        /// SOCKET_TYPE_TCP
-        /// </summary>
-        /// <param name="host">
-        /// A pointer which will be set to the hostname or IP address to which to connect.
-        /// The caller must free this string.
-        /// </param>
-        /// <param name="port">
-        /// The port to which to connect
-        /// </param>
-        /// <returns>
-        /// 0 on success or negative on error
-        /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern int usbmuxd_get_tcp_endpoint(out System.IntPtr host, ref ushort port);
     }
 }

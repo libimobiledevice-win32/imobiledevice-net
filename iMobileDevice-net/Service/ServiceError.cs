@@ -40,10 +40,6 @@ namespace iMobileDevice.Service
         
         StartServiceError = -5,
         
-        NotEnoughData = -6,
-        
-        Timeout = -7,
-        
         UnknownError = -256,
     }
 }

@@ -192,7 +192,7 @@ namespace iMobileDevice.Plist
         /// the node
         /// </param>
         /// <returns>
-        /// the node index or UINT_MAX if node index can't be determined
+        /// the node index
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_get_item_index", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern uint plist_array_get_item_index(PlistHandle node);
@@ -252,16 +252,6 @@ namespace iMobileDevice.Plist
         /// </param>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_remove_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void plist_array_remove_item(PlistHandle node, uint n);
-        
-        /// <summary>
-        /// Remove a node that is a child node of a #PLIST_ARRAY node.
-        /// node will be freed using #plist_free.
-        /// </summary>
-        /// <param name="node">
-        /// The node to be removed from its #PLIST_ARRAY parent.
-        /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_array_item_remove", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void plist_array_item_remove(PlistHandle node);
         
         /// <summary>
         /// Create an iterator of a #PLIST_ARRAY node.
@@ -340,10 +330,10 @@ namespace iMobileDevice.Plist
         public static extern void plist_dict_next_item(PlistHandle node, PlistDictIterHandle iter, out System.IntPtr key, out PlistHandle val);
         
         /// <summary>
-        /// Get key associated key to an item. Item must be member of a dictionary.
+        /// Get key associated to an item. Item must be member of a dictionary
         /// </summary>
         /// <param name="node">
-        /// the item
+        /// the node
         /// </param>
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
@@ -366,18 +356,6 @@ namespace iMobileDevice.Plist
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_get_item", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle plist_dict_get_item(PlistHandle node, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string key);
-        
-        /// <summary>
-        /// Get key node associated to an item. Item must be member of a dictionary.
-        /// </summary>
-        /// <param name="node">
-        /// the item
-        /// </param>
-        /// <returns>
-        /// the key node of the given item, or NULL.
-        /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_dict_item_get_key", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern PlistHandle plist_dict_item_get_key(PlistHandle node);
         
         /// <summary>
         /// Set item identified by key in a #PLIST_DICT node.
@@ -703,7 +681,7 @@ namespace iMobileDevice.Plist
         /// <summary>
         /// Frees the memory allocated by plist_to_xml
         /// </summary>
-        /// <param name="plist_bin">
+        /// <param name="plist_xml">
         /// The object allocated by plist_to_xml
         /// </param>
         [System.Runtime.InteropServices.DllImportAttribute(PlistNativeMethods.libraryName, EntryPoint="plist_to_xml_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]

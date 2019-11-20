@@ -228,7 +228,7 @@ namespace iMobileDevice.MobileBackup2
         /// </returns>
         /// <remarks>
         /// This function returns MOBILEBACKUP2_E_SUCCESS even if no data
-        /// has been received (unless a communication error occurred).
+        /// has been received (unless a communication error occured).
         /// The fourth parameter is required and must be checked to know how
         /// many bytes were actually received.
         /// </remarks>

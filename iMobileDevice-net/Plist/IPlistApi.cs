@@ -185,7 +185,7 @@ namespace iMobileDevice.Plist
         /// the node
         /// </param>
         /// <returns>
-        /// the node index or UINT_MAX if node index can't be determined
+        /// the node index
         /// </returns>
         uint plist_array_get_item_index(PlistHandle node);
         
@@ -240,15 +240,6 @@ namespace iMobileDevice.Plist
         /// The position to remove. Range is [0, array_size[. Assert if n is not in range.
         /// </param>
         void plist_array_remove_item(PlistHandle node, uint n);
-        
-        /// <summary>
-        /// Remove a node that is a child node of a #PLIST_ARRAY node.
-        /// node will be freed using #plist_free.
-        /// </summary>
-        /// <param name="node">
-        /// The node to be removed from its #PLIST_ARRAY parent.
-        /// </param>
-        void plist_array_item_remove(PlistHandle node);
         
         /// <summary>
         /// Create an iterator of a #PLIST_ARRAY node.
@@ -322,10 +313,10 @@ namespace iMobileDevice.Plist
         void plist_dict_next_item(PlistHandle node, PlistDictIterHandle iter, out string key, out PlistHandle val);
         
         /// <summary>
-        /// Get key associated key to an item. Item must be member of a dictionary.
+        /// Get key associated to an item. Item must be member of a dictionary
         /// </summary>
         /// <param name="node">
-        /// the item
+        /// the node
         /// </param>
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
@@ -346,17 +337,6 @@ namespace iMobileDevice.Plist
         /// the returned node.
         /// </returns>
         PlistHandle plist_dict_get_item(PlistHandle node, string key);
-        
-        /// <summary>
-        /// Get key node associated to an item. Item must be member of a dictionary.
-        /// </summary>
-        /// <param name="node">
-        /// the item
-        /// </param>
-        /// <returns>
-        /// the key node of the given item, or NULL.
-        /// </returns>
-        PlistHandle plist_dict_item_get_key(PlistHandle node);
         
         /// <summary>
         /// Set item identified by key in a #PLIST_DICT node.
@@ -659,7 +639,7 @@ namespace iMobileDevice.Plist
         /// <summary>
         /// Frees the memory allocated by plist_to_xml
         /// </summary>
-        /// <param name="plist_bin">
+        /// <param name="plist_xml">
         /// The object allocated by plist_to_xml
         /// </param>
         void plist_to_xml_free(System.IntPtr plistXml);

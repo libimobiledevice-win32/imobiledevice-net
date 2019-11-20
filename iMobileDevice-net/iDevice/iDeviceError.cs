@@ -40,8 +40,8 @@ namespace iMobileDevice.iDevice
         
         NotEnoughData = -4,
         
-        SslError = -6,
+        BadHeader = -5,
         
-        Timeout = -7,
+        SslError = -6,
     }
 }
