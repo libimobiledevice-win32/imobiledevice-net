@@ -398,7 +398,7 @@ namespace iMobileDevice.Lockdown
         LockdownError lockdownd_activate(LockdownClientHandle client, PlistHandle activationRecord);
         
         /// <summary>
-        /// Deactivates the device, returning it to the locked â€œActivate with iTunesâ€
+        /// Deactivates the device, returning it to the locked “Activate with iTunes”
         /// screen.
         /// </summary>
         /// <param name="client">
