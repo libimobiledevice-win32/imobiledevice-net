@@ -30,10 +30,10 @@ steps:
 - script: |
     mkdir packages
     cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.nupkg packages/
-    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTest.netcoreapp30/
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTests.netcoreapp30/
     ls packages/
 
-    cd iMobileDevice.IntegrationTest.netcoreapp30
+    cd iMobileDevice.IntegrationTests.netcoreapp30
 
     dotnet run    
   displayName: Run integration tests

@@ -142,7 +142,7 @@
       </Line>
       <LineText Include="%(Line.Text)" />
     </ItemGroup>
-    <WriteLinesToFile File="../iMobileDevice.IntegrationTest.netcoreapp20/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
+    <WriteLinesToFile File="../iMobileDevice.IntegrationTests.netcoreapp20/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
     <WriteLinesToFile File="../iMobileDevice.IntegrationTests.net45/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
   </Target>
 </Project>
