@@ -27,7 +27,12 @@ namespace iMobileDevice.WebInspector
     public partial class WebInspectorNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static WebInspectorNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the webinspector service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.WebInspector
         /// WEBINSPECTOR_E_SUCCESS on success, WEBINSPECTOR_E_INVALID_ARG when
         /// client is NULL, or an WEBINSPECTOR_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out WebInspectorClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.WebInspector
         /// WEBINSPECTOR_E_SUCCESS on success, or an WEBINSPECTOR_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_client_start_service(iDeviceHandle device, out WebInspectorClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.WebInspector
         /// WEBINSPECTOR_E_SUCCESS on success, WEBINSPECTOR_E_INVALID_ARG when
         /// client is NULL, or an WEBINSPECTOR_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_client_free(System.IntPtr client);
         
         /// <summary>
@@ -99,7 +104,7 @@ namespace iMobileDevice.WebInspector
         /// DIAGNOSTICS_RELAY_E_SUCCESS on success,
         /// DIAGNOSTICS_RELAY_E_INVALID_ARG when client or plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_send(WebInspectorClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -115,7 +120,7 @@ namespace iMobileDevice.WebInspector
         /// DIAGNOSTICS_RELAY_E_SUCCESS on success,
         /// DIAGNOSTICS_RELAY_E_INVALID_ARG when client or plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_receive(WebInspectorClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -139,7 +144,7 @@ namespace iMobileDevice.WebInspector
         /// communication error occurs, or WEBINSPECTOR_E_UNKNOWN_ERROR
         /// when an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.libraryName, EntryPoint="webinspector_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(WebInspectorNativeMethods.LibraryName, EntryPoint="webinspector_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WebInspectorError webinspector_receive_with_timeout(WebInspectorClientHandle client, out PlistHandle plist, uint timeoutMs);
     }
 }

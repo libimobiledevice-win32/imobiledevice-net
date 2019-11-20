@@ -27,7 +27,12 @@ namespace iMobileDevice.DebugServer
     public partial class DebugServerNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static DebugServerNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the debugserver service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success, DEBUGSERVER_E_INVALID_ARG when
         /// client is NULL, or an DEBUGSERVER_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out DebugServerClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success, or an DEBUGSERVER_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_start_service(iDeviceHandle device, out DebugServerClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success, DEBUGSERVER_E_INVALID_ARG when
         /// client is NULL, or an DEBUGSERVER_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_free(System.IntPtr client);
         
         /// <summary>
@@ -107,7 +112,7 @@ namespace iMobileDevice.DebugServer
         /// invalid, or DEBUGSERVER_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_send(DebugServerClientHandle client, byte[] data, uint size, ref uint sent);
         
         /// <summary>
@@ -135,7 +140,7 @@ namespace iMobileDevice.DebugServer
         /// occurs, or DEBUGSERVER_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_receive_with_timeout(DebugServerClientHandle client, byte[] data, uint size, ref uint received, uint timeout);
         
         /// <summary>
@@ -160,7 +165,7 @@ namespace iMobileDevice.DebugServer
         /// <remarks>
         /// The default read timeout is 10 seconds.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_receive(DebugServerClientHandle client, byte[] data, uint size, ref uint received);
         
         /// <summary>
@@ -179,7 +184,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client or command is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_send_command", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_send_command", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out System.IntPtr response);
         
         /// <summary>
@@ -195,7 +200,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_receive_response", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_receive_response", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out System.IntPtr response);
         
         /// <summary>
@@ -212,7 +217,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success, or an DEBUGSERVER_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_set_ack_mode", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_set_ack_mode", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_set_ack_mode(DebugServerClientHandle client, int enabled);
         
         /// <summary>
@@ -234,7 +239,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_set_argv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_set_argv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_set_argv(DebugServerClientHandle client, int argc, System.IntPtr argv, out System.IntPtr response);
         
         /// <summary>
@@ -253,7 +258,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_client_set_environment_hex_encoded", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_set_environment_hex_encoded", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_client_set_environment_hex_encoded(DebugServerClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string env, out System.IntPtr response);
         
         /// <summary>
@@ -275,7 +280,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when name or command is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_command_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_command_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_command_new([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string name, int argc, System.IntPtr argv, out DebugServerCommandHandle command);
         
         /// <summary>
@@ -288,7 +293,7 @@ namespace iMobileDevice.DebugServer
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when command is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_command_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_command_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DebugServerError debugserver_command_free(System.IntPtr command);
         
         /// <summary>
@@ -303,7 +308,7 @@ namespace iMobileDevice.DebugServer
         /// <param name="encoded_length">
         /// Length of the hex encoded string
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_encode_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_encode_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void debugserver_encode_string([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string buffer, out System.IntPtr encodedBuffer, ref uint encodedLength);
         
         /// <summary>
@@ -318,7 +323,7 @@ namespace iMobileDevice.DebugServer
         /// <param name="buffer">
         /// Decoded string to be freed by the caller
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.libraryName, EntryPoint="debugserver_decode_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_decode_string", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void debugserver_decode_string([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string encodedBuffer, uint encodedLength, out System.IntPtr buffer);
     }
 }

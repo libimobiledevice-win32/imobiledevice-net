@@ -27,7 +27,12 @@ namespace iMobileDevice.MobileSync
     public partial class MobileSyncNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MobileSyncNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the mobilesync service on the specified device.
@@ -46,7 +51,7 @@ namespace iMobileDevice.MobileSync
         /// Pointer that will be set to a newly allocated
         /// #mobilesync_client_t upon successful return.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileSyncClientHandle client);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.MobileSync
         /// MOBILESYNC_E_SUCCESS on success, or an MOBILESYNC_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_client_start_service(iDeviceHandle device, out MobileSyncClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -81,7 +86,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client to disconnect and free.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_client_free(System.IntPtr client);
         
         /// <summary>
@@ -96,7 +101,7 @@ namespace iMobileDevice.MobileSync
         /// <returns>
         /// an error code
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_receive(MobileSyncClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -115,7 +120,7 @@ namespace iMobileDevice.MobileSync
         /// This function is low-level and should only be used if you need to send
         /// a new type of message.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_send(MobileSyncClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -150,7 +155,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="error_description">
         /// A pointer to store an error message if reported by the device
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_start", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_start", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_start(MobileSyncClientHandle client, byte[] dataClass, MobileSyncAnchorsHandle anchors, ulong computerDataClassVersion, ref MobileSyncSyncType syncType, ref ulong deviceDataClassVersion, out System.IntPtr errorDescription);
         
         /// <summary>
@@ -164,7 +169,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="reason">
         /// The reason to supply to the device for cancelling
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_cancel", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_cancel", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_cancel(MobileSyncClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string reason);
         
         /// <summary>
@@ -178,7 +183,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_finish", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_finish", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_finish(MobileSyncClientHandle client);
         
         /// <summary>
@@ -191,7 +196,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_get_all_records_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_get_all_records_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_get_all_records_from_device(MobileSyncClientHandle client);
         
         /// <summary>
@@ -204,7 +209,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_get_changes_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_get_changes_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_get_changes_from_device(MobileSyncClientHandle client);
         
         /// <summary>
@@ -219,7 +224,7 @@ namespace iMobileDevice.MobileSync
         /// <remarks>
         /// The operation must be called after starting synchronization.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_clear_all_records_on_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_clear_all_records_on_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_clear_all_records_on_device(MobileSyncClientHandle client);
         
         /// <summary>
@@ -241,7 +246,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="actions">
         /// A pointer to additional flags the device is sending or NULL to ignore
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_receive_changes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_receive_changes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_receive_changes(MobileSyncClientHandle client, out PlistHandle entities, ref char isLastRecord, out PlistHandle actions);
         
         /// <summary>
@@ -252,7 +257,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_acknowledge_changes_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_acknowledge_changes_from_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_acknowledge_changes_from_device(MobileSyncClientHandle client);
         
         /// <summary>
@@ -272,7 +277,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="client">
         /// The mobilesync client
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_ready_to_send_changes_from_computer", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_ready_to_send_changes_from_computer", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_ready_to_send_changes_from_computer(MobileSyncClientHandle client);
         
         /// <summary>
@@ -295,7 +300,7 @@ namespace iMobileDevice.MobileSync
         /// Additional actions for the device created with mobilesync_actions_new()
         /// or NULL if no actions should be passed
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_send_changes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_send_changes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_send_changes(MobileSyncClientHandle client, PlistHandle entities, char isLastRecord, PlistHandle actions);
         
         /// <summary>
@@ -315,7 +320,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="mapping">
         /// A pointer to an array plist containing a dict of identifier remappings
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_remap_identifiers", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_remap_identifiers", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_remap_identifiers(MobileSyncClientHandle client, out PlistHandle mapping);
         
         /// <summary>
@@ -333,7 +338,7 @@ namespace iMobileDevice.MobileSync
         /// Pointer that will be set to a newly allocated
         /// #mobilesync_anchors_t struct. Must be freed using mobilesync_anchors_free().
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_anchors_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_anchors_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_anchors_new([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string deviceAnchor, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string computerAnchor, out MobileSyncAnchorsHandle anchor);
         
         /// <summary>
@@ -343,7 +348,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="anchors">
         /// The anchors to free.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_anchors_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_anchors_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileSyncError mobilesync_anchors_free(System.IntPtr anchors);
         
         /// <summary>
@@ -352,7 +357,7 @@ namespace iMobileDevice.MobileSync
         /// <returns>
         /// A new plist_t of type PLIST_DICT.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_actions_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_actions_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle mobilesync_actions_new();
         
         /// <summary>
@@ -371,7 +376,7 @@ namespace iMobileDevice.MobileSync
         /// integer to use as a boolean value indicating that the device should
         /// link submitted changes and report remapped identifiers.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_actions_add", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_actions_add", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void mobilesync_actions_add(PlistHandle actions);
         
         /// <summary>
@@ -380,7 +385,7 @@ namespace iMobileDevice.MobileSync
         /// <param name="actions">
         /// The actions plist to free. Does nothing if NULL is passed.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.libraryName, EntryPoint="mobilesync_actions_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileSyncNativeMethods.LibraryName, EntryPoint="mobilesync_actions_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void mobilesync_actions_free(PlistHandle actions);
     }
 }

@@ -27,7 +27,12 @@ namespace iMobileDevice.Usbmuxd
     public partial class UsbmuxdNativeMethods
     {
         
-        const string libraryName = "usbmuxd";
+        public const string LibraryName = "usbmuxd";
+        
+        static UsbmuxdNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Sets the socket type (Unix socket or TCP socket) libusbmuxd should use when connecting
@@ -39,7 +44,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_set_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_set_socket_type(int value);
         
         /// <summary>
@@ -52,7 +57,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_get_socket_type", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_get_socket_type(ref int value);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_set_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_set_tcp_endpoint([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string host, ushort port);
         
         /// <summary>
@@ -85,7 +90,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success or negative on error
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_get_tcp_endpoint", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_get_tcp_endpoint(out System.IntPtr host, ref ushort port);
         
         /// <summary>
@@ -98,7 +103,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success or negative on error.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_subscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_subscribe(UsbmuxdEventCallBack callback, System.IntPtr userData);
         
         /// <summary>
@@ -107,7 +112,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// only 0 for now.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_unsubscribe", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_unsubscribe();
         
         /// <summary>
@@ -125,7 +130,7 @@ namespace iMobileDevice.Usbmuxd
         /// <remarks>
         /// The user has to free the list returned.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_device_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_get_device_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_get_device_list(ref System.IntPtr deviceList);
         
         /// <summary>
@@ -137,7 +142,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, -1 on error.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_device_list_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_device_list_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_device_list_free(System.IntPtr deviceList);
         
         /// <summary>
@@ -159,7 +164,7 @@ namespace iMobileDevice.Usbmuxd
         /// This function only considers devices connected through USB. To
         /// query devices available via network, use usbmuxd_get_device().
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_device_by_udid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_get_device_by_udid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_get_device_by_udid([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string udid, ref UsbmuxdDeviceInfo device);
         
         /// <summary>
@@ -189,7 +194,7 @@ namespace iMobileDevice.Usbmuxd
         /// 0 if no matching device is connected, 1 if the device was found,
         /// or a negative value on error.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_get_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_get_device", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_get_device([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string udid, ref UsbmuxdDeviceInfo device, int options);
         
         /// <summary>
@@ -207,7 +212,7 @@ namespace iMobileDevice.Usbmuxd
         /// socket file descriptor of the connection, or a negative errno
         /// value on error.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_connect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_connect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_connect(uint handle, ushort tcpPort);
         
         /// <summary>
@@ -219,7 +224,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, -1 on error.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_disconnect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_disconnect", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_disconnect(int sfd);
         
         /// <summary>
@@ -240,7 +245,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative errno value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_send(int sfd, byte[] data, uint len, ref uint sentBytes);
         
         /// <summary>
@@ -264,7 +269,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative errno value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_recv_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_recv_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_recv_timeout(int sfd, byte[] data, uint len, ref uint recvBytes, uint timeout);
         
         /// <summary>
@@ -285,7 +290,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative errno value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_recv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_recv", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_recv(int sfd, byte[] data, uint len, ref uint recvBytes);
         
         /// <summary>
@@ -298,7 +303,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative errno value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_read_buid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_read_buid", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_read_buid(out System.IntPtr buid);
         
         /// <summary>
@@ -318,7 +323,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative error value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_read_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_read_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_read_pair_record([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId, out System.IntPtr recordData, ref uint recordSize);
         
         /// <summary>
@@ -336,7 +341,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative error value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_save_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_save_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_save_pair_record([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordData, uint recordSize);
         
         /// <summary>
@@ -357,7 +362,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative error value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_save_pair_record_with_device_id", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_save_pair_record_with_device_id", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_save_pair_record_with_device_id([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId, uint deviceId, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordData, uint recordSize);
         
         /// <summary>
@@ -369,7 +374,7 @@ namespace iMobileDevice.Usbmuxd
         /// <returns>
         /// 0 on success, a negative errno value otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="usbmuxd_delete_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="usbmuxd_delete_pair_record", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int usbmuxd_delete_pair_record([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string recordId);
         
         /// <summary>
@@ -378,10 +383,10 @@ namespace iMobileDevice.Usbmuxd
         /// This only has an effect on linux systems if inotify support has been built
         /// in. Otherwise and on all other platforms this function has no effect.
         /// </summary>
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="libusbmuxd_set_use_inotify", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="libusbmuxd_set_use_inotify", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void libusbmuxd_set_use_inotify(int set);
         
-        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.libraryName, EntryPoint="libusbmuxd_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(UsbmuxdNativeMethods.LibraryName, EntryPoint="libusbmuxd_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void libusbmuxd_set_debug_level(int level);
     }
 }

@@ -130,6 +130,12 @@
                 this.Generate(member);
             }
 
+            foreach (var member in type.Members.OfType<CodeTypeConstructor>())
+            {
+                this.WriteLine();
+                this.Generate(type, member);
+            }
+
             foreach (var member in type.Members.OfType<CodeConstructor>())
             {
                 this.WriteLine();
@@ -144,7 +150,7 @@
 
             foreach (var member in type.Members.OfType<CodeMemberMethod>())
             {
-                if (member is CodeConstructor)
+                if (member is CodeConstructor || member is CodeTypeConstructor)
                 {
                     continue;
                 }

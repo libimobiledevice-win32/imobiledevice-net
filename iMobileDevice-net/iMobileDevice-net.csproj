@@ -5,8 +5,8 @@
     <AssemblyTitle>.NET client for iOS devices (libimobiledevice-net)</AssemblyTitle>
     <VersionPrefix>1.2.1</VersionPrefix>
     <Authors>Quamotion</Authors>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net45</TargetFrameworks>
-    <TargetFramework Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0</TargetFramework>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.0;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp3.0;netstandard2.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>iMobileDevice-net</AssemblyName>
     <AssemblyOriginatorKeyFile>iMobileDevice.snk</AssemblyOriginatorKeyFile>
@@ -21,8 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NerdBank.GitVersioning" Version="2.1.65" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
+    <PackageReference Include="NerdBank.GitVersioning" Version="3.0.28" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19554-01" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -142,7 +142,7 @@
       </Line>
       <LineText Include="%(Line.Text)" />
     </ItemGroup>
-    <WriteLinesToFile File="../iMobileDevice.IntegrationTest.netcoreapp20/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
+    <WriteLinesToFile File="../iMobileDevice.IntegrationTests.netcoreapp20/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
     <WriteLinesToFile File="../iMobileDevice.IntegrationTests.net45/Directory.Build.props" Lines="@(LineText)" Overwrite="true" />
   </Target>
 </Project>

@@ -25,16 +25,16 @@ steps:
 - script: |
     export LD_LIBRARY_PATH=$BUILD_SOURCESDIRECTORY/zip/runtimes/$RID/native:$LD_LIBRARY_PATH
     dotnet test iMobileDevice.Generator.Tests/iMobileDevice.Generator.Tests.csproj
-    dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj
+    dotnet test iMobileDevice.Tests/iMobileDevice.Tests.csproj -f netcoreapp3.0
   displayName: Run unit tests
 
 - script: |
     mkdir packages
     cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.nupkg packages/
-    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTest.netcoreapp20/
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTests.netcoreapp30/
     ls packages/
 
-    cd iMobileDevice.IntegrationTest.netcoreapp20
+    cd iMobileDevice.IntegrationTests.netcoreapp30
 
     dotnet run
   displayName: Run integration tests

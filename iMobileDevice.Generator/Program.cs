@@ -70,7 +70,7 @@ namespace iMobileDevice.Generator
 
                         if (includeArgument.HasValue())
                         {
-                            foreach(var path in includeArgument.Values)
+                            foreach (var path in includeArgument.Values)
                             {
                                 generator.IncludeDirectories.Add(path);
                             }
@@ -121,13 +121,20 @@ namespace iMobileDevice.Generator
                         foreach (var file in files)
                         {
                             Console.WriteLine($"Processing {Path.GetFileName(file)}");
+
+                            if (!File.Exists(file))
+                            {
+                                Console.WriteLine($"WARNING: Skipping file {file} because it does not exist.");
+                                continue;
+                            }
+
                             generator.InputFile = file;
 
                             if (string.Equals(Path.GetFileName(file), "libideviceactivation.h", StringComparison.OrdinalIgnoreCase))
                             {
                                 generator.Generate(targetDirectory, "ideviceactivation");
                             }
-                            else if(string.Equals(Path.GetFileName(file), "plist.h", StringComparison.OrdinalIgnoreCase))
+                            else if (string.Equals(Path.GetFileName(file), "plist.h", StringComparison.OrdinalIgnoreCase))
                             {
                                 generator.Generate(targetDirectory, "plist");
                             }

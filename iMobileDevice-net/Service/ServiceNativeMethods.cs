@@ -27,7 +27,12 @@ namespace iMobileDevice.Service
     public partial class ServiceNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static ServiceNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Creates a new service for the specified service descriptor.
@@ -47,7 +52,7 @@ namespace iMobileDevice.Service
         /// SERVICE_E_INVALID_ARG when one of the arguments is invalid,
         /// or SERVICE_E_MUX_ERROR when connecting to the device failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out ServiceClientHandle client);
         
         /// <summary>
@@ -73,7 +78,7 @@ namespace iMobileDevice.Service
         /// SERVICE_E_SUCCESS on success, or a SERVICE_E_* error code
         /// otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_client_factory_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_client_factory_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_client_factory_start_service(iDeviceHandle device, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string serviceName, ref System.IntPtr client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label, ref ConstructorFunc constructorFunc, ref int errorCode);
         
         /// <summary>
@@ -87,7 +92,7 @@ namespace iMobileDevice.Service
         /// SERVICE_E_INVALID_ARG when client is invalid, or a
         /// SERVICE_E_UNKNOWN_ERROR when another error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_client_free(System.IntPtr client);
         
         /// <summary>
@@ -111,7 +116,7 @@ namespace iMobileDevice.Service
         /// invalid, or SERVICE_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_send(ServiceClientHandle client, byte[] data, uint size, ref uint sent);
         
         /// <summary>
@@ -139,7 +144,7 @@ namespace iMobileDevice.Service
         /// occurs, or SERVICE_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_receive_with_timeout(ServiceClientHandle client, byte[] data, uint size, ref uint received, uint timeout);
         
         /// <summary>
@@ -164,7 +169,7 @@ namespace iMobileDevice.Service
         /// occurs, or SERVICE_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_receive(ServiceClientHandle client, byte[] data, uint size, ref uint received);
         
         /// <summary>
@@ -179,7 +184,7 @@ namespace iMobileDevice.Service
         /// NULL, SERVICE_E_SSL_ERROR when SSL could not be enabled,
         /// or SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_enable_ssl(ServiceClientHandle client);
         
         /// <summary>
@@ -193,7 +198,7 @@ namespace iMobileDevice.Service
         /// SERVICE_E_INVALID_ARG if client or client->connection is
         /// NULL, or SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.libraryName, EntryPoint="service_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_disable_ssl(ServiceClientHandle client);
     }
 }

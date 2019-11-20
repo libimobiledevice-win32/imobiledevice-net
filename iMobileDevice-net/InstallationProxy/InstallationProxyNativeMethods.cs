@@ -27,7 +27,12 @@ namespace iMobileDevice.InstallationProxy
     public partial class InstallationProxyNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static InstallationProxyNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the installation_proxy service on the specified device.
@@ -46,7 +51,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success, or an INSTPROXY_E_* error value
         /// when an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out InstallationProxyClientHandle client);
         
         /// <summary>
@@ -68,7 +73,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success, or an INSTPROXY_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_start_service(iDeviceHandle device, out InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -82,7 +87,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success
         /// or INSTPROXY_E_INVALID_ARG if client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_free(System.IntPtr client);
         
         /// <summary>
@@ -107,7 +112,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
         /// an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_browse", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_browse", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_browse(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result);
         
         /// <summary>
@@ -135,7 +140,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
         /// an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_browse_with_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_browse_with_callback", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_browse_with_callback(InstallationProxyClientHandle client, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -160,7 +165,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
         /// an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_lookup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_lookup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_lookup(InstallationProxyClientHandle client, System.IntPtr appids, PlistHandle clientOptions, out PlistHandle result);
         
         /// <summary>
@@ -198,7 +203,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_install", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_install", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_install(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string pkgPath, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -238,7 +243,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_upgrade", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_upgrade", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_upgrade(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string pkgPath, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -271,7 +276,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_uninstall", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_uninstall", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_uninstall(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string appid, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -292,7 +297,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
         /// an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_lookup_archives", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_lookup_archives", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_lookup_archives(InstallationProxyClientHandle client, PlistHandle clientOptions, out PlistHandle result);
         
         /// <summary>
@@ -330,7 +335,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_archive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_archive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_archive(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string appid, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -365,7 +370,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_restore(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string appid, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -400,7 +405,7 @@ namespace iMobileDevice.InstallationProxy
         /// created successfully; any error occuring during the command has to be
         /// handled inside the specified callback function.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_remove_archive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_remove_archive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_remove_archive(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string appid, PlistHandle clientOptions, InstallationProxyStatusCallBack statusCallBack, System.IntPtr userData);
         
         /// <summary>
@@ -425,7 +430,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS on success or an INSTPROXY_E_* error value if
         /// an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_check_capabilities_match", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_check_capabilities_match", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_check_capabilities_match(InstallationProxyClientHandle client, out System.IntPtr capabilities, PlistHandle clientOptions, out PlistHandle result);
         
         /// <summary>
@@ -437,7 +442,7 @@ namespace iMobileDevice.InstallationProxy
         /// <param name="name">
         /// Pointer to store the name of the command.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_command_get_name", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_command_get_name", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_command_get_name(PlistHandle command, out System.IntPtr name);
         
         /// <summary>
@@ -449,7 +454,7 @@ namespace iMobileDevice.InstallationProxy
         /// <param name="name">
         /// Pointer to store the name of the status.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_status_get_name", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_status_get_name", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_status_get_name(PlistHandle status, out System.IntPtr name);
         
         /// <summary>
@@ -474,7 +479,7 @@ namespace iMobileDevice.InstallationProxy
         /// INSTPROXY_E_SUCCESS if no error is found or an INSTPROXY_E_* error
         /// value matching the error that ẃas found in the status.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_status_get_error", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_status_get_error", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_status_get_error(PlistHandle status, out System.IntPtr name, out System.IntPtr description, ref ulong code);
         
         /// <summary>
@@ -499,7 +504,7 @@ namespace iMobileDevice.InstallationProxy
         /// If NULL is passed no list will be returned. If NULL is returned no
         /// list was found in the status.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_status_get_current_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_status_get_current_list", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_status_get_current_list(PlistHandle status, ref ulong total, ref ulong currentIndex, ref ulong currentAmount, out PlistHandle list);
         
         /// <summary>
@@ -512,7 +517,7 @@ namespace iMobileDevice.InstallationProxy
         /// Pointer to store the progress in percent (0-100) or -1 if not
         /// progress was found in the status.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_status_get_percent_complete", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_status_get_percent_complete", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_status_get_percent_complete(PlistHandle status, ref int percent);
         
         /// <summary>
@@ -521,7 +526,7 @@ namespace iMobileDevice.InstallationProxy
         /// <returns>
         /// A new plist_t of type PLIST_DICT.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_options_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_options_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PlistHandle instproxy_client_options_new();
         
         /// <summary>
@@ -538,7 +543,7 @@ namespace iMobileDevice.InstallationProxy
         /// keys "ApplicationSINF", "iTunesMetadata", "ReturnAttributes" which are
         /// expecting a plist_t node as value and "SkipUninstall" expects int.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_options_add", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_options_add", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_client_options_add(PlistHandle clientOptions);
         
         /// <summary>
@@ -553,7 +558,7 @@ namespace iMobileDevice.InstallationProxy
         /// <remarks>
         /// The values passed are expected to be strings.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_options_set_return_attributes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_options_set_return_attributes", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_client_options_set_return_attributes(PlistHandle clientOptions);
         
         /// <summary>
@@ -563,7 +568,7 @@ namespace iMobileDevice.InstallationProxy
         /// The client options plist to free. Does nothing if NULL
         /// is passed.
         /// </param>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_options_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_options_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void instproxy_client_options_free(PlistHandle clientOptions);
         
         /// <summary>
@@ -584,7 +589,7 @@ namespace iMobileDevice.InstallationProxy
         /// the path could not be determined or an INSTPROXY_E_* error
         /// value if an error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.libraryName, EntryPoint="instproxy_client_get_path_for_bundle_identifier", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(InstallationProxyNativeMethods.LibraryName, EntryPoint="instproxy_client_get_path_for_bundle_identifier", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern InstallationProxyError instproxy_client_get_path_for_bundle_identifier(InstallationProxyClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string bundleId, out System.IntPtr path);
     }
 }

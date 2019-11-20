@@ -27,7 +27,12 @@ namespace iMobileDevice.HeartBeat
     public partial class HeartBeatNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static HeartBeatNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the heartbeat service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.HeartBeat
         /// HEARTBEAT_E_SUCCESS on success, HEARTBEAT_E_INVALID_ARG when
         /// client is NULL, or an HEARTBEAT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out HeartBeatClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.HeartBeat
         /// HEARTBEAT_E_SUCCESS on success, or an HEARTBEAT_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_client_start_service(iDeviceHandle device, out HeartBeatClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.HeartBeat
         /// HEARTBEAT_E_SUCCESS on success, HEARTBEAT_E_INVALID_ARG when
         /// client is NULL, or an HEARTBEAT_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_client_free(System.IntPtr client);
         
         /// <summary>
@@ -99,7 +104,7 @@ namespace iMobileDevice.HeartBeat
         /// HEARTBEAT_E_SUCCESS on success,
         /// HEARTBEAT_E_INVALID_ARG when client or plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_send(HeartBeatClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -115,7 +120,7 @@ namespace iMobileDevice.HeartBeat
         /// HEARTBEAT_E_SUCCESS on success,
         /// HEARTBEAT_E_INVALID_ARG when client or plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_receive(HeartBeatClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -139,7 +144,7 @@ namespace iMobileDevice.HeartBeat
         /// communication error occurs, or HEARTBEAT_E_UNKNOWN_ERROR
         /// when an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.libraryName, EntryPoint="heartbeat_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(HeartBeatNativeMethods.LibraryName, EntryPoint="heartbeat_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern HeartBeatError heartbeat_receive_with_timeout(HeartBeatClientHandle client, out PlistHandle plist, uint timeoutMs);
     }
 }

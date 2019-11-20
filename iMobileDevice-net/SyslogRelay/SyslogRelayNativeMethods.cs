@@ -27,7 +27,12 @@ namespace iMobileDevice.SyslogRelay
     public partial class SyslogRelayNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static SyslogRelayNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the syslog_relay service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.SyslogRelay
         /// SYSLOG_RELAY_E_SUCCESS on success, SYSLOG_RELAY_E_INVALID_ARG when
         /// client is NULL, or an SYSLOG_RELAY_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out SyslogRelayClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.SyslogRelay
         /// SYSLOG_RELAY_E_SUCCESS on success, or an SYSLOG_RELAY_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_client_start_service(iDeviceHandle device, out SyslogRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.SyslogRelay
         /// SYSLOG_RELAY_E_SUCCESS on success, SYSLOG_RELAY_E_INVALID_ARG when
         /// client is NULL, or an SYSLOG_RELAY_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_client_free(System.IntPtr client);
         
         /// <summary>
@@ -105,7 +110,7 @@ namespace iMobileDevice.SyslogRelay
         /// invalid or SYSLOG_RELAY_E_UNKNOWN_ERROR when an unspecified
         /// error occurs or a syslog capture has already been started.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_start_capture", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_start_capture", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_start_capture(SyslogRelayClientHandle client, SyslogRelayReceiveCallBack callback, System.IntPtr userData);
         
         /// <summary>
@@ -121,7 +126,7 @@ namespace iMobileDevice.SyslogRelay
         /// invalid or SYSLOG_RELAY_E_UNKNOWN_ERROR when an unspecified
         /// error occurs or a syslog capture has already been started.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_stop_capture", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_stop_capture", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_stop_capture(SyslogRelayClientHandle client);
         
         /// <summary>
@@ -149,7 +154,7 @@ namespace iMobileDevice.SyslogRelay
         /// occurs, or SYSLOG_RELAY_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_receive_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_receive_with_timeout(SyslogRelayClientHandle client, byte[] data, uint size, ref uint received, uint timeout);
         
         /// <summary>
@@ -174,7 +179,7 @@ namespace iMobileDevice.SyslogRelay
         /// SYSLOG_RELAY_E_SUCCESS on success,
         /// SYSLOG_RELAY_E_INVALID_ARG when client or plist is NULL
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.libraryName, EntryPoint="syslog_relay_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(SyslogRelayNativeMethods.LibraryName, EntryPoint="syslog_relay_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern SyslogRelayError syslog_relay_receive(SyslogRelayClientHandle client, byte[] data, uint size, ref uint received);
     }
 }

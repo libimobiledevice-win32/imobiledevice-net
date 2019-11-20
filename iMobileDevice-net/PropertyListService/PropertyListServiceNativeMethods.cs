@@ -27,7 +27,12 @@ namespace iMobileDevice.PropertyListService
     public partial class PropertyListServiceNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static PropertyListServiceNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Creates a new property list service for the specified port.
@@ -47,7 +52,7 @@ namespace iMobileDevice.PropertyListService
         /// PROPERTY_LIST_SERVICE_E_INVALID_ARG when one of the arguments is invalid,
         /// or PROPERTY_LIST_SERVICE_E_MUX_ERROR when connecting to the device failed.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out PropertyListServiceClientHandle client);
         
         /// <summary>
@@ -61,7 +66,7 @@ namespace iMobileDevice.PropertyListService
         /// PROPERTY_LIST_SERVICE_E_INVALID_ARG when client is invalid, or a
         /// PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR when another error occured.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_client_free(System.IntPtr client);
         
         /// <summary>
@@ -79,7 +84,7 @@ namespace iMobileDevice.PropertyListService
         /// PROPERTY_LIST_SERVICE_E_PLIST_ERROR when dict is not a valid plist,
         /// or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR when an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_send_xml_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_send_xml_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_send_xml_plist(PropertyListServiceClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -97,7 +102,7 @@ namespace iMobileDevice.PropertyListService
         /// PROPERTY_LIST_SERVICE_E_PLIST_ERROR when dict is not a valid plist,
         /// or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR when an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_send_binary_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_send_binary_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_send_binary_plist(PropertyListServiceClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -123,7 +128,7 @@ namespace iMobileDevice.PropertyListService
         /// communication error occurs, or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR when
         /// an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_receive_plist_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_receive_plist_with_timeout", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_receive_plist_with_timeout(PropertyListServiceClientHandle client, out PlistHandle plist, uint timeout);
         
         /// <summary>
@@ -147,7 +152,7 @@ namespace iMobileDevice.PropertyListService
         /// communication error occurs, or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR when
         /// an unspecified error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_receive_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_receive_plist", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_receive_plist(PropertyListServiceClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -163,7 +168,7 @@ namespace iMobileDevice.PropertyListService
         /// NULL, PROPERTY_LIST_SERVICE_E_SSL_ERROR when SSL could not be enabled,
         /// or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_enable_ssl(PropertyListServiceClientHandle client);
         
         /// <summary>
@@ -178,7 +183,7 @@ namespace iMobileDevice.PropertyListService
         /// PROPERTY_LIST_SERVICE_E_INVALID_ARG if client or client->connection is
         /// NULL, or PROPERTY_LIST_SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.libraryName, EntryPoint="property_list_service_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(PropertyListServiceNativeMethods.LibraryName, EntryPoint="property_list_service_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern PropertyListServiceError property_list_service_disable_ssl(PropertyListServiceClientHandle client);
     }
 }

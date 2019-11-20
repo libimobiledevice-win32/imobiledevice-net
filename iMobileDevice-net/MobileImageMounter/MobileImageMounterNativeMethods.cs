@@ -27,7 +27,12 @@ namespace iMobileDevice.MobileImageMounter
     public partial class MobileImageMounterNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MobileImageMounterNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the mobile_image_mounter service on the specified device.
@@ -48,7 +53,7 @@ namespace iMobileDevice.MobileImageMounter
         /// or MOBILE_IMAGE_MOUNTER_E_CONN_FAILED if the connection to the
         /// device could not be established.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileImageMounterClientHandle client);
         
         /// <summary>
@@ -70,7 +75,7 @@ namespace iMobileDevice.MobileImageMounter
         /// MOBILE_IMAGE_MOUNTER_E_SUCCESS on success, or an MOBILE_IMAGE_MOUNTER_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_start_service(iDeviceHandle device, out MobileImageMounterClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -84,7 +89,7 @@ namespace iMobileDevice.MobileImageMounter
         /// MOBILE_IMAGE_MOUNTER_E_SUCCESS on success,
         /// or MOBILE_IMAGE_MOUNTER_E_INVALID_ARG if client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_free(System.IntPtr client);
         
         /// <summary>
@@ -107,7 +112,7 @@ namespace iMobileDevice.MobileImageMounter
         /// This function may return MOBILE_IMAGE_MOUNTER_E_SUCCESS even if the
         /// operation has failed. Check the resulting plist for further information.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_lookup_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_lookup_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_lookup_image(MobileImageMounterClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string imageType, out PlistHandle result);
         
         /// <summary>
@@ -141,7 +146,7 @@ namespace iMobileDevice.MobileImageMounter
         /// MOBILE_IMAGE_MOUNTER_E_SUCCESS on succes, or a
         /// MOBILE_IMAGE_MOUNTER_E_* error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_upload_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_upload_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_upload_image(MobileImageMounterClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string imageType, uint imageSize, byte[] signature, ushort signatureSize, MobileImageMounterUploadCallBack uploadCallBack, System.IntPtr userdata);
         
         /// <summary>
@@ -178,7 +183,7 @@ namespace iMobileDevice.MobileImageMounter
         /// Note that there is no unmounting function. The mount persists until the
         /// device is rebooted.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_mount_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_mount_image", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_mount_image(MobileImageMounterClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string imagePath, byte[] signature, ushort signatureSize, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string imageType, out PlistHandle result);
         
         /// <summary>
@@ -194,7 +199,7 @@ namespace iMobileDevice.MobileImageMounter
         /// MOBILE_IMAGE_MOUNTER_E_INVALID_ARG if client is invalid,
         /// or another error code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.libraryName, EntryPoint="mobile_image_mounter_hangup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileImageMounterNativeMethods.LibraryName, EntryPoint="mobile_image_mounter_hangup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileImageMounterError mobile_image_mounter_hangup(MobileImageMounterClientHandle client);
     }
 }

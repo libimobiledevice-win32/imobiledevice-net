@@ -1,0 +1,39 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'deb'
+  displayName: 'Download Debian packages'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    artifactName: 'imobiledevice-net'
+  displayName: 'Download NuGet packages'
+
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y libxml2-utils
+  displayName: Install tools
+
+- script: |
+    set -e
+    version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
+
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libplist3_2.0.2-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd4_1.12.0-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd-tools_1.12.0-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libimobiledevice6_1.2.2-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libimobiledevice-utils_1.2.2-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libideviceactivation_1.0.1-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/ideviceinstaller_1.1.3-${version_number}-0${DIST}_amd64.deb
+  displayName: Install Debian archives
+
+- script: |
+    mkdir packages
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.nupkg packages/
+    cp $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/*.props iMobileDevice.IntegrationTests.netcoreapp30/
+    ls packages/
+
+    cd iMobileDevice.IntegrationTests.netcoreapp30
+
+    dotnet run    
+  displayName: Run integration tests

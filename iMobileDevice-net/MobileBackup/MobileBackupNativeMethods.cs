@@ -27,7 +27,12 @@ namespace iMobileDevice.MobileBackup
     public partial class MobileBackupNativeMethods
     {
         
-        const string libraryName = "imobiledevice";
+        public const string LibraryName = "imobiledevice";
+        
+        static MobileBackupNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         /// <summary>
         /// Connects to the mobilebackup service on the specified device.
@@ -47,7 +52,7 @@ namespace iMobileDevice.MobileBackup
         /// or more parameters are invalid, or DEVICE_LINK_SERVICE_E_BAD_VERSION if
         /// the mobilebackup version on the device is newer.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_client_new", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_client_new(iDeviceHandle device, LockdownServiceDescriptorHandle service, out MobileBackupClientHandle client);
         
         /// <summary>
@@ -69,7 +74,7 @@ namespace iMobileDevice.MobileBackup
         /// MOBILEBACKUP_E_SUCCESS on success, or an MOBILEBACKUP_E_* error
         /// code otherwise.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_client_start_service", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_client_start_service(iDeviceHandle device, out MobileBackupClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string label);
         
         /// <summary>
@@ -83,7 +88,7 @@ namespace iMobileDevice.MobileBackup
         /// MOBILEBACKUP_E_SUCCESS on success, or MOBILEBACKUP_E_INVALID_ARG
         /// if client is NULL.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_client_free(System.IntPtr client);
         
         /// <summary>
@@ -98,7 +103,7 @@ namespace iMobileDevice.MobileBackup
         /// <returns>
         /// an error code
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_receive", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_receive(MobileBackupClientHandle client, out PlistHandle plist);
         
         /// <summary>
@@ -117,7 +122,7 @@ namespace iMobileDevice.MobileBackup
         /// This function is low-level and should only be used if you need to send
         /// a new type of message.
         /// </remarks>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_send", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_send(MobileBackupClientHandle client, PlistHandle plist);
         
         /// <summary>
@@ -145,7 +150,7 @@ namespace iMobileDevice.MobileBackup
         /// backup_manifest is not of type PLIST_DICT, MOBILEBACKUP_E_MUX_ERROR
         /// if a communication error occurs, MOBILEBACKUP_E_REPLY_NOT_OK
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_request_backup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_request_backup", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_request_backup(MobileBackupClientHandle client, PlistHandle backupManifest, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string basePath, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string protoVersion);
         
         /// <summary>
@@ -159,7 +164,7 @@ namespace iMobileDevice.MobileBackup
         /// client is invalid, or MOBILEBACKUP_E_MUX_ERROR if a communication error
         /// occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_send_backup_file_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_send_backup_file_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_send_backup_file_received(MobileBackupClientHandle client);
         
         /// <summary>
@@ -191,7 +196,7 @@ namespace iMobileDevice.MobileBackup
         /// if a communication error occurs, or MOBILEBACKUP_E_REPLY_NOT_OK
         /// if the device did not accept the request.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_request_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_request_restore", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_request_restore(MobileBackupClientHandle client, PlistHandle backupManifest, MobileBackupFlags flags, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string protoVersion);
         
         /// <summary>
@@ -216,7 +221,7 @@ namespace iMobileDevice.MobileBackup
         /// message plist, or MOBILEBACKUP_E_MUX_ERROR if a communication error
         /// occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_receive_restore_file_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_receive_restore_file_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_receive_restore_file_received(MobileBackupClientHandle client, out PlistHandle result);
         
         /// <summary>
@@ -241,7 +246,7 @@ namespace iMobileDevice.MobileBackup
         /// message plist, or MOBILEBACKUP_E_MUX_ERROR if a communication error
         /// occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_receive_restore_application_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_receive_restore_application_received", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_receive_restore_application_received(MobileBackupClientHandle client, out PlistHandle result);
         
         /// <summary>
@@ -257,7 +262,7 @@ namespace iMobileDevice.MobileBackup
         /// message plist is invalid, or MOBILEBACKUP_E_MUX_ERROR if a communication
         /// error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_send_restore_complete", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_send_restore_complete", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_send_restore_complete(MobileBackupClientHandle client);
         
         /// <summary>
@@ -274,7 +279,7 @@ namespace iMobileDevice.MobileBackup
         /// one of the parameters is invalid, or MOBILEBACKUP_E_MUX_ERROR if a
         /// communication error occurs.
         /// </returns>
-        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.libraryName, EntryPoint="mobilebackup_send_error", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        [System.Runtime.InteropServices.DllImportAttribute(MobileBackupNativeMethods.LibraryName, EntryPoint="mobilebackup_send_error", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MobileBackupError mobilebackup_send_error(MobileBackupClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string reason);
     }
 }
