@@ -106,7 +106,7 @@ namespace iMobileDevice.Generator
 
             FunctionVisitor functionVisitor;
 
-            using (var createIndex = Index.Create(false, true))
+            using (var createIndex = ClangSharp.Index.Create(false, true))
             using (var translationUnit = CXTranslationUnit.Parse(createIndex.Handle, this.InputFile, arguments, null, CXTranslationUnit_Flags.CXTranslationUnit_None))
             {
                 StringWriter errorWriter = new StringWriter();

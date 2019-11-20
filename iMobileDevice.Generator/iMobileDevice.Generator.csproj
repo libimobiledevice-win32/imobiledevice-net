@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <Platforms>x64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <PackageReference Include="Native.LibClang" Version="5.0.0" />
     <PackageReference Include="Stubble.Core" Version="1.4.12" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
-    <PackageReference Include="NerdBank.GitVersioning" Version="2.1.65" PrivateAssets="all" />
+    <PackageReference Include="NerdBank.GitVersioning" Version="3.0.28" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

@@ -150,16 +150,16 @@ stages:
       condition: always()
 
     - script: |
-        copy %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\*.props iMobileDevice.IntegrationTest.netcoreapp20\
-        cd iMobileDevice.IntegrationTest.netcoreapp20
+        copy %SYSTEM_ARTIFACTSDIRECTORY%\imobiledevice-net\*.props iMobileDevice.IntegrationTests.netcoreapp30\
+        cd iMobileDevice.IntegrationTests.netcoreapp30
         dotnet run
         dotnet publish -r win7-x64 -c Release
-        dir bin\Release\netcoreapp2.0\win7-x64\publish\
-        bin\Release\netcoreapp2.0\win7-x64\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
+        dir bin\Release\netcoreapp3.0\win7-x64\publish\
+        bin\Release\netcoreapp3.0\win7-x64\publish\iMobileDevice.IntegrationTests.netcoreapp30.exe
         dotnet publish -r win7-x86 -c Release
-        dir bin\Release\netcoreapp2.0\win7-x86\publish\
-        bin\Release\netcoreapp2.0\win7-x86\publish\iMobileDevice.IntegrationTest.netcoreapp20.exe
-      displayName: Run integration tests (.NET Core 2.0)
+        dir bin\Release\netcoreapp3.0\win7-x86\publish\
+        bin\Release\netcoreapp3.0\win7-x86\publish\iMobileDevice.IntegrationTests.netcoreapp30.exe
+      displayName: Run integration tests (.NET Core 3.0)
       continueOnError: true
 
   # This tests deploying the native assets using NuGet packages (as part of the runtime/)
@@ -174,9 +174,11 @@ stages:
     pool:
       vmImage: 'macOS-10.14'
     steps:
-    - script: |
-        ls -l /usr/lib/libcurl*
-        brew install curl
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 3.0.100
     - template: steps/unix.yml
 
   - job: linux_test

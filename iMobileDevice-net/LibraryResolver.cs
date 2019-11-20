@@ -8,7 +8,7 @@ namespace iMobileDevice
     {
         static LibraryResolver()
         {
-#if !NETCOREAPP2_0 && !NET45
+#if !NETCOREAPP2_0 && !NETSTANDARD2_0 && !NET45
             NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
 #endif
         }
@@ -18,7 +18,7 @@ namespace iMobileDevice
             // Dummy call to trigger the static constructor
         }
 
-#if !NETCOREAPP2_0 && !NET45
+#if !NETCOREAPP2_0 && !NETSTANDARD2_0 && !NET45
         private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
             if (libraryName == Plist.PlistNativeMethods.LibraryName)
