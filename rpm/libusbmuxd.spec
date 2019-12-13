@@ -1,7 +1,7 @@
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 Name:          libusbmuxd
-Version:       1.12.0.build
+Version:       2.0.3.build
 Release:       0%{?dist}
 Summary:       Library for the USB multiplexor daemon for iPhone and iPod Touch devices
 
