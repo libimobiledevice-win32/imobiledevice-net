@@ -75,17 +75,20 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  idevice_connection_receive@Base 0.9.7
  idevice_connection_receive_timeout@Base 0.9.7
  idevice_connection_send@Base 0.9.7
+ idevice_device_list_extended_free@Base 1.2.2-1.2.183
  idevice_device_list_free@Base 0.9.7
  idevice_disconnect@Base 0.9.7
  idevice_event_subscribe@Base 0.9.7
  idevice_event_unsubscribe@Base 0.9.7
  idevice_free@Base 0.9.7
  idevice_get_device_list@Base 0.9.7
+ idevice_get_device_list_extended@Base 1.2.2-1.2.183
  idevice_get_handle@Base 0.9.7
  idevice_get_socket_type@Base 1.2.1.138-0xenial
  idevice_get_tcp_endpoint@Base 1.2.1.138-0xenial
  idevice_get_udid@Base 1.1.4
  idevice_new@Base 0.9.7
+ idevice_new_with_options@Base 1.2.2-1.2.183
  idevice_set_debug_callback@Base 1.2.1.97-0xenial
  idevice_set_debug_level@Base 0.9.7
  idevice_set_socket_type@Base 1.2.1.138-0xenial
@@ -139,6 +142,7 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  lockdownd_start_service_with_escrow_bag@Base 1.1.7
  lockdownd_start_session@Base 0.9.7
  lockdownd_stop_session@Base 0.9.7
+ lockdownd_strerror@Base 1.2.2-1.2.183
  lockdownd_unpair@Base 0.9.7
  lockdownd_validate_pair@Base 0.9.7
  misagent_client_free@Base 1.1.5

@@ -77,8 +77,13 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libusbmuxd.so.4", out lib))
+                if (NativeLibrary.TryLoad("libusbmuxd.so.6", out lib))
                 {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libusbmuxd.so.4", out lib))
+                {
+                    // Not all symbols will be available in libusbmuxd.so.4
                     return lib;
                 }
                 else if (NativeLibrary.TryLoad("libusbmuxd.so", out lib))

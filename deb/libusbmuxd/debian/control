@@ -16,7 +16,7 @@ Package: libusbmuxd-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libusbmuxd4 (= ${binary:Version}), ${misc:Depends}
+Depends: libusbmuxd6 (= ${binary:Version}), ${misc:Depends}
 Description: USB multiplexor daemon for iPhone and iPod Touch devices - devel
  usbmuxd, the USB multiplexor daemon, is in charge of coordinating
  access to iPhone and iPod Touch services over USB. Synchronization and
@@ -25,7 +25,7 @@ Description: USB multiplexor daemon for iPhone and iPod Touch devices - devel
  .
  This package contains the development files.
 
-Package: libusbmuxd4
+Package: libusbmuxd6
 Section: libs
 Architecture: any
 Multi-Arch: same
@@ -53,11 +53,11 @@ Description: USB multiplexor daemon for iPhone and iPod Touch devices - tools
  .
  This package contains the iproxy tool that enables TCP access to iOS devices.
 
-Package: libusbmuxd4-dbg
+Package: libusbmuxd6-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: libusbmuxd4 (= ${binary:Version}),
+Depends: libusbmuxd6 (= ${binary:Version}),
          ${misc:Depends}
 Description: USB multiplexor daemon for iPhone and iPod Touch devices - debug
  usbmuxd, the USB multiplexor daemon, is in charge of coordinating
