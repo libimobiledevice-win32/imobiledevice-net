@@ -12,7 +12,7 @@ override_dh_install:
 	dh_install --fail-missing
 
 override_dh_strip:
-	dh_strip --dbg-package=libusbmuxd4-dbg
+	dh_strip --dbg-package=libusbmuxd6-dbg
 
 override_dh_makeshlibs:
 	dh_makeshlibs -- -c4
