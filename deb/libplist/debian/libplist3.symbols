@@ -28,12 +28,14 @@ libplist.so.3 libplist3 #MINVER#
  plist_from_memory@Base 1.31.132-0
  plist_from_xml@Base 1.11
  plist_get_bool_val@Base 1.11
+ plist_get_data_ptr@Base 2.1.1-1.2.180
  plist_get_data_val@Base 1.11
  plist_get_date_val@Base 1.11
  plist_get_key_val@Base 1.11
  plist_get_node_type@Base 1.11
  plist_get_parent@Base 1.11
  plist_get_real_val@Base 1.11
+ plist_get_string_ptr@Base 2.1.1-1.2.180
  plist_get_string_val@Base 1.11
  plist_get_uid_val@Base 1.11
  plist_is_binary@Base 1.13.132-0
