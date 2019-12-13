@@ -18,9 +18,9 @@ steps:
     set -e
     version_number=`xmllint --xpath 'Project/PropertyGroup/MobileDeviceDotNetNuGetVersion/text()' $SYSTEM_ARTIFACTSDIRECTORY/imobiledevice-net/Directory.Build.props`
 
-    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libplist3_2.0.2-${version_number}-0${DIST}_amd64.deb
-    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd4_1.12.0-${version_number}-0${DIST}_amd64.deb
-    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd-tools_1.12.0-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libplist3_2.1.1-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd4_2.0.3-${version_number}-0${DIST}_amd64.deb
+    sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libusbmuxd-tools_2.0.3-${version_number}-0${DIST}_amd64.deb
     sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libimobiledevice6_1.2.2-${version_number}-0${DIST}_amd64.deb
     sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libimobiledevice-utils_1.2.2-${version_number}-0${DIST}_amd64.deb
     sudo apt install -y $SYSTEM_ARTIFACTSDIRECTORY/deb/libideviceactivation_1.0.1-${version_number}-0${DIST}_amd64.deb
