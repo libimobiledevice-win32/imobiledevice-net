@@ -24,6 +24,17 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  afc_rename_path@Base 0.9.7
  afc_set_file_time@Base 0.9.7
  afc_truncate@Base 0.9.7
+ compproxy_client_free@Base 1.2.2-1.2.189
+ compproxy_client_new@Base 1.2.2-1.2.189
+ compproxy_client_start_service@Base 1.2.2-1.2.189
+ compproxy_get_device_registry@Base 1.2.2-1.2.189
+ compproxy_get_value_from_registry@Base 1.2.2-1.2.189
+ compproxy_receive@Base 1.2.2-1.2.189
+ compproxy_send@Base 1.2.2-1.2.189
+ compproxy_start_forwarding_service_port@Base 1.2.2-1.2.189
+ compproxy_start_listening_for_devices@Base 1.2.2-1.2.189
+ compproxy_stop_forwarding_service_port@Base 1.2.2-1.2.189
+ compproxy_stop_listening_for_devices@Base 1.2.2-1.2.189
  debug_info_real@Base 1.2.1.97-0xenial
  debugserver_client_free@Base 1.1.7
  debugserver_client_new@Base 1.1.7
@@ -69,6 +80,7 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  house_arrest_send_command@Base 1.1.0
  house_arrest_send_request@Base 1.1.0
  idevice_connect@Base 0.9.7
+ idevice_connection_disable_bypass_ssl@Base 1.2.2-1.2.189
  idevice_connection_disable_ssl@Base 0.9.7
  idevice_connection_enable_ssl@Base 0.9.7
  idevice_connection_get_fd@Base 1.2.1.97-0xenial
@@ -265,6 +277,7 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  service_client_factory_start_service@Base 1.1.5
  service_client_free@Base 1.1.5
  service_client_new@Base 1.1.5
+ service_disable_bypass_ssl@Base 1.2.2-1.2.189
  service_disable_ssl@Base 1.1.5
  service_enable_ssl@Base 1.1.5
  service_receive@Base 1.1.5
@@ -276,6 +289,7 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  syslog_relay_receive@Base 1.1.6
  syslog_relay_receive_with_timeout@Base 1.1.6
  syslog_relay_start_capture@Base 1.1.6
+ syslog_relay_start_capture_raw@Base 1.2.2-1.2.189
  syslog_relay_stop_capture@Base 1.1.6
  webinspector_client_free@Base 1.1.5
  webinspector_client_new@Base 1.1.5

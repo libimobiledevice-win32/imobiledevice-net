@@ -11,8 +11,13 @@ libplist.so.3 libplist3 #MINVER#
  plist_array_next_item@Base 2.0.2-1.2.77
  plist_array_remove_item@Base 1.11
  plist_array_set_item@Base 1.11
+ plist_boolean_is_true@Base 2.1.1-1.2.188
  plist_compare_node_value@Base 1.11
  plist_copy@Base 1.11
+ plist_data_val_compare@Base 2.1.1-1.2.188
+ plist_data_val_compare_with_size@Base 2.1.1-1.2.188
+ plist_data_val_contains@Base 2.1.1-1.2.188
+ plist_date_val_compare@Base 2.1.1-1.2.188
  plist_dict_get_item@Base 1.11
  plist_dict_get_item_key@Base 1.11
  plist_dict_get_size@Base 1.11
@@ -39,6 +44,9 @@ libplist.so.3 libplist3 #MINVER#
  plist_get_string_val@Base 1.11
  plist_get_uid_val@Base 1.11
  plist_is_binary@Base 1.13.132-0
+ plist_key_val_compare@Base 2.1.1-1.2.188
+ plist_key_val_compare_with_size@Base 2.1.1-1.2.188
+ plist_key_val_contains@Base 2.1.1-1.2.188
  plist_get_uint_val@Base 1.11
  plist_new_array@Base 1.11
  plist_new_bool@Base 1.11
@@ -49,6 +57,7 @@ libplist.so.3 libplist3 #MINVER#
  plist_new_string@Base 1.11
  plist_new_uid@Base 1.11
  plist_new_uint@Base 1.11
+ plist_real_val_compare@Base 2.1.1-1.2.188
  plist_set_bool_val@Base 1.11
  plist_set_data_val@Base 1.11
  plist_set_date_val@Base 1.11
@@ -57,7 +66,12 @@ libplist.so.3 libplist3 #MINVER#
  plist_set_string_val@Base 1.11
  plist_set_uid_val@Base 1.11
  plist_set_uint_val@Base 1.11
+ plist_string_val_compare@Base 2.1.1-1.2.188
+ plist_string_val_compare_with_size@Base 2.1.1-1.2.188
+ plist_string_val_contains@Base 2.1.1-1.2.188
  plist_to_bin@Base 1.11
  plist_to_bin_free@Base 1.13.132-0
  plist_to_xml@Base 1.11
  plist_to_xml_free@Base 1.13.132-0
+ plist_uid_val_compare@Base 2.1.1-1.2.188
+ plist_uint_val_compare@Base 2.1.1-1.2.188
