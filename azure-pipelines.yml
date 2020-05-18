@@ -203,12 +203,12 @@ stages:
         bionic:
           DIST: bionic
           imageName: ubuntu:18.04
-        disco:
-          DIST: disco
-          imageName: ubuntu:19.04
         eoan:
           DIST: eoan
           imageName: ubuntu:19.10
+        focal:
+          DIST: focal
+          imageName: ubuntu:20.04
     pool:
       vmImage: 'ubuntu-16.04'
     container:
@@ -233,9 +233,9 @@ stages:
         bionic:
           DIST: bionic
           imageName: mcr.microsoft.com/dotnet/core/sdk:3.0-bionic
-        disco:
-          DIST: disco
-          imageName: mcr.microsoft.com/dotnet/core/sdk:3.0-disco
+        focal:
+          DIST: focal
+          imageName: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
     pool:
       vmImage: 'ubuntu-16.04'
     container:
@@ -311,10 +311,10 @@ stages:
           DIST: xenial
         bionic:
           DIST: bionic
-        disco:
-          DIST: disco
         eoan:
           DIST: eoan
+        focal:
+          DIST: focal
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
