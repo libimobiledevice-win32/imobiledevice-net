@@ -209,6 +209,9 @@ stages:
         eoan:
           DIST: eoan
           imageName: ubuntu:19.10
+        focal:
+          DIST: focal
+          imageName: ubuntu:20.04
     pool:
       vmImage: 'ubuntu-16.04'
     container:
@@ -315,6 +318,8 @@ stages:
           DIST: disco
         eoan:
           DIST: eoan
+        focal:
+          DIST: focal
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
