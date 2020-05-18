@@ -203,9 +203,6 @@ stages:
         bionic:
           DIST: bionic
           imageName: ubuntu:18.04
-        disco:
-          DIST: disco
-          imageName: ubuntu:19.04
         eoan:
           DIST: eoan
           imageName: ubuntu:19.10
@@ -314,8 +311,6 @@ stages:
           DIST: xenial
         bionic:
           DIST: bionic
-        disco:
-          DIST: disco
         eoan:
           DIST: eoan
         focal:
