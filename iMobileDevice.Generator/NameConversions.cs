@@ -157,6 +157,11 @@ namespace iMobileDevice.Generator
                 {
                     parts[i] = "Recovery";
                 }
+                else if (parts[i] == "compproxy")
+                {
+                    parts[i] = "Companion";
+                    parts.Insert(i + 1, "Proxy");
+                }
 
                 if (conversion == NameConversion.Parameter && i == 0)
                 {
