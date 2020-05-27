@@ -11,7 +11,7 @@ libplist.so.3 libplist3 #MINVER#
  plist_array_next_item@Base 2.0.2-1.2.77
  plist_array_remove_item@Base 1.11
  plist_array_set_item@Base 1.11
- plist_boolean_is_true@Base 2.1.1-1.2.188
+ plist_bool_val_is_true@Base 2.1.1-1.2.203
  plist_compare_node_value@Base 1.11
  plist_copy@Base 1.11
  plist_data_val_compare@Base 2.1.1-1.2.188
