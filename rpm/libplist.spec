@@ -49,8 +49,8 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/pkgconfig/libplist.pc
-%{_libdir}/pkgconfig/libplist++.pc
+%{_libdir}/pkgconfig/libplist-2.0.pc
+%{_libdir}/pkgconfig/libplist++-2.0.pc
 %{_libdir}/libplist.so
 %{_libdir}/libplist++.so
 %{_includedir}/plist

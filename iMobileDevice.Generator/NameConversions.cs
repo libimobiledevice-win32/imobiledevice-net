@@ -27,6 +27,7 @@ namespace iMobileDevice.Generator
             patchedName = patchedName.Replace("SYSLOG_RELAY", "syslogrelay");
             patchedName = patchedName.Replace("FILE_RELAY", "filerelay");
             patchedName = patchedName.Replace("IDEVICE_ACTIVATION", "ideviceactivation");
+            patchedName = patchedName.Replace("COMPANION_PROXY", "companionproxy");
             patchedName = patchedName.Replace("libideviceactivation", "ideviceactivation");
             patchedName = patchedName.Replace("libirecovery", "irecv");
 
