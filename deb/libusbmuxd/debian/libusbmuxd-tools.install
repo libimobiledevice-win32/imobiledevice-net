@@ -1,1 +1,3 @@
 usr/bin/*
+usr/share/man/man1/inetcat.1
+usr/share/man/man1/iproxy.1
