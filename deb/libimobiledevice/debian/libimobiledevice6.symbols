@@ -24,17 +24,17 @@ libimobiledevice.so.6 libimobiledevice6 #MINVER#
  afc_rename_path@Base 0.9.7
  afc_set_file_time@Base 0.9.7
  afc_truncate@Base 0.9.7
- compproxy_client_free@Base 1.2.2-1.2.189
- compproxy_client_new@Base 1.2.2-1.2.189
- compproxy_client_start_service@Base 1.2.2-1.2.189
- compproxy_get_device_registry@Base 1.2.2-1.2.189
- compproxy_get_value_from_registry@Base 1.2.2-1.2.189
- compproxy_receive@Base 1.2.2-1.2.189
- compproxy_send@Base 1.2.2-1.2.189
- compproxy_start_forwarding_service_port@Base 1.2.2-1.2.189
- compproxy_start_listening_for_devices@Base 1.2.2-1.2.189
- compproxy_stop_forwarding_service_port@Base 1.2.2-1.2.189
- compproxy_stop_listening_for_devices@Base 1.2.2-1.2.189
+ companion_proxy_client_free@Base 1.2.2-1.2.218
+ companion_proxy_client_new@Base 1.2.2-1.2.218
+ companion_proxy_client_start_service@Base 1.2.2-1.2.218
+ companion_proxy_get_device_registry@Base 1.2.2-1.2.218
+ companion_proxy_get_value_from_registry@Base 1.2.2-1.2.218
+ companion_proxy_receive@Base 1.2.2-1.2.218
+ companion_proxy_send@Base 1.2.2-1.2.218
+ companion_proxy_start_forwarding_service_port@Base 1.2.2-1.2.218
+ companion_proxy_start_listening_for_devices@Base 1.2.2-1.2.218
+ companion_proxy_stop_forwarding_service_port@Base 1.2.2-1.2.218
+ companion_proxy_stop_listening_for_devices@Base 1.2.2-1.2.218
  debug_info_real@Base 1.2.1.97-0xenial
  debugserver_client_free@Base 1.1.7
  debugserver_client_new@Base 1.1.7
