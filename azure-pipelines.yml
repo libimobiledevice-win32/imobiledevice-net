@@ -1,5 +1,5 @@
 variables:
-  nativeBuild: 998
+  nativeBuild: 1024
   nativePipeline: 12
   runTests: true
   createDeb: true
