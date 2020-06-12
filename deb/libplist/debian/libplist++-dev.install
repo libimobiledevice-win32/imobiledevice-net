@@ -12,4 +12,4 @@ usr/include/plist/plist++.h
 usr/include/plist/Integer.h
 usr/include/plist/Key.h
 usr/include/plist/Uid.h
-usr/lib/*/pkgconfig/libplist++.pc
+usr/lib/*/pkgconfig/libplist++-2.0.pc
