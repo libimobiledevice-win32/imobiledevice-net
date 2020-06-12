@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="ServiceNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -90,7 +90,7 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG when client is invalid, or a
-        /// SERVICE_E_UNKNOWN_ERROR when another error occured.
+        /// SERVICE_E_UNKNOWN_ERROR when another error occurred.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_client_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_client_free(System.IntPtr client);
@@ -165,7 +165,9 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG when one or more parameters are
-        /// invalid, SERVICE_E_MUX_ERROR when a communication error
+        /// invalid, SERVICE_E_NOT_ENOUGH_DATA when not enough data
+        /// received, SERVICE_E_TIMEOUT when the connection times out,
+        /// SERVICE_E_MUX_ERROR when a communication error
         /// occurs, or SERVICE_E_UNKNOWN_ERROR when an unspecified
         /// error occurs.
         /// </returns>
@@ -181,7 +183,9 @@ namespace iMobileDevice.Service
         /// <returns>
         /// SERVICE_E_SUCCESS on success,
         /// SERVICE_E_INVALID_ARG if client or client->connection is
-        /// NULL, SERVICE_E_SSL_ERROR when SSL could not be enabled,
+        /// NULL, SERVICE_E_NOT_ENOUGH_DATA when not enough data
+        /// received, SERVICE_E_TIMEOUT when the connection times out,
+        /// SERVICE_E_SSL_ERROR when SSL could not be enabled,
         /// or SERVICE_E_UNKNOWN_ERROR otherwise.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_enable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
@@ -200,5 +204,19 @@ namespace iMobileDevice.Service
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_disable_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ServiceError service_disable_ssl(ServiceClientHandle client);
+        
+        /// <summary>
+        /// Disable SSL for the given service client without sending SSL terminate messages.
+        /// </summary>
+        /// <param name="client">
+        /// The connected service client for that SSL should be disabled.
+        /// </param>
+        /// <returns>
+        /// SERVICE_E_SUCCESS on success,
+        /// SERVICE_E_INVALID_ARG if client or client->connection is
+        /// NULL, or SERVICE_E_UNKNOWN_ERROR otherwise.
+        /// </returns>
+        [System.Runtime.InteropServices.DllImportAttribute(ServiceNativeMethods.LibraryName, EntryPoint="service_disable_bypass_ssl", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern ServiceError service_disable_bypass_ssl(ServiceClientHandle client, char sslbypass);
     }
 }

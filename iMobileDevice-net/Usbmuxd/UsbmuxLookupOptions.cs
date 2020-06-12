@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="UsbmuxLookupOptions.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -32,13 +32,10 @@ namespace iMobileDevice.Usbmuxd
         
         LookupUsbmux = 2,
         
-        /// <summary>
-        /// include USBMUX devices during lookup 
-        /// </summary>
         LookupNetwork = 4,
         
         /// <summary>
-        /// include network devices during lookup 
+        /// prefer network connection if device is available via USBMUX *and* network 
         /// </summary>
         LookupPreferNetwork = 8,
     }

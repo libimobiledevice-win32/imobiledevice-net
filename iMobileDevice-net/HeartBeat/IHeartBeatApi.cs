@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="IHeartBeatApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -135,6 +135,8 @@ namespace iMobileDevice.HeartBeat
         /// <returns>
         /// HEARTBEAT_E_SUCCESS on success,
         /// HEARTBEAT_E_INVALID_ARG when client or *plist is NULL,
+        /// HEARTBEAT_E_NOT_ENOUGH_DATA when not enough data
+        /// received, HEARTBEAT_E_TIMEOUT when the connection times out,
         /// HEARTBEAT_E_PLIST_ERROR when the received data cannot be
         /// converted to a plist, HEARTBEAT_E_MUX_ERROR when a
         /// communication error occurs, or HEARTBEAT_E_UNKNOWN_ERROR

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceDebugCallBack.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -25,5 +25,5 @@ namespace iMobileDevice.iDevice
     
     
     [System.Runtime.InteropServices.UnmanagedFunctionPointerAttribute(System.Runtime.InteropServices.CallingConvention.Cdecl)]
-    public delegate void iDeviceDebugCallBack([System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string message);
+    public delegate void iDeviceDebugCallBack(System.IntPtr message);
 }

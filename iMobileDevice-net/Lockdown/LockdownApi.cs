@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="LockdownApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -636,6 +636,17 @@ namespace iMobileDevice.Lockdown
         public virtual LockdownError lockdownd_service_descriptor_free(System.IntPtr service)
         {
             return LockdownNativeMethods.lockdownd_service_descriptor_free(service);
+        }
+        
+        /// <summary>
+        /// Gets a readable error string for a given lockdown error code.
+        /// </summary>
+        /// <param name="err">
+        /// A lockdownd error code
+        /// </param>
+        public virtual System.IntPtr lockdownd_strerror(LockdownError err)
+        {
+            return LockdownNativeMethods.lockdownd_strerror(err);
         }
     }
 }

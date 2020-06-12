@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="ScreenshotrError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -38,7 +38,11 @@ namespace iMobileDevice.Screenshotr
         
         MuxError = -3,
         
-        BadVersion = -4,
+        SslError = -4,
+        
+        ReceiveTimeout = -5,
+        
+        BadVersion = -6,
         
         UnknownError = -256,
     }

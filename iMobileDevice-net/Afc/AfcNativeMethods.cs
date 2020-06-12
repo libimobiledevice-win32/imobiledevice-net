@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="AfcNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -142,7 +142,7 @@ namespace iMobileDevice.Afc
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(AfcNativeMethods.LibraryName, EntryPoint="afc_get_file_info", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern AfcError afc_get_file_info(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string filename, out System.IntPtr fileInformation);
+        public static extern AfcError afc_get_file_info(AfcClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string path, out System.IntPtr fileInformation);
         
         /// <summary>
         /// Opens a file on the device.

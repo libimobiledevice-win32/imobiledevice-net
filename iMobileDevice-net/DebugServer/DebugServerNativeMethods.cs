@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="DebugServerNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -180,12 +180,15 @@ namespace iMobileDevice.DebugServer
         /// <param name="response">
         /// Response received for the command (can be NULL to ignore)
         /// </param>
+        /// <param name="response_size">
+        /// Pointer to receive response size. Set to NULL to ignore.
+        /// </param>
         /// <returns>
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client or command is NULL
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_send_command", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out System.IntPtr response);
+        public static extern DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out System.IntPtr response, ref uint responseSize);
         
         /// <summary>
         /// Receives and parses response of debugserver service.
@@ -196,12 +199,15 @@ namespace iMobileDevice.DebugServer
         /// <param name="response">
         /// Response received for last command (can be NULL to ignore)
         /// </param>
+        /// <param name="response_size">
+        /// Pointer to receive response size. Set to NULL to ignore.
+        /// </param>
         /// <returns>
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client is NULL
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(DebugServerNativeMethods.LibraryName, EntryPoint="debugserver_client_receive_response", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out System.IntPtr response);
+        public static extern DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out System.IntPtr response, ref uint responseSize);
         
         /// <summary>
         /// Controls status of ACK mode when sending commands or receiving responses.

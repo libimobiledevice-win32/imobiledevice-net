@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="RestoreError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -34,19 +34,13 @@ namespace iMobileDevice.Restore
         
         InvalidArg = -1,
         
-        InvalidConf = -2,
+        PlistError = -2,
         
-        PlistError = -3,
+        MuxError = -3,
         
-        DictError = -4,
+        NotEnoughData = -4,
         
-        NotEnoughData = -5,
-        
-        MuxError = -6,
-        
-        StartRestoreFailed = -7,
-        
-        DeviceError = -8,
+        ReceiveTimeout = -5,
         
         UnknownError = -256,
     }

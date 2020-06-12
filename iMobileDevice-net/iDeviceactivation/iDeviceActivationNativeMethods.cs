@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceActivationNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -28,6 +28,11 @@ namespace iMobileDevice.iDeviceActivation
     {
         
         public const string LibraryName = "ideviceactivation";
+        
+        static iDeviceActivationNativeMethods()
+        {
+            LibraryResolver.EnsureRegistered();
+        }
         
         [System.Runtime.InteropServices.DllImportAttribute(iDeviceActivationNativeMethods.LibraryName, EntryPoint="idevice_activation_set_debug_level", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void idevice_activation_set_debug_level(int level);

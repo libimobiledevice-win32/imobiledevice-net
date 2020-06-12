@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="MobileBackupError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -38,9 +38,13 @@ namespace iMobileDevice.MobileBackup
         
         MuxError = -3,
         
-        BadVersion = -4,
+        SslError = -4,
         
-        ReplyNotOk = -5,
+        ReceiveTimeout = -5,
+        
+        BadVersion = -6,
+        
+        ReplyNotOk = -7,
         
         UnknownError = -256,
     }

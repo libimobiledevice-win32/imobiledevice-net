@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="LockdownNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -544,5 +544,14 @@ namespace iMobileDevice.Lockdown
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(LockdownNativeMethods.LibraryName, EntryPoint="lockdownd_service_descriptor_free", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern LockdownError lockdownd_service_descriptor_free(System.IntPtr service);
+        
+        /// <summary>
+        /// Gets a readable error string for a given lockdown error code.
+        /// </summary>
+        /// <param name="err">
+        /// A lockdownd error code
+        /// </param>
+        [System.Runtime.InteropServices.DllImportAttribute(LockdownNativeMethods.LibraryName, EntryPoint="lockdownd_strerror", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern System.IntPtr lockdownd_strerror(LockdownError err);
     }
 }

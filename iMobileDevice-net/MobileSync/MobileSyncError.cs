@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="MobileSyncError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -38,15 +38,19 @@ namespace iMobileDevice.MobileSync
         
         MuxError = -3,
         
-        BadVersion = -4,
+        SslError = -4,
         
-        SyncRefused = -5,
+        ReceiveTimeout = -5,
         
-        Cancelled = -6,
+        BadVersion = -6,
         
-        WrongDirection = -7,
+        SyncRefused = -7,
         
-        NotReady = -8,
+        Cancelled = -8,
+        
+        WrongDirection = -9,
+        
+        NotReady = -10,
         
         UnknownError = -256,
     }

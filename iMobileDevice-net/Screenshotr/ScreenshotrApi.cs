@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="ScreenshotrApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -143,7 +143,7 @@ namespace iMobileDevice.Screenshotr
         /// <returns>
         /// SCREENSHOTR_E_SUCCESS on success, SCREENSHOTR_E_INVALID_ARG if
         /// one or more parameters are invalid, or another error code if an
-        /// error occured.
+        /// error occurred.
         /// </returns>
         public virtual ScreenshotrError screenshotr_take_screenshot(ScreenshotrClientHandle client, ref System.IntPtr imgdata, ref ulong imgsize)
         {

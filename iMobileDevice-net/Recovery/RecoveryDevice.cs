@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="RecoveryDevice.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -36,6 +36,8 @@ namespace iMobileDevice.Recovery
         
         public uint chip_id;
         
+        public System.IntPtr display_name;
+        
         public string product_typeString
         {
             get
@@ -49,6 +51,14 @@ namespace iMobileDevice.Recovery
             get
             {
                 return Utf8Marshal.PtrToStringUtf8(this.hardware_model);
+            }
+        }
+        
+        public string display_nameString
+        {
+            get
+            {
+                return Utf8Marshal.PtrToStringUtf8(this.display_name);
             }
         }
     }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="DebugServerError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -39,6 +39,8 @@ namespace iMobileDevice.DebugServer
         SslError = -3,
         
         ResponseError = -4,
+        
+        Timeout = -5,
         
         UnknownError = -256,
     }

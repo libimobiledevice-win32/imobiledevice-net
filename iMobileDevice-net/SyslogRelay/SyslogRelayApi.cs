@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="SyslogRelayApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -143,6 +143,36 @@ namespace iMobileDevice.SyslogRelay
         public virtual SyslogRelayError syslog_relay_start_capture(SyslogRelayClientHandle client, SyslogRelayReceiveCallBack callback, System.IntPtr userData)
         {
             return SyslogRelayNativeMethods.syslog_relay_start_capture(client, callback, userData);
+        }
+        
+        /// <summary>
+        /// Starts capturing the *raw* syslog of the device using a callback.
+        /// This function is like syslog_relay_start_capture with the difference that
+        /// it will neither check nor process the received data before passing it to
+        /// the callback function.
+        /// Use syslog_relay_stop_capture() to stop receiving the syslog.
+        /// </summary>
+        /// <param name="client">
+        /// The syslog_relay client to use
+        /// </param>
+        /// <param name="callback">
+        /// Callback to receive each character from the syslog.
+        /// </param>
+        /// <param name="user_data">
+        /// Custom pointer passed to the callback function.
+        /// </param>
+        /// <returns>
+        /// SYSLOG_RELAY_E_SUCCESS on success,
+        /// SYSLOG_RELAY_E_INVALID_ARG when one or more parameters are
+        /// invalid or SYSLOG_RELAY_E_UNKNOWN_ERROR when an unspecified
+        /// error occurs or a syslog capture has already been started.
+        /// </returns>
+        /// <remarks>
+        /// Use syslog_relay_start_capture for a safer implementation.
+        /// </remarks>
+        public virtual SyslogRelayError syslog_relay_start_capture_raw(SyslogRelayClientHandle client, SyslogRelayReceiveCallBack callback, System.IntPtr userData)
+        {
+            return SyslogRelayNativeMethods.syslog_relay_start_capture_raw(client, callback, userData);
         }
         
         /// <summary>

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="AfcApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -175,9 +175,9 @@ namespace iMobileDevice.Afc
         /// <returns>
         /// AFC_E_SUCCESS on success or an AFC_E_* error value.
         /// </returns>
-        public virtual AfcError afc_get_file_info(AfcClientHandle client, string filename, out System.Collections.ObjectModel.ReadOnlyCollection<string> fileInformation)
+        public virtual AfcError afc_get_file_info(AfcClientHandle client, string path, out System.Collections.ObjectModel.ReadOnlyCollection<string> fileInformation)
         {
-            return AfcNativeMethods.afc_get_file_info(client, filename, out fileInformation);
+            return AfcNativeMethods.afc_get_file_info(client, path, out fileInformation);
         }
         
         /// <summary>
