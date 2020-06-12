@@ -49,6 +49,7 @@ override_dh_makeshlibs:
 
 override_dh_auto_clean:
 	dh_auto_clean
+	rm -Rf docs/html/
 	rm -f test/data/*.out
 
 #override_dh_auto_test:
