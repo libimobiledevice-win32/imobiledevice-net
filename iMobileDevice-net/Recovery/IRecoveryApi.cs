@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="IRecoveryApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -70,6 +70,10 @@ namespace iMobileDevice.Recovery
         int irecv_usb_control_transfer(RecoveryClientHandle client, char bmRequestType, char bRequest, ushort wValue, ushort wIndex, ref char data, ushort wLength, uint timeout);
         
         int irecv_usb_bulk_transfer(RecoveryClientHandle client, char endpoint, ref char data, int length, ref int transferred, uint timeout);
+        
+        RecoveryError irecv_device_event_subscribe(out RecoveryDeviceEventContextHandle context, RecoveryDeviceEventCallBack callback, System.IntPtr userData);
+        
+        RecoveryError irecv_device_event_unsubscribe(RecoveryDeviceEventContextHandle context);
         
         RecoveryError irecv_event_subscribe(RecoveryClientHandle client, RecoveryEventType type, RecoveryEventCallBack callback, System.IntPtr userData);
         

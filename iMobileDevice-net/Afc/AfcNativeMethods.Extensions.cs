@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="AfcNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -47,11 +47,11 @@ namespace iMobileDevice.Afc
             return returnValue;
         }
         
-        public static AfcError afc_get_file_info(AfcClientHandle client, string filename, out System.Collections.ObjectModel.ReadOnlyCollection<string> fileInformation)
+        public static AfcError afc_get_file_info(AfcClientHandle client, string path, out System.Collections.ObjectModel.ReadOnlyCollection<string> fileInformation)
         {
             System.Runtime.InteropServices.ICustomMarshaler fileInformationMarshaler = AfcDictionaryMarshaler.GetInstance(null);
             System.IntPtr fileInformationNative = System.IntPtr.Zero;
-            AfcError returnValue = AfcNativeMethods.afc_get_file_info(client, filename, out fileInformationNative);
+            AfcError returnValue = AfcNativeMethods.afc_get_file_info(client, path, out fileInformationNative);
             fileInformation = ((System.Collections.ObjectModel.ReadOnlyCollection<string>)fileInformationMarshaler.MarshalNativeToManaged(fileInformationNative));
             fileInformationMarshaler.CleanUpNativeData(fileInformationNative);
             return returnValue;

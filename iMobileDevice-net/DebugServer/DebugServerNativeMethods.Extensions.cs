@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="DebugServerNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -27,21 +27,21 @@ namespace iMobileDevice.DebugServer
     public partial class DebugServerNativeMethods
     {
         
-        public static DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out string response)
+        public static DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out string response, ref uint responseSize)
         {
             System.Runtime.InteropServices.ICustomMarshaler responseMarshaler = NativeStringMarshaler.GetInstance(null);
             System.IntPtr responseNative = System.IntPtr.Zero;
-            DebugServerError returnValue = DebugServerNativeMethods.debugserver_client_send_command(client, command, out responseNative);
+            DebugServerError returnValue = DebugServerNativeMethods.debugserver_client_send_command(client, command, out responseNative, ref responseSize);
             response = ((string)responseMarshaler.MarshalNativeToManaged(responseNative));
             responseMarshaler.CleanUpNativeData(responseNative);
             return returnValue;
         }
         
-        public static DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out string response)
+        public static DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out string response, ref uint responseSize)
         {
             System.Runtime.InteropServices.ICustomMarshaler responseMarshaler = NativeStringMarshaler.GetInstance(null);
             System.IntPtr responseNative = System.IntPtr.Zero;
-            DebugServerError returnValue = DebugServerNativeMethods.debugserver_client_receive_response(client, out responseNative);
+            DebugServerError returnValue = DebugServerNativeMethods.debugserver_client_receive_response(client, out responseNative, ref responseSize);
             response = ((string)responseMarshaler.MarshalNativeToManaged(responseNative));
             responseMarshaler.CleanUpNativeData(responseNative);
             return returnValue;

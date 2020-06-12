@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="MobileImageMounterError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -39,6 +39,8 @@ namespace iMobileDevice.MobileImageMounter
         ConnFailed = -3,
         
         CommandFailed = -4,
+        
+        DeviceLocked = -5,
         
         UnknownError = -256,
     }

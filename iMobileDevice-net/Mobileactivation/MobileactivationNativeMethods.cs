@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="MobileactivationNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -159,8 +159,8 @@ namespace iMobileDevice.Mobileactivation
         /// <param name="client">
         /// The mobileactivation client
         /// </param>
-        /// <param name="handshake_result">
-        /// The handshake result returned from drmHandshake
+        /// <param name="handshake_response">
+        /// The handshake response returned from drmHandshake
         /// </param>
         /// <param name="info">
         /// Pointer to a plist_t variable that will be set to the
@@ -173,7 +173,7 @@ namespace iMobileDevice.Mobileactivation
         /// error code otherwise.
         /// </returns>
         [System.Runtime.InteropServices.DllImportAttribute(MobileactivationNativeMethods.LibraryName, EntryPoint="mobileactivation_create_activation_info_with_session", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern MobileactivationError mobileactivation_create_activation_info_with_session(MobileactivationClientHandle client, PlistHandle handshakeResult, out PlistHandle info);
+        public static extern MobileactivationError mobileactivation_create_activation_info_with_session(MobileactivationClientHandle client, PlistHandle handshakeResponse, out PlistHandle info);
         
         /// <summary>
         /// Activates the device with the given activation record.

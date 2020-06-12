@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -40,8 +40,8 @@ namespace iMobileDevice.iDevice
         
         NotEnoughData = -4,
         
-        BadHeader = -5,
-        
         SslError = -6,
+        
+        Timeout = -7,
     }
 }

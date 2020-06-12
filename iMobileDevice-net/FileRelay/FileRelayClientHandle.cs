@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="FileRelayClientHandle.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 
 using System;

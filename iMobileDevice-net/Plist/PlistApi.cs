@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="PlistApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -274,7 +274,7 @@ namespace iMobileDevice.Plist
         /// the node
         /// </param>
         /// <returns>
-        /// the node index
+        /// the node index or UINT_MAX if node index can't be determined
         /// </returns>
         public virtual uint plist_array_get_item_index(PlistHandle node)
         {
@@ -345,6 +345,18 @@ namespace iMobileDevice.Plist
         public virtual void plist_array_remove_item(PlistHandle node, uint n)
         {
             PlistNativeMethods.plist_array_remove_item(node, n);
+        }
+        
+        /// <summary>
+        /// Remove a node that is a child node of a #PLIST_ARRAY node.
+        /// node will be freed using #plist_free.
+        /// </summary>
+        /// <param name="node">
+        /// The node to be removed from its #PLIST_ARRAY parent.
+        /// </param>
+        public virtual void plist_array_item_remove(PlistHandle node)
+        {
+            PlistNativeMethods.plist_array_item_remove(node);
         }
         
         /// <summary>
@@ -438,10 +450,10 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
-        /// Get key associated to an item. Item must be member of a dictionary
+        /// Get key associated key to an item. Item must be member of a dictionary.
         /// </summary>
         /// <param name="node">
-        /// the node
+        /// the item
         /// </param>
         /// <param name="key">
         /// a location to store the key. The caller is responsible for freeing the returned string.
@@ -468,6 +480,23 @@ namespace iMobileDevice.Plist
         {
             PlistHandle returnValue;
             returnValue = PlistNativeMethods.plist_dict_get_item(node, key);
+            returnValue.Api = this.Parent;
+            return returnValue;
+        }
+        
+        /// <summary>
+        /// Get key node associated to an item. Item must be member of a dictionary.
+        /// </summary>
+        /// <param name="node">
+        /// the item
+        /// </param>
+        /// <returns>
+        /// the key node of the given item, or NULL.
+        /// </returns>
+        public virtual PlistHandle plist_dict_item_get_key(PlistHandle node)
+        {
+            PlistHandle returnValue;
+            returnValue = PlistNativeMethods.plist_dict_item_get_key(node);
             returnValue.Api = this.Parent;
             return returnValue;
         }
@@ -603,6 +632,27 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
+        /// Get a pointer to the buffer of a #PLIST_STRING node.
+        /// </summary>
+        /// <param name="node">
+        /// The node
+        /// </param>
+        /// <param name="length">
+        /// If non-NULL, will be set to the length of the string
+        /// </param>
+        /// <returns>
+        /// Pointer to the NULL-terminated buffer.
+        /// </returns>
+        /// <remarks>
+        /// DO NOT MODIFY the buffer. Mind that the buffer is only available
+        /// until the plist node gets freed. Make a copy if needed.
+        /// </remarks>
+        public virtual System.IntPtr plist_get_string_ptr(PlistHandle node, ref ulong length)
+        {
+            return PlistNativeMethods.plist_get_string_ptr(node, ref length);
+        }
+        
+        /// <summary>
         /// Get the value of a #PLIST_BOOLEAN node.
         /// This function does nothing if node is not of type #PLIST_BOOLEAN
         /// </summary>
@@ -664,6 +714,27 @@ namespace iMobileDevice.Plist
         public virtual void plist_get_data_val(PlistHandle node, out string val, ref ulong length)
         {
             PlistNativeMethods.plist_get_data_val(node, out val, ref length);
+        }
+        
+        /// <summary>
+        /// Get a pointer to the data buffer of a #PLIST_DATA node.
+        /// </summary>
+        /// <param name="node">
+        /// The node
+        /// </param>
+        /// <param name="length">
+        /// Pointer to a uint64_t that will be set to the length of the buffer
+        /// </param>
+        /// <returns>
+        /// Pointer to the buffer
+        /// </returns>
+        /// <remarks>
+        /// DO NOT MODIFY the buffer. Mind that the buffer is only available
+        /// until the plist node gets freed. Make a copy if needed.
+        /// </remarks>
+        public virtual System.IntPtr plist_get_data_ptr(PlistHandle node, ref ulong length)
+        {
+            return PlistNativeMethods.plist_get_data_ptr(node, ref length);
         }
         
         /// <summary>
@@ -846,10 +917,10 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
-        /// Frees the memory allocated by plist_to_xml
+        /// Frees the memory allocated by plist_to_xml().
         /// </summary>
         /// <param name="plist_xml">
-        /// The object allocated by plist_to_xml
+        /// The buffer allocated by plist_to_xml().
         /// </param>
         public virtual void plist_to_xml_free(System.IntPtr plistXml)
         {
@@ -875,10 +946,10 @@ namespace iMobileDevice.Plist
         }
         
         /// <summary>
-        /// Frees the memory allocated by plist_to_bin
+        /// Frees the memory allocated by plist_to_bin().
         /// </summary>
         /// <param name="plist_bin">
-        /// The object allocated by plist_to_bin
+        /// The buffer allocated by plist_to_bin().
         /// </param>
         public virtual void plist_to_bin_free(System.IntPtr plistBin)
         {
@@ -1023,6 +1094,324 @@ namespace iMobileDevice.Plist
         public virtual sbyte plist_compare_node_value(PlistHandle nodeL, PlistHandle nodeR)
         {
             return PlistNativeMethods.plist_compare_node_value(nodeL, nodeR);
+        }
+        
+        /// <summary>
+        /// Helper function to check the value of a PLIST_BOOL node.
+        /// </summary>
+        /// <param name="boolnode">
+        /// node of type PLIST_BOOL
+        /// </param>
+        /// <returns>
+        /// 1 if the boolean node has a value of TRUE, 0 if FALSE,
+        /// or -1 if the node is not of type PLIST_BOOL
+        /// </returns>
+        public virtual int plist_bool_val_is_true(PlistHandle boolnode)
+        {
+            return PlistNativeMethods.plist_bool_val_is_true(boolnode);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_UINT node against
+        /// a given value.
+        /// </summary>
+        /// <param name="uintnode">
+        /// node of type PLIST_UINT
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// 1 if the node's value is greater than cmpval,
+        /// or -1 if the node's value is less than cmpval.
+        /// </returns>
+        public virtual int plist_uint_val_compare(PlistHandle uintnode, ulong cmpval)
+        {
+            return PlistNativeMethods.plist_uint_val_compare(uintnode, cmpval);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_UID node against
+        /// a given value.
+        /// </summary>
+        /// <param name="uidnode">
+        /// node of type PLIST_UID
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// 1 if the node's value is greater than cmpval,
+        /// or -1 if the node's value is less than cmpval.
+        /// </returns>
+        public virtual int plist_uid_val_compare(PlistHandle uidnode, ulong cmpval)
+        {
+            return PlistNativeMethods.plist_uid_val_compare(uidnode, cmpval);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_REAL node against
+        /// a given value.
+        /// </summary>
+        /// <param name="realnode">
+        /// node of type PLIST_REAL
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are (almost) equal,
+        /// 1 if the node's value is greater than cmpval,
+        /// or -1 if the node's value is less than cmpval.
+        /// </returns>
+        /// <remarks>
+        /// WARNING: Comparing floating point values can give inaccurate
+        /// results because of the nature of floating point values on computer
+        /// systems. While this function is designed to be as accurate as
+        /// possible, please don't rely on it too much.
+        /// </remarks>
+        public virtual int plist_real_val_compare(PlistHandle realnode, double cmpval)
+        {
+            return PlistNativeMethods.plist_real_val_compare(realnode, cmpval);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_DATE node against
+        /// a given set of seconds and fraction of a second since epoch.
+        /// </summary>
+        /// <param name="datenode">
+        /// node of type PLIST_DATE
+        /// </param>
+        /// <param name="cmpsec">
+        /// number of seconds since epoch to compare against
+        /// </param>
+        /// <param name="cmpusec">
+        /// fraction of a second in microseconds to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's date is equal to the supplied values,
+        /// 1 if the node's date is greater than the supplied values,
+        /// or -1 if the node's date is less than the supplied values.
+        /// </returns>
+        public virtual int plist_date_val_compare(PlistHandle datenode, int cmpsec, int cmpusec)
+        {
+            return PlistNativeMethods.plist_date_val_compare(datenode, cmpsec, cmpusec);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_STRING node against
+        /// a given value.
+        /// This function basically behaves like strcmp.
+        /// </summary>
+        /// <param name="strnode">
+        /// node of type PLIST_STRING
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_string_val_compare(PlistHandle strnode, string cmpval)
+        {
+            return PlistNativeMethods.plist_string_val_compare(strnode, cmpval);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_STRING node against
+        /// a given value, while not comparing more than n characters.
+        /// This function basically behaves like strncmp.
+        /// </summary>
+        /// <param name="strnode">
+        /// node of type PLIST_STRING
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <param name="n">
+        /// maximum number of characters to compare
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_string_val_compare_with_size(PlistHandle strnode, string cmpval, uint n)
+        {
+            return PlistNativeMethods.plist_string_val_compare_with_size(strnode, cmpval, n);
+        }
+        
+        /// <summary>
+        /// Helper function to match a given substring in the value of a
+        /// PLIST_STRING node.
+        /// </summary>
+        /// <param name="strnode">
+        /// node of type PLIST_STRING
+        /// </param>
+        /// <param name="substr">
+        /// value to match
+        /// </param>
+        /// <returns>
+        /// 1 if the node's value contains the given substring,
+        /// or 0 if not.
+        /// </returns>
+        public virtual int plist_string_val_contains(PlistHandle strnode, string substr)
+        {
+            return PlistNativeMethods.plist_string_val_contains(strnode, substr);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_KEY node against
+        /// a given value.
+        /// This function basically behaves like strcmp.
+        /// </summary>
+        /// <param name="keynode">
+        /// node of type PLIST_KEY
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_key_val_compare(PlistHandle keynode, string cmpval)
+        {
+            return PlistNativeMethods.plist_key_val_compare(keynode, cmpval);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the value of a PLIST_KEY node against
+        /// a given value, while not comparing more than n characters.
+        /// This function basically behaves like strncmp.
+        /// </summary>
+        /// <param name="keynode">
+        /// node of type PLIST_KEY
+        /// </param>
+        /// <param name="cmpval">
+        /// value to compare against
+        /// </param>
+        /// <param name="n">
+        /// maximum number of characters to compare
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_key_val_compare_with_size(PlistHandle keynode, string cmpval, uint n)
+        {
+            return PlistNativeMethods.plist_key_val_compare_with_size(keynode, cmpval, n);
+        }
+        
+        /// <summary>
+        /// Helper function to match a given substring in the value of a
+        /// PLIST_KEY node.
+        /// </summary>
+        /// <param name="keynode">
+        /// node of type PLIST_KEY
+        /// </param>
+        /// <param name="substr">
+        /// value to match
+        /// </param>
+        /// <returns>
+        /// 1 if the node's value contains the given substring,
+        /// or 0 if not.
+        /// </returns>
+        public virtual int plist_key_val_contains(PlistHandle keynode, string substr)
+        {
+            return PlistNativeMethods.plist_key_val_contains(keynode, substr);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the data of a PLIST_DATA node against
+        /// a given blob and size.
+        /// This function basically behaves like memcmp after making sure the
+        /// size of the node's data value is equal to the size of cmpval (n),
+        /// making this a "full match" comparison.
+        /// </summary>
+        /// <param name="datanode">
+        /// node of type PLIST_DATA
+        /// </param>
+        /// <param name="cmpval">
+        /// data blob to compare against
+        /// </param>
+        /// <param name="n">
+        /// size of data blob passed in cmpval
+        /// </param>
+        /// <returns>
+        /// 0 if the node's data blob and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_data_val_compare(PlistHandle datanode, ref char cmpval, uint n)
+        {
+            return PlistNativeMethods.plist_data_val_compare(datanode, ref cmpval, n);
+        }
+        
+        /// <summary>
+        /// Helper function to compare the data of a PLIST_DATA node against
+        /// a given blob and size, while no more than n bytes are compared.
+        /// This function basically behaves like memcmp after making sure the
+        /// size of the node's data value is at least n, making this a
+        /// "starts with" comparison.
+        /// </summary>
+        /// <param name="datanode">
+        /// node of type PLIST_DATA
+        /// </param>
+        /// <param name="cmpval">
+        /// data blob to compare against
+        /// </param>
+        /// <param name="n">
+        /// size of data blob passed in cmpval
+        /// </param>
+        /// <returns>
+        /// 0 if the node's value and cmpval are equal,
+        /// > 0 if the node's value is lexicographically greater than cmpval,
+        /// or
+        /// <
+        /// 0 if the node's value is lexicographically less than cmpval.
+        /// </returns>
+        public virtual int plist_data_val_compare_with_size(PlistHandle datanode, ref char cmpval, uint n)
+        {
+            return PlistNativeMethods.plist_data_val_compare_with_size(datanode, ref cmpval, n);
+        }
+        
+        /// <summary>
+        /// Helper function to match a given data blob within the value of a
+        /// PLIST_DATA node.
+        /// </summary>
+        /// <param name="datanode">
+        /// node of type PLIST_KEY
+        /// </param>
+        /// <param name="cmpval">
+        /// data blob to match
+        /// </param>
+        /// <param name="n">
+        /// size of data blob passed in cmpval
+        /// </param>
+        /// <returns>
+        /// 1 if the node's value contains the given data blob
+        /// or 0 if not.
+        /// </returns>
+        public virtual int plist_data_val_contains(PlistHandle datanode, ref char cmpval, uint n)
+        {
+            return PlistNativeMethods.plist_data_val_contains(datanode, ref cmpval, n);
         }
     }
 }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="RecoveryDeviceInfo.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -46,6 +46,10 @@ namespace iMobileDevice.Recovery
         
         public System.IntPtr imei;
         
+        public System.IntPtr srtg;
+        
+        public System.IntPtr serial_string;
+        
         public System.IntPtr ap_nonce;
         
         public uint ap_nonce_size;
@@ -67,6 +71,22 @@ namespace iMobileDevice.Recovery
             get
             {
                 return Utf8Marshal.PtrToStringUtf8(this.imei);
+            }
+        }
+        
+        public string srtgString
+        {
+            get
+            {
+                return Utf8Marshal.PtrToStringUtf8(this.srtg);
+            }
+        }
+        
+        public string serial_stringString
+        {
+            get
+            {
+                return Utf8Marshal.PtrToStringUtf8(this.serial_string);
             }
         }
     }

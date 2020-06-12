@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="DiagnosticsRelayNativeMethods.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -193,7 +193,7 @@ namespace iMobileDevice.DiagnosticsRelay
         public static extern DiagnosticsRelayError diagnostics_relay_query_mobilegestalt(DiagnosticsRelayClientHandle client, PlistHandle keys, out PlistHandle result);
         
         [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_query_ioregistry_entry", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string name, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string classname, out PlistHandle result);
+        public static extern DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string entryName, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string entryClass, out PlistHandle result);
         
         [System.Runtime.InteropServices.DllImportAttribute(DiagnosticsRelayNativeMethods.LibraryName, EntryPoint="diagnostics_relay_query_ioregistry_plane", CallingConvention=System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern DiagnosticsRelayError diagnostics_relay_query_ioregistry_plane(DiagnosticsRelayClientHandle client, [System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)] string plane, out PlistHandle result);

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="iDeviceApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -89,7 +89,7 @@ namespace iMobileDevice.iDevice
         /// to the registered callback function.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
         public virtual iDeviceError idevice_event_subscribe(iDeviceEventCallBack callback, System.IntPtr userData)
         {
@@ -101,7 +101,7 @@ namespace iMobileDevice.iDevice
         /// idevice_event_subscribe().
         /// </summary>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
         public virtual iDeviceError idevice_event_unsubscribe()
         {
@@ -109,28 +109,32 @@ namespace iMobileDevice.iDevice
         }
         
         /// <summary>
-        /// Get a list of currently available devices.
+        /// Get a list of UDIDs of currently available devices (USBMUX devices only).
         /// </summary>
         /// <param name="devices">
-        /// List of udids of devices that are currently available.
+        /// List of UDIDs of devices that are currently available.
         /// This list is terminated by a NULL pointer.
         /// </param>
         /// <param name="count">
         /// Number of devices found.
         /// </param>
         /// <returns>
-        /// IDEVICE_E_SUCCESS on success or an error value when an error occured.
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
         /// </returns>
+        /// <remarks>
+        /// This function only returns the UDIDs of USBMUX devices. To also include
+        /// network devices in the list, use idevice_get_device_list_extended().
+        /// </remarks>
         public virtual iDeviceError idevice_get_device_list(out System.Collections.ObjectModel.ReadOnlyCollection<string> devices, ref int count)
         {
             return iDeviceNativeMethods.idevice_get_device_list(out devices, ref count);
         }
         
         /// <summary>
-        /// Free a list of device udids.
+        /// Free a list of device UDIDs.
         /// </summary>
         /// <param name="devices">
-        /// List of udids to free.
+        /// List of UDIDs to free.
         /// </param>
         /// <returns>
         /// Always returnes IDEVICE_E_SUCCESS.
@@ -141,8 +145,40 @@ namespace iMobileDevice.iDevice
         }
         
         /// <summary>
-        /// Creates an idevice_t structure for the device specified by udid,
-        /// if the device is available.
+        /// Get a list of currently available devices
+        /// </summary>
+        /// <param name="devices">
+        /// List of idevice_info_t records with device information.
+        /// This list is terminated by a NULL pointer.
+        /// </param>
+        /// <param name="count">
+        /// Number of devices included in the list.
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
+        /// </returns>
+        public virtual iDeviceError idevice_get_device_list_extended(ref System.IntPtr devices, ref int count)
+        {
+            return iDeviceNativeMethods.idevice_get_device_list_extended(ref devices, ref count);
+        }
+        
+        /// <summary>
+        /// Free an extended device list retrieved through idevice_get_device_list_extended().
+        /// </summary>
+        /// <param name="devices">
+        /// Device list to free.
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS on success or an error value when an error occurred.
+        /// </returns>
+        public virtual iDeviceError idevice_device_list_extended_free(System.IntPtr devices)
+        {
+            return iDeviceNativeMethods.idevice_device_list_extended_free(devices);
+        }
+        
+        /// <summary>
+        /// Creates an idevice_t structure for the device specified by UDID,
+        /// if the device is available (USBMUX devices only).
         /// </summary>
         /// <param name="device">
         /// Upon calling this function, a pointer to a location of type
@@ -157,6 +193,8 @@ namespace iMobileDevice.iDevice
         /// <remarks>
         /// The resulting idevice_t structure has to be freed with
         /// idevice_free() if it is no longer used.
+        /// If you need to connect to a device available via network, use
+        /// idevice_new_with_options() and include IDEVICE_LOOKUP_NETWORK in options.
         /// </remarks>
         public virtual iDeviceError idevice_new(out iDeviceHandle device, string udid)
         {
@@ -167,9 +205,43 @@ namespace iMobileDevice.iDevice
         }
         
         /// <summary>
+        /// Creates an idevice_t structure for the device specified by UDID,
+        /// if the device is available, with the given lookup options.
+        /// </summary>
+        /// <param name="device">
+        /// Upon calling this function, a pointer to a location of type
+        /// idevice_t. On successful return, this location will be populated.
+        /// </param>
+        /// <param name="udid">
+        /// The UDID to match.
+        /// </param>
+        /// <param name="options">
+        /// Specifies what connection types should be considered
+        /// when looking up devices. Accepts bitwise or'ed values of idevice_options.
+        /// If 0 (no option) is specified it will default to IDEVICE_LOOKUP_USBMUX.
+        /// To lookup both USB and network-connected devices, pass
+        /// IDEVICE_LOOKUP_USBMUX | IDEVICE_LOOKUP_NETWORK. If a device is available
+        /// both via USBMUX *and* network, it will select the USB connection.
+        /// This behavior can be changed by adding IDEVICE_LOOKUP_PREFER_NETWORK
+        /// to the options in which case it will select the network connection.
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS if ok, otherwise an error code.
+        /// </returns>
+        /// <remarks>
+        /// The resulting idevice_t structure has to be freed with
+        /// idevice_free() if it is no longer used.
+        /// </remarks>
+        public virtual iDeviceError idevice_new_with_options(out iDeviceHandle device, string udid, int options)
+        {
+            iDeviceError returnValue;
+            returnValue = iDeviceNativeMethods.idevice_new_with_options(out device, udid, options);
+            device.Api = this.Parent;
+            return returnValue;
+        }
+        
+        /// <summary>
         /// Cleans up an idevice structure, then frees the structure itself.
-        /// This is a library-level function; deals directly with the device to tear
-        /// down relations, but otherwise is mostly internal.
         /// </summary>
         /// <param name="device">
         /// idevice_t to free.
@@ -327,6 +399,26 @@ namespace iMobileDevice.iDevice
         public virtual iDeviceError idevice_connection_disable_ssl(iDeviceConnectionHandle connection)
         {
             return iDeviceNativeMethods.idevice_connection_disable_ssl(connection);
+        }
+        
+        /// <summary>
+        /// Disable bypass SSL for the given connection without sending out terminate messages.
+        /// </summary>
+        /// <param name="connection">
+        /// The connection to disable SSL for.
+        /// </param>
+        /// <param name="sslBypass">
+        /// if true ssl connection will not be terminated but just cleaned up, allowing
+        /// plain text data going on underlying connection
+        /// </param>
+        /// <returns>
+        /// IDEVICE_E_SUCCESS on success, IDEVICE_E_INVALID_ARG when connection
+        /// is NULL. This function also returns IDEVICE_E_SUCCESS when SSL is not
+        /// enabled and does no further error checking on cleanup.
+        /// </returns>
+        public virtual iDeviceError idevice_connection_disable_bypass_ssl(iDeviceConnectionHandle connection, char sslbypass)
+        {
+            return iDeviceNativeMethods.idevice_connection_disable_bypass_ssl(connection, sslbypass);
         }
         
         /// <summary>

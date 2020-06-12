@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="IDiagnosticsRelayApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -184,7 +184,7 @@ namespace iMobileDevice.DiagnosticsRelay
         
         DiagnosticsRelayError diagnostics_relay_query_mobilegestalt(DiagnosticsRelayClientHandle client, PlistHandle keys, out PlistHandle result);
         
-        DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, string name, string classname, out PlistHandle result);
+        DiagnosticsRelayError diagnostics_relay_query_ioregistry_entry(DiagnosticsRelayClientHandle client, string entryName, string entryClass, out PlistHandle result);
         
         DiagnosticsRelayError diagnostics_relay_query_ioregistry_plane(DiagnosticsRelayClientHandle client, string plane, out PlistHandle result);
     }

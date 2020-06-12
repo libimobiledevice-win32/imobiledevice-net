@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="DebugServerApi.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -216,13 +216,16 @@ namespace iMobileDevice.DebugServer
         /// <param name="response">
         /// Response received for the command (can be NULL to ignore)
         /// </param>
+        /// <param name="response_size">
+        /// Pointer to receive response size. Set to NULL to ignore.
+        /// </param>
         /// <returns>
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client or command is NULL
         /// </returns>
-        public virtual DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out string response)
+        public virtual DebugServerError debugserver_client_send_command(DebugServerClientHandle client, DebugServerCommandHandle command, out string response, ref uint responseSize)
         {
-            return DebugServerNativeMethods.debugserver_client_send_command(client, command, out response);
+            return DebugServerNativeMethods.debugserver_client_send_command(client, command, out response, ref responseSize);
         }
         
         /// <summary>
@@ -234,13 +237,16 @@ namespace iMobileDevice.DebugServer
         /// <param name="response">
         /// Response received for last command (can be NULL to ignore)
         /// </param>
+        /// <param name="response_size">
+        /// Pointer to receive response size. Set to NULL to ignore.
+        /// </param>
         /// <returns>
         /// DEBUGSERVER_E_SUCCESS on success,
         /// DEBUGSERVER_E_INVALID_ARG when client is NULL
         /// </returns>
-        public virtual DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out string response)
+        public virtual DebugServerError debugserver_client_receive_response(DebugServerClientHandle client, out string response, ref uint responseSize)
         {
-            return DebugServerNativeMethods.debugserver_client_receive_response(client, out response);
+            return DebugServerNativeMethods.debugserver_client_receive_response(client, out response, ref responseSize);
         }
         
         /// <summary>

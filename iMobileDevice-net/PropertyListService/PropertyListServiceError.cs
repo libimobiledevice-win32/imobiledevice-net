@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 // <copyright file="PropertyListServiceError.cs" company="Quamotion">
-// Copyright (c) 2016-2019 Quamotion. All rights reserved.
+// Copyright (c) 2016-2020 Quamotion. All rights reserved.
 // </copyright>
 #pragma warning disable 1591
 #pragma warning disable 1572
@@ -38,6 +38,8 @@ namespace iMobileDevice.PropertyListService
         SslError = -4,
         
         ReceiveTimeout = -5,
+        
+        NotEnoughData = -6,
         
         UnknownError = -256,
     }

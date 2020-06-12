@@ -39,7 +39,8 @@ namespace iMobileDevice.Tests
         public void DebugServerClientReceiveResponseZero()
         {
             string response;
-            Assert.Equal(DebugServerError.InvalidArg, this.api.DebugServer.debugserver_client_receive_response(DebugServerClientHandle.Zero, out response));
+            uint responseSize = 0;
+            Assert.Equal(DebugServerError.InvalidArg, this.api.DebugServer.debugserver_client_receive_response(DebugServerClientHandle.Zero, out response, ref responseSize));
         }
 
         [Fact]
@@ -59,7 +60,8 @@ namespace iMobileDevice.Tests
         [Fact(Skip = "debugserver_client_send_command does not check for null values")]
         public void DebugServerClientSendCommandZero()
         {
-            Assert.Equal(DebugServerError.InvalidArg, this.api.DebugServer.debugserver_client_send_command(DebugServerClientHandle.Zero, DebugServerCommandHandle.Zero, out string response));
+            uint responseSize = 0;
+            Assert.Equal(DebugServerError.InvalidArg, this.api.DebugServer.debugserver_client_send_command(DebugServerClientHandle.Zero, DebugServerCommandHandle.Zero, out string response, ref responseSize));
         }
 
         [Fact]
