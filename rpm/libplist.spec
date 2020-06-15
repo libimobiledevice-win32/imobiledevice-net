@@ -43,6 +43,7 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING.LESSER README.md
+%doc %{_datadir}/man/man1/plistutil*
 %{_bindir}/plistutil
 %{_libdir}/libplist.so.*
 %{_libdir}/libplist++.so.*
