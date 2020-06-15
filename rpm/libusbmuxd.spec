@@ -44,13 +44,15 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING README.md
+%doc %{_datadir}/man/man1/iproxy*
+%doc %{_datadir}/man/man1/inetcat*
 %{_bindir}/iproxy
 %{_bindir}/inetcat
 %{_libdir}/libusbmuxd.so.*
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/pkgconfig/libusbmuxd.pc
+%{_libdir}/pkgconfig/libusbmuxd-2.0.pc
 %{_libdir}/libusbmuxd.so
 %{_includedir}/*.h
 
