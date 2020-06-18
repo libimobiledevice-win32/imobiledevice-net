@@ -150,7 +150,7 @@ namespace iMobileDevice
 
                 string[] linuxLibariesToLoad = new string[]
                     {
-                        "libimobiledevice",
+                        "libimobiledevice-1.0",
                     };
 
                 // Clear any value from dlerror
