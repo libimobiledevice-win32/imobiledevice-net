@@ -45,15 +45,15 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 %doc AUTHORS COPYING.LESSER README.md
 %doc %{_datadir}/man/man1/plistutil*
 %{_bindir}/plistutil
-%{_libdir}/libplist.so.*
-%{_libdir}/libplist++.so.*
+%{_libdir}/libplist-2.0.so.*
+%{_libdir}/libplist++-2.0.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %{_libdir}/pkgconfig/libplist-2.0.pc
 %{_libdir}/pkgconfig/libplist++-2.0.pc
-%{_libdir}/libplist.so
-%{_libdir}/libplist++.so
+%{_libdir}/libplist-2.0.so
+%{_libdir}/libplist++-2.0.so
 %{_includedir}/plist
 
 %changelog
