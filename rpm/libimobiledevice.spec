@@ -1,7 +1,7 @@
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 Name:          libimobiledevice
-Version:       1.2.2.build
+Version:       1.3.1.build
 Release:       6%{?dist}
 Summary:       Library for connecting to mobile devices
 
