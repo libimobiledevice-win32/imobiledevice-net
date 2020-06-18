@@ -50,7 +50,15 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libplist.so.3", out lib))
+                if (NativeLibrary.TryLoad("libplist-2.0.so.3", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist-2.0.so", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist.so.3", out lib))
                 {
                     return lib;
                 }
@@ -62,7 +70,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libplist.dylib", out lib))
+                if (NativeLibrary.TryLoad("libplist-2.0.dylib", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist.dylib", out lib))
                 {
                     return lib;
                 }
@@ -109,7 +121,15 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libimobiledevice.so.6", out lib))
+                if (NativeLibrary.TryLoad("libimobiledevice-1.0.so.6", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice-1.0.so", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice.so.6", out lib))
                 {
                     return lib;
                 }
@@ -121,7 +141,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libimobiledevice.dylib", out lib))
+                if (NativeLibrary.TryLoad("libimobiledevice-1.0.dylib", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice.dylib", out lib))
                 {
                     return lib;
                 }
@@ -136,7 +160,15 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libideviceactivation.so.2", out lib))
+                if (NativeLibrary.TryLoad("libideviceactivation-1.0.so.2", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation-1.0.so", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation.so.2", out lib))
                 {
                     return lib;
                 }
@@ -148,7 +180,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libideviceactivation.dylib", out lib))
+                if (NativeLibrary.TryLoad("libideviceactivation-1.0.dylib", out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation.dylib", out lib))
                 {
                     return lib;
                 }
