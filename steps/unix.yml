@@ -36,5 +36,7 @@ steps:
 
     cd iMobileDevice.IntegrationTests.netcoreapp30
 
+    export LD_DEBUG=libs
+    export DYLD_PRINT_LIBRARIES=1
     dotnet run
   displayName: Run integration tests
