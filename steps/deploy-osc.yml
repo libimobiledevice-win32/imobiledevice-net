@@ -29,7 +29,7 @@ steps:
 
     declare -A package_versions
 
-    package_versions=( ["libplist"]="2.1.1" ["libusbmuxd"]="2.0.3" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1" ["ideviceinstaller"]="1.1.3" ["ios-webkit-debug-proxy"]="1.8.6")
+    package_versions=( ["libplist"]="2.2.1" ["libusbmuxd"]="2.0.3" ["libimobiledevice"]="1.2.2" ["usbmuxd"]="1.1.2" ["libideviceactivation"]="1.0.1" ["ideviceinstaller"]="1.1.3" ["ios-webkit-debug-proxy"]="1.8.6")
 
     for package in libplist libusbmuxd libimobiledevice usbmuxd libideviceactivation ideviceinstaller ios-webkit-debug-proxy
     do
