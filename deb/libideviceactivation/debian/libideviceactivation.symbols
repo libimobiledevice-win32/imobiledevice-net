@@ -1,4 +1,4 @@
-libideviceactivation.so.2 libideviceactivation #MINVER#
+libideviceactivation-1.0.so.2 libideviceactivation #MINVER#
  idevice_activation_drm_handshake_request_new@Base 1.0.0.25
  idevice_activation_request_free@Base 1.0.0.25
  idevice_activation_request_get_field@Base 1.0.0.25
