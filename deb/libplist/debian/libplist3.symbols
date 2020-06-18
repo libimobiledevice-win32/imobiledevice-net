@@ -1,4 +1,4 @@
-libplist.so.3 libplist3 #MINVER#
+libplist-2.0.so.3 libplist3 #MINVER#
  plist_access_path@Base 1.11
  plist_access_pathv@Base 1.11
  plist_array_append_item@Base 1.11

@@ -75,6 +75,8 @@ namespace iMobileDevice
             isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             isMacOs = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
+            LibraryResolver.EnsureRegistered();
 #else
             switch (Environment.OSVersion.Platform)
             {
@@ -150,7 +152,7 @@ namespace iMobileDevice
 
                 string[] linuxLibariesToLoad = new string[]
                     {
-                        "libimobiledevice",
+                        "libimobiledevice-1.0",
                     };
 
                 // Clear any value from dlerror

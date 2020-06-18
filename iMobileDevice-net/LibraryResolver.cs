@@ -50,11 +50,19 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libplist.so.3", out lib))
+                if (NativeLibrary.TryLoad("libplist-2.0.so.3", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
-                else if (NativeLibrary.TryLoad("libplist.so", out lib))
+                else if (NativeLibrary.TryLoad("libplist-2.0.so", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist.so.3", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist.so", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -62,7 +70,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libplist.dylib", out lib))
+                if (NativeLibrary.TryLoad("libplist-2.0.dylib", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libplist.dylib", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -77,16 +89,16 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libusbmuxd.so.6", out lib))
+                if (NativeLibrary.TryLoad("libusbmuxd.so.6", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
-                else if (NativeLibrary.TryLoad("libusbmuxd.so.4", out lib))
+                else if (NativeLibrary.TryLoad("libusbmuxd.so.4", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     // Not all symbols will be available in libusbmuxd.so.4
                     return lib;
                 }
-                else if (NativeLibrary.TryLoad("libusbmuxd.so", out lib))
+                else if (NativeLibrary.TryLoad("libusbmuxd.so", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -94,7 +106,7 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libusbmuxd.dylib", out lib))
+                if (NativeLibrary.TryLoad("libusbmuxd.dylib", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -109,11 +121,19 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libimobiledevice.so.6", out lib))
+                if (NativeLibrary.TryLoad("libimobiledevice-1.0.so.6", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
-                else if (NativeLibrary.TryLoad("libimobiledevice.so", out lib))
+                else if (NativeLibrary.TryLoad("libimobiledevice-1.0.so", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice.so.6", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice.so", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -121,7 +141,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libimobiledevice.dylib", out lib))
+                if (NativeLibrary.TryLoad("libimobiledevice-1.0.dylib", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libimobiledevice.dylib", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -136,11 +160,19 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                if (NativeLibrary.TryLoad("libideviceactivation.so.2", out lib))
+                if (NativeLibrary.TryLoad("libideviceactivation-1.0.so.2", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
-                else if (NativeLibrary.TryLoad("libideviceactivation.so", out lib))
+                else if (NativeLibrary.TryLoad("libideviceactivation-1.0.so", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation.so.2", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation.so", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }
@@ -148,7 +180,11 @@ namespace iMobileDevice
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (NativeLibrary.TryLoad("libideviceactivation.dylib", out lib))
+                if (NativeLibrary.TryLoad("libideviceactivation-1.0.dylib", Assembly.GetExecutingAssembly(), null, out lib))
+                {
+                    return lib;
+                }
+                else if (NativeLibrary.TryLoad("libideviceactivation.dylib", Assembly.GetExecutingAssembly(), null, out lib))
                 {
                     return lib;
                 }

@@ -1,4 +1,4 @@
-libplist++.so.3 libplist++3v5 #MINVER#
+libplist++-2.0.so.3 libplist++3v5 #MINVER#
 # (c++)"PList::Dictionary::GetNodeKey[abi:cxx11](PList::Node*)@Base" 1.12
 # (c++)"PList::Dictionary::End[abi:cxx11]()@Base" 1.12
 # (c++)"PList::Dictionary::Begin[abi:cxx11]()@Base" 1.12

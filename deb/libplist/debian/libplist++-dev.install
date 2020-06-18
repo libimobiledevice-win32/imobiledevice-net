@@ -1,4 +1,4 @@
-usr/lib/*/libplist++.so
+usr/lib/*/libplist++-2.0.so
 usr/include/plist/Structure.h
 usr/include/plist/Real.h
 usr/include/plist/String.h
