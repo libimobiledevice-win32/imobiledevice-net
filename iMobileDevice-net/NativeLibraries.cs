@@ -75,6 +75,8 @@ namespace iMobileDevice
             isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
             isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             isMacOs = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+
+            LibraryResolver.EnsureRegistered();
 #else
             switch (Environment.OSVersion.Platform)
             {
