@@ -1,5 +1,5 @@
 Name:          libideviceactivation 
-Version:       1.0.0.build
+Version:       1.0.1.build
 Release:       6%{?dist}
 Summary:       A library to manage the activation process of Apple iOS devices.
 
@@ -43,12 +43,12 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 %files
 %defattr(-,root,root,-)
 %{_bindir}/ideviceactivation
-%{_libdir}/libideviceactivation.so.*
+%{_libdir}/libideviceactivation-1.0.so.*
 %{_mandir}/man1/ideviceactivation.1.gz
 
 
 %files devel
 %defattr(-,root,root,-)
-%{_libdir}/libideviceactivation.so
+%{_libdir}/libideviceactivation-1.0.so
 %{_libdir}/pkgconfig/libideviceactivation-1.0.pc
 %{_includedir}/libideviceactivation.h
