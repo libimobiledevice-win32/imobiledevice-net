@@ -50,12 +50,12 @@ rm $RPM_BUILD_ROOT/usr/lib64/*.la
 %doc AUTHORS COPYING.LESSER README.md
 %doc %{_datadir}/man/man1/idevice*
 %{_bindir}/idevice*
-%{_libdir}/libimobiledevice.so.*
+%{_libdir}/libimobiledevice-1.0.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %{_libdir}/pkgconfig/libimobiledevice-1.0.pc
-%{_libdir}/libimobiledevice.so
+%{_libdir}/libimobiledevice-1.0.so
 %{_includedir}/libimobiledevice/
 
 %changelog
