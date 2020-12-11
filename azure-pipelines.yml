@@ -206,6 +206,9 @@ stages:
         focal:
           DIST: focal
           imageName: ubuntu:20.04
+        groovy:
+          DIST: groovy
+          imageName: ubuntu:20.10
     pool:
       vmImage: 'ubuntu-16.04'
     container:
@@ -310,6 +313,8 @@ stages:
           DIST: bionic
         focal:
           DIST: focal
+        groovy:
+          DIST: groovy
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
