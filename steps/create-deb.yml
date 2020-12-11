@@ -10,7 +10,8 @@ steps:
 - script: |
     sudo apt-get update
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libusb-1.0-0-dev libreadline-dev libcurl4-openssl-dev libssl-dev pkg-config libjs-jquery libglib2.0-dev libtasn1-6-dev udev systemd libxml2-dev
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput cython python-all-dev doxygen chrpath
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libxml2-utils devscripts debhelper dh-autoreconf dput doxygen chrpath
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y cython3 python3-all-dev dh-python
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libzip-dev
   displayName: 'Install dependencies'
 - script: |
