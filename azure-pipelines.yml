@@ -203,12 +203,12 @@ stages:
         bionic:
           DIST: bionic
           imageName: ubuntu:18.04
-        eoan:
-          DIST: eoan
-          imageName: ubuntu:19.10
         focal:
           DIST: focal
           imageName: ubuntu:20.04
+        groovy:
+          DIST: groovy
+          imageName: ubuntu:20.10
     pool:
       vmImage: 'ubuntu-16.04'
     container:
@@ -311,10 +311,10 @@ stages:
           DIST: xenial
         bionic:
           DIST: bionic
-        eoan:
-          DIST: eoan
         focal:
           DIST: focal
+        groovy:
+          DIST: groovy
     pool:
       vmImage: 'ubuntu-16.04'
     steps:

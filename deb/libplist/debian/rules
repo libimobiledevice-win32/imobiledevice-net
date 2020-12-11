@@ -8,7 +8,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 PYVER=$(shell pyversions -vd)
 
 %:
-	dh $@ --with python2,autoreconf
+	dh $@ --with python3,autoreconf
 
 override_dh_auto_configure:
 	dh_auto_configure -- PYTHON_VERSION=$(PYVER) --without-cython
@@ -36,10 +36,6 @@ override_dh_installman: debian/$(manpage_name)
 override_dh_link:
 	dh_link
 	dh_link -p libplist-utils /usr/share/man/man1/$(manpage_name).gz /usr/share/man/man1/plistutil.1.gz
-
-override_dh_python2:
-	# Only build for the current version of python, not all supported.
-	dh_python2 --no-guessing-versions
 
 override_dh_strip:
 	dh_strip --dbgsym-migration='libplist-dbg (<< 2.0.0-4~)'
