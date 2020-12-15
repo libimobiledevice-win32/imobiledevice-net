@@ -8,6 +8,7 @@ Build-Depends: debhelper (>= 9.20120115~),
                dh-autoreconf,
                pkg-config,
                cython3,
+               dh-python,
                python3-all-dev (>= 2.6.6-3~),
                doxygen,
                chrpath
