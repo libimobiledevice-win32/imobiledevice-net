@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyNativeBinaries" AfterTargets="Build">
+    <!-- This file lives in the build\net40 directory, whereas the native libraries live in tools\-->
+    <ItemGroup>
+      <MobileDevice64Files Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\*.*" />
+    </ItemGroup>
+    
+    <!-- Copy all files to the $(OutDir) directory. Optionally, you can specify a subdirectory of $(OutDir) to which to copy the files,
+         by setting the $(MobileDeviceDir) property -->
+    <Copy SourceFiles="@(MobileDevice64Files)" DestinationFolder="$(OutDir)\win-x64\" SkipUnchangedFiles="true" />
+    
+    <!-- This file lives in the build\net40 directory, whereas the native libraries live in runtimes\win7-x86\native\ -->
+    <ItemGroup>
+      <MobileDevice32Files Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\*.*" />
+    </ItemGroup>
+
+    <!-- Copy all files to the $(OutDir)\win7-x86 directory. -->
+    <Copy SourceFiles="@(MobileDevice32Files)" DestinationFolder="$(OutDir)\win-x86\" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

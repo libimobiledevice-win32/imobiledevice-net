@@ -25,7 +25,8 @@ stages:
         cd ..
         dotnet build imobiledevice-net\iMobileDevice-net.csproj
         dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
-      displayName: Generate code, build imobiledevice-net
+        dotnet pack iproxy\iproxy.csproj -c Release
+      displayName: Generate code, build imobiledevice-net, iproxy
 
     - script: |
         7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
@@ -38,6 +39,7 @@ stages:
         7z a -tzip %BUILD_ARTIFACTSTAGINGDIRECTORY%\binaries\libimobiledevice.1.2.1-r%BUILD_BUILDID%-osx-x64.zip .\zip\runtimes\osx-x64\native\*
 
         copy imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
+        copy iproxy\bin\Release\iproxy.*.nupkg %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
         copy iMobileDevice.IntegrationTests.net45\Directory.Build.props %BUILD_ARTIFACTSTAGINGDIRECTORY%\imobiledevice-net
       displayName: Prepare artifacts
 
