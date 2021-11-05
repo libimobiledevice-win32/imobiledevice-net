@@ -189,7 +189,7 @@ stages:
     variables:
       RID: ubuntu.16.04-x64
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
     - template: steps/unix.yml
 
@@ -212,7 +212,7 @@ stages:
           DIST: groovy
           imageName: ubuntu:20.10
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     container:
       image: $(imageName)
       options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
@@ -239,7 +239,7 @@ stages:
           DIST: focal
           imageName: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     container:
       image: $(imageName)
       options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
@@ -261,7 +261,7 @@ stages:
           VERSION: 7
           imageName: centos:7
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     container:
       image: $(imageName)
       options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
@@ -277,7 +277,7 @@ stages:
   jobs:
   - job: github_deploy
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
     - template: steps/deploy-github.yml
 
@@ -300,7 +300,7 @@ stages:
           SUFFIX: -bionic
           NAME: bionic
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
     - template: steps/deploy-docker.yml
 
@@ -318,13 +318,13 @@ stages:
         groovy:
           DIST: groovy
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
     - template: steps/deploy-ppa.yml
 
   - job: osc_deploy
     dependsOn: github_deploy
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
     - template: steps/deploy-osc.yml
