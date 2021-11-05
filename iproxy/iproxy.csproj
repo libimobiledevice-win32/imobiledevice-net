@@ -25,29 +25,29 @@
   <ItemGroup>
     <!-- win-x64 files which come from VSTS artifacts -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/plist.dll">
-      <PackagePath>runtimes/win-x64/native/plist.dll</PackagePath>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/usbmuxd.dll">
-      <PackagePath>runtimes/win-x64/native/usbmuxd.dll</PackagePath>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/iproxy.exe">
-      <PackagePath>runtimes/win-x64/native/iproxy.exe</PackagePath>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- win-x86 files which come from NuGet packages-->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/plist.dll">
-      <PackagePath>runtimes/win-x86/native/plist.dll</PackagePath>
+      <PackagePath>runtimes/win-x86/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/usbmuxd.dll">
-      <PackagePath>runtimes/win-x86/native/plist.dll</PackagePath>
+      <PackagePath>runtimes/win-x86/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/iproxy.exe">
-      <PackagePath>runtimes/win-x86/native/plist.dll</PackagePath>
+      <PackagePath>runtimes/win-x86/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
@@ -62,47 +62,47 @@
          but we keep the Ubuntu 16.04 archives for backward compatibility
          purposes. Starting with 18.04, you really need to use the PPAs, though :) -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/lib/libplist-2.0.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/libplist-2.0.so</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/lib/libusbmuxd.so">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/libusbmuxd.so</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/ubuntu.16.04-x64/bin/iproxy">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/iproxy</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- macOS files come from the tarballs -->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/lib/libplist-2.0.dylib">
-      <PackagePath>runtimes/osx-x64/native/libplist-2.0.dylib</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/lib/libusbmuxd.6.dylib">
-      <PackagePath>runtimes/osx-x64/native/libusbmuxd.6.dylib</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/osx-x64/bin/iproxy">
-      <PackagePath>runtimes/osx-x64/native/iproxy</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <!-- Pack the files are included in the current project dir-->
     <Content Include="../iMobileDevice-net/runtimes/win-x64/native/*.*">
-      <PackagePath>runtimes/win-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="../iMobileDevice-net/runtimes/win-x86/native/*.*">
-      <PackagePath>runtimes/win-x86/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win-x86/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="../iMobileDevice-net/runtimes/osx-x64/native/*.*">
-      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/osx-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="../iMobileDevice-net/runtimes/ubuntu.16.04-x64/native/*.*">
-      <PackagePath>runtimes/ubuntu.16.04-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/ubuntu.16.04-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
 
