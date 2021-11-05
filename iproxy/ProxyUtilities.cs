@@ -36,7 +36,7 @@ namespace iMobileDevice
     /// Unicode, whereas the Unix ones use UTF-8.
     /// </para>
     /// </remarks>
-    public static class Utilities
+    public static class ProxyUtilities
     {
         /// <summary>
         /// Caches the result of <see cref="GetMobileDeviceDotNetDirectory"/>, so only a single call is required.
