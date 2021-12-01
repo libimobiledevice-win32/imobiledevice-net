@@ -28,6 +28,10 @@
       <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/getopt.dll">
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x64/bin/usbmuxd.dll">
       <PackagePath>runtimes/win-x64/native/</PackagePath>
       <Pack>true</Pack>
@@ -39,6 +43,10 @@
 
     <!-- win-x86 files which come from NuGet packages-->
     <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/plist.dll">
+      <PackagePath>runtimes/win-x86/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="$(SYSTEM_ARTIFACTSDIRECTORY)/libimobiledevice/win-x86/bin/getopt.dll">
       <PackagePath>runtimes/win-x86/native/</PackagePath>
       <Pack>true</Pack>
     </Content>
