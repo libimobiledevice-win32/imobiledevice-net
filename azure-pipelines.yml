@@ -9,7 +9,7 @@ stages:
   jobs:
   - job: windows_build
     pool:
-      vmImage: 'VS2017-Win2016'
+      vmImage: 'windows-2019'
     steps:
     - template: steps/download-artifacts.yml
 
@@ -27,6 +27,12 @@ stages:
         dotnet pack imobiledevice-net\iMobileDevice-net.csproj -c Release
         dotnet pack iproxy\iproxy.csproj -c Release
       displayName: Generate code, build imobiledevice-net, iproxy
+
+    - script: |
+        dotnet tool install xmldocmd -g
+        mkdir %SYSTEM_ARTIFACTSDIRECTORY%\md\
+        xmldocmd imobiledevice-net\bin\Release\netcoreapp2.0\imobiledevice-net.dll %SYSTEM_ARTIFACTSDIRECTORY%\docs\
+      displayName: Generate documentation
 
     - script: |
         7z x imobiledevice-net\bin\Release\imobiledevice-net.*.nupkg -ozip\
@@ -62,6 +68,12 @@ stages:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/imobiledevice-net'
         artifactName: imobiledevice-net
       displayName: Publish imobiledevice-net
+      condition: always()
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/docs'
+        artifactName: docs
+      displayName: Publish docs
       condition: always()
 
     - task: PublishBuildArtifacts@1
